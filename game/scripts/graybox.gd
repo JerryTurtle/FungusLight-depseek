@@ -35,7 +35,9 @@ var queued_pointer := Vector2.INF
 var combat_audio = preload("res://scripts/combat_audio.gd").new()
 
 func _ready() -> void:
-	ThemeDB.fallback_font = load("res://assets/fonts/NotoSansSC.ttf")
+	if not review_mode:
+		ThemeDB.fallback_font = load("res://assets/fonts/ArkPixel12px-zh_hans.ttf")
+		ThemeDB.fallback_font_size = 24
 	combat.reset()
 	add_child(combat_audio)
 	if "--integration" in OS.get_cmdline_user_args():
@@ -67,7 +69,7 @@ func _ready() -> void:
 	add_child(hud)
 	status = Label.new()
 	status.position = Vector2(28,654)
-	status.add_theme_font_size_override("font_size",20)
+	status.add_theme_font_size_override("font_size",24)
 	add_child(status)
 	if review_mode:
 		panel.hide()

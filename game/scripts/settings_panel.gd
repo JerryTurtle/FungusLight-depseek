@@ -21,7 +21,7 @@ func _ready() -> void:
 	add_child(box)
 	var title := Label.new()
 	title.text = "画面与声音设置"
-	title.add_theme_font_size_override("font_size",32)
+	title.add_theme_font_size_override("font_size",36)
 	box.add_child(title)
 	for item in [["低特效（保留全部危险预告）","low_effects"],["减少动态（关闭碎片飞散）","reduced_motion"],["降低闪光（保留命中轮廓）","reduced_flash"]]:
 		var checkbox := CheckButton.new()
@@ -47,7 +47,7 @@ func _ready() -> void:
 	box.add_child(slider)
 	save_label = Label.new()
 	save_label.text = "设置保存在用户目录；当前战斗已暂停。"
-	save_label.add_theme_font_size_override("font_size",20)
+	save_label.add_theme_font_size_override("font_size",24)
 	box.add_child(save_label)
 	var close := Button.new()
 	close.text = "返回（F1 / Esc）"

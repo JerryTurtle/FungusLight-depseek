@@ -42,7 +42,9 @@ func button(parent: Node, title: String, callback: Callable) -> Button:
 	return result
 
 func _ready() -> void:
+	# The review bench keeps the H2-approved dense tool layout on Noto Sans SC.
 	ThemeDB.fallback_font = load("res://assets/fonts/NotoSansSC.ttf")
+	ThemeDB.fallback_font_size = 16
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var background := ColorRect.new()
 	background.color = Color("101e23")

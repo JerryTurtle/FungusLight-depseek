@@ -2,6 +2,7 @@
 
 - `assets/original/Characters/*.png`：用户工作目录 `Fungus Cave [16x16]/Characters` 原样复制。原目录未附许可。仅作为本地开发输入；不声称已获得商业分发许可。哈希、尺寸在 `qa/asset_manifest.json`。
 - `assets/fonts/NotoSansSC.ttf`：Google Fonts 的 Noto Sans SC，SIL Open Font License 1.1。来源 https://github.com/google/fonts/tree/main/ofl/notosanssc ，许可全文随包 `NotoSansSC-OFL.txt`。
+- `assets/fonts/ArkPixel12px-zh_hans.ttf`：方舟像素字体（Ark Pixel Font）12px 比例宽度简体中文版，SIL Open Font License 1.1，版权 TakWolf。来源 https://github.com/TakWolf/ark-pixel-font ，版本 2026.10.16（发布包 `ark-pixel-font-12px-proportional-ttf-v2026.10.16.zip` 内 `ark-pixel-12px-proportional-zh_hans.ttf`）。用途：G3 起游戏内 UI/对白像素文字；导入参数关闭抗锯齿、hinting 与子像素定位，字号只使用 12/24/36。许可全文 `ArkPixel-OFL.txt`。审核台继续使用 Noto Sans SC，避免 H2 已审工具排版变化。
 - 程序与配置：本项目生成。
 - Godot 4.3：MIT，导出模板来源官方 `godotengine/godot-builds` 的 `4.3-stable` 发布。
 
