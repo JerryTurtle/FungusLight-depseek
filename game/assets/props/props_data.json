@@ -1,0 +1,5169 @@
+{
+ "schema_version": 1,
+ "generator": "tools/gen_props.py",
+ "source": {
+  "tileset": "res://assets/original/Tilesets/Complete.png",
+  "size": [
+   128,
+   736
+  ],
+  "tile": 16,
+  "note": "所有调色板颜色均从该图集逐像素采样；家具图块直接按像素矩形裁切"
+ },
+ "world": {
+  "logical_size": [
+   320,
+   180
+  ],
+  "scale": 4
+ },
+ "palette": {
+  "groups": {
+   "ink": "kKjhv",
+   "metal": "MmnLlq",
+   "cold": "zZ",
+   "brown": "dDeBbCc",
+   "stone": "PQ",
+   "warm": "wyaAYFW",
+   "red": "RrToO",
+   "violet": "VUu",
+   "green": "gGHIJx"
+  },
+  "colors": {
+   "B": "#864b12",
+   "C": "#c2903c",
+   "D": "#3e1d0c",
+   "F": "#f8ca66",
+   "G": "#424530",
+   "H": "#234333",
+   "I": "#2a5e36",
+   "J": "#30793b",
+   "K": "#13120c",
+   "L": "#4a5152",
+   "M": "#242b2b",
+   "P": "#b7a178",
+   "Q": "#d7af89",
+   "R": "#94242d",
+   "T": "#c93327",
+   "W": "#f8f8f8",
+   "Y": "#ddc161",
+   "Z": "#cdf5ff",
+   "a": "#d7a453",
+   "b": "#965d24",
+   "c": "#ac7036",
+   "d": "#411f0f",
+   "k": "#0e0b08",
+   "l": "#4f4442",
+   "m": "#332e2e",
+   "o": "#ac552f",
+   "q": "#748989",
+   "r": "#b52727",
+   "w": "#e5c996",
+   "y": "#cfa545",
+   "z": "#9ab8bf"
+  }
+ },
+ "aliases": {
+  "rest": "bed",
+  "socket": "lamp",
+  "reward": "ring",
+  "exit": "door",
+  "end": "mine_door",
+  "storage": "door",
+  "storage_door": "door",
+  "crate": "crates",
+  "crates_small": "crate_single",
+  "barrel_old": "barrel",
+  "lore": "papers",
+  "note": "papers",
+  "mushroom": "mushroom_red",
+  "wall_panel_green": "wall_panel",
+  "panel": "wall_panel"
+ },
+ "kinds": {
+  "lamp": {
+   "size": [
+    16,
+    30
+   ],
+   "anchor": [
+    -8,
+    -26
+   ],
+   "label_anchor": [
+    0,
+    -31
+   ],
+   "ground": 26,
+   "default_variant": "unlit",
+   "state_notes": "lit:false=熄灭（冷玻璃/灰烬） lit:true=点燃（火焰+暖玻璃）；near 由运行时画四角高亮",
+   "variants": {
+    "lit": {
+     "hold": 7,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmlmmlmK....",
+       "...KllllllllK...",
+       "...KYmmmmYmmK...",
+       "...KmmaaymamK...",
+       "...KmayFYammK...",
+       "...KmmaWFyamK...",
+       "...KmamFWammK...",
+       "...KmyaaFmymK...",
+       "...KmamayammK...",
+       "...KmmmmmmmyK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmYmmlmK....",
+       "...KllllllllK...",
+       "...KymmmmmmmK...",
+       "...KmmaFamamK...",
+       "...KmayWFammK...",
+       "...KmmaFWyamK...",
+       "...KmamYFammK...",
+       "...KmyaFamymK...",
+       "...KmamayammK...",
+       "...KmmmmmmmYK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmlmmlmK....",
+       "...KllllllllK...",
+       "...KYmmmmmmmK...",
+       "...KmamyaammK...",
+       "...KmyaFWmymK...",
+       "...KmamWFammK...",
+       "...KmmyFamamK...",
+       "...KmamamymmK...",
+       "...KmmayamamK...",
+       "...KmmmmmmmyK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmlmmlmK....",
+       "...KllllllllK...",
+       "...KymmmmYmmK...",
+       "...KmamamammK...",
+       "...KmyaFYmymK...",
+       "...KmamWFammK...",
+       "...KmmyFWmamK...",
+       "...KmamaFymmK...",
+       "...KmmayamamK...",
+       "...KmmmmmmmYK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmYmmlmK....",
+       "...KllllllllK...",
+       "...KYmmmmmmmK...",
+       "...KmmyFamamK...",
+       "...KmamWFymmK...",
+       "...KmmaFWmamK...",
+       "...KmymYFaymK...",
+       "...KmmaFamamK...",
+       "...KmayamammK...",
+       "...KmmmmmmmyK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmlmmlmK....",
+       "...KllllllllK...",
+       "...KymmmmmmmK...",
+       "...KmmymamamK...",
+       "...KmamFWymmK...",
+       "...KmmaWFmamK...",
+       "...KmymFaaymK...",
+       "...KmmaaymamK...",
+       "...KmayamammK...",
+       "...KmmmmmmmYK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    },
+    "unlit": {
+     "hold": 10,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmlmmlmK....",
+       "...KllllllllK...",
+       "...KmmmmmmmmK...",
+       "...KmmMmMmMmK...",
+       "...KmLlMmMmmKK..",
+       "...KmmMmMmMmKLK.",
+       "...KmMmMmMmmKK..",
+       "...KmmMmMmMmK...",
+       "...KmMmMmMmmK...",
+       "...KmmmmmmmmK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KKKKKKKKKKKKGK."
+      ],
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmlmmlmK....",
+       "...KllllllllK...",
+       "...KmmmmmmmmK...",
+       "...KmMmMmMmmK...",
+       "...KmmMmMmMmK...",
+       "...KmMmMmMmmKK..",
+       "...KmmLlMmMmKLK.",
+       "...KmMmMmMmmKK..",
+       "...KmmMmMmMmK...",
+       "...KmmmmmmmmK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KGKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmlmmlmK....",
+       "...KllllllllK...",
+       "...KmmmmmmmmK...",
+       "...KmmMmMmMmK...",
+       "...KmMmMmMmmK...",
+       "...KmmMmMmMmK...",
+       "...KmMmMmMmmKK..",
+       "...KmmMmMLlmKLK.",
+       "...KmMmMmMmmKK..",
+       "...KmmmmmmmmK...",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KKKKKKKKKKKKGK."
+      ],
+      [
+       ".......KK.......",
+       ".......KK.......",
+       ".....KKKKKK.....",
+       "....KmlmmlmK....",
+       "...KllllllllK...",
+       "...KmmmmmmmmK...",
+       "...KmMmMmMmmK...",
+       "...KmmMmMmMmK...",
+       "...KmMmMmMLlK...",
+       "...KmmMmMmMmK...",
+       "...KmMmMmMmmKK..",
+       "...KmmMmMmMmKLK.",
+       "...KmmmmmmmmKK..",
+       "...KmmmmmmmmK...",
+       "....KKmmmmKK....",
+       "......KmmK......",
+       ".......KK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlK.......",
+       "......KlK.......",
+       "......KlK.......",
+       ".....KmmmK......",
+       "......KlKK......",
+       ".....KmmmmK.....",
+       "...KKmmmmmmKK...",
+       "..KGmllllllmGK..",
+       "..KMHmmmmmmmMK..",
+       ".KGKKKKKKKKKKKK."
+      ]
+     ]
+    }
+   }
+  },
+  "chest": {
+   "size": [
+    20,
+    16
+   ],
+   "anchor": [
+    -10,
+    -14
+   ],
+   "label_anchor": [
+    0,
+    -19
+   ],
+   "ground": 13,
+   "default_variant": "closed",
+   "state_notes": "open:false=闭合（缝光呼吸） open:true=开箱（箱内暖光） available:false=暗态（不发光，仍可读）",
+   "variants": {
+    "closed": {
+     "hold": 8,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "....................",
+       ".....KKKKKKKKKK.....",
+       "....KmMDDDDDDDMK....",
+       "...KblMccbbbbmlbK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBBmMBBBBBBmMBBK..",
+       "..KDDmMDDDDDDmMDDK..",
+       "..KDDmyDDDDDymMDDK..",
+       "..KBBlMBKyyKBmlBBK..",
+       "..KBBmMBKYyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ],
+      [
+       "....................",
+       ".....KKKKKKKKKK.....",
+       "....KmMDDDDDDmMK....",
+       "...KblMccbbbbmlbK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBBmMBBBBBBmMBBK..",
+       "..KDDmMaDDDDamMDDK..",
+       "..KDDmaYDDDDymMDDK..",
+       "..KBBlMBKyyKBmlBBK..",
+       "..KBBmMBKYyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ],
+      [
+       "....................",
+       ".....KKKKKKKKKK.....",
+       "....KmMDDDDDDmMK....",
+       "...KblMccbbbbmlbK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBBmMBBBBBBmMBBK..",
+       ".KKDDmMDDDDDDmMDDKK.",
+       "KyKDDmyaDDDYamMDDKaK",
+       ".KKBBlMBKyyKBmlBBKK.",
+       "..KBBmMBKWyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ],
+      [
+       "....................",
+       ".....KKKKKKKKKK.....",
+       "....KmMDDDDDDDMK....",
+       "...KblMccbbbbmlbK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBBmMBBBBBBmMBBK..",
+       "..KDDmMDDDDDDmMDDK..",
+       "..KDDmyDDDDDymMDDK..",
+       "..KBBlMBKyyKBmlBBK..",
+       "..KBBmMBKYyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ],
+      [
+       "....................",
+       ".....KKKKKKKKKK.....",
+       "....KmMDDDDDDmMK....",
+       "...KblMccbbbbmlbK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBBmMBBBBBBmMBBK..",
+       "..KDDmMaDDDDamMDDK..",
+       "..KDDmaYDDDDymMDDK..",
+       "..KBBlMBKyyKBmlBBK..",
+       "..KBBmMBKYyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ],
+      [
+       "....................",
+       ".....KKKKKKKKKK.....",
+       "....KmMDDDDDDmMK....",
+       "...KblMccbbbbmlbK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBBmMBBBBBBmMBBK..",
+       ".KKDDmMDDDDDDmMDDKK.",
+       "KyKDDmyaDDDYamMDDKaK",
+       ".KKBBlMBKyyKBmlBBKK.",
+       "..KBBmMBKWyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ]
+     ]
+    },
+    "open": {
+     "hold": 12,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       ".....KKKKKKKKKK.....",
+       "....KbbbbbbbbbbK....",
+       "...KDDDDDDDDDDDDK...",
+       "..KkkkkkkkkkkkkkkK..",
+       "..KDDDDDDDDDDDDYDK..",
+       "..KkkkkkkWFkykkkkK..",
+       "..KkkkkkaFYkkkkkkK..",
+       "..KkkkkkkykakkkkkK..",
+       "...KKKKKKKKKKKKKK...",
+       "..KbblMbKmmKbmMbbK..",
+       "..KBBmMBBKBBBmlBBK..",
+       "..KBBmMBBBBBBmMBBK..",
+       "...KBBBBBBBBBBBBK...",
+       "....KKKKKKKKKKKK....",
+       "....KK........KK....",
+       "...................."
+      ],
+      [
+       ".....KKKKKKKKKK.....",
+       "....KbbbbbbbbbbK....",
+       "...KDDDDDDDDDDDDK...",
+       "..KkkkkkkkkkkkkkkK..",
+       "..KDDDDDDDDDDDDDDK..",
+       "..KkkkkkkFFkakYkkK..",
+       "..KkkkkkyFYkkkkkkK..",
+       "..KkkkkkkykakkkkkK..",
+       "...KKKKKKKKKKKKKK...",
+       "..KbblMbKmmKbmMbbK..",
+       "..KBBmMBBKBBBmlBBK..",
+       "..KBBmMBBBBBBmMBBK..",
+       "...KBBBBBBBBBBBBK...",
+       "....KKKKKKKKKKKK....",
+       "....KK........KK....",
+       "...................."
+      ],
+      [
+       ".....KKKKKKKKKK.....",
+       "....KbbbbbbbbbbK....",
+       "...KDDDDDDDDDDDDK...",
+       "..KkkkkkkkkkkkkkkK..",
+       "..KDDDDDDDDDDYDDDK..",
+       "..KkkkkkkWFkykkkkK..",
+       "..KkkkkkaFYkkkkkkK..",
+       "..KkkkkkkykakkkkkK..",
+       "...KKKKKKKKKKKKKK...",
+       "..KbblMbKmmKbmMbbK..",
+       "..KBBmMBBKBBBmlBBK..",
+       "..KBBmMBBBBBBmMBBK..",
+       "...KBBBBBBBBBBBBK...",
+       "....KKKKKKKKKKKK....",
+       "....KK........KK....",
+       "...................."
+      ]
+     ]
+    },
+    "dim": {
+     "hold": 16,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "....................",
+       ".....KKKKKKKKKKK....",
+       "....KmMDDDDDDmMlK...",
+       "...KMlMccbbbbmlMK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBlmMBBBBBBmMBBK..",
+       "..KDMmMDDDDDDmMMDK..",
+       "..KDDmMDDDDDDmMDDK..",
+       "..KBBlMBKyyKBmlBBK..",
+       "..KBBmMBKmyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ],
+      [
+       "....................",
+       ".....KKKKKKKKKKK....",
+       "....KmMDDDDDDmMmK...",
+       "...KMlMccbbbbmlMK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBlmMBBBBBBmMBBK..",
+       "..KDMmMDDDDDDmMMDK..",
+       "..KDDmMDDDDDDmMDDK..",
+       "..KBBlMBKyyKBmlBBK..",
+       "..KBBmMBKmyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ],
+      [
+       "....................",
+       ".....KKKKKKKKKKK....",
+       "....KmMDDDDDDmMlK...",
+       "...KMlMccbbbbmlMK...",
+       "..KbbmMbbcbbbmMbbK..",
+       "..KBlmMBBBBBBmMBBK..",
+       "..KDMmMDDDDDDmMMDK..",
+       "..KDDmMDDDDDDmMDDK..",
+       "..KBBlMBKyyKBmlBBK..",
+       "..KBBmMBKmyKBmMBBK..",
+       "..KBBmMBKKyKBmMBBK..",
+       "..KBBmMBKKKKBmMBBK..",
+       "..KDDlMDDDDDDmlDDK..",
+       "...KbmMBBBBBBmMBK...",
+       "....KDKKKKKKKKDK....",
+       "....KDK......KDK...."
+      ]
+     ]
+    }
+   }
+  },
+  "door": {
+   "size": [
+    20,
+    32
+   ],
+   "anchor": [
+    -10,
+    -29
+   ],
+   "label_anchor": [
+    0,
+    -34
+   ],
+   "ground": 29,
+   "default_variant": "sealed",
+   "state_notes": "open:true=打开（暖光从门内溢出） open:false & available:true=带灯门（灯摆动） available:false=封板冷门",
+   "variants": {
+    "sealed": {
+     "hold": 12,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmzmMmmK......",
+       "......KmmzmMmK......",
+       "......KmMmMzmK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KPPPPPPPPPPPPPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPPPPPPPPPPPPPK..",
+       "..KPKbbbbbbbbbbKPK..",
+       "..KPKMlMBMBMBMBKPK..",
+       "..KPKBmDmBmDmBmKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKKKKKKKKKKKKPK..",
+       "..KPblbbbblbbblbPK..",
+       "..KPDDDDDDDDDDDDPK..",
+       "..KPKKKKKKKKKKKKPK..",
+       "..KPKBBDBBBDKlBKPK..",
+       "..KPKKKKKKKKKKKKPK..",
+       "..KPblbbbblbbblbPK..",
+       "..KmDDDDDDDDDDDDmK..",
+       "..KlKKKKKKKKKKKKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQQQQQQQQPPPPPPPK",
+       "KMMMMMMMMMMMMMMMMMMK",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "...KKKKKKKKKKKKKK..."
+      ],
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmmMmMmK......",
+       "......KmMzzzmK......",
+       "......KmmMmMmK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KPPPPPPPPPPPPPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPPPPPPPPPPPPPK..",
+       "..KPKbbbbbbbbbbKPK..",
+       "..KPKMBMBMBMBMBKPK..",
+       "..KPKBlDmBmDmBmKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKKKKKKKKKKKKPK..",
+       "..KPblbbbblbbblbPK..",
+       "..KPDDDDDDDDDDDDPK..",
+       "..KPKKKKKKKKKKKKPK..",
+       "..KPKBBDBBBDKlBKPK..",
+       "..KPKKKKKKKKKKKKPK..",
+       "..KPblbbbblbbblbPK..",
+       "..KmDDDDDDDDDDDDmK..",
+       "..KlKKKKKKKKKKKKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQQQQQQQQPPPPPPPK",
+       "KMMMMMMMMMMMMMMMMMMK",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "...KKKKKKKKKKKKKK..."
+      ],
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmMmMmmK......",
+       "......KmmzmMmK......",
+       "......KmMmzzmK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KPPPPPPPPPPPPPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPPPPPPPPPPPPPK..",
+       "..KPKbbbbbbbbbbKPK..",
+       "..KPKMBMBMBMBMBKPK..",
+       "..KPKBmDmBmDmBmKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKKKKKKKKKKKKPK..",
+       "..KPblbbbblbbblbPK..",
+       "..KPDDDDDDDDDDDDPK..",
+       "..KPKKKKKKKKKKKKPK..",
+       "..KPKBBDBBBDKlBKPK..",
+       "..KPKKKKKKKKKKKKPK..",
+       "..KPblbbbblbbblbPK..",
+       "..KmDDDDDDDDDDDDmK..",
+       "..KlKKKKKKKKKKKKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQQQQQQQQPPPPPPPK",
+       "KMMMMMMMMMMMMMMMMMMK",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "...KKKKKKKKKKKKKK..."
+      ],
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmmMmzmK......",
+       "......KmMmzzmK......",
+       "......KmmMmMmK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KPPPPPPPPPPPPPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPPPPPPPPPPPPPK..",
+       "..KPKbbbbbbbbbbKPK..",
+       "..KPKMBMBMBMBMBKPK..",
+       "..KPKBmDmBmDmBmKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKKlKKKKKKKKKPK..",
+       "..KPblbbbblbbblbPK..",
+       "..KPDDDDDDDDDDDDPK..",
+       "..KPKKKKKKKKKKKKPK..",
+       "..KPKBBDBBBDKlBKPK..",
+       "..KPKKKKKKKKKKKKPK..",
+       "..KPblbbbblbbblbPK..",
+       "..KmDDDDDDDDDDDDmK..",
+       "..KlKKKKKKKKKKKKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQQQQQQQQPPPPPPPK",
+       "KMMMMMMMMMMMMMMMMMMK",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "...KKKKKKKKKKKKKK..."
+      ]
+     ]
+    },
+    "lit": {
+     "hold": 7,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmaFYymK......",
+       "......KmyWFamK......",
+       "......KmaFYymK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KyPPyPPyPPyPPyPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPPaPPaPPaPPPPK..",
+       "..KPKbybybybybyKPK..",
+       "..KPKyBDBBBDBBaKPK..",
+       "..KPKaBDBBBDBByKPK..",
+       "..KmKylmmmlmmlaKmK..",
+       "..KlKaMMMMMMMMyKPK..",
+       "..KPKBBDYBBDBbBKPK..",
+       "..KPKBBDBbBDBBBKPK..",
+       "..KPKbBDBBBDmmKKPK..",
+       "..KPKBBDBBBDKlBKPK..",
+       "..KPKBBDbBBDBBBKPK..",
+       "..KPKBBDBBBDBBBKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKMMMMMMMMMMKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQQaQQaQQaPPaPPPK",
+       "KMMMyMyMyMyMyMyMMMMK",
+       ".KKKYKKKYKKKYKKKKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ],
+      [
+       ".......KKKK.........",
+       "......KmmmmK........",
+       ".....KlmmmmlK.......",
+       ".....KmyYFamK.......",
+       ".....KmaFWymK.......",
+       ".....KmyYFYmK.......",
+       ".....KmmmmmmK.......",
+       "...KKKKmlmmKKKKKK...",
+       "..KPPyPPyPPyPPyPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPaPPaPPaPPaPPK..",
+       "..KPKybybybybybKPK..",
+       "..KPKaBDBBBDBByKPK..",
+       "..KPKyBDBBBDBBaKPK..",
+       "..KmKalmmmlmmlyKmK..",
+       "..KlKyMMMMMMMMaKPK..",
+       "..KPKBBDBBBDBbBKPK..",
+       "..KPKBBDBYBDBBBKPK..",
+       "..KPKbBDBBBDmmKKPK..",
+       "..KPKBBDBBBDKlBKPK..",
+       "..KPKBBDbBBDBBBKPK..",
+       "..KPKBBDBBBDBBBKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKMMMMMMMMMMKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQaQQaQQaPPaPPPPK",
+       "KMMMMyMyMyMyMyMyMMMK",
+       ".KKKKKKYKKKYKKKYKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ],
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmaFaymK......",
+       "......KmyYWYmK......",
+       "......KmYFFymK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KPyPPyPPyPPyPPyK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPPPaPPaPPaPPPK..",
+       "..KPKbybybybybyKPK..",
+       "..KPKyBDBBBDBBaKPK..",
+       "..KPKaBDBBBDBByKPK..",
+       "..KmKylmmmlmmlaKmK..",
+       "..KlKaMMMMMMMMyKPK..",
+       "..KPKBBDBBBDBbBKPK..",
+       "..KPKBBDBbBDBBBKPK..",
+       "..KPKbBDBBYDmmKKPK..",
+       "..KPKBBDBBBDKlBKPK..",
+       "..KPKBBDbBBDBBBKPK..",
+       "..KPKBBDBBBDBBBKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKMMMMMMMMMMKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQaQQaQQaQPaPPPPPK",
+       "KMMMyMyMyMyMyMyMMMMK",
+       ".KKKKKYKKKYKKKYKKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ],
+      [
+       ".........KKKK.......",
+       "........KmmmmK......",
+       ".......KlmmmmlK.....",
+       ".......KmyFYYmK.....",
+       ".......KmYWFymK.....",
+       ".......KmyFYamK.....",
+       ".......KmmmmmmK.....",
+       "...KKKKKKmlmmKKKK...",
+       "..KyPPyPPyPPyPPyPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPPaPPaPPaPPPPK..",
+       "..KPKybybybybybKPK..",
+       "..KPKaBDBBBDBByKPK..",
+       "..KPKyBDBBBDBBaKPK..",
+       "..KmKalmmmlmmlyKmK..",
+       "..KlKyMMMMMMMMaKPK..",
+       "..KPKBBDBBBDBbBKPK..",
+       "..KPKBBDBbBDBBBKPK..",
+       "..KPKbBDBBBDmmKKPK..",
+       "..KPKBBDYBBDKlBKPK..",
+       "..KPKBBDbBBDBBBKPK..",
+       "..KPKBBDBBBDBBBKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKMMMMMMMMMMKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQQaQQaQQaPPaPPPK",
+       "KMMMMyMyMyMyMyMyMMMK",
+       ".KKKKYKKKYKKKYKKKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ],
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmYYFymK......",
+       "......KmyFWamK......",
+       "......KmaYFymK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KPPyPPyPPyPPyPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPaPPaPPaPPaPPK..",
+       "..KPKbybybybybyKPK..",
+       "..KPKyBDBBBDBBaKPK..",
+       "..KPKaBDBBBDBByKPK..",
+       "..KmKylmmmlmmlaKmK..",
+       "..KlKaMMMMMMMMyKPK..",
+       "..KPKBBDBYBDBbBKPK..",
+       "..KPKBBDBbBDBBBKPK..",
+       "..KPKbBDBBBDmmKKPK..",
+       "..KPKBBDBBBDKlBKPK..",
+       "..KPKBBDbBBDBBBKPK..",
+       "..KPKBBDBBBDBBBKPK..",
+       "..KmKmlmmmlmmlmKmK..",
+       "..KlKMMMMMMMMMMKPK..",
+       "..KPKBBDBBBDBBbKPK..",
+       "..KPKBBDBBbDBBBKPK..",
+       "..KPKBbDBBBDBBBKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQaQQaQQaPPaPPPPK",
+       "KMMMyMyMyMyMyMyMMMMK",
+       ".KKKYKKKYKKKYKKKKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ]
+     ]
+    },
+    "open": {
+     "hold": 9,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmaFYymK......",
+       "......KmyWFamK......",
+       "......KmaFYymK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KPPPPPPPPPPPPPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPlPPPYPPPPPPPK..",
+       "..KPKmkkakakkkkKPK..",
+       "..KmKlkkkYakkkkKMK..",
+       "..KPKmkkkakkkkkKPK..",
+       "..KPKlkkaYkkkkkKPK..",
+       "..KPKkkakkakkkkKPK..",
+       "..KmKkkkkYkkkkkKMK..",
+       "..KPKkkkykkykkkKPK..",
+       "..KPKkkYkYykkkkKPK..",
+       "..KPKkkkkykkkkkKPK..",
+       "..KmKkMkykMykkMKMK..",
+       "..KPKkkykkykkkkKPK..",
+       "..KPKkykkykkyakKPK..",
+       "..KPKkkkkkkkkkkKPK..",
+       "..KmKkMkkkMkkkMKMK..",
+       "..KPKkkkkkkkkkkKPK..",
+       "..KPKkkkkkkkkkkKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQaQQaQQaPPaPPPPK",
+       "KMMMMyMyMyMyMyMyMMMK",
+       ".KKKKKKYKKKYKKKYKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ],
+      [
+       ".........KKKK.......",
+       "........KmmmmK......",
+       ".......KlmmmmlK.....",
+       ".......KmyYFamK.....",
+       ".......KmaFWymK.....",
+       ".......KmyYFYmK.....",
+       ".......KmmmmmmK.....",
+       "...KKKKKKmlmmKKKK...",
+       "..KPPPPPPPPPPPPPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPlPPaYPPPPPPPK..",
+       "..KPKmkkkkakkkkKPK..",
+       "..KmKlkkkYkkkkkKMK..",
+       "..KPKmkkakkkkkkKPK..",
+       "..KPKlkkkYakkkkKPK..",
+       "..KPKkMkkaMkkkMKPK..",
+       "..KmKkkkyYkykkkKMK..",
+       "..KPKkkykkykkkkKPK..",
+       "..KPKkkkkYkkkkkKPK..",
+       "..KPKkkkYkkykkkKPK..",
+       "..KmKkkykkykkkkKMK..",
+       "..KPKkykkykkykkKPK..",
+       "..KPKkkkykkykkkKPK..",
+       "..KPKkkkkkkkakkKPK..",
+       "..KmKkkkkkkkkkkKMK..",
+       "..KPKkkkkkkkkkkKPK..",
+       "..KPKkkkkkkkkkkKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQaQQaQQaQPaPPPPPK",
+       "KMMMyMyMyMyMyMyMMMMK",
+       ".KKKKKYKKKYKKKYKKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ],
+      [
+       "........KKKK........",
+       ".......KmmmmK.......",
+       "......KlmmmmlK......",
+       "......KmaFaymK......",
+       "......KmyYWYmK......",
+       "......KmYFFymK......",
+       "......KmmmmmmK......",
+       "...KKKKKmlmmKKKKK...",
+       "..KPPPPPPPPPPPPPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPlPPPYaPPPPPPK..",
+       "..KPKmkkkaakkkkKPK..",
+       "..KmKlkkaYkkkkkKMK..",
+       "..KPKmkkkkakkkkKPK..",
+       "..KPKlkkkYkkkkkKPK..",
+       "..KPKkkkakkakkkKPK..",
+       "..KmKkkykYykkkkKMK..",
+       "..KPKkkkkykkkkkKPK..",
+       "..KPKkkkyYkykkkKPK..",
+       "..KPKkkykkykkkkKPK..",
+       "..KmKkykkYMkykMKMK..",
+       "..KPKkkkykkykkkKPK..",
+       "..KPKkkykkykkkkKPK..",
+       "..KPKkkkkkkkkkkKPK..",
+       "..KmKkMkkkMakkMKMK..",
+       "..KPKkkkkkkkkkkKPK..",
+       "..KPKkkkkkkkkkkKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQQaQQaQQaPPaPPPK",
+       "KMMMMyMyMyMyMyMyMMMK",
+       ".KKKKYKKKYKKKYKKKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ],
+      [
+       ".......KKKK.........",
+       "......KmmmmK........",
+       ".....KlmmmmlK.......",
+       ".....KmyFYYmK.......",
+       ".....KmYWFymK.......",
+       ".....KmyFYamK.......",
+       ".....KmmmmmmK.......",
+       "...KKKKmlmmKKKKKK...",
+       "..KPPPPPPPPPPPPPPK..",
+       ".KQPMPPPPPMPPPPPPQK.",
+       "..KPPlPPPYPPPPPPPK..",
+       "..KPKmkkakakkkkKPK..",
+       "..KmKlkkkYakkkkKMK..",
+       "..KPKmkkkakkkkkKPK..",
+       "..KPKlkkaYkkkkkKPK..",
+       "..KPKkMakkakkkMKPK..",
+       "..KmKkkkkYkkkkkKMK..",
+       "..KPKkkkykkykkkKPK..",
+       "..KPKkkykYykkkkKPK..",
+       "..KPKkkkkykkkkkKPK..",
+       "..KmKkkkykkykkkKMK..",
+       "..KPKkkykkYkkkkKPK..",
+       "..KPKkykkykkyakKPK..",
+       "..KPKkkkkkkkkkkKPK..",
+       "..KmKkkkkkkkkkkKMK..",
+       "..KPKkkkkkkkkkkKPK..",
+       "..KPKkkkkkkkkkkKPK..",
+       ".KKKKKKKKKKKKKKKKKK.",
+       "KPQQQaQQaQQaPPaPPPPK",
+       "KMMMyMyMyMyMyMyMMMMK",
+       ".KKKYKKKYKKKYKKKKKK.",
+       "...KKKKKKyKKKKKKK..."
+      ]
+     ]
+    }
+   }
+  },
+  "pipe": {
+   "size": [
+    34,
+    18
+   ],
+   "anchor": [
+    -17,
+    -11
+   ],
+   "label_anchor": [
+    0,
+    -16
+   ],
+   "ground": 11,
+   "default_variant": "idle",
+   "state_notes": "scanned:true=水位刻痕被高亮（Q 观察后）；drip 动画持续",
+   "variants": {
+    "idle": {
+     "hold": 8,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKqQqQqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmQmmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmKKKmKmQKmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMMKKKMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMMKKKKQKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "................KZK...........KHK.",
+       ".................K.............K..",
+       "..................................",
+       "..................................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLZzLLqLLqLLK.........",
+       "...........KKqKKKKqKKKKK..........",
+       ".............K....K..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKqQqQqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmQmmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmzKKmKmQKmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMMKKKMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMMKKKKQKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       ".................K............KHK.",
+       "................KZK............K..",
+       "................KzK...............",
+       ".................K................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLLzLLqLLqLLK.........",
+       "...........KKqKKKKqKKKKK..........",
+       ".............K....K..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKqQqQqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmQmmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmKKKmKmQKmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMMKKKMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMMKKKKQKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "..............................KHK.",
+       ".................K.............K..",
+       "................KZK...............",
+       ".................K................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLZzLLqLLqLLK.........",
+       "...........KKqKKKKqKKKKK..........",
+       ".............K....K..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKqQqQqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmQmmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmKKKmKmQKmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMMKKKMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMMKKKKQKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "..............................KHK.",
+       "...............................K..",
+       "..................................",
+       "..................................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLLzZLzqLqLLK.........",
+       "...........KKqKKKZqKKKKK..........",
+       ".............K...KK..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKqQqQqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmQmmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmzKKmKmQKmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMMKKKMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMMKKKKQKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "..............................KHK.",
+       "...............................K..",
+       "..................................",
+       "..................................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLZzqLzLLqLLK.........",
+       "...........KKqKKKZqKKKKK..........",
+       ".............K...KK..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKqQqQqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmQmmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmKKKmKmQKmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMMKKKMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMMKKKKQKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "..............................KHK.",
+       "...............................K..",
+       "..................................",
+       "..................................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLLzLLqLLqLLK.........",
+       "...........KKqKKKKqKKKKK..........",
+       ".............K....K..............."
+      ]
+     ]
+    },
+    "scanned": {
+     "hold": 9,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKZyqyqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmymmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmaKymKmyZmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMZaKyMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMZaKaKyKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "..............................KHK.",
+       ".................K.............K..",
+       "................KZK...............",
+       ".................K................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLZzLLqLLqLLK.........",
+       "...........KKqKKKKqKKKKK..........",
+       ".............K....K..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKzYqYqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmYmmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmaKymKmYzmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMzaKyMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMzaKaKyKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "..............................KHK.",
+       "...............................K..",
+       "..................................",
+       "..................................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLZzZLzqLqLLK.........",
+       "...........KKqKKKZqKKKKK..........",
+       ".............K...KK..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKZyqyqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmymmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmaKymKmyZmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMZaKyMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMZaKaKyKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "..............................KHK.",
+       "...............................K..",
+       "..................................",
+       "..................................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLZzqLzLLqLLK.........",
+       "...........KKqKKKZqKKKKK..........",
+       ".............K...KK..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKzYqYqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmYmmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmaKymKmYzmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMzaKyMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMzaKaKyKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "..............................KHK.",
+       "...............................K..",
+       "..................................",
+       "..................................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLZzLLqLLqLLK.........",
+       "...........KKqKKKKqKKKKK..........",
+       ".............K....K..............."
+      ],
+      [
+       "...K......KmK.....................",
+       "..KIKKK.KKmlmK.KKK........KKK.....",
+       "...KKmKKGHKmKKKKmKKKKKKKKKKmKKK...",
+       "..KqKmKqqGqqqqqKmKqqqqqqqqKmKqqK..",
+       ".KllKmKqqqqqqqqKmKZyqyqqqqKmKlllK.",
+       ".KmmKlKmmmmmmmmKlKmKmKmymmKlKmmmK.",
+       ".KmmKmKmmmmmmmmKmKmaKymKmyZmKmmmK.",
+       "..KMKmKMMMMMMMMKmKMMZaKyMKKmKMMK..",
+       "...KKmKMMMMMMMMKmKMMMMZaKaKyKMKK..",
+       "....KKKKKKKKKKKKKKKKKKKKKKKKKKKGK.",
+       "................KZK...........KHK.",
+       ".................K.............K..",
+       "..................................",
+       "..................................",
+       "...........KKKKKKKKKKKKK..........",
+       "..........KLqLZzLLqLLqLLK.........",
+       "...........KKqKKKKqKKKKK..........",
+       ".............K....K..............."
+      ]
+     ]
+    }
+   }
+  },
+  "ring": {
+   "size": [
+    18,
+    18
+   ],
+   "anchor": [
+    -9,
+    -13
+   ],
+   "label_anchor": [
+    0,
+    -18
+   ],
+   "ground": 13,
+   "default_variant": "idle",
+   "state_notes": "complete:true=初燃完成（更大火焰+浮尘） complete:false=待点燃（弱余烬）",
+   "variants": {
+    "idle": {
+     "hold": 9,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "..................",
+       "........K.........",
+       ".......KaK........",
+       ".......KYFK.......",
+       ".......KFWK.......",
+       "......KYWFKK......",
+       "....KKQQFYwwKK....",
+       "...KQQKyFayKwwK...",
+       "..KQQKKddddKKwwK..",
+       ".KPPKddkdkkddKPPK.",
+       "KYyPKdkkkkkkdKyPYK",
+       ".KPPKddkkkkddKPPK.",
+       "..KPPKKddddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKyKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "........KK........",
+       ".......KFaK.......",
+       ".......KWFK.......",
+       ".......KWYK.......",
+       "......KKFWKK......",
+       "....KKQQYFwwKK....",
+       "...KQQKyFayKwwK...",
+       "..KQQKKddddKKwwK..",
+       ".KPPKadkkkkddKPPK.",
+       "KYyPKdkkkkkkdKyPYK",
+       ".KPPKddkkkkadKPPK.",
+       "..KPPKKddddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKyKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "..................",
+       "........KK........",
+       ".......KYaK.......",
+       ".......KWFK.......",
+       "......KKFWKK......",
+       "....KKQQYFwwKK....",
+       "...KQQKyaYyKwwK...",
+       "..KQQKKddddKKwwK..",
+       ".KPPKddkakkdaKPPK.",
+       "KYyPKdkkkkkkdKyPYK",
+       ".KPPKdakkkkddKPPK.",
+       "..KPPKKddddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKyKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "........K.........",
+       ".......KaK........",
+       ".......KYFK.......",
+       ".......KFWK.......",
+       "......KYWFKK......",
+       "....KKQQFYwwKK....",
+       "...KQQKyFayKwwK...",
+       "..KQQKKddddKKwwK..",
+       ".KPPKddkkkkddKPPK.",
+       "KYyPKdkkkkkkdKyPYK",
+       ".KPPKddkkkkddKPPK.",
+       "..KPPKKddddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKyKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "........KK........",
+       ".......KFaK.......",
+       ".......KWFK.......",
+       ".......KWYK.......",
+       "......KKFWKK......",
+       "....KKQQYFwwKK....",
+       "...KQQKyFayKwwK...",
+       "..KQQKKddddKKwwK..",
+       ".KPPKddkakkdaKPPK.",
+       "KYyPKdkkkkkkdKyPYK",
+       ".KPPKdakkkkddKPPK.",
+       "..KPPKKddddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKyKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "..................",
+       "........KK........",
+       ".......KYaK.......",
+       ".......KWFK.......",
+       "......KKFWKK......",
+       "....KKQQYFwwKK....",
+       "...KQQKyaYyKwwK...",
+       "..KQQKKddddKKwwK..",
+       ".KPPKadkkkkddKPPK.",
+       "KYyPKdkkkkkkdKyPYK",
+       ".KPPKddkkkkadKPPK.",
+       "..KPPKKddddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKyKKK......",
+       ".......KYK........",
+       "........K........."
+      ]
+     ]
+    },
+    "complete": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [
+      2,
+      3
+     ],
+     "frames": [
+      [
+       "..................",
+       "........K.........",
+       ".......KYK.K......",
+       "......KKYFKFK.....",
+       ".....KYKYWKK......",
+       "......KYWFKKK.....",
+       "....KKQQFYYwyK....",
+       "...KQQKaFaKKwwK...",
+       "..KQQYKddddKKwwK..",
+       ".KPPKadkkkkdyKPPK.",
+       "KYYPKdkkkkkkdKYPYK",
+       ".KPPKdykkkkadKPPK.",
+       "..KPPKKdyddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKYKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "........KK........",
+       "......KKYaK.......",
+       ".....KYKWFKK......",
+       "......KKYYKFK.....",
+       "......KYFWKK......",
+       "....KKQQYFYwKK....",
+       "...KQQKKFaKKywK...",
+       "..KQQKKddddKKwwK..",
+       ".KPPKYdkkkkdaKPPK.",
+       "KYYPKdkkkkkkdKYPYK",
+       ".KPPKdakkkkydKPPK.",
+       "..KPPKKdaddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKYKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "........K.........",
+       ".......KYK........",
+       "......KKYaK.......",
+       ".....KYKYFKK......",
+       "......KYFWKFK.....",
+       "....KKQQYFYwyK....",
+       "...KQQKKaYKKwwK...",
+       "..KQQYKddddKKwwK..",
+       ".KPPKadkkkkdyKPPK.",
+       "KYYPKdkkkkkkdKYPYK",
+       ".KPPKdykkkkadKPPK.",
+       "..KPPKKdyddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKYKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "........K.........",
+       "......KKYK.K......",
+       ".....KYKYFKFK.....",
+       "......KKYWKK......",
+       "......KYWFKK......",
+       "....KKQQFYYwKK....",
+       "...KQQKaFaKKywK...",
+       "..KQQKKddddKKwwK..",
+       ".KPPKYdkkkkdaKPPK.",
+       "KYYPKdkkkkkkdKYPYK",
+       ".KPPKdakkkkydKPPK.",
+       "..KPPKKdaddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKYKKK......",
+       ".......KYK........",
+       "........K........."
+      ],
+      [
+       "..................",
+       "........KK........",
+       ".......KYaK.......",
+       "......KKWFKK......",
+       ".....KYKYYKFK.....",
+       "......KYFWKKK.....",
+       "....KKQQYFYwyK....",
+       "...KQQKKFaKKwwK...",
+       "..KQQYKddddKKwwK..",
+       ".KPPKadkkkkdyKPPK.",
+       "KYYPKdkkkkkkdKYPYK",
+       ".KPPKdykkkkadKPPK.",
+       "..KPPKKdyddKKPPK..",
+       "...KMMKKKKKKMMK...",
+       "....KKMMMMMMKK....",
+       "......KKYKKK......",
+       ".......KYK........",
+       "........K........."
+      ]
+     ]
+    }
+   }
+  },
+  "guide": {
+   "size": [
+    16,
+    26
+   ],
+   "anchor": [
+    -8,
+    -23
+   ],
+   "label_anchor": [
+    0,
+    -28
+   ],
+   "ground": 23,
+   "default_variant": "d11",
+   "state_notes": "dir:0下/1左/2右/3上（world_art.row 约定）；correct:true=暖金束，false=冷灰束；available:false 不画光束",
+   "variants": {
+    "d0c": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [
+      2
+     ],
+     "frames": [
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymYYmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzZZzQlK...",
+       "...KlQZZZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymYYmyK....",
+       "....KllmmlmK....",
+       "...KylKZZKlYK...",
+       "...KlQzWqzQlK...",
+       "...KlQZzZZQlK...",
+       "...KYlKzzKlyK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymYYmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzZZZQlK...",
+       "...KlQZWZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymYYmyK....",
+       "....KllmmlmK....",
+       "...KylKZZKlYK...",
+       "...KlQzZZzQlK...",
+       "...KlQZZZZQlK...",
+       "...KYlKzzKlyK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymYYmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzWqzQlK...",
+       "...KlQZzZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    },
+    "d0w": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmqqmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzZZzQlK...",
+       "...KlQZZZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmqqmqK....",
+       "....KllmmlmK....",
+       "...KqlKZZKlzK...",
+       "...KlQzWqzQlK...",
+       "...KlQZzZZQlK...",
+       "...KzlKzzKlqK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmqqmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzZZZQlK...",
+       "...KlQZWZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmqqmqK....",
+       "....KllmmlmK....",
+       "...KqlKZZKlzK...",
+       "...KlQzZZzQlK...",
+       "...KlQZZZZQlK...",
+       "...KzlKzzKlqK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmqqmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzWqzQlK...",
+       "...KlQZzZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    },
+    "d1c": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [
+      2
+     ],
+     "frames": [
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzZZzQlYK..",
+       "...KlQZZZZQlYK..",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KllmmlmK....",
+       "...KylKZZKlYK...",
+       "...KlQzWqzQlYK..",
+       "...KlQZzZZQlYK..",
+       "...KYlKzzKlyK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzZZZQlYK..",
+       "...KlQZWZZQlYK..",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KllmmlmK....",
+       "...KylKZZKlYK...",
+       "...KlQzZZzQlYK..",
+       "...KlQZZZZQlYK..",
+       "...KYlKzzKlyK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzWqzQlYK..",
+       "...KlQZzZZQlYK..",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    },
+    "d1w": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzZZzQlqK..",
+       "...KlQZZZZQlqK..",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KqlKZZKlzK...",
+       "...KlQzWqzQlqK..",
+       "...KlQZzZZQlqK..",
+       "...KzlKzzKlqK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzZZZQlqK..",
+       "...KlQZWZZQlqK..",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KqlKZZKlzK...",
+       "...KlQzZZzQlqK..",
+       "...KlQZZZZQlqK..",
+       "...KzlKzzKlqK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzWqzQlqK..",
+       "...KlQZzZZQlqK..",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    },
+    "d2c": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [
+      2
+     ],
+     "frames": [
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzZZzQlK...",
+       "...KlQZZZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmYYmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KllmmlmK....",
+       "...KylKZZKlYK...",
+       "...KlQzWqzQlK...",
+       "...KlQZzZZQlK...",
+       "...KYlKzzKlyK...",
+       "....KmmmmmmK....",
+       ".....KmYYmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzZZZQlK...",
+       "...KlQZWZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmYYmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KllmmlmK....",
+       "...KylKZZKlYK...",
+       "...KlQzZZzQlK...",
+       "...KlQZZZZQlK...",
+       "...KYlKzzKlyK...",
+       "....KmmmmmmK....",
+       ".....KmYYmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "...KlQzWqzQlK...",
+       "...KlQZzZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmYYmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    },
+    "d2w": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzZZzQlK...",
+       "...KlQZZZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmqqmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KqlKZZKlzK...",
+       "...KlQzWqzQlK...",
+       "...KlQZzZZQlK...",
+       "...KzlKzzKlqK...",
+       "....KmmmmmmK....",
+       ".....KmqqmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzZZZQlK...",
+       "...KlQZWZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmqqmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KqlKZZKlzK...",
+       "...KlQzZZzQlK...",
+       "...KlQZZZZQlK...",
+       "...KzlKzzKlqK...",
+       "....KmmmmmmK....",
+       ".....KmqqmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "...KlQzWqzQlK...",
+       "...KlQZzZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmqqmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    },
+    "d3c": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [
+      2
+     ],
+     "frames": [
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "..KYlQzZZzQlK...",
+       "..KYlQZZZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KllmmlmK....",
+       "...KylKZZKlYK...",
+       "..KYlQzWqzQlK...",
+       "..KYlQZzZZQlK...",
+       "...KYlKzzKlyK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "..KYlQzZZZQlK...",
+       "..KYlQZWZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KllmmlmK....",
+       "...KylKZZKlYK...",
+       "..KYlQzZZzQlK...",
+       "..KYlQZZZZQlK...",
+       "...KYlKzzKlyK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KymmmmyK....",
+       "....KYlmmlmK....",
+       "...KYlKZZKlyK...",
+       "..KYlQzWqzQlK...",
+       "..KYlQZzZZQlK...",
+       "...KylKzzKlYK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQYYQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    },
+    "d3w": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "..KqlQzZZzQlK...",
+       "..KqlQZZZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KqlKZZKlzK...",
+       "..KqlQzWqzQlK...",
+       "..KqlQZzZZQlK...",
+       "...KzlKzzKlqK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "..KqlQzZZZQlK...",
+       "..KqlQZWZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KqlKZZKlzK...",
+       "..KqlQzZZzQlK...",
+       "..KqlQZZZZQlK...",
+       "...KzlKzzKlqK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ],
+      [
+       ".......KK.......",
+       ".....KKmmKK.....",
+       "....KqmmmmqK....",
+       "....KllmmlmK....",
+       "...KzlKZZKlqK...",
+       "..KqlQzWqzQlK...",
+       "..KqlQZzZZQlK...",
+       "...KqlKzzKlzK...",
+       "....KmmmmmmK....",
+       ".....KmmmmK.....",
+       "......KKKK......",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KmmmmK.....",
+       "......KlmK......",
+       "......KlmK......",
+       ".....KKlmKK.....",
+       "...KKmmmmmmKK...",
+       "..KPPQQqQQQPPK..",
+       ".KHPPPPPMMMMGMK.",
+       ".KKKKKKKKKKKKKK."
+      ]
+     ]
+    }
+   }
+  },
+  "guide_target": {
+   "size": [
+    18,
+    18
+   ],
+   "anchor": [
+    -9,
+    -12
+   ],
+   "label_anchor": [
+    0,
+    -17
+   ],
+   "ground": 12,
+   "default_variant": "off",
+   "state_notes": "correct:true=暖金目标亮起；false=冷色待机",
+   "variants": {
+    "on": {
+     "hold": 6,
+     "rest_frame": 0,
+     "flash_frames": [
+      1
+     ],
+     "frames": [
+      [
+       "........K.........",
+       ".......KwK........",
+       "........K.........",
+       "..................",
+       "..................",
+       "..................",
+       ".....KKKKKKKK.....",
+       "...KKQQQYKQQQKK...",
+       "..KaQKKyYKaKKQQK..",
+       ".KKQKKyKKKKaKKQKK.",
+       "KwYPK.KKWWKK.KYPwK",
+       ".KPPK..KFYK..KPPK.",
+       "..KPK.KyKKaK.KPyK.",
+       "..KPPKKKyKKKKPPK..",
+       "...KKPPPYKPPPKK...",
+       ".....KKKKKKKK.....",
+       "........K.........",
+       ".......KwK........"
+      ],
+      [
+       "........K.........",
+       ".......KwK........",
+       "........K.........",
+       "..................",
+       "..................",
+       "..................",
+       ".....KKKKKKKK.....",
+       "...KKQQQYKQQQKK...",
+       "..KQQKKaKKyKKQQK..",
+       ".KKaKKaKKKKyKKQKK.",
+       "KwYPK.KKWWKK.KYPwK",
+       ".KPPK..KFYK..KPyK.",
+       "..KPK.KaKKyK.KPK..",
+       "..KPPKKKaKKKKPPK..",
+       "...KKPPPYKPPPKK...",
+       ".....KKKKKKKK.....",
+       "........K.........",
+       ".......KwK........"
+      ],
+      [
+       "........K.........",
+       ".......KwK........",
+       "........K.........",
+       "..................",
+       "..................",
+       "..................",
+       ".....KKKKKKKK.....",
+       "...KKQQQYKQQQKK...",
+       "..KQQKKyYKaKKQQK..",
+       ".KKQKKyKKKKaKKQKK.",
+       "KwYaK.KKWWKK.KYPwK",
+       ".KPPK..KFYK..KPPK.",
+       "..KPK.KyKKaK.KPyK.",
+       "..KPPKKKyKKKKPPK..",
+       "...KKPPPYKPPPKK...",
+       ".....KKKKKKKK.....",
+       "........K.........",
+       ".......KwK........"
+      ],
+      [
+       "........K.........",
+       ".......KwK........",
+       "........K.........",
+       "..................",
+       "..................",
+       "..................",
+       ".....KKKKKKKK.....",
+       "...KKQQQYKQQQKK...",
+       "..KaQKKaKKyKKQQK..",
+       ".KKQKKaKKKKyKKQKK.",
+       "KwYPK.KKWWKK.KYPwK",
+       ".KPPK..KFYK..KPyK.",
+       "..KPK.KaKKyK.KPK..",
+       "..KPPKKKaKKKKPPK..",
+       "...KKPPPYKPPPKK...",
+       ".....KKKKKKKK.....",
+       "........K.........",
+       ".......KwK........"
+      ]
+     ]
+    },
+    "off": {
+     "hold": 10,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "........K.........",
+       ".......KwK........",
+       "........K.........",
+       "..................",
+       "..................",
+       "..................",
+       ".....KKKKKKKK.....",
+       "...KKQQQzKQQQKK...",
+       "..KQQKKKK.KKKQQK..",
+       ".KKQKKzKKK...KQKK.",
+       "KwzPK.KKqwK.KKzPwK",
+       ".KPPK..KzqKKqKPPK.",
+       "..KPK...KK..KKPK..",
+       "..KPPKKKK.KKKPPK..",
+       "...KKPPPzKPPPKK...",
+       ".....KKKKKKKK.....",
+       "........K.........",
+       ".......KwK........"
+      ],
+      [
+       "........K.........",
+       ".......KwK........",
+       "........K.........",
+       "..................",
+       "..................",
+       "..................",
+       ".....KKKKKKKK.....",
+       "...KKQQQzKQQQKK...",
+       "..KQQKKKK.KKKQQK..",
+       ".KKQK.KzKK...KQKK.",
+       "KwzPK..KqwK..KzPwK",
+       ".KPPK..KzqK.KKPPK.",
+       "..KPK...KK.KqKPK..",
+       "..KPPKKKK.KKKPPK..",
+       "...KKPPPzKPPPKK...",
+       ".....KKKKKKKK.....",
+       "........K.........",
+       ".......KwK........"
+      ],
+      [
+       "........K.........",
+       ".......KwK........",
+       "........K.........",
+       "..................",
+       "..................",
+       "..................",
+       ".....KKKKKKKK.....",
+       "...KKQQQzKQQQKK...",
+       "..KQQKKKK.KKKQQK..",
+       ".KKQK..KzK...KQKK.",
+       "KwzPK..KqwK.KKzPwK",
+       ".KPPK..KzqKKqKPPK.",
+       "..KPK...KK..KKPK..",
+       "..KPPKKKK.KKKPPK..",
+       "...KKPPPzKPPPKK...",
+       ".....KKKKKKKK.....",
+       "........K.........",
+       ".......KwK........"
+      ],
+      [
+       "........K.........",
+       ".......KwK........",
+       "........K.........",
+       "..................",
+       "..................",
+       "..................",
+       ".....KKKKKKKK.....",
+       "...KKQQQzKQQQKK...",
+       "..KQQKKKKKKKKQQK..",
+       ".KKQK...KzK..KQKK.",
+       "KwzPK..KqwK..KzPwK",
+       ".KPPK..KzqK.KKPPK.",
+       "..KPK...KK.KqKPK..",
+       "..KPPKKKK.KKKPPK..",
+       "...KKPPPzKPPPKK...",
+       ".....KKKKKKKK.....",
+       "........K.........",
+       ".......KwK........"
+      ]
+     ]
+    }
+   }
+  },
+  "mine_door": {
+   "size": [
+    22,
+    34
+   ],
+   "anchor": [
+    -11,
+    -31
+   ],
+   "label_anchor": [
+    0,
+    -36
+   ],
+   "ground": 31,
+   "default_variant": "sealed",
+   "state_notes": "open:true=打开；available:false=锁链封闭；scanned:true=扫描标记（仅 sealed 时）",
+   "variants": {
+    "sealed": {
+     "hold": 11,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmZmmKMMMKmMMK",
+       "KMMmMMMMKmMMmKMMMmmMMK",
+       "KMKMMMMMKmMmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKZmBzBBBBBBBBBzKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmmmlmmmmlmmlKmmK",
+       "KmKKKKKKlKKKKKKKKKlKmK",
+       "KMKKBDBBDmZDBDBBDmKKmK",
+       "KMKKBBBBBBlmBBBBlBKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRRDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKKKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBKDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmMmmKMMMKmMMK",
+       "KMMmMMMMKmMzmKMMMmmMMK",
+       "KMKMMMMMKmMmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKzmBBBBBBBBBBBZKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmzmlmmmmlmmlKmmK",
+       "KmKKKKKKlKKKKKKKKKlKmK",
+       "KMKKBDBBDmzDBDBBDmKKmK",
+       "KMKKBBBBBBlmBBBBlBKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRRDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKKKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBKDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmMmmKMMMKmMMK",
+       "KMMmMMMMKmMMmKMMMmmMMK",
+       "KMKMMMMMKmZmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKZmBBBBBBBBBBBzKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmmmlmmmmlmmlKmmK",
+       "KmKKKKKKlKKKKKKKKKlKmK",
+       "KMKKBDBBDmZDBDBBDmKKmK",
+       "KMKKBBBzBBlmBBBBlBKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRRDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKKKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBKDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmMzmKMMMKmMMK",
+       "KMMmMMMMKmMMmKMMMmmMMK",
+       "KMKMMMMMKmMmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKzmBBBBBBBBBBBZKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmmmlmmmmlmmlKmmK",
+       "KmKKKKKKlKKKKKKKKKlKmK",
+       "KMKKBDBBDmzDBDBBDmKKmK",
+       "KMKKBBBBBBlmBBBBlBKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRzDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKKKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBKDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmMmmKMMMKmMMK",
+       "KMMmMMMMKmZMmKMMMmmMMK",
+       "KMKMMMMMKmMmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKZmBBBBBBBBBBBzKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmmmlmmmmlmmlKmmK",
+       "KmKKKKKKlKKKKKKKKKlKmK",
+       "KMKKBDBBDmZDBDBBDmKKmK",
+       "KMKKBBBBBBlmBBBBlBKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRRDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKzKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBKDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ]
+     ]
+    },
+    "sealed_scan": {
+     "hold": 8,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmZmmKMMMKmMMK",
+       "KMMmMMMMKmMMmKMMMmmMMK",
+       "KMKMMMMMKmMmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKzKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKZmBzBBBBBBBBBzKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmmmlmmmmlmmlKmmK",
+       "KmKKKZKKlKKKKKKKzKlKmK",
+       "KMKKBDBBDmZDBDBBDmKKmK",
+       "KMKKBBzBBzlmzBBzlBKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRRDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKKKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBzDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmMmmKMMMKmMMK",
+       "KMMmMMMMKmMzmKMMMmmMMK",
+       "KMKMMMMMKmMmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKzKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKzmBBBBBBBBBBBZKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmzmlmmmmlmmlKmmK",
+       "KmKKKzKKlKKKKKKKZKlKmK",
+       "KMKKBDBBDmzDBDBBDmKKmK",
+       "KMKKBzBBzBlzBBzBlzKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRRDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKKKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBZDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmMmmKMMMKmMMK",
+       "KMMmMMMMKmMMmKMMMmmMMK",
+       "KMKMMMMMKmZmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKzKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKZmBBBBBBBBBBBzKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmmmlmmmmlmmlKmmK",
+       "KmKKKZKKlKKKKKKKzKlKmK",
+       "KMKKBDBBDmZDBDBBDmKKmK",
+       "KMKKzBBzBBzmBzBBzBKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRRDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKKKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBzDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmMzmKMMMKmMMK",
+       "KMMmMMMMKmMMmKMMMmmMMK",
+       "KMKMMMMMKmMmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKzKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKzmBBBBBBBBBBBZKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmmmlmmmmlmmlKmmK",
+       "KmKKKzKKlKKKKKKKZKlKmK",
+       "KMKKBDBBDmzDBDBBDmKKmK",
+       "KMKKBBzBBzlmzBBzlBKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRzDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKKKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBZDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmMmmKMMMKmMMK",
+       "KMMmMMMMKmZMmKMMMmmMMK",
+       "KMKMMMMMKmMmmKMMmMMKMK",
+       "KMKKKKKKKmKKMKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKKzKKKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmKKZmBBBBBBBBBBBzKKmK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKBDlBDBKDBDBBDBKKlK",
+       "KMKKmlmmmlmmmmlmmlKmmK",
+       "KmKKKZKKlKKKKKKKzKlKmK",
+       "KMKKBDBBDmZDBDBBDmKKmK",
+       "KMKKBzBBzBlzBBzBlzKKMK",
+       "KMKKBRBBDKKKKDBmDBKKmK",
+       "KmKKRDRBDmlmmDlBDBKKmK",
+       "KMKRBRRRDBKKBmmBDBKKmK",
+       "KMKKBDBBDKKKKDlBDBKKMK",
+       "KMKKmlmmmlmmmmlmmlKKmK",
+       "KmKKKKKzKKlKKKKKlmKKmK",
+       "KMKKRDRBRmKDBDBBDmKKmK",
+       "KMKKBDBBlBKDBDBBDBlKMK",
+       "KMKKBBBmBBzDBBBBBBKmmK",
+       "KmKKBDlBDBKDBDBBDBKKlK",
+       "KMKKBmBBDBKDBDBBDBKKmm",
+       "KMKKllmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPPPPPPPPPPPPPPPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ]
+     ]
+    },
+    "lit": {
+     "hold": 7,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmFYmKMMMKmMMK",
+       "KMMmMMMMKyWFmKMMMmmMMK",
+       "KMKMMMMMKmFYYKMMmMMKMK",
+       "KMKKKKKKKmaKmKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKyKyYyKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmmKyBByBBYBByBByBKKmK",
+       "KMlKBDBBDBKDBDBBDBKKmK",
+       "KMmKBDBBDByDBDBBDBKKMK",
+       "KMlKmlmmmlmmmmlmmlKKmK",
+       "KmmKKKKKKKyKKKKKKKKKmK",
+       "KMlKBDBBDBKDBDBBDBKKmK",
+       "KMmKBBBBBByDBBBBBBKKMK",
+       "KMKKBRBBDBKDBDBBDBKKmK",
+       "KmKKRDRBDByDBDBBDBKKmK",
+       "KMKRBRRRDBKDBDBBDBKlmK",
+       "KMKKBDBBDByDBDBBDBKmMK",
+       "KMKKmlmmmlmmmmlmmlKlmK",
+       "KmKKKKKKKKyKKKKKKKKmmK",
+       "KMKKRDRBRBKDBDBBDBKlmK",
+       "KMKKBDBBDByDBDBBDBKmMK",
+       "KMKKBBBBBBKDBBBBBBKlmK",
+       "KmKKBDBBDByDBDBBDBKKmK",
+       "KMKKBDBBDBKDBDBBDBKKmK",
+       "KMKKmlmmmlymmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQyPaPyYyPaPyayPaPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmYFmKMMMKmMMK",
+       "KMMmMMMMKyFWmKMMMmmMMK",
+       "KMKMMMMMKmYFYKMMmMMKMK",
+       "KMKKKKKKKmKamKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKyKYKyKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKyKKKKKKKKKmK",
+       "KmmKyBByBBYBByBByBKKmK",
+       "KMlKBDBBDByDBDBBDBKKmK",
+       "KMmKBDBBDBKDBDBBDBKKMK",
+       "KMlKmlmmmlymmmlmmlKKmK",
+       "KmmKKKKKKKKKKKKKKKKKmK",
+       "KMlKBDBBDByDBDBBDBKKmK",
+       "KMmKBBBBBBKDBBBBBBKKMK",
+       "KMKKBRBBDByDBDBBDBKKmK",
+       "KmKKRDRBDBKDBDBBDBKKmK",
+       "KMKRBRRRDByDBDBBDBKlmK",
+       "KMKKBDBBDBKDBDBBDBKmMK",
+       "KMKKmlmmmlymmmlmmlKlmK",
+       "KmKKKKKKKKKKKKKKKKKmmK",
+       "KMKKRDRBRByDBDBBDBKlmK",
+       "KMKKBDBBDBKDBDBBDBKmMK",
+       "KMKKBBBBBByDBBBBBBKlmK",
+       "KmKKBDBBDBKDBDBBDBKKmK",
+       "KMKKBDBBDByDBDBBDBKKmK",
+       "KMKKmlmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPaPyayYaPyayPaPPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmammKMMMKmMMK",
+       "KMMmMMMMKyFYmKMMMmmMMK",
+       "KMKMMMMMKmWFYKMMmMMKMK",
+       "KMKKKKKKKmYKmKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKyKyYyKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmmKyBByBBYBByBByBKKmK",
+       "KMlKBDBBDBKDBDBBDBKKmK",
+       "KMmKBDBBDByDBDBBDBKKMK",
+       "KMlKmlmmmlmmmmlmmlKKmK",
+       "KmmKKKKKKKyKKKKKKKKKmK",
+       "KMlKBDBBDBKDBDBBDBKKmK",
+       "KMmKBBBBBByDBBBBBBKKMK",
+       "KMKKBRBBDBKDBDBBDBKKmK",
+       "KmKKRDRBDByDBDBBDBKKmK",
+       "KMKRBRRRDBKDBDBBDBKlmK",
+       "KMKKBDBBDByDBDBBDBKmMK",
+       "KMKKmlmmmlmmmmlmmlKlmK",
+       "KmKKKKKKKKyKKKKKKKKmmK",
+       "KMKKRDRBRBKDBDBBDBKlmK",
+       "KMKKBDBBDByDBDBBDBKmMK",
+       "KMKKBBBBBBKDBBBBBBKlmK",
+       "KmKKBDBBDByDBDBBDBKKmK",
+       "KMKKBDBBDBKDBDBBDBKKmK",
+       "KMKKmlmmmlymmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQaPyayPaYyayPaPyPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmFYmKMMMKmMMK",
+       "KMMmMMMMKyWFmKMMMmmMMK",
+       "KMKMMMMMKmFYYKMMmMMKMK",
+       "KMKKKKKKKmaKmKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKyKYKyKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKyKKKKKKKKKmK",
+       "KmmKyBByBBYBByBByBKKmK",
+       "KMlKBDBBDByDBDBBDBKKmK",
+       "KMmKBDBBDBKDBDBBDBKKMK",
+       "KMlKmlmmmlymmmlmmlKKmK",
+       "KmmKKKKKKKKKKKKKKKKKmK",
+       "KMlKBDBBDByDBDBBDBKKmK",
+       "KMmKBBBBBBKDBBBBBBKKMK",
+       "KMKKBRBBDByDBDBBDBKKmK",
+       "KmKKRDRBDBKDBDBBDBKKmK",
+       "KMKRBRRRDByDBDBBDBKlmK",
+       "KMKKBDBBDBKDBDBBDBKmMK",
+       "KMKKmlmmmlymmmlmmlKlmK",
+       "KmKKKKKKKKKKKKKKKKKmmK",
+       "KMKKRDRBRByDBDBBDBKlmK",
+       "KMKKBDBBDBKDBDBBDBKmMK",
+       "KMKKBBBBBByDBBBBBBKlmK",
+       "KmKKBDBBDBKDBDBBDBKKmK",
+       "KMKKBDBBDByDBDBBDBKKmK",
+       "KMKKmlmmmlmmmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPyayPYPyayPaPyaPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmYFmKMMMKmMMK",
+       "KMMmMMMMKyFWmKMMMmmMMK",
+       "KMKMMMMMKmYFYKMMmMMKMK",
+       "KMKKKKKKKmKamKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKyKyYyKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKKKKKKKKKKKKKKKKmK",
+       "KmmKyBByBBYBByBByBKKmK",
+       "KMlKBDBBDBKDBDBBDBKKmK",
+       "KMmKBDBBDByDBDBBDBKKMK",
+       "KMlKmlmmmlmmmmlmmlKKmK",
+       "KmmKKKKKKKyKKKKKKKKKmK",
+       "KMlKBDBBDBKDBDBBDBKKmK",
+       "KMmKBBBBBByDBBBBBBKKMK",
+       "KMKKBRBBDBKDBDBBDBKKmK",
+       "KmKKRDRBDByDBDBBDBKKmK",
+       "KMKRBRRRDBKDBDBBDBKlmK",
+       "KMKKBDBBDByDBDBBDBKmMK",
+       "KMKKmlmmmlmmmmlmmlKlmK",
+       "KmKKKKKKKKyKKKKKKKKmmK",
+       "KMKKRDRBRBKDBDBBDBKlmK",
+       "KMKKBDBBDByDBDBBDBKmMK",
+       "KMKKBBBBBBKDBBBBBBKlmK",
+       "KmKKBDBBDByDBDBBDBKKmK",
+       "KMKKBDBBDBKDBDBBDBKKmK",
+       "KMKKmlmmmlymmmlmmlKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQyayPaPYayPaPyayPmK",
+       "KMKKKKKKKKKKKKKKKKKKmK"
+      ]
+     ]
+    },
+    "open": {
+     "hold": 8,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmFYmKMMMKmMMK",
+       "KMMmMMMMKyWFmKMMMmmMMK",
+       "KMKMMMMMKmFYYKMMmMMKMK",
+       "KMKKKKKKKmaKmKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKyKyYyKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKBDBBKYKKBBDBKKKmK",
+       "KmKKKBDBByayyBBDBKKKmK",
+       "KMKKKBDBBKKaKBBDBKKKmK",
+       "KMKKKBDBBKaKKBBDBKKKMK",
+       "KMKKMmMmByKyyBMmMmKKmK",
+       "KmKKKBDBBKaKKBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBByayyBBDBKKKMK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KmKKKBDBBKaKKBBDBKKKmK",
+       "KMKRKBDBByKyyBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKMK",
+       "KMKKMmYmBKKKKBMmMmKKmK",
+       "KmKKKBDBByKKyBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKMK",
+       "KMKKKBDBByKKyBBDyKKKmK",
+       "KmKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKMmMmByKKyBMmMmKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQyPaPyaYPaPyayPaPmK",
+       "KMKKKKKKKKKyKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmYFmKMMMKmMMK",
+       "KMMmMMMMKyFWmKMMMmmMMK",
+       "KMKMMMMMKmYFYKMMmMMKMK",
+       "KMKKKKKKKmKamKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKyKYKyKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKBDBBKYyKBBDBKKKmK",
+       "KmKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBBKaaKBBDBKKKmK",
+       "KMKKKBDBByKyyBBDBKKKMK",
+       "KMKKMmMmBKaKKBMmMmKKmK",
+       "KmKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBByayyBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKMK",
+       "KMKKKBDBBKaKKBBDBKKKmK",
+       "KmKKKBDBByKyyBBDBKKKmK",
+       "KMKRKBDBBKaKKBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKMK",
+       "KMKKMmMmByKKyBMmMmKKmK",
+       "KmKKKBDYBKKKKBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBByKKyBBDBKKKMK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KmKKKBDBBKKKKBByBKKKmK",
+       "KMKKKBDBByKKyBBDBKKKmK",
+       "KMKKMmMmBKKKKBMmMmKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPaPyayYaPyayPaPPmK",
+       "KMKKKKKKKKKyKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmammKMMMKmMMK",
+       "KMMmMMMMKyFYmKMMMmmMMK",
+       "KMKMMMMMKmWFYKMMmMMKMK",
+       "KMKKKKKKKmYKmKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKyKyYyKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKBDBBKYKKBBDBKKKmK",
+       "KmKKKBDBBKaKKBBDBKKKmK",
+       "KMKKKBDBByKayBBDBKKKmK",
+       "KMKKKBDBBKaKKBBDBKKKMK",
+       "KMKKMmMmBKKKKBMmMmKKmK",
+       "KmKKKBDBByayyBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBBKaKKBBDBKKKMK",
+       "KMKKKBDBByKyyBBDBKKKmK",
+       "KmKKKBDBBKaKKBBDBKKKmK",
+       "KMKRKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBByKKyBBDBKKKMK",
+       "KMKKMmMmBKKKKBMmMmKKmK",
+       "KmKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBYyKKyBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKMK",
+       "KMKKKBDBBKKKKByDBKKKmK",
+       "KmKKKBDBByKKyBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKMmMmBKKKKBMmMmKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQaPyayPYPyayPaPyPmK",
+       "KMKKKKKKKKKyKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmFYmKMMMKmMMK",
+       "KMMmMMMMKyWFmKMMMmmMMK",
+       "KMKMMMMMKmFYYKMMmMMKMK",
+       "KMKKKKKKKmaKmKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKKyKYKyKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKBDBBKYKKBBDBKKKmK",
+       "KmKKKBDBByKyyBBDBKKKmK",
+       "KMKKKBDBBKaaKBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKMK",
+       "KMKKMmMmByayyBMmMmKKmK",
+       "KmKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBBKaKKBBDBKKKmK",
+       "KMKKKBDBByKyyBBDBKKKMK",
+       "KMKKKBDBBKaKKBBDBKKKmK",
+       "KmKKKBDBBKKKKBBDBKKKmK",
+       "KMKRKBDBByayyBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKMK",
+       "KMKKMmMmBKKKKBMmMmKKmK",
+       "KmKKKBDBByKKyBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBBYKKKBBDBKKKMK",
+       "KMKKKBDBByKKyBBDBKKKmK",
+       "KmKKKBDBBKKKKBBDyKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKMmMmByKKyBMmMmKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQPyayPaYyayPaPyaPmK",
+       "KMKKKKKKKKKyKKKKKKKKmK"
+      ],
+      [
+       "......KKKKKKKKKK......",
+       "....KKKKKKKKKKKKKK....",
+       ".KKKKKKKKKKKKKKKKKKKK.",
+       "KMMMKKMMKmYFmKMMMKmMMK",
+       "KMMmMMMMKyFWmKMMMmmMMK",
+       "KMKMMMMMKmYFYKMMmMMKMK",
+       "KMKKKKKKKmKamKKKKKKKMK",
+       "KMK.....KmmmmK.....KmK",
+       "KKKKKKKKyKyYyKKKKKKKKK",
+       "KmmlmmmmlmmmmlmmmmlmmK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KMKKKBDBBKYyKBBDBKKKmK",
+       "KmKKKBDBBKaKKBBDBKKKmK",
+       "KMKKKBDBBKKaKBBDBKKKmK",
+       "KMKKKBDBByayyBBDBKKKMK",
+       "KMKKMmMmBKKKKBMmMmKKmK",
+       "KmKKKBDBBKaKKBBDBKKKmK",
+       "KMKKKBDBByKyyBBDBKKKmK",
+       "KMKKKBDBBKaKKBBDBKKKMK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KmKKKBDBByayyBBDBKKKmK",
+       "KMKRKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKMK",
+       "KMKKMmYmByKKyBMmMmKKmK",
+       "KmKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBByKKyBBDBKKKMK",
+       "KMKKKBDBBKKKKBByBKKKmK",
+       "KmKKKBDBBKKKKBBDBKKKmK",
+       "KMKKKBDBByKKyBBDBKKKmK",
+       "KMKKMmMmBKKKKBMmMmKKMK",
+       "KKKKKKKKKKKKKKKKKKKKKK",
+       "KmPQyayPaPYayPaPyayPmK",
+       "KMKKKKKKKKKyKKKKKKKKmK"
+      ]
+     ]
+    }
+   }
+  },
+  "rail": {
+   "size": [
+    34,
+    10
+   ],
+   "anchor": [
+    -17,
+    -4
+   ],
+   "label_anchor": [
+    0,
+    -9
+   ],
+   "ground": 4,
+   "default_variant": "idle",
+   "state_notes": "静态矿道装饰，仅 1px 锈光/尘埃",
+   "variants": {
+    "idle": {
+     "hold": 12,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "..KK..K...KK......KK......KK......",
+       ".KbDKKlK.KbDK....KbDK....KbDK.....",
+       ".KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK.",
+       "KqlqzqqqqqlqqqqqqqlqqqqqqqlqqqqqqK",
+       "KGbbKPKKKKbbKKPKKqbbKKKPKKbbKPKKK.",
+       ".KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK.",
+       "KqqlqqqqqqqlqqqqqqqlqqqqqqqlzqqqqK",
+       ".KbbKKPKKKbbKKKPKKbbKKKKPKbbKKKKKH",
+       ".KkKkKkKkGkKkKkKkKkKkKkKkKkKkKkKkK",
+       "..KkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKk"
+      ],
+      [
+       "..KK......KK......KK......KK......",
+       ".KbDK....KblK....KbDK....KbDK.....",
+       ".KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK.",
+       "KqlqqqqqqqlqzqqqqqlqqqqqqqlqqqqqqK",
+       "KGbbKPKKKKbbKKPKKKbbKKKPKKbbKPKKK.",
+       ".KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK.",
+       "KqqlqqqqqqqlqqqqqqqlzqqqqqqlqqqqqK",
+       ".KbbKKPKKKbbKKKPKKbbKKKKPKbbKKKKKH",
+       ".KkKkKkKkGkKkKkKkKkKkKkKkKkKkKkKkK",
+       "..KkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKk"
+      ],
+      [
+       "..KK......KK....K.KK......KK......",
+       ".KbDK....KbDK..KlKbDK....KbDK.....",
+       ".KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK.",
+       "KqlqqqqqqqlqqqqqqqlqzqqqqqlqqqqqqK",
+       "KGbbKPKKKKbbKKPKKqbbKKKPKKbbKPKKK.",
+       ".KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK.",
+       "KqqlqqqqqqqlzqqqqqqlqqqqqqqlqqqqqK",
+       ".KbbKKPKKKbbKKKPKKbbKKKKPKbbKKKKKH",
+       ".KkKkKkKkGkKkKkKkKkKkKkKkKkKkKkKkK",
+       "..KkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKk"
+      ],
+      [
+       "..KK......KK......KK.K....KK......",
+       ".KbDK....KbDK....KbDKlK..KbDK.....",
+       ".KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK.",
+       "KqlqqqqqqqlqqqqqqqlqqqqqqqlqzqqqqK",
+       "KGbbKPKKKKbbKKPKKKbbKKKPKKbbKPKKK.",
+       ".KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK.",
+       "KqqlqqqqqqqlqqqqqqqlqqqqqqzlqqqqqK",
+       ".KbbKKPKKKbbKKKPKKbbKKKKPKbbKKKKKH",
+       ".KkKkKkKkGkKkKkKkKkKkKkKkKkKkKkKkK",
+       "..KkKkKkKkKkKkKkKkKkKkKkKkKkKkKkKk"
+      ]
+     ]
+    }
+   }
+  },
+  "rubble": {
+   "size": [
+    16,
+    10
+   ],
+   "anchor": [
+    -8,
+    -7
+   ],
+   "label_anchor": [
+    0,
+    -12
+   ],
+   "ground": 7,
+   "default_variant": "idle",
+   "state_notes": "静态矿道装饰，菌光呼吸",
+   "variants": {
+    "idle": {
+     "hold": 10,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "..K.............",
+       ".KPK..KK........",
+       ".KPPKKQHKK..K...",
+       "..KGMKKKQPKKZK..",
+       ".KQKKKMPPKPzK...",
+       "..KMMMKMPPQQKK..",
+       "...KmMmKmmKKGQK.",
+       "....KKK.KKKQQQQK",
+       "...........KmmK.",
+       "............KK.."
+      ],
+      [
+       "................",
+       "..KK.KKK.....K..",
+       ".KPPKPQHKK..KZK.",
+       "..KGMKKKQPKKzK..",
+       ".KQKKKMPPKPKK...",
+       "..KMMMKMPPQQKK..",
+       "...KmMmKmmKKGQK.",
+       "....KKK.KKKQQQQK",
+       "...........KmmK.",
+       "............KK.."
+      ],
+      [
+       "........K.......",
+       "..KK..KKPK......",
+       ".KPPKKQHKK..K...",
+       "..KGMKKKQPKKqK..",
+       ".KQKKKMPPKPKK...",
+       "..KMMMKMPPQQKK..",
+       "...KmMmKmmKKGQK.",
+       "....KKK.KKKQQQQK",
+       "...........KmmK.",
+       "............KK.."
+      ],
+      [
+       "................",
+       "..KK..KK...K....",
+       ".KPPKKQHKKKPK...",
+       "..KGMKKKQPKKZK..",
+       ".KQKKKMPPKPzK...",
+       "..KMMMKMPPQQKK..",
+       "...KmMmKmmKKGQK.",
+       "....KKK.KKKQQQQK",
+       "...........KmmK.",
+       "............KK.."
+      ]
+     ]
+    }
+   }
+  },
+  "barrel": {
+   "size": [
+    14,
+    18
+   ],
+   "anchor": [
+    -7,
+    -16
+   ],
+   "label_anchor": [
+    0,
+    -21
+   ],
+   "ground": 15,
+   "default_variant": "idle",
+   "state_notes": "静态矿道装饰（自绘，图集给定位置无独立木桶）",
+   "variants": {
+    "idle": {
+     "hold": 10,
+     "rest_frame": 0,
+     "flash_frames": [],
+     "frames": [
+      [
+       "...KKKKKKKK...",
+       "..KbbbbbbbbK..",
+       ".KbbcbbDbbccK.",
+       ".KBbDBbcBbDBK.",
+       ".KbCcbBDbBcbK.",
+       ".KmmlmmmmmmmK.",
+       ".KMMMMMMMlMMK.",
+       ".KbBDbBcbBDbK.",
+       ".KBBcBBDBBcBK.",
+       ".KBbDBbcBbDBK.",
+       ".KbBcbBDbBcbK.",
+       ".KmmlmmmmlmmK.",
+       ".KMMMMMMMlMMK.",
+       ".KbBDbBcbBDbK.",
+       ".KDDcDDDDDcDK.",
+       "..KDDDDDDDDK..",
+       "...KKKKKKKK...",
+       "....K....K...."
+      ],
+      [
+       "...KKKKKKKK...",
+       "..KbbbbbbbbK..",
+       ".KbbcbbDbbcbK.",
+       ".KBbDBbcBbDcK.",
+       ".KbBcCBDbBcbK.",
+       ".KmmqmmmmmmmK.",
+       ".KMMMMMMMlMMK.",
+       ".KbBDbBcbBDbK.",
+       ".KBBcBBDBBcBK.",
+       ".KBbDBbcBbDBK.",
+       ".KbBcbBDbBcbK.",
+       ".KmmlmmmmqmmK.",
+       ".KMMMMMMMlMMK.",
+       ".KbBDbBcbBDbK.",
+       ".KDDcDDDDDcDK.",
+       "..KDDDDDDDDK..",
+       "...KKKKKKKK...",
+       "....K....K...."
+      ],
+      [
+       "...KKKKKKKK...",
+       "..KbbbbbbbbK..",
+       ".KbbcbbDbbcbK.",
+       ".KBbDBbcBbDBK.",
+       ".KbBcbBCbBccK.",
+       ".KmmlmmmmmmmK.",
+       ".KMMMMMMMlMMK.",
+       ".KbBDbBcbBDbK.",
+       ".KBBcBBDBBcBK.",
+       ".KBbDBbcBbDBK.",
+       ".KbBcbBDbBcbK.",
+       ".KmmlmmmmqmmK.",
+       ".KMMMMMMMlMMK.",
+       ".KbBDbBcbBDbK.",
+       ".KDDcDDDDDcDK.",
+       "..KDDDDDDDDK..",
+       "...KKKKKKKK...",
+       "....K....K...."
+      ],
+      [
+       "...KKKKKKKK...",
+       "..KbbbbbbbbK..",
+       ".KbbcbbDbbcbK.",
+       ".KBbDBbcBbDBK.",
+       ".KbBcbBDbCcbK.",
+       ".KmmqmmmmmmcK.",
+       ".KMMMMMMMlMMK.",
+       ".KbBDbBcbBDbK.",
+       ".KBBcBBDBBcBK.",
+       ".KBbDBbcBbDBK.",
+       ".KbBcbBDbBcbK.",
+       ".KmmlmmmmlmmK.",
+       ".KMMMMMMMlMMK.",
+       ".KbBDbBcbBDbK.",
+       ".KDDcDDDDDcDK.",
+       "..KDDDDDDDDK..",
+       "...KKKKKKKK...",
+       "....K....K...."
+      ]
+     ]
+    }
+   }
+  }
+ },
+ "furniture": {
+  "bed": {
+   "label_anchor": [
+    0,
+    -47
+   ],
+   "near_rect": [
+    -16,
+    -45,
+    32,
+    46
+   ],
+   "layers": [
+    {
+     "rect": [
+      9,
+      339,
+      31,
+      45
+     ],
+     "offset": [
+      -15,
+      -44
+     ]
+    }
+   ],
+   "fx": {
+    "motes": [
+     {
+      "origin": [
+       0,
+       -32
+      ],
+      "count": 3,
+      "colors": [
+       "y",
+       "Y",
+       "a"
+      ],
+      "spread": [
+       10,
+       8
+      ],
+      "rise": 12,
+      "hold": 9
+     }
+    ],
+    "sparkle": [
+     {
+      "points": [
+       [
+        -13,
+        -24
+       ],
+       [
+        8,
+        -24
+       ]
+      ],
+      "colors": [
+       "Y",
+       "W"
+      ],
+      "hold": 16
+     }
+    ]
+   },
+   "state_notes": "床铺/存档点：暖色浮尘 + 红柱反光；不会与图集床体冲突"
+  },
+  "chest_closed": {
+   "label_anchor": [
+    0,
+    -18
+   ],
+   "near_rect": [
+    -11,
+    -15,
+    22,
+    16
+   ],
+   "layers": [
+    {
+     "rect": [
+      7,
+      241,
+      20,
+      15
+     ],
+     "offset": [
+      -10,
+      -14
+     ]
+    }
+   ],
+   "fx": {
+    "seam": [
+     {
+      "origin": [
+       -6,
+       -7
+      ],
+      "width": 13,
+      "colors": [
+       "F",
+       "Y",
+       "y"
+      ],
+      "hold": 7
+     }
+    ],
+    "sparkle": [
+     {
+      "points": [
+       [
+        0,
+        -12
+       ],
+       [
+        5,
+        -13
+       ]
+      ],
+      "colors": [
+       "Y",
+       "F"
+      ],
+      "hold": 15
+     }
+    ]
+   },
+   "state_notes": "闭合储藏箱：缝隙呼吸暖光；near 高亮"
+  },
+  "chest_open": {
+   "label_anchor": [
+    0,
+    -18
+   ],
+   "near_rect": [
+    -11,
+    -15,
+    22,
+    16
+   ],
+   "layers": [
+    {
+     "rect": [
+      39,
+      241,
+      20,
+      15
+     ],
+     "offset": [
+      -10,
+      -14
+     ]
+    }
+   ],
+   "fx": {
+    "glow": [
+     {
+      "center": [
+       0,
+       -9
+      ],
+      "radii": [
+       6,
+       3
+      ],
+      "colors": [
+       "Y",
+       "y"
+      ],
+      "alpha": 0.32,
+      "hold": 8
+     }
+    ],
+    "motes": [
+     {
+      "origin": [
+       0,
+       -11
+      ],
+      "count": 2,
+      "colors": [
+       "Y",
+       "F"
+      ],
+      "spread": [
+       7,
+       4
+      ],
+      "rise": 8,
+      "hold": 8
+     }
+    ]
+   },
+   "state_notes": "打开储藏箱：箱内暖光 + 上浮微尘"
+  },
+  "crates": {
+   "label_anchor": [
+    0,
+    -26
+   ],
+   "near_rect": [
+    -25,
+    -25,
+    50,
+    26
+   ],
+   "layers": [
+    {
+     "rect": [
+      32,
+      471,
+      48,
+      25
+     ],
+     "offset": [
+      -24,
+      -24
+     ]
+    }
+   ],
+   "fx": {
+    "dust": [
+     {
+      "origin": [
+       0,
+       -6
+      ],
+      "count": 4,
+      "colors": [
+       "P",
+       "Q",
+       "l"
+      ],
+      "spread": [
+       30,
+       6
+      ],
+      "hold": 13
+     }
+    ],
+    "sparkle": [
+     {
+      "points": [
+       [
+        -12,
+        -14
+       ],
+       [
+        10,
+        -9
+       ]
+      ],
+      "colors": [
+       "Y",
+       "y"
+      ],
+      "hold": 21
+     }
+    ]
+   },
+   "state_notes": "木箱堆（含开口箱）：静态图块 + 尘埃"
+  },
+  "crate_single": {
+   "label_anchor": [
+    0,
+    -20
+   ],
+   "near_rect": [
+    -9,
+    -17,
+    18,
+    19
+   ],
+   "layers": [
+    {
+     "rect": [
+      32,
+      479,
+      16,
+      17
+     ],
+     "offset": [
+      -8,
+      -16
+     ]
+    }
+   ],
+   "fx": {
+    "dust": [
+     {
+      "origin": [
+       0,
+       -4
+      ],
+      "count": 2,
+      "colors": [
+       "P",
+       "l"
+      ],
+      "spread": [
+       8,
+       4
+      ],
+      "hold": 15
+     }
+    ],
+    "sparkle": [
+     {
+      "points": [
+       [
+        0,
+        -10
+       ]
+      ],
+      "colors": [
+       "y"
+      ],
+      "hold": 23
+     }
+    ]
+   },
+   "state_notes": "单木箱（近道装饰）"
+  },
+  "crate_stack": {
+   "label_anchor": [
+    0,
+    -37
+   ],
+   "near_rect": [
+    -17,
+    -36,
+    34,
+    37
+   ],
+   "layers": [
+    {
+     "rect": [
+      96,
+      461,
+      32,
+      35
+     ],
+     "offset": [
+      -16,
+      -34
+     ]
+    }
+   ],
+   "fx": {
+    "dust": [
+     {
+      "origin": [
+       0,
+       -8
+      ],
+      "count": 3,
+      "colors": [
+       "P",
+       "Q"
+      ],
+      "spread": [
+       22,
+       8
+      ],
+      "hold": 14
+     }
+    ]
+   },
+   "state_notes": "叠放木箱堆（靠墙）"
+  },
+  "papers": {
+   "label_anchor": [
+    0,
+    -26
+   ],
+   "near_rect": [
+    -15,
+    -25,
+    30,
+    26
+   ],
+   "layers": [
+    {
+     "rect": [
+      1,
+      444,
+      14,
+      16
+     ],
+     "offset": [
+      -8,
+      -17
+     ]
+    },
+    {
+     "rect": [
+      2,
+      433,
+      13,
+      10
+     ],
+     "offset": [
+      -14,
+      -23
+     ]
+    },
+    {
+     "rect": [
+      37,
+      453,
+      7,
+      7
+     ],
+     "offset": [
+      4,
+      -14
+     ]
+    }
+   ],
+   "fx": {
+    "dust": [
+     {
+      "origin": [
+       0,
+       -10
+      ],
+      "count": 3,
+      "colors": [
+       "w",
+       "Q",
+       "P"
+      ],
+      "spread": [
+       18,
+       8
+      ],
+      "hold": 12
+     }
+    ],
+    "sparkle": [
+     {
+      "points": [
+       [
+        -2,
+        -10
+       ]
+      ],
+      "colors": [
+       "w"
+      ],
+      "hold": 24
+     }
+    ]
+   },
+   "state_notes": "散落纸张/文件（三层图块合成）"
+  },
+  "shelf": {
+   "label_anchor": [
+    0,
+    -36
+   ],
+   "near_rect": [
+    -9,
+    -35,
+    18,
+    38
+   ],
+   "layers": [
+    {
+     "rect": [
+      112,
+      414,
+      16,
+      34
+     ],
+     "offset": [
+      -8,
+      -32
+     ]
+    }
+   ],
+   "fx": {
+    "sparkle": [
+     {
+      "points": [
+       [
+        0,
+        -29
+       ]
+      ],
+      "colors": [
+       "Z",
+       "z"
+      ],
+      "hold": 17
+     }
+    ],
+    "dust": [
+     {
+      "origin": [
+       0,
+       -12
+      ],
+      "count": 2,
+      "colors": [
+       "P",
+       "l"
+      ],
+      "spread": [
+       9,
+       10
+      ],
+      "hold": 16
+     }
+    ]
+   },
+   "state_notes": "书架/高柜（顶部青色书页反光）"
+  },
+  "barrel": {
+   "label_anchor": [
+    0,
+    -21
+   ],
+   "near_rect": [
+    -8,
+    -17,
+    16,
+    18
+   ],
+   "prop": "barrel",
+   "state_notes": "木桶：图集 c5 r26-28 实际为墙火把/发光菌，无独立透明木桶；此处用手绘同调色板木桶（见 docs 说明）"
+  },
+  "mushroom_red": {
+   "label_anchor": [
+    0,
+    -21
+   ],
+   "near_rect": [
+    -13,
+    -20,
+    26,
+    21
+   ],
+   "layers": [
+    {
+     "rect": [
+      0,
+      397,
+      23,
+      19
+     ],
+     "offset": [
+      -11,
+      -18
+     ]
+    }
+   ],
+   "fx": {
+    "spores": [
+     {
+      "origin": [
+       0,
+       -12
+      ],
+      "count": 3,
+      "colors": [
+       "w",
+       "P",
+       "z"
+      ],
+      "spread": [
+       14,
+       8
+      ],
+      "rise": 10,
+      "hold": 10
+     }
+    ]
+   },
+   "state_notes": "红蘑菇丛：静态图块 + 孢子"
+  },
+  "glow_mushroom": {
+   "label_anchor": [
+    0,
+    -14
+   ],
+   "near_rect": [
+    -8,
+    -13,
+    16,
+    14
+   ],
+   "layers": [
+    {
+     "rect": [
+      82,
+      448,
+      12,
+      13
+     ],
+     "offset": [
+      -6,
+      -12
+     ]
+    }
+   ],
+   "fx": {
+    "pulse": [
+     {
+      "center": [
+       0,
+       -8
+      ],
+      "radius": [
+       5,
+       3
+      ],
+      "colors": [
+       "Z",
+       "z",
+       "I"
+      ],
+      "alpha": 0.3,
+      "hold": 9
+     }
+    ],
+    "spores": [
+     {
+      "origin": [
+       0,
+       -10
+      ],
+      "count": 2,
+      "colors": [
+       "Z",
+       "z"
+      ],
+      "spread": [
+       8,
+       6
+      ],
+      "rise": 9,
+      "hold": 8
+     }
+    ]
+   },
+   "state_notes": "地面发光菌：青绿脉冲光 + 孢子"
+  },
+  "torch": {
+   "label_anchor": [
+    0,
+    -24
+   ],
+   "near_rect": [
+    -9,
+    -23,
+    18,
+    24
+   ],
+   "layers": [
+    {
+     "rect": [
+      65,
+      425,
+      17,
+      22
+     ],
+     "offset": [
+      -8,
+      -21
+     ]
+    }
+   ],
+   "fx": {
+    "flame": [
+     {
+      "origin": [
+       0,
+       -23
+      ],
+      "hold": 5,
+      "colors": [
+       "F",
+       "W",
+       "Y",
+       "y"
+      ]
+     }
+    ],
+    "motes": [
+     {
+      "origin": [
+       0,
+       -20
+      ],
+      "count": 3,
+      "colors": [
+       "F",
+       "Y",
+       "y"
+      ],
+      "spread": [
+       6,
+       6
+      ],
+      "rise": 9,
+      "hold": 7
+     }
+    ],
+    "glow": [
+     {
+      "center": [
+       0,
+       -16
+      ],
+      "radii": [
+       9,
+       4
+      ],
+      "colors": [
+       "y",
+       "a"
+      ],
+      "alpha": 0.16,
+      "hold": 9
+     }
+    ]
+   },
+   "state_notes": "立式火把：图块未带火焰，运行时叠加火焰/火星/暖光；state.lit=false 时只留冷炭"
+  },
+  "wall_panel": {
+   "label_anchor": [
+    0,
+    -19
+   ],
+   "near_rect": [
+    -9,
+    -18,
+    18,
+    18
+   ],
+   "layers": [
+    {
+     "rect": [
+      47,
+      687,
+      16,
+      16
+     ],
+     "offset": [
+      -8,
+      -16
+     ]
+    }
+   ],
+   "fx": {
+    "pulse": [
+     {
+      "center": [
+       0,
+       -8
+      ],
+      "radius": [
+       4,
+       4
+      ],
+      "colors": [
+       "J",
+       "I",
+       "z"
+      ],
+      "alpha": 0.3,
+      "hold": 8
+     }
+    ]
+   },
+   "state_notes": "墙挂装置面板（绿）：导光受光/目标标记用；带 16x16 砖墙底，建议贴墙放置"
+  },
+  "wall_panel_red": {
+   "label_anchor": [
+    0,
+    -19
+   ],
+   "near_rect": [
+    -9,
+    -18,
+    18,
+    18
+   ],
+   "layers": [
+    {
+     "rect": [
+      47,
+      703,
+      16,
+      16
+     ],
+     "offset": [
+      -8,
+      -16
+     ]
+    }
+   ],
+   "fx": {
+    "pulse": [
+     {
+      "center": [
+       0,
+       -8
+      ],
+      "radius": [
+       4,
+       4
+      ],
+      "colors": [
+       "T",
+       "r",
+       "o"
+      ],
+      "alpha": 0.3,
+      "hold": 8
+     }
+    ]
+   },
+   "state_notes": "墙挂装置面板（红）：警示/未对准"
+  },
+  "wall_panel_cyan": {
+   "label_anchor": [
+    0,
+    -19
+   ],
+   "near_rect": [
+    -9,
+    -18,
+    18,
+    18
+   ],
+   "layers": [
+    {
+     "rect": [
+      47,
+      719,
+      16,
+      16
+     ],
+     "offset": [
+      -8,
+      -16
+     ]
+    }
+   ],
+   "fx": {
+    "pulse": [
+     {
+      "center": [
+       0,
+       -8
+      ],
+      "radius": [
+       4,
+       4
+      ],
+      "colors": [
+       "Z",
+       "z",
+       "q"
+      ],
+      "alpha": 0.3,
+      "hold": 8
+     }
+    ]
+   },
+   "state_notes": "墙挂装置面板（青）：冷却/备用"
+  }
+ },
+ "ambient": {
+  "budget": 24,
+  "kinds": {
+   "spores": {
+    "base_count": 12,
+    "pixel": 1,
+    "colors": [
+     "z",
+     "Z",
+     "w"
+    ],
+    "alpha": 0.85,
+    "span": [
+     34,
+     26
+    ],
+    "hold": 2,
+    "state_notes": "洞穴/菌丛上浮孢子：1px，慢速上浮 + 1px 横摆"
+   },
+   "dust": {
+    "base_count": 8,
+    "pixel": 1,
+    "colors": [
+     "P",
+     "Q",
+     "l"
+    ],
+    "alpha": 0.55,
+    "span": [
+     40,
+     8
+    ],
+    "hold": 3,
+    "state_notes": "地面/家具旁尘埃：横向漂移，贴地 1px"
+   },
+   "drip": {
+    "base_count": 2,
+    "pixel": 1,
+    "colors": [
+     "Z",
+     "z",
+     "q"
+    ],
+    "alpha": 0.9,
+    "span": [
+     4,
+     20
+    ],
+    "hold": 2,
+    "state_notes": "水管滴水：下落 + 2px 溅落，循环 56 tick"
+   },
+   "ember": {
+    "base_count": 5,
+    "pixel": 1,
+    "colors": [
+     "F",
+     "Y",
+     "y"
+    ],
+    "alpha": 0.85,
+    "span": [
+     8,
+     22
+    ],
+    "hold": 2,
+    "state_notes": "灯座/火把余烬：上浮暖色火星"
+   },
+   "light_pool": {
+    "base_count": 1,
+    "pixel": 1,
+    "colors": [
+     "a",
+     "y"
+    ],
+    "alpha": 0.18,
+    "radii": [
+     18,
+     5
+    ],
+    "hold": 6,
+    "state_notes": "灯光呼吸地面光斑：2~3 层抖动硬像素，无渐变"
+   },
+   "sway": {
+    "base_count": 1,
+    "pixel": 1,
+    "colors": [
+     "y",
+     "a"
+    ],
+    "alpha": 0.1,
+    "length": 26,
+    "hold": 8,
+    "state_notes": "吊灯摆动光锥：1px 抖动，左右 ±2px"
+   }
+  }
+ },
+ "stats": {
+  "lamp": {
+   "frames": 10,
+   "colors": 12,
+   "size": [
+    16,
+    30
+   ]
+  },
+  "chest": {
+   "frames": 12,
+   "colors": 14,
+   "size": [
+    20,
+    16
+   ]
+  },
+  "door": {
+   "frames": 13,
+   "colors": 16,
+   "size": [
+    20,
+    32
+   ]
+  },
+  "pipe": {
+   "frames": 11,
+   "colors": 15,
+   "size": [
+    34,
+    18
+   ]
+  },
+  "ring": {
+   "frames": 11,
+   "colors": 12,
+   "size": [
+    18,
+    18
+   ]
+  },
+  "guide": {
+   "frames": 40,
+   "colors": 14,
+   "size": [
+    16,
+    26
+   ]
+  },
+  "guide_target": {
+   "frames": 8,
+   "colors": 11,
+   "size": [
+    18,
+    18
+   ]
+  },
+  "mine_door": {
+   "frames": 20,
+   "colors": 16,
+   "size": [
+    22,
+    34
+   ]
+  },
+  "rail": {
+   "frames": 4,
+   "colors": 10,
+   "size": [
+    34,
+    10
+   ]
+  },
+  "rubble": {
+   "frames": 4,
+   "colors": 10,
+   "size": [
+    16,
+    10
+   ]
+  },
+  "barrel": {
+   "frames": 4,
+   "colors": 10,
+   "size": [
+    14,
+    18
+   ]
+  }
+ },
+ "build": "59458e26ea62a10b"
+}

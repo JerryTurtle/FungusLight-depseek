@@ -1,0 +1,28 @@
+# G3 props-art headless self-test evidence
+
+Command (run through the DSH godot-bridge, unconfined subprocess; do NOT launch Godot from a pwsh/bash shell):
+
+    godot --headless --path game --script scripts/test_props.gd
+
+Engine:
+
+    Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+Output (exit code 0):
+
+    PROP_TEST checks=2089 failures=0
+
+Coverage summary (see docs/g3/props-art.md §7):
+- props_data.json schema/build/palette and every declared kind, alias, furniture crop and ambient kind;
+- 137 prop frames across 11 hand-drawn kinds: 3..6 frames per state, row width/height, palette chars,
+  <=16 colours per kind, exact Colour+alpha after ImageTexture construction;
+- guide dir mapping 0=up/1=right/2=down/3=left matches campaign.gd DIR_VECTORS;
+- 1px dark outline per frame (emissive pixels exempt), binary alpha only;
+- animation phase bounds, reduced_motion freeze, reduced_flash avoids flash frames;
+- state -> variant mapping for lamp/chest/door/pipe/ring/guide x8/guide_target/mine_door x4;
+- furniture crops validated against the real 128x736 Complete.png (non-empty, transparent margin,
+  crop/offset/near/label/fx inside bounds);
+- ambient budget 24 -> 12 with low_effects, integer deterministic positions, bounds, reduced_motion static;
+- aliases + all prologue.json object kinds (NPC `rong` excluded) resolve;
+- real-canvas smoke: draw_prop / draw_furniture / draw_ambient executed inside a Node2D `_draw`
+  (including low_effects + reduced_motion + reduced_flash prefs) with counters increasing and no script errors.

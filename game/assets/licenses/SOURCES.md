@@ -15,3 +15,5 @@
 G2-004纠正：已撤销躯干拆分与G2-003追加手臂，当前使用完整原角色帧，仅重绘原图手部2×2区域实现与武器的遮挡；没有新肢体素材或PNG编辑。武器/靶/护壳碎片仍为程序绘制。
 
 G2-006新增 `assets/audio/{shell_break,shield_hit,rain_impact}.wav`：本项目generate_sfx.py原创程序合成，无第三方采样，44.1kHz单声道16bit PCM；原四音频保持字节不变。新增火花、轮廓和数字均为引擎程序绘制，无新增位图。
+
+G3-006新增 `assets/props/props_data.json`：本项目 `tools/gen_props.py` 确定性生成的像素素材数据（137 帧自绘道具、15 个来自 `Complete.png` 的家具裁切、6 类环境粒子），无外部图片采样；调色板取自原图集与角色并登记在 JSON。灯座/宝箱/门/水管/灯环/导光/矿门为自绘；床铺/箱柜/木箱/书架/纸张/菌丛/火把/墙面装置复用用户提供的 `Complete.png`，继承原素材授权待核实状态。运行时由 `prop_art.gd` 构建 ImageTexture，不新增 PNG 文件依赖。
