@@ -2,6 +2,8 @@ extends "res://scripts/graybox.gd"
 ## G3 gameplay adapter reuses the accepted combat/rendering components.
 const Progress = preload("res://scripts/campaign_state.gd")
 const SaveStore = preload("res://scripts/save_store.gd")
+const DIR_NAMES := ["上","右","下","左"]
+const DIR_VECTORS := [Vector2.UP,Vector2.RIGHT,Vector2.DOWN,Vector2.LEFT]
 var progress = Progress.new()
 var saves = SaveStore.new()
 var overlay: PanelContainer
@@ -10,12 +12,18 @@ var notice := ""
 var running := false
 var scanned := false
 var dialogue_index := 0
+var dialogue_mode := ""
+var dialogue_lines: Array = []
+var choice_pending := false
 var pending_encounter := ""
 var checkpoint: Dictionary = {}
 var dirty := false
 var tutorial_target := -1
+var guide_dirs: Dictionary = {}
 var objects_layer: Node2D
 var ui_layer: Node2D
+var dialogue
+var props = preload("res://scripts/prop_art.gd").new()
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
@@ -36,10 +44,15 @@ func _ready() -> void:
 	menu = VBoxContainer.new()
 	menu.add_theme_constant_override("separation",10)
 	overlay.add_child(menu)
+	dialogue = preload("res://scripts/dialogue_box.gd").new()
+	add_child(dialogue)
+	dialogue.advance_requested.connect(advance_dialogue)
+	dialogue.skip_requested.connect(finish_dialogue)
+	dialogue.choice_selected.connect(func(id: String): choose_growth(id))
 	show_title()
 	if "--campaign-capture" in OS.get_cmdline_user_args(): call_deferred("capture_preview")
 	get_window().focus_exited.connect(func():
-		if running and not overlay.visible: show_pause())
+		if running and not overlay.visible and not dialogue.is_open(): show_pause())
 
 func _notification(what: int) -> void:
 	if what != NOTIFICATION_WM_CLOSE_REQUEST or not is_instance_valid(overlay): return
@@ -50,8 +63,9 @@ func _notification(what: int) -> void:
 	paragraph("未保存的移动、战斗与对话进度会回退到最近安全存档。当前演出不会提交半完成奖励。")
 	button("确认退出",func(): get_tree().quit())
 	button("返回当前进度",func():
-		if progress.active_event.is_empty(): resume()
-		else: show_dialogue())
+		if choice_pending: show_growth_choice()
+		elif not dialogue_mode.is_empty(): show_dialogue()
+		else: resume())
 
 func capture_preview() -> void:
 	for i in 10: await get_tree().process_frame
@@ -70,6 +84,7 @@ func capture_preview() -> void:
 	get_tree().quit()
 
 func clear_menu(title: String) -> void:
+	if dialogue != null and dialogue.is_open(): dialogue.close()
 	paused = true
 	commands.clear()
 	combat.clear_input_buffer()
@@ -80,7 +95,7 @@ func clear_menu(title: String) -> void:
 	overlay.show()
 	var heading := Label.new()
 	heading.text = title
-	heading.add_theme_font_size_override("font_size",30)
+	heading.add_theme_font_size_override("font_size",36)
 	menu.add_child(heading)
 
 func paragraph(text: String) -> void:
@@ -88,18 +103,20 @@ func paragraph(text: String) -> void:
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.custom_minimum_size = Vector2(700,65)
-	label.add_theme_font_size_override("font_size",22)
+	label.add_theme_font_size_override("font_size",24)
 	menu.add_child(label)
 
 func button(text: String, action: Callable) -> void:
 	var control := Button.new()
 	control.text = text
-	control.add_theme_font_size_override("font_size",22)
+	control.add_theme_font_size_override("font_size",24)
 	control.pressed.connect(action)
 	menu.add_child(control)
 
 func resume() -> void:
 	overlay.hide()
+	if dialogue != null and dialogue.is_open(): dialogue.close()
+	if status != null: status.visible = true
 	paused = false
 	commands.clear()
 	queued_pointer = Vector2.INF
@@ -142,6 +159,7 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	combat.player = Vector2(spawn[0],spawn[1]) if not position.is_finite() else position
 	combat.hp = clampf(prior_hp if health < 0 else health,1,progress.max_hp())
 	combat.focus = clampf(prior_focus if focus_value < 0 else focus_value,0,100)
+	sewer = progress.node().get("style","cave") == "mine"
 	apply_growth()
 	feedback.reset()
 	combat_audio.stop_all()
@@ -153,7 +171,31 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	scan_tick = -1000
 	pending_encounter = ""
 	tutorial_target = -1
+	dialogue_mode = ""
+	dialogue_lines = []
+	reset_guides()
 	start_encounters()
+
+func reset_guides() -> void:
+	guide_dirs.clear()
+	for object in progress.guides():
+		guide_dirs[object.id] = int(object.solution) if progress.has("P02") else int(object.dir)
+
+func guide_aligned(object: Dictionary) -> bool:
+	return int(guide_dirs.get(object.id,int(object.dir))) == int(object.solution)
+
+func guides_aligned() -> bool:
+	var found: Array = progress.guides()
+	if found.is_empty(): return false
+	for guide in found:
+		if not guide_aligned(guide): return false
+	return true
+
+func guides_correct() -> int:
+	var count := 0
+	for guide in progress.guides():
+		if guide_aligned(guide): count += 1
+	return count
 
 func apply_growth() -> void:
 	combat.config.player.hp = progress.max_hp()
@@ -163,24 +205,35 @@ func apply_growth() -> void:
 
 func start_encounters() -> void:
 	if not pending_encounter.is_empty(): return
-	if progress.node_id == "N0-02" and progress.has("S02"):
-		if not progress.has("tutorial"):
-			var target: Dictionary = combat.add_enemy(Vector2(230,70),true)
-			target.hp = 24
+	for id in progress.content.encounters:
+		var spec: Dictionary = progress.content.encounters[id]
+		if str(spec.get("node","")) != progress.node_id or progress.has(id): continue
+		var requires: String = spec.get("requires","")
+		if not requires.is_empty() and not progress.has(requires): continue
+		spawn_encounter(id,spec)
+		pending_encounter = id
+		return
+
+func adjust_spawn(at: Vector2) -> Vector2:
+	if combat.player.distance_to(at) >= 20 and not combat.blocked(at,6): return at
+	for radius in [16,24,32,40,48,56]:
+		for i in 12:
+			var candidate: Vector2 = at + Vector2.from_angle(TAU*float(i)/12.0)*float(radius)
+			if not combat.blocked(candidate,6) and combat.player.distance_to(candidate) >= 20: return candidate
+	return at
+
+func spawn_encounter(id: String, spec: Dictionary) -> void:
+	var archetype: String = spec.get("archetype","T1")
+	for point in spec.get("positions",[]):
+		var at := adjust_spawn(Vector2(point[0],point[1]))
+		if bool(spec.get("dummy",false)):
+			var target: Dictionary = combat.add_enemy(at,true)
+			target.hp = float(spec.get("hp",24))
 			tutorial_target = int(target.id)
-			pending_encounter = "tutorial"
-		elif not progress.has("E01"):
-			combat.add_enemy(Vector2(245,96))
-			pending_encounter = "E01"
-	if progress.node_id == "N0-04":
-		if not progress.has("E02"):
-			combat.add_enemy(Vector2(155,90))
-			combat.add_enemy(Vector2(162,130))
-			pending_encounter = "E02"
-		elif not progress.has("E03"):
-			combat.add_enemy(Vector2(255,90))
-			combat.add_archetype("T5",Vector2(250,132))
-			pending_encounter = "E03"
+		elif archetype == "T1": combat.add_enemy(at)
+		else: combat.add_archetype(archetype,at)
+	for member in spec.get("members",[]):
+		combat.add_archetype(str(member[0]),adjust_spawn(Vector2(member[1],member[2])))
 
 func safety() -> Dictionary:
 	var alerted := false
@@ -254,38 +307,67 @@ func show_pause() -> void:
 
 func begin_dialogue(id: String) -> void:
 	if not progress.start_event(id): return
+	dialogue_mode = "event"
+	dialogue_lines = progress.content.dialogues[id]
+	dialogue_index = 0
+	show_dialogue()
+
+func begin_lore(id: String) -> void:
+	if dialogue_mode != "" or not progress.content.dialogues.has(id): return
+	dialogue_mode = "lore"
+	dialogue_lines = progress.content.dialogues[id]
 	dialogue_index = 0
 	show_dialogue()
 
 func show_dialogue() -> void:
-	var id: String = progress.active_event
-	var lines: Array = progress.content.dialogues[id]
-	dialogue_index = clampi(dialogue_index,0,lines.size()-1)
-	clear_menu(str(lines[dialogue_index][0]))
-	paragraph(str(lines[dialogue_index][1]))
-	button("下一句" if dialogue_index < lines.size()-1 else "继续",advance_dialogue)
-	button("跳过本段对白",finish_dialogue)
+	if dialogue_lines.is_empty(): return
+	choice_pending = false
+	dialogue_index = clampi(dialogue_index,0,dialogue_lines.size()-1)
+	paused = true
+	overlay.hide()
+	if status != null: status.visible = false
+	dialogue.show_line(str(dialogue_lines[dialogue_index][0]),str(dialogue_lines[dialogue_index][1]))
 
 func advance_dialogue() -> void:
+	if dialogue_mode.is_empty(): return
 	dialogue_index += 1
-	if dialogue_index >= progress.content.dialogues[progress.active_event].size(): finish_dialogue()
+	if dialogue_index >= dialogue_lines.size(): finish_dialogue()
 	else: show_dialogue()
 
 func finish_dialogue() -> void:
-	if progress.active_event == "M1":
-		clear_menu("初燃 · 选择一项强化")
-		paragraph("基础生命提升与守灯结共同提交。伤害按统一四舍五入：灯击18→21，或净光24→28。")
-		button("灯击伤害 +15%",func(): choose_growth("melee"))
-		button("净光伤害 +15%",func(): choose_growth("light"))
+	if dialogue_mode == "event" and progress.active_event == "M1":
+		show_growth_choice()
 		return
-	progress.finish_event()
-	dirty = true
-	start_encounters()
+	if dialogue_mode == "event":
+		progress.finish_event()
+		dirty = true
+		dialogue_mode = ""
+		dialogue_lines = []
+		dialogue.close()
+		start_encounters()
+		resume()
+		if SaveStore.is_safe(safety()): save_game("auto",true)
+		return
+	dialogue_mode = ""
+	dialogue_lines = []
+	dialogue.close()
 	resume()
-	if SaveStore.is_safe(safety()): save_game("auto",true)
+
+func show_growth_choice() -> void:
+	choice_pending = true
+	paused = true
+	overlay.hide()
+	if status != null: status.visible = false
+	dialogue.show_choices("初燃 · 选择一项强化（生命上限100→120）",[
+		{"id":"melee","label":"灯击伤害 +15%","desc":"18 → 21（四舍五入）"},
+		{"id":"light","label":"净光伤害 +15%","desc":"24 → 28（四舍五入）"}])
 
 func choose_growth(option: String) -> void:
 	if not progress.finish_event(option): return
+	dialogue_mode = ""
+	dialogue_lines = []
+	choice_pending = false
+	dialogue.close()
 	apply_growth()
 	dirty = true
 	resume()
@@ -295,12 +377,27 @@ func nearest_object() -> Dictionary:
 	var nearest: Dictionary = {}
 	var distance := 24.01
 	for object in progress.node().objects:
+		if object.kind == "guide_target": continue
 		var pos := Vector2(object.pos[0],object.pos[1])
 		var d: float = combat.player.distance_to(pos)
 		if d <= 24 and d < distance and combat.clear_line(combat.player,pos):
 			distance = d
 			nearest = object
 	return nearest
+
+func rotate_guide(object: Dictionary) -> void:
+	if progress.has("P02"):
+		notice = "导光装置已对齐，灯路保持连通。"
+		return
+	var current := int(guide_dirs.get(object.id,int(object.dir)))
+	guide_dirs[object.id] = (current+1)%4
+	dirty = true
+	if guides_aligned():
+		progress.flags.P02 = true
+		notice = "三束光同时落在刻痕上，门内灯线复亮。"
+		if SaveStore.is_safe(safety()): save_game("auto",true)
+	else:
+		notice = "导光装置转向%s。已对准 %d / 3。" % [DIR_NAMES[(current+1)%4],guides_correct()]
 
 func interact() -> void:
 	if not SaveStore.is_safe(safety()):
@@ -323,6 +420,8 @@ func interact() -> void:
 			if progress.has("pipe"): begin_dialogue("S03")
 			else: notice = "绒望着水管：先看看那些刻痕。按 Q 观察，再靠近调查。"
 		"reward": begin_dialogue("M1")
+		"lore": begin_lore(str(object.get("dialogue","")))
+		"guide": rotate_guide(object)
 		"rest":
 			combat.hp = progress.max_hp()
 			combat.focus = 100
@@ -336,13 +435,18 @@ func interact() -> void:
 			dirty = true
 			if SaveStore.is_safe(safety()): save_game("auto",true)
 		"end":
-			clear_menu("旧矿门重新见光")
-			paragraph("你已抵达当前开发切片边界。绒的线索指向更深处的菌根。\n后续矿道、完整敌人及十至十五分钟切片仍在制作，本页不是游戏结局。")
+			clear_menu("菌根深处")
+			paragraph("你已抵达当前开发切片边界：营地—旧矿通道—菌洞入口—导光间。\n更深的菌根、完整章节和十至十五分钟路线仍在制作，本页不是游戏结局。")
 			button("返回探索",resume)
 			button("保存当前进度",func(): save_game("auto",true))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not running: return
+	if dialogue.is_open() and dialogue.handle_input(event):
+		get_viewport().set_input_as_handled()
+		return
+	if dialogue.is_open():
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.physical_keycode == KEY_ESCAPE:
 			if overlay.visible and progress.active_event.is_empty(): resume()
@@ -369,9 +473,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			if progress.has("S02"): commands.append("light")
 			else: notice = "净光尚未解锁。先找备用灯芯。"
 
+func free_overlapping_player() -> void:
+	var radius := float(combat.config.player.body_radius)+float(combat.config.enemy_t1.body_radius)
+	for enemy in combat.enemies:
+		if enemy.hp <= 0: continue
+		var offset: Vector2 = combat.player-enemy.pos
+		if offset.length() >= radius-0.001: continue
+		var direction := offset.normalized() if offset.length() > 0.001 else Vector2.RIGHT
+		var candidate: Vector2 = enemy.pos+direction*radius
+		if not combat.blocked(candidate,float(combat.config.player.body_radius)):
+			combat.player = candidate
+
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(overlay): return
 	if running and not paused:
+		free_overlapping_player()
 		var movement := Vector2(float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),float(Input.is_physical_key_pressed(KEY_S))-float(Input.is_physical_key_pressed(KEY_W)))
 		var pointer := world.to_local(queued_pointer if queued_pointer.is_finite() else get_global_mouse_position())
 		var inside := Rect2(0,25,320,135).has_point(pointer)
@@ -387,8 +503,9 @@ func _physics_process(delta: float) -> void:
 		progress.seconds += delta
 		if player_moving or not combat.events.is_empty(): dirty = true
 		if not pending_encounter.is_empty() and combat.enemies.all(func(e): return e.hp <= 0):
-			progress.flags[pending_encounter] = true
-			notice = "教学完成，通道里有菌人靠近。" if pending_encounter == "tutorial" else "威胁解除。靠近灯环或继续探索。"
+			var cleared := pending_encounter
+			progress.flags[cleared] = true
+			notice = str(progress.content.encounters[cleared].get("clear_notice","威胁解除。靠近灯环或继续探索。"))
 			pending_encounter = ""
 			start_encounters()
 		if combat.hp <= 0:
@@ -425,45 +542,120 @@ func current_goal() -> String:
 			if not progress.has("pipe"): return progress.node().goal
 			if not progress.has("S03"): return "已记录水位刻痕，靠近绒按 E 交谈。"
 			return "绒留在灯旁。沿右门独自进入旧矿通道。"
-		"N0-04": return "旧矿门前威胁已清除，靠近门按 E。" if progress.has("E03") else progress.node().goal
+		"N0-04":
+			if progress.has("E02") and not progress.has("E03"): return "旧矿门前的双灯试炼：清理最后的菌人与孢囊。"
+			if not progress.has("E03"): return progress.node().goal
+			return "旧矿门已开，向东进入菌洞入口。"
+		"N1-01":
+			if not progress.has("E04"): return progress.node().goal
+			return "菌洞入口已清空，沿右门进入导光间。"
+		"N1-02":
+			if not progress.has("E05"): return "清理盘踞在导光间的菌人。"
+			if not progress.has("E06"): return "击破两枚膨胀的孢囊，别等它们炸开。"
+			if not progress.has("P02"): return "转动三座导光装置（E 转向），已对准 %d / 3。" % guides_correct()
+			return "灯路已连通。进入菌根深处（当前切片边界）。"
 	return progress.node().goal
+
+func guide_color(object: Dictionary) -> Color:
+	match str(object.get("color","amber")):
+		"moss": return Color("9cbb87")
+		"teal": return Color("7fc9c4")
+	return Color("e4c675")
+
+func object_state(object: Dictionary, nearest_id: String) -> Dictionary:
+	var near: bool = nearest_id == str(object.id)
+	var state := {"near":near, "available":true}
+	match str(object.kind):
+		"lamp": state.lit = progress.has("S01")
+		"chest":
+			state.open = progress.has("core")
+			state.available = not progress.has("core")
+		"socket":
+			state.lit = progress.has("P01")
+			state.available = progress.has("core")
+		"pipe": state.scanned = scanned or progress.has("pipe")
+		"reward":
+			state.complete = progress.has("M1")
+			state.available = progress.has("E01")
+		"exit":
+			state.available = not object.has("requires") or progress.has(object.requires)
+			state.open = state.available
+		"end":
+			state.available = progress.has("P02")
+			state.open = progress.has("P02")
+		"guide":
+			state.dir = int(guide_dirs.get(object.id,int(object.dir)))
+			state.correct = guide_aligned(object)
+			state.beam = false
+		"guide_target": state.available = true
+		"rest":
+			if str(object.get("visual","bed")) == "lamp": state.lit = true
+	return state
 
 func draw_objects() -> void:
 	preload("res://scripts/enemy_warnings.gd").draw(objects_layer,combat)
+	var tick: int = combat.tick
+	var nearest: Dictionary = nearest_object()
+	var nearest_id: String = str(nearest.get("id",""))
+	for entry in progress.node().get("decor",[]):
+		props.draw_furniture(objects_layer,str(entry.kind),Vector2(entry.pos[0],entry.pos[1]),tick,preferences)
 	for object in progress.node().objects:
 		var pos := Vector2(object.pos[0],object.pos[1])
-		var color := Color("e4c675")
-		if object.has("requires") and not progress.has(object.requires): color = Color("8c7c77")
-		match object.kind:
-			"rong": art.actor(objects_layer,pos,Vector2.LEFT,"idle",0,combat.tick,false,false)
-			"chest":
-				objects_layer.draw_rect(Rect2(pos-Vector2(8,9),Vector2(16,12)),Color("6a452b"))
-				objects_layer.draw_rect(Rect2(pos-Vector2(8,9),Vector2(16,12)),color,false,1)
-				objects_layer.draw_line(pos-Vector2(8,4),pos+Vector2(8,-4),color,1)
-				objects_layer.draw_rect(Rect2(pos-Vector2(1,5),Vector2(2,4)),Color("ffe4a2"))
+		var state := object_state(object,nearest_id)
+		var draw_kind: String = str(object.get("visual",object.kind))
+		if draw_kind == "rong":
+			art.actor(objects_layer,pos,Vector2.LEFT,"idle",0,tick,false,false)
+			props.draw_ambient(objects_layer,"spores",pos,tick,preferences)
+			continue
+		props.draw_prop(objects_layer,draw_kind,pos,state,tick,preferences)
+		match draw_kind:
+			"lamp","socket":
+				props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,12),tick,preferences)
+				props.draw_ambient(objects_layer,"ember",pos,tick,preferences)
 			"pipe":
-				objects_layer.draw_rect(Rect2(pos-Vector2(16,6),Vector2(32,9)),Color("5d7071"))
-				for i in 4: objects_layer.draw_line(pos+Vector2(-10+i*6,-6),pos+Vector2(-10+i*6,-2),color,1)
+				props.draw_ambient(objects_layer,"drip",pos+Vector2(15,9),tick,preferences)
+			"chest","bed":
+				props.draw_ambient(objects_layer,"dust",pos,tick,preferences)
+			"reward":
+				props.draw_ambient(objects_layer,"light_pool",pos,tick,preferences)
+				props.draw_ambient(objects_layer,"ember",pos,tick,preferences)
 			"exit","end":
-				objects_layer.draw_rect(Rect2(pos-Vector2(7,23),Vector2(14,26)),Color("242a25"))
-				objects_layer.draw_rect(Rect2(pos-Vector2(7,23),Vector2(14,26)),color,false,2)
-				if color == Color("8c7c77"):
-					for i in 3: objects_layer.draw_line(pos+Vector2(-6,-18+i*7),pos+Vector2(6,-18+i*7),color,1)
-			_:
-				objects_layer.draw_rect(Rect2(pos-Vector2(6,3),Vector2(12,5)),Color("6d6250"))
-				objects_layer.draw_line(pos,pos-Vector2(0,17),Color("998066"),3)
-				objects_layer.draw_rect(Rect2(pos-Vector2(5,22),Vector2(10,9)),Color("473b30"))
-				objects_layer.draw_rect(Rect2(pos-Vector2(3,20),Vector2(6,5)),color)
-				if object.kind != "lamp" or progress.has("S01"):
-					objects_layer.draw_circle(pos-Vector2(0,17),10,Color(0.9,0.7,0.4,0.08))
-		if nearest_object().get("id","") == object.id: objects_layer.draw_arc(pos,10,0,TAU,16,Color("e4c675"),0.6)
+				props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,16),tick,preferences)
+	for entry in progress.node().get("ambient",[]):
+		props.draw_ambient(objects_layer,str(entry.kind),Vector2(entry.pos[0],entry.pos[1]),tick,preferences)
+	draw_guide_beams()
+
+func draw_guide_beams() -> void:
+	var tick: int = combat.tick
+	for guide in progress.guides():
+		var pos := Vector2(guide.pos[0],guide.pos[1])
+		var dir := int(guide_dirs.get(guide.id,int(guide.dir)))
+		var target := Vector2(guide.target[0],guide.target[1])
+		var tint := guide_color(guide)
+		if guide_aligned(guide):
+			objects_layer.draw_line(pos+DIR_VECTORS[dir]*7,target,tint,3)
+			objects_layer.draw_line(pos+DIR_VECTORS[dir]*7,target,tint.lightened(0.45),1)
+			var span: float = pos.distance_to(target)
+			for i in 2:
+				var phase := fmod(float(tick)/22.0+float(i)*0.5,1.0)
+				var dot: Vector2 = (pos+DIR_VECTORS[dir]*7).lerp(target,phase)
+				objects_layer.draw_rect(Rect2(dot.round(),Vector2.ONE),Color(1,0.96,0.8,0.85))
+			if target.distance_to(pos) > 1: objects_layer.draw_rect(Rect2(target-Vector2(2,2),Vector2(5,5)),tint.lightened(0.3))
+		else:
+			var stub: Vector2 = pos+DIR_VECTORS[dir]*7
+			objects_layer.draw_line(stub,stub+DIR_VECTORS[dir]*10,Color(tint.r,tint.g,tint.b,0.35),1)
 
 func draw_object_labels() -> void:
 	var font := ThemeDB.fallback_font
 	for object in progress.node().objects:
-		var pos := Vector2(object.pos[0],object.pos[1])*4
+		if not bool(object.get("label",true)): continue
 		var label: String = object.name
-		var width: float = font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,18).x
-		pos.x = clampf(pos.x-width/2,8,1272-width)
-		ui_layer.draw_rect(Rect2(pos+Vector2(-4,32),Vector2(width+8,24)),Color(0.035,0.045,0.04,0.85))
-		ui_layer.draw_string(font,pos+Vector2(0,50),label,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("f4dfab"))
+		if label.is_empty(): continue
+		var draw_kind: String = str(object.get("visual",object.kind))
+		var world_point := Vector2(object.pos[0],object.pos[1]) + props.label_anchor(draw_kind)
+		var at := world_point * 4.0
+		var width: float = font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
+		at.x = clampf(at.x-width/2,8,1272-width)
+		ui_layer.draw_rect(Rect2(at+Vector2(-5,-30),Vector2(width+10,30)),Color(0.035,0.045,0.04,0.85))
+		ui_layer.draw_rect(Rect2(at+Vector2(-5,-30),Vector2(width+10,30)),Color(0.35,0.33,0.24,0.9),false,1)
+		ui_layer.draw_string(font,at+Vector2(0,-7),label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("f4dfab"))

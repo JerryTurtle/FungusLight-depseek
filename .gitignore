@@ -1,4 +1,4 @@
-game/.godot/
+﻿game/.godot/
 deliverables/
 /Fungus Cave \[16x16\]/
 qa/*.tpz
@@ -18,3 +18,5 @@ qa/storage_probe.gd
 
 # Local repro packages, templates and probes
 qa/local/
+game/autoload/
+

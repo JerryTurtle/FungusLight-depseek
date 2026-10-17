@@ -1,10 +1,11 @@
 {
   "schema_version": 1,
-  "build_id": "G3-002",
+  "build_id": "G3-006",
   "nodes": [
     {
       "id": "N0-01",
       "name": "营地床铺",
+      "style": "cave",
       "spawn": [
         50,
         110
@@ -41,7 +42,8 @@
             48,
             128
           ],
-          "kind": "rest"
+          "kind": "rest",
+          "visual": "bed"
         },
         {
           "id": "east",
@@ -54,11 +56,44 @@
           "target": "N0-02",
           "requires": "S01"
         }
+      ],
+      "decor": [
+        {
+          "kind": "crates",
+          "pos": [
+            232,
+            132
+          ]
+        },
+        {
+          "kind": "mushroom_red",
+          "pos": [
+            152,
+            138
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "dust",
+          "pos": [
+            90,
+            90
+          ]
+        },
+        {
+          "kind": "ember",
+          "pos": [
+            88,
+            80
+          ]
+        }
       ]
     },
     {
       "id": "N0-02",
       "name": "储藏间",
+      "style": "cave",
       "spawn": [
         40,
         110
@@ -127,11 +162,51 @@
           "target": "N0-03",
           "requires": "M1"
         }
+      ],
+      "decor": [
+        {
+          "kind": "crates",
+          "pos": [
+            206,
+            136
+          ]
+        },
+        {
+          "kind": "shelf",
+          "pos": [
+            44,
+            48
+          ]
+        },
+        {
+          "kind": "torch",
+          "pos": [
+            104,
+            52
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "dust",
+          "pos": [
+            120,
+            80
+          ]
+        },
+        {
+          "kind": "light_pool",
+          "pos": [
+            178,
+            68
+          ]
+        }
       ]
     },
     {
       "id": "N0-03",
       "name": "水管隔间",
+      "style": "cave",
       "spawn": [
         40,
         110
@@ -187,7 +262,8 @@
             78,
             126
           ],
-          "kind": "rest"
+          "kind": "rest",
+          "visual": "lamp"
         },
         {
           "id": "east",
@@ -200,11 +276,51 @@
           "target": "N0-04",
           "requires": "S03"
         }
+      ],
+      "decor": [
+        {
+          "kind": "barrel",
+          "pos": [
+            168,
+            136
+          ]
+        },
+        {
+          "kind": "glow_mushroom",
+          "pos": [
+            96,
+            56
+          ]
+        },
+        {
+          "kind": "mushroom_red",
+          "pos": [
+            186,
+            140
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "drip",
+          "pos": [
+            145,
+            92
+          ]
+        },
+        {
+          "kind": "spores",
+          "pos": [
+            220,
+            100
+          ]
+        }
       ]
     },
     {
       "id": "N0-04",
       "name": "旧矿通道",
+      "style": "mine",
       "spawn": [
         35,
         110
@@ -236,14 +352,384 @@
           "target": "N0-03"
         },
         {
-          "id": "end",
-          "name": "旧矿门 / 切片边界",
+          "id": "east",
+          "name": "旧矿门 → 菌洞入口",
           "pos": [
             290,
             85
           ],
-          "kind": "end",
+          "kind": "exit",
+          "target": "N1-01",
           "requires": "E03"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            70,
+            56
+          ]
+        },
+        {
+          "kind": "torch",
+          "pos": [
+            236,
+            52
+          ]
+        },
+        {
+          "kind": "rubble",
+          "pos": [
+            156,
+            56
+          ]
+        },
+        {
+          "kind": "glow_mushroom",
+          "pos": [
+            268,
+            140
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "dust",
+          "pos": [
+            160,
+            90
+          ]
+        },
+        {
+          "kind": "spores",
+          "pos": [
+            250,
+            110
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-01",
+      "name": "菌洞入口",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          50,
+          22,
+          44
+        ],
+        [
+          100,
+          120,
+          22,
+          32
+        ],
+        [
+          190,
+          60,
+          24,
+          40
+        ],
+        [
+          250,
+          110,
+          30,
+          20
+        ]
+      ],
+      "goal": "菌洞岔口有投孢的紫菌人，借岩柱遮挡后清理通道。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "← 旧矿通道",
+          "pos": [
+            25,
+            96
+          ],
+          "kind": "exit",
+          "target": "N0-04"
+        },
+        {
+          "id": "rest",
+          "name": "矿口安全灯座 / 休息存档",
+          "pos": [
+            56,
+            138
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "lore",
+          "name": "矿工刻字",
+          "pos": [
+            74,
+            60
+          ],
+          "kind": "lore",
+          "dialogue": "L01"
+        },
+        {
+          "id": "east",
+          "name": "导光间 →",
+          "pos": [
+            292,
+            120
+          ],
+          "kind": "exit",
+          "target": "N1-02",
+          "requires": "E04"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            148,
+            52
+          ]
+        },
+        {
+          "kind": "rubble",
+          "pos": [
+            226,
+            140
+          ]
+        },
+        {
+          "kind": "glow_mushroom",
+          "pos": [
+            62,
+            74
+          ]
+        },
+        {
+          "kind": "crates",
+          "pos": [
+            166,
+            136
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "spores",
+          "pos": [
+            160,
+            80
+          ]
+        },
+        {
+          "kind": "dust",
+          "pos": [
+            260,
+            130
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-02",
+      "name": "导光间",
+      "style": "mine",
+      "spawn": [
+        35,
+        105
+      ],
+      "walls": [
+        [
+          120,
+          40,
+          20,
+          36
+        ],
+        [
+          120,
+          105,
+          20,
+          50
+        ],
+        [
+          215,
+          40,
+          20,
+          30
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "清理盘踞的孢囊，转动三座导光装置对准刻痕，开启深处通路。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "← 菌洞入口",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N1-01"
+        },
+        {
+          "id": "guide_a",
+          "name": "导光装置·上",
+          "pos": [
+            95,
+            55
+          ],
+          "kind": "guide",
+          "dir": 2,
+          "solution": 1,
+          "target": [
+            150,
+            55
+          ],
+          "color": "amber"
+        },
+        {
+          "id": "guide_b",
+          "name": "导光装置·中",
+          "pos": [
+            170,
+            135
+          ],
+          "kind": "guide",
+          "dir": 1,
+          "solution": 0,
+          "target": [
+            170,
+            105
+          ],
+          "color": "moss"
+        },
+        {
+          "id": "guide_c",
+          "name": "导光装置·下",
+          "pos": [
+            280,
+            95
+          ],
+          "kind": "guide",
+          "dir": 2,
+          "solution": 3,
+          "target": [
+            240,
+            95
+          ],
+          "color": "teal"
+        },
+        {
+          "id": "marker_a",
+          "name": "",
+          "pos": [
+            150,
+            55
+          ],
+          "kind": "guide_target",
+          "color": "amber",
+          "label": false,
+          "guide": "guide_a"
+        },
+        {
+          "id": "marker_b",
+          "name": "",
+          "pos": [
+            170,
+            105
+          ],
+          "kind": "guide_target",
+          "color": "moss",
+          "label": false,
+          "guide": "guide_b"
+        },
+        {
+          "id": "marker_c",
+          "name": "",
+          "pos": [
+            240,
+            95
+          ],
+          "kind": "guide_target",
+          "color": "teal",
+          "label": false,
+          "guide": "guide_c"
+        },
+        {
+          "id": "lore",
+          "name": "断掉的灯线",
+          "pos": [
+            60,
+            135
+          ],
+          "kind": "lore",
+          "dialogue": "L02"
+        },
+        {
+          "id": "east",
+          "name": "菌根深处 / 切片边界",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "end",
+          "requires": "P02"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        },
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            132
+          ]
+        },
+        {
+          "kind": "rubble",
+          "pos": [
+            88,
+            90
+          ]
+        },
+        {
+          "kind": "glow_mushroom",
+          "pos": [
+            200,
+            60
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "spores",
+          "pos": [
+            170,
+            80
+          ]
+        },
+        {
+          "kind": "light_pool",
+          "pos": [
+            95,
+            55
+          ]
         }
       ]
     }
@@ -304,19 +790,41 @@
         "岚",
         "我会去看。你留在这盏灯旁，别跟进暗处。"
       ]
+    ],
+    "L01": [
+      [
+        "矿工刻字",
+        "“水退第三格。灯还能亮，别把管子全堵死。”"
+      ],
+      [
+        "岚",
+        "刻痕被反复描过。写它的人，也许早就知道水位在下降。"
+      ]
+    ],
+    "L02": [
+      [
+        "回声",
+        "三束光从这间屋子被引向矿门。有人拆走了导线，把灯座留在这里。"
+      ],
+      [
+        "岚",
+        "不是菌群扯断的。至少这一处，不是。"
+      ]
     ]
   },
   "encounters": {
     "tutorial": {
       "node": "N0-02",
-      "pos": [
-        230,
-        70
+      "positions": [
+        [
+          230,
+          70
+        ]
       ],
       "hp": 24,
       "dummy": true,
-      "requires": "P01",
-      "clear": "tutorial"
+      "requires": "S02",
+      "clear_notice": "教学完成，通道里有菌人靠近。"
     },
     "E01": {
       "node": "N0-02",
@@ -350,8 +858,67 @@
           90
         ]
       ],
+      "members": [
+        [
+          "T5",
+          250,
+          132
+        ]
+      ],
       "requires": "E02",
-      "note": "T1 and T5 are implemented in campaign; complete slice route remains under validation."
+      "clear_notice": "旧矿门重新见光。门后传来菌洞的风声。"
+    },
+    "E04": {
+      "node": "N1-01",
+      "positions": [
+        [
+          150,
+          80
+        ],
+        [
+          230,
+          90
+        ]
+      ],
+      "members": [
+        [
+          "T2",
+          275,
+          65
+        ]
+      ],
+      "requires": "E03",
+      "clear_notice": "菌洞入口安静下来。紫菌人的孢囊不再鼓起。"
+    },
+    "E05": {
+      "node": "N1-02",
+      "positions": [
+        [
+          150,
+          90
+        ],
+        [
+          200,
+          110
+        ]
+      ],
+      "requires": "E04"
+    },
+    "E06": {
+      "node": "N1-02",
+      "positions": [
+        [
+          90,
+          95
+        ],
+        [
+          265,
+          120
+        ]
+      ],
+      "archetype": "T5",
+      "requires": "E05",
+      "clear_notice": "孢囊清理完毕。导光装置可以安全转动了。"
     }
   }
 }
