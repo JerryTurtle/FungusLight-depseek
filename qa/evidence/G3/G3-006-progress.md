@@ -4,7 +4,7 @@
 
 ## 本轮完成
 
-1. **像素中文字体**：接入 SIL OFL 1.1 的方舟像素字体（Ark Pixel 12px，简体中文，2026.10.16 版），关闭抗锯齿、hinting 与子像素定位；游戏 UI 字号统一为 12 的整数倍（24/36）。G2 审核台继续使用 Noto Sans SC，保持 H2 已审工具排版不变。
+1. **像素中文字体**：接入 SIL OFL 1.1 的方舟像素字体 Ark Pixel 12px（简体中文，2026.10.16 版；G3-007 实测缺字后改为缝合像素 Fusion Pixel），关闭抗锯齿、hinting 与子像素定位；游戏 UI 字号统一为 12 的整数倍（24/36）。G2 审核台继续使用 Noto Sans SC，保持 H2 已审工具排版不变。
 2. **底部 RPG 对话框**：新增 `game/scripts/dialogue_box.gd`，对白固定在画面下部（1280×720 时面板 (48,504,1184,176)），含名字牌、逐字打字机、▼ 闪烁、`E / 回车 / 空格 / 左键` 推进、`Tab` 跳过、M1 二选一同框选项页；选项页不能跳过，不会替玩家代选。原居中菜单仅保留标题/暂停/读档/切片边界。
 3. **交互物像素化与待机动效**：新增 `tools/gen_props.py`、`game/assets/props/props_data.json`、`game/scripts/prop_art.gd`。灯座/宝箱/门/水管/灯环/导光装置/矿门改为自绘像素素材；床铺/箱柜/木箱/书架/纸张/菌丛/火把/墙面装置直接复用原图集 `Complete.png` 裁切；叠加火光、缝隙呼吸光、尘埃、孢子、滴水、余烬、灯池等 6 类粒子与 3～6 帧待机动画。低特效减半、减少动态冻结、降低闪光降亮。修复“床铺视觉套用到矿口安全灯座”的映射问题，恢复点为灯具/床两种视觉。
 4. **菌洞切片扩展**：新增 N1-01 菌洞入口与 N1-02 导光间（数据 `prologue.json`）：
@@ -53,7 +53,7 @@
 
 新增：`game/scripts/dialogue_box.gd`、`test_dialogue.gd`、`prop_art.gd`、`test_props.gd`、`route_test.gd`、`capture_tour.gd`、`game/assets/props/props_data.json`、`tools/gen_props.py`、`tools/test_g3_slice.py`、`game/scenes/campaign.tscn`、`capture_tour.tscn`。
 修改：`game/scripts/campaign.gd`、`campaign_state.gd`、`test_campaign.gd`、`game/data/prologue.json`、`game/project.godot`（仅字体/无 autoload）、`game/scenes/boot.gd`、`graybox.gd`、`review.gd`、`settings_panel.gd`、`.gitignore`。
-字体许可与来源：`game/assets/licenses/ArkPixel-OFL.txt`、`SOURCES.md`。
+字体许可与来源：`game/assets/licenses/ArkPixel-OFL.txt`（G3-007 起改为 `FusionPixel-OFL.txt` 与 `FusionPixel-components/`）、`SOURCES.md`。
 
 ## 下一项（G3-007）
 

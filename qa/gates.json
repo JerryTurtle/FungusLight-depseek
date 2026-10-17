@@ -99,7 +99,7 @@
   },
   "G3": {
     "status": "in_progress",
-    "iteration": "G3-006",
+    "iteration": "G3-007",
     "evidence": [
       "qa/evidence/G3/G3-001-save-tests.log",
       "qa/evidence/G3/G3-001-progress.md",
@@ -135,7 +135,27 @@
       "qa/evidence/G3/G3-006-dialogue.png",
       "qa/evidence/G3/G3-006-choice.png",
       "qa/evidence/G3/G3-006-mine-entrance.png",
-      "qa/evidence/G3/G3-006-light-room-solved.png"
+      "qa/evidence/G3/G3-006-light-room-solved.png",
+      "qa/evidence/G3/G3-007-progress.md",
+      "qa/evidence/G3/G3-007-checks.json",
+      "qa/evidence/G3/G3-007-campaign-tests.log",
+      "qa/evidence/G3/G3-007-dialogue-tests.log",
+      "qa/evidence/G3/G3-007-props-tests.log",
+      "qa/evidence/G3/G3-007-route-tests.log",
+      "qa/evidence/G3/G3-007-route.json",
+      "qa/evidence/G3/G3-007-save-tests.log",
+      "qa/evidence/G3/G3-007-enemies-tests.log",
+      "qa/evidence/G3/G3-007-integration.json",
+      "qa/evidence/G3/G3-007-review/checks.json",
+      "qa/evidence/G3/G3-007-framerate-summary.json",
+      "qa/evidence/G3/G3-007-hashes.txt",
+      "qa/evidence/G3/G3-007-storage.png",
+      "qa/evidence/G3/G3-007-rong-label.png",
+      "qa/evidence/G3/G3-007-lore-exit.png",
+      "qa/evidence/G3/G3-007-guides-unsolved.png",
+      "qa/evidence/G3/G3-007-corpse-visible.png",
+      "qa/evidence/G3/G3-007-corpse-gone.png",
+      "qa/evidence/G3/G3-007-package-camp.png"
     ],
     "remaining": [
       "10～15分钟人类首次游玩时长实测（当前AI快速路线89.6秒，不能替代）",
