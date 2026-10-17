@@ -99,7 +99,7 @@
   },
   "G3": {
     "status": "in_progress",
-    "iteration": "G3-005",
+    "iteration": "G3-006",
     "evidence": [
       "qa/evidence/G3/G3-001-save-tests.log",
       "qa/evidence/G3/G3-001-progress.md",
@@ -116,12 +116,31 @@
       "qa/evidence/G3/G3-005-progress.md",
       "qa/evidence/G3/G3-005-campaign-tests.log",
       "qa/evidence/G3/G3-005-enemy-tests.log",
-      "qa/evidence/G3/G3-005-save-tests.log"
+      "qa/evidence/G3/G3-005-save-tests.log",
+      "qa/evidence/G3/G3-006-progress.md",
+      "qa/evidence/G3/G3-006-checks.json",
+      "qa/evidence/G3/G3-006-campaign-tests.log",
+      "qa/evidence/G3/G3-006-dialogue-tests.log",
+      "qa/evidence/G3/G3-006-props-tests.log",
+      "qa/evidence/G3/G3-006-route-tests.log",
+      "qa/evidence/G3/G3-006-route.json",
+      "qa/evidence/G3/G3-006-save-tests.log",
+      "qa/evidence/G3/G3-006-enemies-tests.log",
+      "qa/evidence/G3/G3-006-integration.json",
+      "qa/evidence/G3/G3-006-review/checks.json",
+      "qa/evidence/G3/G3-006-framerate-summary.json",
+      "qa/evidence/G3/G3-006-hashes.txt",
+      "qa/evidence/G3/G3-006-camp.png",
+      "qa/evidence/G3/G3-006-dialogue.png",
+      "qa/evidence/G3/G3-006-choice.png",
+      "qa/evidence/G3/G3-006-mine-entrance.png",
+      "qa/evidence/G3/G3-006-light-room-solved.png"
     ],
     "remaining": [
-      "完整矿道与10～15分钟正常输入路线实测",
-      "投孢/冲锋/精英主线应用与A15全场景压力",
-      "A16～A18及C01/C03完整恢复/奖励/流程验收"
+      "10～15分钟人类首次游玩时长实测（当前AI快速路线89.6秒，不能替代）",
+      "完整矿道/更多有效内容与T3/精英主线连续应用、A15全场景压力",
+      "整段跳过/奖励/任务/资源联合回读与坏档恢复的引擎级用例",
+      "真人可读入口、截图与最终人类验收"
     ]
   },
   "G4": {

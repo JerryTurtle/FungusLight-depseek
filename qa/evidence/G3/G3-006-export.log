@@ -1,0 +1,140 @@
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+savepack: begin: 打包中 steps: 102
+	savepack: step 2: 保存文件：res://.godot/imported/cast.wav-890e81f3fb16de54418f60cfbccbedfa.sample
+	savepack: step 2: 保存文件：res://assets/audio/cast.wav.import
+	savepack: step 3: 保存文件：res://.godot/imported/hit.wav-96dc477cdf4a42f381370dba6e3f75ce.sample
+	savepack: step 3: 保存文件：res://assets/audio/hit.wav.import
+	savepack: step 4: 保存文件：res://.godot/imported/hurt.wav-e638edfaf88190ba3ffee0adc26b7375.sample
+	savepack: step 4: 保存文件：res://assets/audio/hurt.wav.import
+	savepack: step 6: 保存文件：res://.godot/imported/rain_impact.wav-8936bd2889dc13dda1f944d5373592cb.sample
+	savepack: step 6: 保存文件：res://assets/audio/rain_impact.wav.import
+	savepack: step 7: 保存文件：res://.godot/imported/shell_break.wav-05c9ff89a53dae1340cab1647031b579.sample
+	savepack: step 7: 保存文件：res://assets/audio/shell_break.wav.import
+	savepack: step 9: 保存文件：res://.godot/imported/shield_hit.wav-05ba262d19df9d0b3446e89289a4e19d.sample
+	savepack: step 9: 保存文件：res://assets/audio/shield_hit.wav.import
+	savepack: step 10: 保存文件：res://.godot/imported/swing.wav-794de6e16fd48d414e484bd2479a4c9c.sample
+	savepack: step 10: 保存文件：res://assets/audio/swing.wav.import
+	savepack: step 12: 保存文件：res://.godot/imported/ArkPixel12px-zh_hans.ttf-fd1cff0c9b808576af157e9cdaaaa5c1.fontdata
+	savepack: step 12: 保存文件：res://assets/fonts/ArkPixel12px-zh_hans.ttf.import
+	savepack: step 13: 保存文件：res://.godot/imported/NotoSansSC.ttf-53e7d2951cb723449d16fcecb813db38.fontdata
+	savepack: step 13: 保存文件：res://assets/fonts/NotoSansSC.ttf.import
+	savepack: step 15: 保存文件：res://.godot/imported/Characters.png-ea0629e367cb6150fac3d38ef51aad30.ctex
+	savepack: step 15: 保存文件：res://assets/original/Characters/Characters.png.import
+	savepack: step 16: 保存文件：res://.godot/imported/Cleric.png-8db2fdf301289a2f9cb9f8b53676df60.ctex
+	savepack: step 16: 保存文件：res://assets/original/Characters/Cleric.png.import
+	savepack: step 17: 保存文件：res://.godot/imported/Fungus - Ghost.png-fc151fb46a87ad1aee671364006bfd9d.ctex
+	savepack: step 17: 保存文件：res://assets/original/Characters/Fungus - Ghost.png.import
+	savepack: step 19: 保存文件：res://.godot/imported/Fungus - King.png-76cb5f8b5bb0ec9fa44130cb68333463.ctex
+	savepack: step 19: 保存文件：res://assets/original/Characters/Fungus - King.png.import
+	savepack: step 20: 保存文件：res://.godot/imported/Fungus - red.png-0d1f688447115e26289839ab958d9082.ctex
+	savepack: step 20: 保存文件：res://assets/original/Characters/Fungus - red.png.import
+	savepack: step 22: 保存文件：res://.godot/imported/Fungus - violet.png-30251ef0e24a1aacec48e1597a37d39e.ctex
+	savepack: step 22: 保存文件：res://assets/original/Characters/Fungus - violet.png.import
+	savepack: step 23: 保存文件：res://.godot/imported/Refugee 1.png-b28b669533789993c9f2eae999455e2a.ctex
+	savepack: step 23: 保存文件：res://assets/original/Characters/Refugee 1.png.import
+	savepack: step 25: 保存文件：res://.godot/imported/Refugee 2.png-2f1557d267467502c49f249068dd11c1.ctex
+	savepack: step 25: 保存文件：res://assets/original/Characters/Refugee 2.png.import
+	savepack: step 26: 保存文件：res://.godot/imported/Refugee 3.png-33d0170948b33a89aa2cff5b87892d8d.ctex
+	savepack: step 26: 保存文件：res://assets/original/Characters/Refugee 3.png.import
+	savepack: step 28: 保存文件：res://.godot/imported/Refugee 4.png-6f384949aa7f503fb14d41b26015c9c6.ctex
+	savepack: step 28: 保存文件：res://assets/original/Characters/Refugee 4.png.import
+	savepack: step 29: 保存文件：res://.godot/imported/Sewers monster - ghost.png-00a0acec3a9cb765552037f05b48dc6f.ctex
+	savepack: step 29: 保存文件：res://assets/original/Characters/Sewers monster - ghost.png.import
+	savepack: step 30: 保存文件：res://.godot/imported/Sewers monster.png-ea181a771b4781b31d35857673b2f4e8.ctex
+	savepack: step 30: 保存文件：res://assets/original/Characters/Sewers monster.png.import
+	savepack: step 32: 保存文件：res://.godot/imported/Complete.png-0e6ea8c6a64f3a756fca338a7ada0955.ctex
+	savepack: step 32: 保存文件：res://assets/original/Tilesets/Complete.png.import
+	savepack: step 33: 保存文件：res://assets/props/props_data.json
+	savepack: step 35: 保存文件：res://data/actions.json
+	savepack: step 36: 保存文件：res://data/enemies.json
+	savepack: step 38: 保存文件：res://data/prologue.json
+	savepack: step 39: 保存文件：res://data/review_manifest.json
+	savepack: step 41: 保存文件：res://.godot/exported/133200997/export-6c5725b767360216a6e1743087f4316b-asset_preview.scn
+	savepack: step 42: 保存文件：res://.godot/exported/133200997/export-c3c40bb4d42d26c7c74cc88080d6723d-boot.scn
+	savepack: step 44: 保存文件：res://.godot/exported/133200997/export-98d96d2d684bec82d8fe7046ef0bf070-campaign.scn
+	savepack: step 45: 保存文件：res://.godot/exported/133200997/export-b74b1e12ec48c2377c57235878138771-capture_tour.scn
+	savepack: step 46: 保存文件：res://.godot/exported/133200997/export-3ad5c15c4f3250da0cc7c1af1770d85f-main.scn
+	savepack: step 48: 保存文件：res://scripts/asset_preview.gdc
+	savepack: step 49: 保存文件：res://scripts/boot.gdc
+	savepack: step 51: 保存文件：res://scripts/campaign.gdc
+	savepack: step 52: 保存文件：res://scripts/campaign_combat.gdc
+	savepack: step 54: 保存文件：res://scripts/campaign_state.gdc
+	savepack: step 55: 保存文件：res://scripts/capture_tour.gdc
+	savepack: step 57: 保存文件：res://scripts/combat_audio.gdc
+	savepack: step 58: 保存文件：res://scripts/combat_feedback.gdc
+	savepack: step 59: 保存文件：res://scripts/combat_model.gdc
+	savepack: step 61: 保存文件：res://scripts/dialogue_box.gdc
+	savepack: step 62: 保存文件：res://scripts/enemy_arena.gdc
+	savepack: step 64: 保存文件：res://scripts/enemy_warnings.gdc
+	savepack: step 65: 保存文件：res://scripts/graybox.gdc
+	savepack: step 67: 保存文件：res://scripts/grid_navigation.gdc
+	savepack: step 68: 保存文件：res://scripts/integration_test.gdc
+	savepack: step 70: 保存文件：res://scripts/main.gdc
+	savepack: step 71: 保存文件：res://scripts/presentation_settings.gdc
+	savepack: step 73: 保存文件：res://scripts/prop_art.gdc
+	savepack: step 74: 保存文件：res://scripts/replay_driver.gdc
+	savepack: step 75: 保存文件：res://scripts/review.gdc
+	savepack: step 77: 保存文件：res://scripts/review_demo.gdc
+	savepack: step 78: 保存文件：res://scripts/review_store.gdc
+	savepack: step 80: 保存文件：res://scripts/route_test.gdc
+	savepack: step 81: 保存文件：res://scripts/save_store.gdc
+	savepack: step 83: 保存文件：res://scripts/settings_panel.gdc
+	savepack: step 84: 保存文件：res://scripts/stress_driver.gdc
+	savepack: step 86: 保存文件：res://scripts/stress_review.gdc
+	savepack: step 87: 保存文件：res://scripts/sweep.gdc
+	savepack: step 88: 保存文件：res://scripts/test_campaign.gdc
+	savepack: step 90: 保存文件：res://scripts/test_combat.gdc
+	savepack: step 91: 保存文件：res://scripts/test_dialogue.gdc
+	savepack: step 93: 保存文件：res://scripts/test_enemies.gdc
+	savepack: step 94: 保存文件：res://scripts/test_props.gdc
+	savepack: step 96: 保存文件：res://scripts/test_review.gdc
+	savepack: step 97: 保存文件：res://scripts/test_save.gdc
+	savepack: step 99: 保存文件：res://scripts/user_storage.gdc
+	savepack: step 100: 保存文件：res://scripts/world_art.gdc
+	savepack: step 100: 保存文件：res://scenes/asset_preview.tscn.remap
+	savepack: step 100: 保存文件：res://scenes/boot.tscn.remap
+	savepack: step 100: 保存文件：res://scenes/campaign.tscn.remap
+	savepack: step 100: 保存文件：res://scenes/capture_tour.tscn.remap
+	savepack: step 100: 保存文件：res://scenes/main.tscn.remap
+	savepack: step 100: 保存文件：res://scripts/asset_preview.gd.remap
+	savepack: step 100: 保存文件：res://scripts/boot.gd.remap
+	savepack: step 100: 保存文件：res://scripts/campaign.gd.remap
+	savepack: step 100: 保存文件：res://scripts/campaign_combat.gd.remap
+	savepack: step 100: 保存文件：res://scripts/campaign_state.gd.remap
+	savepack: step 100: 保存文件：res://scripts/capture_tour.gd.remap
+	savepack: step 100: 保存文件：res://scripts/combat_audio.gd.remap
+	savepack: step 100: 保存文件：res://scripts/combat_feedback.gd.remap
+	savepack: step 100: 保存文件：res://scripts/combat_model.gd.remap
+	savepack: step 100: 保存文件：res://scripts/dialogue_box.gd.remap
+	savepack: step 100: 保存文件：res://scripts/enemy_arena.gd.remap
+	savepack: step 100: 保存文件：res://scripts/enemy_warnings.gd.remap
+	savepack: step 100: 保存文件：res://scripts/graybox.gd.remap
+	savepack: step 100: 保存文件：res://scripts/grid_navigation.gd.remap
+	savepack: step 100: 保存文件：res://scripts/integration_test.gd.remap
+	savepack: step 100: 保存文件：res://scripts/main.gd.remap
+	savepack: step 100: 保存文件：res://scripts/presentation_settings.gd.remap
+	savepack: step 100: 保存文件：res://scripts/prop_art.gd.remap
+	savepack: step 100: 保存文件：res://scripts/replay_driver.gd.remap
+	savepack: step 100: 保存文件：res://scripts/review.gd.remap
+	savepack: step 100: 保存文件：res://scripts/review_demo.gd.remap
+	savepack: step 100: 保存文件：res://scripts/review_store.gd.remap
+	savepack: step 100: 保存文件：res://scripts/route_test.gd.remap
+	savepack: step 100: 保存文件：res://scripts/save_store.gd.remap
+	savepack: step 100: 保存文件：res://scripts/settings_panel.gd.remap
+	savepack: step 100: 保存文件：res://scripts/stress_driver.gd.remap
+	savepack: step 100: 保存文件：res://scripts/stress_review.gd.remap
+	savepack: step 100: 保存文件：res://scripts/sweep.gd.remap
+	savepack: step 100: 保存文件：res://scripts/test_campaign.gd.remap
+	savepack: step 100: 保存文件：res://scripts/test_combat.gd.remap
+	savepack: step 100: 保存文件：res://scripts/test_dialogue.gd.remap
+	savepack: step 100: 保存文件：res://scripts/test_enemies.gd.remap
+	savepack: step 100: 保存文件：res://scripts/test_props.gd.remap
+	savepack: step 100: 保存文件：res://scripts/test_review.gd.remap
+	savepack: step 100: 保存文件：res://scripts/test_save.gd.remap
+	savepack: step 100: 保存文件：res://scripts/user_storage.gd.remap
+	savepack: step 100: 保存文件：res://scripts/world_art.gd.remap
+	savepack: step 100: 保存文件：res://.godot/global_script_class_cache.cfg
+	savepack: step 100: 保存文件：res://.godot/uid_cache.bin
+	savepack: step 100: 保存文件：res://project.binary
+savepack: end

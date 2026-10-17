@@ -4,20 +4,19 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 ## 1. 当前状态（2026-10-17）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3 开发中。** 当前已完成 G3-005 序章首段与敌人专项（四节点、剧情/机关/M1、存档接入）；营地—矿道完整切片、Boss、完整主线、时长验证与最终验收尚未完成。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3-006 开发中。** 当前已完成 G3-006 像素字体/底部对话框/交互物动效、N1-01 菌洞入口与 N1-02 导光间切片、P02 三导光机关、数据驱动遭遇与正常输入快速路线；营地—矿道完整时长、T3/精英主线连续应用、A15 压力、Boss、完整主线与最终验收尚未完成。
 
-- 仓库：[JerryTurtle/FungusLight](https://github.com/JerryTurtle/FungusLight)。
-- 接续分支：`codex/g3-save-foundation`，存档基线提交 `2b4bd23`（后续G3提交以git log为准）。`main` 目前仍是 G2 导入基线 `74dd0f6`，接手时先核对分支。
-- **默认运行仍是 G2 审核台，不是主线。** 入口为 `boot.tscn → boot.gd → review.gd`；特定测试参数转入 `graybox.gd`。
+- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
+- **默认运行仍是 G2 审核台，不是主线。** 入口为 `boot.tscn → boot.gd → review.gd`；`FungusLight.exe -- --campaign` 进入 G3 序章—菌洞切片（`deliverables/G3-006/Play-Prologue.cmd` 若由 build.ps1 生成则直接进入）。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
-- **下一项 G3-006：正常输入全路线实测、矿道扩展及完整切片验收。** 文档维护不改变游戏构建编号。
+- **下一项 G3-007：扩充矿道有效内容并按真实人类操作记录分项时间，目标 10～15 分钟；接 T3/精英与 A15 压力；补整段跳过/奖励回读/坏档恢复；G3 完成前不标 passed。** 文档维护不改变游戏构建编号。
 
 状态依据：用户最新要求、[AGENTS.md](AGENTS.md)、[qa/gates.json](qa/gates.json)和[game/DEV_STATE.md](game/DEV_STATE.md)的最新条目。旧报告中的“待H2/禁止G3”是历史状态，已被批准记录取代。发现文件与实际Git状态不符时先核对，不自行推定完成。
 
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
 ### 接续快照：已实现功能与剩余工作（2026-10-17）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G3-005，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3进行中，G4～G6未开始。当前分支codex/g3-save-foundation；运行入口仍是G2审核台。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G3-006，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3进行中，G4～G6未开始。当前分支main；运行入口仍是G2审核台，`-- --campaign`进入序章—菌洞切片。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
 
 #### 已实现清单（接续时直接复用）
 
@@ -39,6 +38,9 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 | I14 审核反馈/存储 | 问题截图、项目状态与文字保存/重读、Markdown/JSON导出、复制/打开目录、配置和素材哈希；PC日志启动修复与剪贴板占用重试 | review_store.gd、user_storage.gd；审核反馈与正式存档分开，不伪造或改写用户人工结论 |
 | I15 存档基础 | 3手动槽＋自动槽、六项安全条件缺失即拒绝、版本/外层结构/数值检查、顶层白名单、临时写入/回读/替换、旧有效档备份、手动覆盖确认、显式备份恢复 | save_store.gd；损坏主档不污染好备份；这是独立模块，未接UI、正式世界或死亡恢复 |
 | I16 工具/交接 | 构建、模型/原生集成、帧率回放、负载/内存采样、包验证、源码快照、资源审计；Git功能分支/标准提交、接续记录 | tools/qa_paths.py按阶段输出qa/evidence/G0～G6；历史原文保留、迁移表记录旧路径和哈希；本机副本放qa/local |
+| I17 像素字体/底部对话框 | 方舟像素字体12px（OFL，关闭抗锯齿/hinting/子像素，字号12/24/36）；底部RPG对话框含名字牌、打字机、▼、E/回车/空格/左键推进、Tab跳过、M1选项页且不能跳过代选；审核台保留Noto | dialogue_box.gd、test_dialogue.gd（167项）；1280×720面板(48,504,1184,176)；无立绘/历史/语音 |
+| I18 交互物像素与待机粒子 | 自绘灯座/宝箱/门/水管/灯环/导光/矿门；床/柜/木箱/书架/纸张/菌丛/火把/墙面板复用Complete.png裁切；6类粒子与3～6帧待机；低特效减半、减少动态冻结 | prop_art.gd、props_data.json、tools/gen_props.py、test_props.gd（2089项）；导光颜色字段暂未做三色键控 |
+| I19 G3-006切片/路线 | N1-01菌洞入口、N1-02导光间、P02三导光机关、T2主线、L01/L02回声、数据驱动遭遇与出生避让、重叠脱困；引擎输入快速路线 | prologue.json、campaign.gd、campaign_state.gd、route_test.gd、test_g3_slice.py；快速路线89.6秒，不是人类10～15分钟 |
 
 #### 已验证范围与不可扩大解释的结论
 
@@ -46,7 +48,8 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 - G2发布负载900.003秒：标准/低档平均59.90/60.00FPS；标准最大帧148.63ms、4帧超过50ms，低档最大25.00ms；节点112稳定，最后5分钟私有内存364.02～364.66MiB。不能仅凭平均帧率宣称无长帧或无限时无泄漏；压力二进制与最终包的视觉/剪贴板收尾差异见G2报告。
 - 中文干净包及普通环境启动、后备目录保存/重启恢复已通过。原生集成使用Godot输入事件，不是OS键鼠自动化。H2是之后来自真实用户的整体批准，不是自动化给出的主观评价。
 - G3存档65项真实Godot磁盘检查，包括槽隔离、非法/缺失字段、覆盖确认、版本不兼容、损坏恢复、资源/奖励共同回退、写入失败保留原档及遗留临时文件。未进行断电级事务保证，也未完成A17整体验收。
-- 证据位置：qa/evidence/G2/G2-007-gate-report.md、qa/evidence/G3/G3-001-progress.md、qa/H2-approval.md。根qa/gates.json的顶层build_id仍是G2审核基线；G3进度看G3.iteration。无需从旧报告的“待H2”重新开始。
+- G3-006：129序章、167对话框、2089交互物、35敌人、65存档、8路线检查通过；原生导出118、审核台50、30/60/144回放360步一致；快速路线89.6秒/0死亡。截图为真实窗口渲染；路线为引擎输入注入（非OS键鼠）且对白停留为模型化，不构成人类时长或真人验收。
+- 证据位置：qa/evidence/G2/G2-007-gate-report.md、qa/evidence/G3/G3-006-progress.md、qa/H2-approval.md。根qa/gates.json的顶层build_id仍是G2审核基线；G3进度看G3.iteration。无需从旧报告的“待H2”重新开始。
 
 
 #### 当前动作参数（来自actions.json，不是未验证的新调参）
@@ -91,7 +94,7 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 #### 每轮必须保留的操作规则
 
-先检查git status/branch/log，复用既有成果；本机Godot4.3、Windows导出模板、Python3.13，运行入口game/project.godot。核心指令：`python tools/test_save.py <新证据编号>`；战斗改动跑test_combat.py；先`./tools/build.ps1 -BuildId <新编号>`再跑test_export_input.py/test_review.py/replay_framerates.py同编号。test_combat输出编号仍固定，改动测试时先避免覆盖历史日志。工具含本机绝对引擎路径，换机逐项核实；不运行历史finalize_g2.py重置H2和G3。
+先检查git status/branch/log，复用既有成果；本机Godot4.3、Windows导出模板、Python3.13，运行入口game/project.godot。核心指令：`python tools/test_g3_slice.py <新证据编号>`（切片全套）；存档改动跑test_save.py；战斗改动跑test_combat.py；先`./tools/build.ps1 -BuildId <新编号>`再跑test_export_input.py/test_review.py/replay_framerates.py同编号。test_combat输出编号仍固定，改动测试时先避免覆盖历史日志。工具含本机绝对引擎路径，换机逐项核实；不运行历史finalize_g2.py重置H2和G3。
 
 每轮真实验证→更新README与本策划的同步快照、DEV_STATE和必要门槛→Conventional Commits提交→推送功能分支→核对远端。未完/失败如实记录，不能删旧证据或提交个人档；额度不可用时等待，不绕过限额。自动化automation属于原聊天环境，不随Git克隆继承。两份文档足够判断交接内容，实际修改前仍应打开对应代码和证据核实。
 
@@ -107,9 +110,14 @@ R治疗/三瓶药剂已实现并接入休息/存档：36步完成、恢复35，�
 
 campaign_combat.gd＋enemies.json已实现T2/T3/T4/T5/EL1原型与孢毒，专项入口`-- --enemy-arena`，35项机制检查通过；E03已加入T5，主线不显示未解锁灯雨圈。78序章/549模型/118原生输入与30/60/144回放通过，截图见qa/evidence/G3/G3-004-*.png。T2/T3/EL1尚在独立专项场；全地图A15、完整主线闭环和10～15分钟未验收，T6/EL2/Boss未开发。下一项G3-005优先正常输入路线回放、退出/存档语义与提示修复，不把短序章标完整G3。
 
-#### G3-005 最新状态（接续优先）
+#### G3-005 增量
 
 安全存档现在拒绝活动孢毒和未知进度字段；关闭窗口有未保存提示、取消退出恢复对话且不代选M1。83项序章、35项敌人、65项存档检查通过。可直接运行deliverables/G3-005/Play-Prologue.cmd，敌人专项用Enemy-Arena.cmd；exe无参数仍进入G2审核台。源码与包对应G3-005，报告qa/evidence/G3/G3-005-progress.md。下一项G3-006：正式输入全路线回放/耗时实测、补矿道及新敌人连续应用、完善A15～A18/C01/C03；四个短序章房间不等于10～15分钟完整切片，G3仍进行中。
+
+#### G3-006 最新状态（接续优先）
+
+已接入方舟像素字体（SIL OFL 1.1；游戏UI只使用12/24/36字号，审核台保留Noto）、底部RPG对话框（名字牌/打字机/▼/Tab跳过/M1同框选项且不可跳过代选）、交互物像素素材与待机粒子（自绘7类＋Complete.png家具裁切＋6类环境粒子，尊重低特效/减少动态/降低闪光）、N1-01菌洞入口与N1-02导光间、P02三导光装置机关、T2投孢者主线应用、L01/L02回声对白、数据驱动遭遇与出生/重叠保护。`tools/test_g3_slice.py`统一跑129序章/65存档/35敌人/167对话/2089素材/8路线检查，全部失败0；原生导出118、审核台50、30/60/144回放一致。正常输入快速路线N0-01→N1-02在引擎事件下完成：89.6秒、23段、0死亡、min HP 66、12闪避、1治疗（对白按0.9秒/句模型化），不是人类首次游玩时长。包deliverables/G3-006，报告qa/evidence/G3/G3-006-progress.md。仍未完成：10～15分钟人类耗时、T3/精英主线连续应用、A15全场景压力、整段跳过/奖励联合回读的引擎用例与真人验收；遭遇字段4→7使G3-005旧开发档被显式拒绝。下一项G3-007，G3不得标passed。
+
 <!-- HANDOFF_SNAPSHOT_END -->
 
 ## 2. 接手后的第一步
@@ -137,10 +145,10 @@ cd FungusLight
 
 ## 3. 下一轮可直接执行的工作
 
-1. 先落实序章切片的节点施工表、机关状态表与完整对白表：目标操作、成功条件、出口条件、失败反馈、提示与重置必须明确，不先堆空地图。
-2. 复用现有战斗与绘制，接入营地—矿道、S01/S02及切片所需S03、净光解锁和M1真实互斥选择。跳过对白不能自动解机关/代选奖励，事件提交须幂等。
-3. 将 `save_store.gd` 接入真实世界：安全条件由战斗/地图计算，禁止固定传true；补节点/技能/任务ID语义及可走落点校验、保存/覆盖确认/备份恢复UI、死亡恢复和继续游戏。任务、奖励与资源同快照恢复。
-4. 完成投孢、冲锋、精英专项场与 A15～A18、C01/C03。G3目标是正常输入可走通的 **10～15分钟营地＋矿道切片**，记录分项实际耗时；模块测试通过不能代替完整路线。
+1. 扩充矿道有效内容（新房间/遭遇/机关组合）并用真实人类操作实测分项耗时，目标 10～15 分钟；不靠拖速、加血或强制文本等待。
+2. 把 T3 与经策划允许的精英原型接入连续主线，补窄口、活动区、动态门、环形障碍/拥堵等 A15 专项压力。
+3. 补整段 Tab 跳过、任务/奖励/资源联合回读、坏档显式恢复、继续/死亡恢复的引擎级用例；检查导出包进入序章与敌人专项的入口。
+4. 完成上述并形成真人可读证据后更新门槛；在此之前 G3 保持 in_progress，G4 不启动。
 
 G4再扩展五章、两结局与至少一小时有效主线，G5/G6依策划验证和交付。章内细节自主推进；已审体验实质改变才按复审规则处理。
 
@@ -154,7 +162,10 @@ G4再扩展五章、两结局与至少一小时有效主线，G5/G6依策划验�
 | `game/scripts/world_art.gd` | 已审角色与握杖、图块绘制；禁止再加虚构手臂 |
 | `game/scripts/combat_feedback.gd`、`combat_audio.gd` | 正式事件驱动的视觉/声音反馈 |
 | `game/scripts/review.gd`、`review_demo.gd`、`review_store.gd` | G2审核台、演示与个人反馈 |
-| `game/scripts/save_store.gd` | G3新存档模块，尚未接主线 |
+| `game/scripts/save_store.gd` | G3存档模块（槽位/白名单/临时写入/备份恢复），已接序章切片 |
+| `game/scripts/campaign.gd`、`campaign_state.gd`、`campaign_combat.gd`、`game/data/prologue.json` | G3序章—菌洞切片：节点/交互/机关/敌人/存档适配；内容以JSON为准 |
+| `game/scripts/dialogue_box.gd`、`prop_art.gd`、`game/assets/props/props_data.json` | 底部RPG对话框；交互物自绘像素/图集家具/待机粒子 |
+| `game/scripts/route_test.gd`、`capture_tour.gd` | 正常输入快速路线回放；证据截图巡览（开发用，不进入正式主线） |
 | `game/scripts/user_storage.gd`、`presentation_settings.gd` | 可写用户目录选择、独立设置 |
 | `game/scripts/test_*.gd`、`integration_test.gd` | 引擎内专项验证，不是正式内容 |
 | `game/scripts/main.gd` | 早期G0展示，**不是默认入口** |
@@ -169,7 +180,7 @@ G4再扩展五章、两结局与至少一小时有效主线，G5/G6依策划验�
 
 ## 5. 运行与环境
 
-本机工作区 `C:/Users/shandian/Documents/AI/gpt_test`；Godot `4.3.stable.official.77dcf97d8`，Compatibility渲染器；Python 3.13。核心测试用Python标准库；素材工具需Pillow，其他工具依赖以各脚本imports为准。
+本机工作区 `C:/Users/shandian/Documents/AI/FungusLight-depseek`；Godot `4.3.stable.official.77dcf97d8`，Compatibility渲染器；Python 3.13 + Pillow（素材生成）。核心测试用Python标准库；其他工具依赖以各脚本imports为准。
 
 ```powershell
 $GodotExe = 'C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_console.exe'
@@ -186,34 +197,38 @@ $GodotExe = 'C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_con
 
 | 改动 | 命令 | 已有基线 |
 | --- | --- | --- |
-| 存档 | `python tools/test_save.py` | G3-001：65项实际Godot磁盘读写检查 |
+| G3切片全套 | `python tools/test_g3_slice.py G3-006` | 129序章/65存档/35敌人/167对话/2089素材/8路线，失败0 |
+| 存档 | `python tools/test_save.py <BuildId>` | G3-001：65项实际Godot磁盘读写检查 |
 | 战斗逻辑 | `python tools/test_combat.py` | 549项模型检查 |
-| 原生输入/场景 | `python tools/test_export_input.py <BuildId>` | G2-007：118项 |
-| 审核台 | `python tools/test_review.py <BuildId>` | G2-007：50项 |
+| 原生输入/场景 | `python tools/test_export_input.py <BuildId>` | G3-006：118项 |
+| 审核台 | `python tools/test_review.py <BuildId>` | G3-006：50项 |
 | 时序/渲染接线 | `python tools/replay_framerates.py <BuildId>` | 30/60/144上限逐步状态一致 |
 | 性能 | `python tools/stress_review.py <BuildId>` | G2-007：900秒负载，见最终报告 |
 
-原生测试先构建相同编号。例如未来G3-002实现后：
+原生测试先构建相同编号。例如本轮切片：
 
 ```powershell
-./tools/build.ps1 -BuildId G3-002
-python tools/test_export_input.py G3-002
+./tools/build.ps1 -BuildId G3-006
+python tools/test_export_input.py G3-006
+python tools/test_g3_slice.py G3-006
 ```
 
 产物为 `deliverables/<BuildId>/FungusLight.exe`。必须显式指定新编号，默认旧编号会覆盖历史产物。`test_combat.py`固定写`qa/evidence/G1/g1-batch-tests.log`，`test_save.py`无参数时写`qa/evidence/G3/G3-001-save-tests.log`，传新编号可另存；新迭代先调整输出编号或另存新证据，再检查diff。不要把示例编号或审核台导出当作主线完成。
 
 **不要直接运行 `tools/finalize_g2.py`**：它是历史收尾脚本，会重写报告/门槛。`test_review_package.py`固定用本机G2包，压力汇总也有固定G2路径；`snapshot_source.py`依赖对应报告存在。先读[工具索引](tools/README.md)与脚本再执行。
 
-最新证据：[G2最终报告](qa/evidence/G2/G2-007-gate-report.md)、[G3存档报告](qa/evidence/G3/G3-001-progress.md)。存档测试中的`blocked/subdir`创建失败是有意错误注入，65项检查通过；其他错误不能一概忽略。
+最新证据：[G2最终报告](qa/evidence/G2/G2-007-gate-report.md)、[G3-006报告](qa/evidence/G3/G3-006-progress.md)、[G3-006检查汇总](qa/evidence/G3/G3-006-checks.json)。存档测试中的`blocked/subdir`创建失败是有意错误注入，65项检查通过；其他错误不能一概忽略。
 
 ## 7. 已知限制与必须保留的决定
 
-- H2冻结角色尺度、握持、核心时序、命中范围、相机/特效体验，实质改变要复审受影响项；普通文案/路径整理不需重审。
-- 存档只完成外层结构与资源校验，内层ID语义、地图落点、菜单和世界接入仍待实现。A17及G3整体不能置passed。
+- H2冻结角色尺度、握持、核心时序、命中范围、相机/特效体验，实质改变要复审受影响项；普通文案/路径整理不需重审。G3-006 UI/字体/交互物改动不改变这些核心体验。
+- 存档外层结构与切片内ID/落点已接，但完整章节ID语义、菜单与世界的全部恢复路径仍待实现；A17及G3整体不能置passed。
+- G3-006快速路线89.6秒是引擎输入下的AI最优路线（对白0.9秒/句模型化），不是人类首次游玩时长；10～15分钟目标未实测，不能按AI耗时宣称达标。
+- T3/EL1仍在敌人专项场；仅T2进入主线连续应用。A15全场景压力、完整矿道、Boss与G4～G6未完成。
 - 部分系统用户目录在本机不可写；`user_storage.gd`寻找可写后备位置，可能落到exe旁`用户数据/`。不要改系统ACL，不提交个人设置/反馈/存档。
-- 原生集成注入Godot事件，**不是系统键鼠自动化**；截图、回放、模型测试分别声明覆盖范围。
-- 灰盒调试键与测试入口需在正式发布前隐藏禁用。完整主线、Boss、时长与G6均未完成。
-- 根目录Apache-2.0不重新授权第三方素材。字体遵循OFL；用户原素材许可待核实，见[来源登记](game/assets/licenses/SOURCES.md)。
+- 原生集成注入Godot事件，**不是系统键鼠自动化**；截图、回放、模型测试分别声明覆盖范围；截图由真实窗口渲染，路线回放不等同真人手测。
+- 灰盒调试键、`route_test.gd`/`capture_tour.gd`与`--enemy-arena`等测试入口需在正式发布前隐藏禁用。
+- 根目录Apache-2.0不重新授权第三方素材。字体遵循OFL（方舟像素字体许可全文随包）；用户原素材许可待核实，见[来源登记](game/assets/licenses/SOURCES.md)。
 
 ## 8. 每轮交付与中断接续
 
