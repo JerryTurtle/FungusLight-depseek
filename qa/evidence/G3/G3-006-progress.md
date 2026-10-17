@@ -29,7 +29,7 @@
 | 审核台导出回归 | 50 项通过 | `G3-006-review/checks.json` |
 | 30/60/144 回放 | 360 物理步一致，暂停冻结 | `G3-006-framerate-summary.json`、`G3-006-replay-*` |
 
-截图：`G3-006-title/camp/storage/dialogue/choice/dialogue-lore/mine-corridor/mine-entrance/light-room-enemies/light-room-solved/light-room-open.png`。
+截图：`G3-006-title/camp/storage/dialogue/choice/dialogue-lore/mine-corridor/mine-entrance/light-room-enemies/light-room-solved/light-room-open.png`；另用 `deliverables/G3-006/FungusLight.exe -- --campaign --campaign-capture` 从导出包实机截取 `G3-006-package-camp.png`，与源码窗口画面一致。
 素材合成与逐件预览：`qa/evidence/G3/props/`（`props_world_mock.png` 为首选）。
 
 ## A15～A18 / C01 / C03 覆盖
