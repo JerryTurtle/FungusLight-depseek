@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "moved_files_hash_verified": 256,
+  "gate_evidence_paths": 66,
+  "current_markdown_links": 22,
+  "python_syntax_files": 22,
+  "unchanged_game_files": 75,
+  "godot_save_checks": 65,
+  "godot_log": "qa/evidence/G3/G3-001-layout-save-tests.log",
+  "scope": "Directory migration, tool output routing and handoff documentation. No gameplay change."
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "path": "game/assets/audio/cast.wav",
+    "sha256": "3506891c97a493abe9b3a8f5e80b888b2e9c88fdb32bf86e72d63cf01313574d",
+    "channels": 1,
+    "sample_rate": 44100,
+    "bits": 16,
+    "duration_seconds": 0.46,
+    "source": "tools/generate_sfx.py; original procedural synthesis v1"
+  },
+  {
+    "path": "game/assets/audio/hit.wav",
+    "sha256": "9bc8b9c3011552f7366cc189fc85d924fa13a382bbffcf56e2cf2f3ab797e41b",
+    "channels": 1,
+    "sample_rate": 44100,
+    "bits": 16,
+    "duration_seconds": 0.16,
+    "source": "tools/generate_sfx.py; original procedural synthesis v1"
+  },
+  {
+    "path": "game/assets/audio/hurt.wav",
+    "sha256": "233afb9259b5f516d0f952eb02402dc4651d14c9b98a78121af74a5d0a074bdc",
+    "channels": 1,
+    "sample_rate": 44100,
+    "bits": 16,
+    "duration_seconds": 0.25,
+    "source": "tools/generate_sfx.py; original procedural synthesis v1"
+  },
+  {
+    "path": "game/assets/audio/swing.wav",
+    "sha256": "0f827e3e11738518b9a4ee7ac7729befb77c8f4371916a9e3c8f047353bcadf4",
+    "channels": 1,
+    "sample_rate": 44100,
+    "bits": 16,
+    "duration_seconds": 0.18,
+    "source": "tools/generate_sfx.py; original procedural synthesis v1"
+  },
+  {
+    "path": "game/assets/original/Tilesets/Complete.png",
+    "sha256": "7c3c78a09535bb0b5669c9507fb172316fceb1e782b664142cca39d670ce6ea8",
+    "dimensions": [
+      128,
+      736
+    ],
+    "source": "Fungus Cave [16x16]/Tilesets/Tileset - Complete 16x16.png",
+    "original_unchanged": true
+  }
+]

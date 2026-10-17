@@ -1,0 +1,384 @@
+{
+  "build_id": "G0-001",
+  "assets": [
+    {
+      "path": "assets/original/Characters/Characters.png",
+      "size": [
+        288,
+        256
+      ],
+      "sha256": "3de18f3d1bf581bdc7ab86411c2144b93007e0a07cc673afccac3489d66acb89",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Cleric.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "aecf33f0a7fce147cb02accfd7039ac1c9d8239f0e9a87bea864eca5ad8d81e1",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Fungus - Ghost.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "64b37e325a64c6ae19e5dd13c30ae8e635dfc4e38b3824a42301c44440046a5b",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Fungus - King.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "769c6097e4ef3720c11d29ad3d0e16ae933586d4d145a7d3364b686110ca5b18",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Fungus - red.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "309c5a854de52e51a29d24525de36f8407b96b0e7a3a8e3d840dd2ea8c5be88f",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Fungus - violet.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "8105b1404754ef668c5c0387ad9512f63966b288c225dac84ecc80d04c851dc4",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Refugee 1.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "c8e5590bc7dcef5cb9c379bc86fb86f0054f52a65fff85b5bc2a0d02c258e49a",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Refugee 2.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "40ff3377f62d9cacf07c9a44e9f79bca6f845c33a25e3a4ec1a8a6296221865c",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Refugee 3.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "b281058ab03d9cac05c6c2050cb006d564bfe2893a42008c0023dddb576eff01",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Refugee 4.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "23e2887acc8a3871813fa0dddbce06a10298bb8636e2168a392072ff74378140",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Sewers monster - ghost.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "a19d73f07785d10c5bca530d7bbdd1b2a0e07fe59f3b393dded239b577a030b0",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    },
+    {
+      "path": "assets/original/Characters/Sewers monster.png",
+      "size": [
+        48,
+        128
+      ],
+      "sha256": "380787b1dfe6a5d7a81b7d38ee55d8a5f2218df5eec527223ef5dbc58f7291ff",
+      "source": "User-provided Fungus Cave [16x16]",
+      "license": "Not supplied; pending verification"
+    }
+  ],
+  "cleric_frames": [
+    {
+      "direction": "down",
+      "frame": 0,
+      "visible_bounds": [
+        0,
+        7,
+        15,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "down",
+      "frame": 1,
+      "visible_bounds": [
+        0,
+        7,
+        16,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "down",
+      "frame": 2,
+      "visible_bounds": [
+        1,
+        7,
+        16,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "left",
+      "frame": 0,
+      "visible_bounds": [
+        1,
+        8,
+        14,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "left",
+      "frame": 1,
+      "visible_bounds": [
+        1,
+        7,
+        14,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "left",
+      "frame": 2,
+      "visible_bounds": [
+        1,
+        8,
+        14,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "right",
+      "frame": 0,
+      "visible_bounds": [
+        2,
+        8,
+        15,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "right",
+      "frame": 1,
+      "visible_bounds": [
+        2,
+        7,
+        15,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "right",
+      "frame": 2,
+      "visible_bounds": [
+        2,
+        8,
+        15,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "up",
+      "frame": 0,
+      "visible_bounds": [
+        0,
+        7,
+        15,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "up",
+      "frame": 1,
+      "visible_bounds": [
+        0,
+        7,
+        16,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    },
+    {
+      "direction": "up",
+      "frame": 2,
+      "visible_bounds": [
+        1,
+        7,
+        16,
+        32
+      ],
+      "foot_anchor": [
+        8,
+        31
+      ]
+    }
+  ],
+  "palette": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      24,
+      78,
+      165
+    ],
+    [
+      32,
+      41,
+      95
+    ],
+    [
+      35,
+      109,
+      195
+    ],
+    [
+      50,
+      50,
+      22
+    ],
+    [
+      60,
+      29,
+      20
+    ],
+    [
+      60,
+      40,
+      40
+    ],
+    [
+      85,
+      78,
+      46
+    ],
+    [
+      108,
+      101,
+      58
+    ],
+    [
+      159,
+      191,
+      230
+    ],
+    [
+      169,
+      72,
+      11
+    ],
+    [
+      193,
+      89,
+      0
+    ],
+    [
+      194,
+      144,
+      129
+    ],
+    [
+      199,
+      134,
+      58
+    ],
+    [
+      211,
+      168,
+      149
+    ],
+    [
+      212,
+      175,
+      57
+    ],
+    [
+      223,
+      194,
+      166
+    ]
+  ],
+  "data_validation": "passed",
+  "note": "Source validation only; does not establish runtime, combat, audio, or human review."
+}

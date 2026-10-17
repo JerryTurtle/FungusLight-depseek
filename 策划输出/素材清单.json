@@ -1,0 +1,476 @@
+[
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\16.png",
+    "width": 48,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\16b.png",
+    "width": 48,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\16bw.png",
+    "width": 48,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\16s.png",
+    "width": 48,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\17.png",
+    "width": 48,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\17b.png",
+    "width": 48,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\17bw.png",
+    "width": 48,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\17s.png",
+    "width": 48,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\18.png",
+    "width": 96,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\18b.png",
+    "width": 96,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\18bw.png",
+    "width": 96,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\18s.png",
+    "width": 96,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\29.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\29b.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\29bw.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\29s.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\30.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\30b.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\30bw.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\30s.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\31.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\31b.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\31bw.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\31s.png",
+    "width": 48,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\32.png",
+    "width": 42,
+    "height": 37,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\32b.png",
+    "width": 42,
+    "height": 37,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\32bw.png",
+    "width": 42,
+    "height": 37,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\32s.png",
+    "width": 42,
+    "height": 37,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers\\BOSS.png",
+    "width": 155,
+    "height": 135,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\16.png",
+    "width": 96,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\16b.png",
+    "width": 96,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\16bw.png",
+    "width": 96,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\16s.png",
+    "width": 96,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\17.png",
+    "width": 96,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\17b.png",
+    "width": 96,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\17bw.png",
+    "width": 96,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\17s.png",
+    "width": 96,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\18.png",
+    "width": 192,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\18b.png",
+    "width": 192,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\18bw.png",
+    "width": 192,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\18s.png",
+    "width": 192,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\29.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\29b.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\29bw.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\29s.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\30.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\30b.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\30bw.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\30s.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\31.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\31b.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\31bw.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\31s.png",
+    "width": 96,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\32.png",
+    "width": 84,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\32b.png",
+    "width": 84,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\32bw.png",
+    "width": 84,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\32s.png",
+    "width": 84,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Battlers x2 size\\BOSS.png",
+    "width": 310,
+    "height": 270,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Characters.png",
+    "width": 288,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Cleric.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Fungus - Ghost.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Fungus - King.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Fungus - red.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Fungus - violet.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Refugee 1.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Refugee 2.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Refugee 3.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Refugee 4.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Sewers monster - ghost.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Characters\\Sewers monster.png",
+    "width": 48,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Complete 16x16.png",
+    "width": 128,
+    "height": 736,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Complete 32x32.png",
+    "width": 256,
+    "height": 1472,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Complete 48x48.png",
+    "width": 384,
+    "height": 2208,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Fungus cave and Refugee outpost 16x16.png",
+    "width": 128,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Fungus cave and Refugee outpost 32x32.png",
+    "width": 256,
+    "height": 1120,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Fungus cave and Refugee outpost 48x48.png",
+    "width": 384,
+    "height": 1680,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Sewers 16x16.png",
+    "width": 128,
+    "height": 176,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Sewers 32x32.png",
+    "width": 256,
+    "height": 352,
+    "mode": "RGBA"
+  },
+  {
+    "file": "Fungus Cave [16x16]\\Tilesets\\Tileset - Sewers 48x48.png",
+    "width": 384,
+    "height": 528,
+    "mode": "RGBA"
+  }
+]

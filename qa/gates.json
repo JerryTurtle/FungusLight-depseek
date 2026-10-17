@@ -1,0 +1,136 @@
+{
+  "build_id": "G2-007",
+  "G0": {
+    "status": "passed",
+    "evidence": [
+      "qa/evidence/G0/asset_manifest.json",
+      "qa/evidence/G0/G0-001-export.log",
+      "qa/evidence/G0/g0-export-window.log",
+      "qa/evidence/G0/g0-export-window.png",
+      "qa/evidence/G0/G0-G1-progress.md"
+    ],
+    "caveat": "Original native export used isolated APPDATA. G2-007 later verifies normal-environment launch and portable fallback persistence; normal AppData remains restricted on this automation host."
+  },
+  "G1": {
+    "status": "passed",
+    "evidence": [
+      "qa/evidence/G1/G1-002-batch-report.md",
+      "qa/evidence/G1/G1-003-collision-report.md",
+      "qa/evidence/G1/G1-004-navigation-report.md",
+      "qa/evidence/G1/G1-005-hazards-report.md",
+      "qa/evidence/G1/G1-006-tests.log",
+      "qa/evidence/G1/G1-006-input-replay-report.md",
+      "qa/evidence/G1/G1-006-framerate-summary.json",
+      "qa/evidence/G1/G1-evidence-matrix.md",
+      "qa/evidence/G1/G1-007-tests.log",
+      "qa/evidence/G1/G1-007-integration.json",
+      "qa/evidence/G1/G1-007-integration.log",
+      "qa/evidence/G1/G1-007-window.png",
+      "qa/evidence/G1/G1-007-gate-report.md"
+    ],
+    "remaining": [],
+    "caveat": "G1 native integration injects viewport events, not OS keyboard events. Later G2-007 verifies default-environment startup and portable fallback persistence. Original G1 evidence remains historical."
+  },
+  "G2": {
+    "status": "passed",
+    "evidence": [
+      "qa/evidence/G2/G2-001-assets.json",
+      "qa/evidence/G2/G2-001-tests.log",
+      "qa/evidence/G2/G2-001-integration.json",
+      "qa/evidence/G2/G2-001-framerate-summary.json",
+      "qa/evidence/G2/G2-001-window.png",
+      "qa/evidence/G2/G2-001-poses-sewer.png",
+      "qa/evidence/G2/G2-001-progress.md",
+      "qa/evidence/G2/G2-002-tests.log",
+      "qa/evidence/G2/G2-002-integration.json",
+      "qa/evidence/G2/G2-002-framerate-summary.json",
+      "qa/evidence/G2/G2-002-spell-windup.png",
+      "qa/evidence/G2/G2-002-window.png",
+      "qa/evidence/G2/G2-002-progress.md",
+      "qa/evidence/G2/G2-003-grip-review.png",
+      "qa/evidence/G2/G2-003-window.png",
+      "qa/evidence/G2/G2-003-integration.json",
+      "qa/evidence/G2/G2-003-grip-report.md",
+      "qa/evidence/G2/G2-004-grip-review.png",
+      "qa/evidence/G2/G2-004-window.png",
+      "qa/evidence/G2/G2-004-tests.log",
+      "qa/evidence/G2/G2-004-integration.json",
+      "qa/evidence/G2/G2-004-framerate-summary.json",
+      "qa/evidence/G2/G2-004-progress.md",
+      "qa/evidence/G2/G2-005-grip-review.png",
+      "qa/evidence/G2/G2-005-window.png",
+      "qa/evidence/G2/G2-005-integration.json",
+      "qa/evidence/G2/G2-005-grip-report.md",
+      "qa/evidence/G2/G2-006-audio-assets.json",
+      "qa/evidence/G2/G2-006-settings.png",
+      "qa/evidence/G2/G2-006-feedback-standard.png",
+      "qa/evidence/G2/G2-006-feedback-low.png",
+      "qa/evidence/G2/G2-006-integration.json",
+      "qa/evidence/G2/G2-006-framerate-summary.json",
+      "qa/evidence/G2/G2-006-progress.md",
+      "qa/evidence/G2/G2-007-tests.log",
+      "qa/evidence/G2/G2-007-integration.json",
+      "qa/evidence/G2/G2-007-check-framerate-summary.json",
+      "qa/evidence/G2/G2-007-review/checks.json",
+      "qa/evidence/G2/G2-007-stress-summary.json",
+      "qa/evidence/G2/G2-007-stress.json",
+      "qa/evidence/G2/G2-007-stress-os-memory.json",
+      "qa/evidence/G2/G2-007-stress-build-hashes.txt",
+      "qa/evidence/G2/G2-007-package-check.json",
+      "qa/evidence/G2/G2-007-grip-review.png",
+      "qa/evidence/G2/G2-007-gate-report.md",
+      "qa/evidence/G2/G2-007-source-hashes.json"
+    ],
+    "remaining": [],
+    "caveat": "H2 approved by user on 2026-10-17; see qa/H2-approval.md. Default environment launch/persistence verified via writable portable fallback; normal user directories restricted on this host. Native input events tested; OS gameplay automation unavailable. Stress binary and final package differ only in documented non-load-increasing visual/clipboard finishing changes."
+  },
+  "H2": {
+    "status": "passed",
+    "build_id": "G2-007",
+    "human_approval": {
+      "date": "2026-10-17",
+      "source": "user_chat",
+      "build_id": "G2-007",
+      "evidence": "qa/H2-approval.md",
+      "conclusion": "H2已通过，无问题；H01～H06整体通过"
+    },
+    "package": "deliverables/G2_Review/动作审核.exe",
+    "instructions": "deliverables/G2_Review/开始审核.md"
+  },
+  "G3": {
+    "status": "in_progress",
+    "iteration": "G3-005",
+    "evidence": [
+      "qa/evidence/G3/G3-001-save-tests.log",
+      "qa/evidence/G3/G3-001-progress.md",
+      "qa/evidence/G3/G3-002-progress.md",
+      "qa/evidence/G3/G3-002-campaign-tests.log",
+      "qa/evidence/G3/G3-003-progress.md",
+      "qa/evidence/G3/G3-003-campaign-tests.log",
+      "qa/evidence/G3/G3-003-model-tests.log",
+      "qa/evidence/G3/G3-003-framerate-summary.json",
+      "qa/evidence/G3/G3-004-progress.md",
+      "qa/evidence/G3/G3-004-enemy-tests.log",
+      "qa/evidence/G3/G3-004-campaign-tests.log",
+      "qa/evidence/G3/G3-004-framerate-summary.json",
+      "qa/evidence/G3/G3-005-progress.md",
+      "qa/evidence/G3/G3-005-campaign-tests.log",
+      "qa/evidence/G3/G3-005-enemy-tests.log",
+      "qa/evidence/G3/G3-005-save-tests.log"
+    ],
+    "remaining": [
+      "完整矿道与10～15分钟正常输入路线实测",
+      "投孢/冲锋/精英主线应用与A15全场景压力",
+      "A16～A18及C01/C03完整恢复/奖励/流程验收"
+    ]
+  },
+  "G4": {
+    "status": "not_started"
+  },
+  "G5": {
+    "status": "not_started"
+  },
+  "G6": {
+    "status": "not_started"
+  }
+}

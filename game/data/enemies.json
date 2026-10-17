@@ -1,0 +1,50 @@
+{
+  "T2": {
+    "hp": 60,
+    "speed": 34,
+    "damage": 10,
+    "range": 90,
+    "windup": 36,
+    "active": 1,
+    "recovery": 54
+  },
+  "T3": {
+    "hp": 110,
+    "speed": 40,
+    "charge_speed": 160,
+    "damage": 18,
+    "range": 100,
+    "windup": 42,
+    "active": 27,
+    "recovery": 60
+  },
+  "T4": {
+    "hp": 130,
+    "speed": 28,
+    "damage": 16,
+    "range": 26,
+    "windup": 39,
+    "active": 9,
+    "recovery": 51,
+    "armor": 2
+  },
+  "T5": {
+    "hp": 30,
+    "speed": 0,
+    "damage": 8,
+    "range": 24,
+    "windup": 48,
+    "active": 1,
+    "recovery": 1
+  },
+  "EL1": {
+    "hp": 450,
+    "speed": 28,
+    "damage": 18,
+    "range": 26,
+    "windup": 48,
+    "active": 11,
+    "recovery": 72,
+    "armor": 2
+  }
+}

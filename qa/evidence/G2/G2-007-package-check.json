@@ -1,0 +1,10 @@
+{
+  "directory": "C:\\Users\\shandian\\Documents\\AI\\gpt_test\\qa\\G2-007-clean-1792221594",
+  "hashes": {
+    "动作审核.exe": "66b26ad96df7458ea917b632a73ac7c88bb058db24dbd11a457fd50435ab7b13",
+    "动作审核.pck": "120f6956e0c5d02cc18442a5b0607baa56bf7a24f6167ff7f06b02dc9172c823"
+  },
+  "review_checks": 50,
+  "default_environment_persistence": "portable fallback saved and restored; original per-user directories inaccessible on this host",
+  "passed": true
+}

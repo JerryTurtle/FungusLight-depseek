@@ -1,0 +1,72 @@
+[
+  {
+    "path": "game/assets/audio/cast.wav",
+    "sha256": "3506891c97a493abe9b3a8f5e80b888b2e9c88fdb32bf86e72d63cf01313574d",
+    "sample_rate": 44100,
+    "channels": 1,
+    "bits": 16,
+    "duration": 0.46,
+    "unchanged_from_G2_005": true,
+    "source": "tools/generate_sfx.py deterministic original synthesis"
+  },
+  {
+    "path": "game/assets/audio/hit.wav",
+    "sha256": "9bc8b9c3011552f7366cc189fc85d924fa13a382bbffcf56e2cf2f3ab797e41b",
+    "sample_rate": 44100,
+    "channels": 1,
+    "bits": 16,
+    "duration": 0.16,
+    "unchanged_from_G2_005": true,
+    "source": "tools/generate_sfx.py deterministic original synthesis"
+  },
+  {
+    "path": "game/assets/audio/hurt.wav",
+    "sha256": "233afb9259b5f516d0f952eb02402dc4651d14c9b98a78121af74a5d0a074bdc",
+    "sample_rate": 44100,
+    "channels": 1,
+    "bits": 16,
+    "duration": 0.25,
+    "unchanged_from_G2_005": true,
+    "source": "tools/generate_sfx.py deterministic original synthesis"
+  },
+  {
+    "path": "game/assets/audio/rain_impact.wav",
+    "sha256": "60093a15336934fe839c1fe67a3a2cec7bce5cf4078d4649e25e23a7d78a3555",
+    "sample_rate": 44100,
+    "channels": 1,
+    "bits": 16,
+    "duration": 0.5,
+    "unchanged_from_G2_005": null,
+    "source": "tools/generate_sfx.py deterministic original synthesis"
+  },
+  {
+    "path": "game/assets/audio/shell_break.wav",
+    "sha256": "44dc964c0c3557b322c1d63725de10a82c719ed232dd80aba773be40cfdee1f7",
+    "sample_rate": 44100,
+    "channels": 1,
+    "bits": 16,
+    "duration": 0.34,
+    "unchanged_from_G2_005": null,
+    "source": "tools/generate_sfx.py deterministic original synthesis"
+  },
+  {
+    "path": "game/assets/audio/shield_hit.wav",
+    "sha256": "0976182a1f16b1d8c9dec1635130da584b33bbdad00cef7220bb47bad2587306",
+    "sample_rate": 44100,
+    "channels": 1,
+    "bits": 16,
+    "duration": 0.24,
+    "unchanged_from_G2_005": null,
+    "source": "tools/generate_sfx.py deterministic original synthesis"
+  },
+  {
+    "path": "game/assets/audio/swing.wav",
+    "sha256": "0f827e3e11738518b9a4ee7ac7729befb77c8f4371916a9e3c8f047353bcadf4",
+    "sample_rate": 44100,
+    "channels": 1,
+    "bits": 16,
+    "duration": 0.18,
+    "unchanged_from_G2_005": true,
+    "source": "tools/generate_sfx.py deterministic original synthesis"
+  }
+]

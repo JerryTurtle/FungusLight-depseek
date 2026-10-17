@@ -1,0 +1,27 @@
+config_version=5
+
+[application]
+config/name="菌灯之下 · 开发验证"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="FungusLight"
+run/main_scene="res://scenes/boot.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=false
+textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.035, 0.05, 0.06, 1)
+
+[physics]
+common/physics_ticks_per_second=60
+
+[debug]
+file_logging/enable_file_logging=false
+file_logging/enable_file_logging.pc=false

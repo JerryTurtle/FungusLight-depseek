@@ -1,0 +1,9 @@
+
+Algorithm : SHA256
+Hash      : 66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13
+Path      : C:\Users\shandian\Documents\AI\gpt_test\deliverables\G1-006\FungusLight.exe
+
+Algorithm : SHA256
+Hash      : 45F0D4A459E6F16FA8215C9C99BDE458C4C7814B01F18AD76FE2D8764505AB73
+Path      : C:\Users\shandian\Documents\AI\gpt_test\deliverables\G1-006\FungusLight.pck
+

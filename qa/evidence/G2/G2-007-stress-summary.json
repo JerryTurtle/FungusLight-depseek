@@ -1,0 +1,63 @@
+{
+  "cpu": "AMD Ryzen 7 8745H w/ Radeon 780M Graphics",
+  "elapsed_seconds": 900.002629,
+  "os": "Windows",
+  "renderer": "gl_compatibility",
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_adapter": "AMD Radeon 780M Graphics",
+  "profiles": {
+    "standard": {
+      "samples": 89,
+      "average_fps": 59.90356183542779,
+      "minimum_5s_fps": 58.0773204011929,
+      "maximum_engine_frame_ms": 148.626,
+      "frames_over_50ms": 4
+    },
+    "low": {
+      "samples": 90,
+      "average_fps": 59.99614737651564,
+      "minimum_5s_fps": 59.7007216798946,
+      "maximum_engine_frame_ms": 24.9953333333333,
+      "frames_over_50ms": 0
+    }
+  },
+  "nodes_range": [
+    112,
+    112
+  ],
+  "objects_range": [
+    1554,
+    1563
+  ],
+  "effects_range": [
+    20,
+    32
+  ],
+  "enemies_range": [
+    6,
+    6
+  ],
+  "projectiles_range": [
+    6,
+    20
+  ],
+  "private_bytes": {
+    "peak_mib": 367.27734375,
+    "last5min_min_mib": 364.01953125,
+    "last5min_max_mib": 364.65625,
+    "last5min_first_mib": 364.11328125,
+    "last_mib": 364.65625
+  },
+  "working_set": {
+    "peak_mib": 333.92578125,
+    "last5min_min_mib": 333.4140625,
+    "last5min_max_mib": 333.92578125,
+    "last5min_first_mib": 333.4609375,
+    "last_mib": 333.92578125
+  },
+  "memory_samples": 181,
+  "engine_static_memory_available": false
+}

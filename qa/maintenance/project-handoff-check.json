@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-17",
+  "passed": true,
+  "markdown_local_links": 17,
+  "legacy_scripts_syntax": 7,
+  "relocated_asset_roots": 3,
+  "runtime_files_unchanged": 75,
+  "scope": "Documentation, safe archival, static checks; no game logic changes or new gameplay acceptance.",
+  "cleanup": "Deletion command rejected by automatic policy. Kept test directories; archived root debug.log. No personal data deleted."
+}

@@ -1,0 +1,339 @@
+{
+	"checks": 83,
+	"failures": 0,
+	"results": [
+		{
+			"check": "mouse press/release dispatch",
+			"passed": true
+		},
+		{
+			"check": "quick click starts melee",
+			"passed": true
+		},
+		{
+			"check": "one swing event triggers one audio playback",
+			"passed": true
+		},
+		{
+			"check": "released mouse does not repeat",
+			"passed": true
+		},
+		{
+			"check": "same callback priority reverse=false",
+			"passed": true
+		},
+		{
+			"check": "same callback priority reverse=true",
+			"passed": true
+		},
+		{
+			"check": "physical movement key held",
+			"passed": true
+		},
+		{
+			"check": "movement key released",
+			"passed": true
+		},
+		{
+			"check": "Escape freezes simulation",
+			"passed": true
+		},
+		{
+			"check": "resume drops paused commands",
+			"passed": true
+		},
+		{
+			"check": "focus loss pauses",
+			"passed": true
+		},
+		{
+			"check": "focus regain requires explicit resume",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 0",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 0",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 0",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 1",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 1",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 1",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 2",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 2",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 2",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 3",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 3",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 3",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 4",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 4",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 4",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 5",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 5",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 5",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 6",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 6",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 6",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 7",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 7",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 7",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 8",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 8",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 8",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 9",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 9",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 9",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 10",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 10",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 10",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 11",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 11",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 11",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 12",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 12",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 12",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 13",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 13",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 13",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 14",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 14",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 14",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 15",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 15",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 15",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 16",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 16",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 16",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 17",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 17",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 17",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 18",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 18",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 18",
+			"passed": true
+		},
+		{
+			"check": "retry restores player 19",
+			"passed": true
+		},
+		{
+			"check": "retry clears transient state 19",
+			"passed": true
+		},
+		{
+			"check": "retry refreshes HUD 19",
+			"passed": true
+		},
+		{
+			"check": "20 retries stable scene node count",
+			"passed": true
+		},
+		{
+			"check": "20 retries stable signal connections",
+			"passed": true
+		},
+		{
+			"check": "20 retries preserve single input dispatch",
+			"passed": true
+		},
+		{
+			"check": "20 retries preserve playable input",
+			"passed": true
+		},
+		{
+			"check": "paused callbacks do not replay audio events",
+			"passed": true
+		},
+		{
+			"check": "pose preview freezes live combat",
+			"passed": true
+		},
+		{
+			"check": "pose playback pause",
+			"passed": true
+		},
+		{
+			"check": "pose single frame step",
+			"passed": true
+		},
+		{
+			"check": "sewer background switch",
+			"passed": true
+		},
+		{
+			"check": "debug overlays opt in",
+			"passed": true
+		},
+		{
+			"check": "return to live combat resumes exactly once",
+			"passed": true
+		}
+	],
+	"scope": "Exported native viewport events and explicit physics callbacks; not OS keyboard automation."
+}

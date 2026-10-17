@@ -1,0 +1,20 @@
+game/.godot/
+deliverables/
+/Fungus Cave \[16x16\]/
+qa/*.tpz
+qa/clean-run/
+qa/runtime-profile/
+qa/*-clean-*/
+qa/*-check-review/
+qa/*-check-*
+qa/storage_probe.gd
+**/__pycache__/
+*.py[cod]
+*.tmp
+/debug.log
+.env
+.env.*
+!.env.example
+
+# Local repro packages, templates and probes
+qa/local/

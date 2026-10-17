@@ -1,0 +1,6 @@
+# Preserve verified source, configuration hashes and historical evidence byte-for-byte.
+* -text
+*.png binary
+*.wav binary
+*.ttf binary
+*.zip binary

@@ -1,0 +1,56 @@
+[
+  {
+    "requested_fps": 30,
+    "measured_fps": 29.99175405285895,
+    "drawn_frames": 178,
+    "elapsed_seconds": 5.910038,
+    "events": {
+      "action": 5,
+      "hit": 3,
+      "knockback": 3,
+      "release": 1,
+      "door_changed": 2,
+      "projectile_spawn": 1,
+      "dot": 1,
+      "projectile_wall": 1
+    },
+    "trace_equal": true,
+    "pause_frozen": true
+  },
+  {
+    "requested_fps": 60,
+    "measured_fps": 60.00654998609748,
+    "drawn_frames": 353,
+    "elapsed_seconds": 5.88931,
+    "events": {
+      "action": 5,
+      "hit": 3,
+      "knockback": 3,
+      "release": 1,
+      "door_changed": 2,
+      "projectile_spawn": 1,
+      "dot": 1,
+      "projectile_wall": 1
+    },
+    "trace_equal": true,
+    "pause_frozen": true
+  },
+  {
+    "requested_fps": 144,
+    "measured_fps": 143.81668075234487,
+    "drawn_frames": 845,
+    "elapsed_seconds": 5.894476,
+    "events": {
+      "action": 5,
+      "hit": 3,
+      "knockback": 3,
+      "release": 1,
+      "door_changed": 2,
+      "projectile_spawn": 1,
+      "dot": 1,
+      "projectile_wall": 1
+    },
+    "trace_equal": true,
+    "pause_frozen": true
+  }
+]

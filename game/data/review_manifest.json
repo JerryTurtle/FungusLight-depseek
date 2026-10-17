@@ -1,0 +1,7 @@
+{
+  "build": "G2-007",
+  "actions_sha256": "78316e59546ff33553e053760e23f3f4612f5d911f0f3e7c02ecb1bcf4f9982d",
+  "character_sha256": "aecf33f0a7fce147cb02accfd7039ac1c9d8239f0e9a87bea864eca5ad8d81e1",
+  "physics_hz": 60,
+  "default_pixel_scale": 4
+}
