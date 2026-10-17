@@ -371,12 +371,12 @@ func ambient_positions(kind: String, pos: Vector2, tick: int, prefs) -> Array:
 	match kind:
 		"spores":
 			for i in count:
-				var x := cx - 17 + posmod(i * 13 + posmod(t / 16 + i, 3), 34)
-				var y := cy - 2 - posmod(t / 2 + i * 9, 26)
+				var x := cx - 17 + posmod(i * 13 + posmod(t / 24 + i, 3), 34)
+				var y := cy - 2 - posmod(t / 6 + i * 9, 26)
 				out.append(Vector2(x, y))
 		"dust":
 			for i in count:
-				var x := cx - 20 + posmod(i * 17 + t / 3, 40)
+				var x := cx - 20 + posmod(i * 17 + t / 8, 40)
 				var y := cy - 1 - posmod(i * 5, 7)
 				out.append(Vector2(x, y))
 		"drip":
@@ -390,8 +390,8 @@ func ambient_positions(kind: String, pos: Vector2, tick: int, prefs) -> Array:
 					out.append(Vector2(bx + int(splash.x), cy - 1))
 		"ember":
 			for i in count:
-				var x := cx - 3 + posmod(i * 7 + posmod(t / 12 + i, 3), 7)
-				var y := cy - 18 - posmod(t / 2 + i * 7, 20)
+				var x := cx - 3 + posmod(i * 7 + posmod(t / 20 + i, 3), 7)
+				var y := cy - 18 - posmod(t / 5 + i * 7, 20)
 				out.append(Vector2(x, y))
 		_:
 			pass
@@ -529,7 +529,7 @@ func _fx_pulse(canvas: CanvasItem, base: Vector2, item: Dictionary, tick: int, p
 	var rx := maxi(1, int(radii[0]))
 	var ry := maxi(1, int(radii[1]))
 	var cols: Array = item.get("colors", ["y"])
-	var alpha := float(item.get("alpha", 0.18))
+	var alpha := float(item.get("alpha", 0.18)) * 0.8
 	if _pref(prefs, "reduced_flash"):
 		alpha *= 0.7
 	var phase := posmod(int(tick / maxi(1, int(item.get("hold", 8)))), 3)
@@ -556,7 +556,7 @@ func _fx_seam(canvas: CanvasItem, base: Vector2, item: Dictionary, tick: int, pr
 	var width := int(item.get("width", 12))
 	var cols: Array = item.get("colors", ["y"])
 	var phase := posmod(int(tick / maxi(1, int(item.get("hold", 8)))), 3)
-	var alpha := 0.75
+	var alpha := 0.58
 	if _pref(prefs, "reduced_flash"):
 		alpha *= 0.75
 	for i in width:
@@ -592,7 +592,7 @@ func _fx_sparkle(canvas: CanvasItem, base: Vector2, item: Dictionary, tick: int,
 		return
 	var cols: Array = item.get("colors", ["Y"])
 	var points: Array = item.get("points", [])
-	var alpha := 0.95 if phase == 0 else 0.6
+	var alpha := 0.7 if phase == 0 else 0.4
 	if _pref(prefs, "reduced_flash"):
 		alpha *= 0.7
 	for i in points.size():
@@ -612,12 +612,12 @@ func _fx_motes(canvas: CanvasItem, base: Vector2, item: Dictionary, tick: int, p
 	var rise := maxi(1, int(item.get("rise", 10)))
 	var hold := maxi(1, int(item.get("hold", 8)))
 	var t := int(tick / hold)
-	var alpha := 0.85
+	var alpha := 0.5
 	if _pref(prefs, "reduced_flash"):
 		alpha *= 0.75
 	for i in count:
 		var x := int(origin.x) + posmod(i * 13 + posmod(t + i, 3) - 1, maxi(1, int(spread[0]))) - int(spread[0]) / 2
-		var y := int(origin.y) - posmod(t + i * 5, rise)
+		var y := int(origin.y) - posmod(t / 2 + i * 5, rise)
 		var col: Color = palette.get(str(cols[i % cols.size()]), Color.WHITE)
 		col.a = alpha
 		canvas.draw_rect(Rect2(Vector2(x, y), Vector2.ONE), col)
@@ -633,12 +633,12 @@ func _fx_spores(canvas: CanvasItem, base: Vector2, item: Dictionary, tick: int, 
 	var rise := maxi(1, int(item.get("rise", 10)))
 	var hold := maxi(1, int(item.get("hold", 10)))
 	var t := int(tick / hold)
-	var alpha := 0.8
+	var alpha := 0.45
 	if _pref(prefs, "reduced_flash"):
 		alpha *= 0.75
 	for i in count:
 		var x := int(origin.x) + posmod(i * 7 + posmod(t + i, 3) - 1, maxi(1, int(spread[0]))) - int(spread[0]) / 2
-		var y := int(origin.y) - posmod(t * 2 + i * 4, rise)
+		var y := int(origin.y) - posmod(t + i * 4, rise)
 		var col: Color = palette.get(str(cols[i % cols.size()]), Color.WHITE)
 		col.a = alpha
 		canvas.draw_rect(Rect2(Vector2(x, y), Vector2.ONE), col)
@@ -653,11 +653,11 @@ func _fx_dust(canvas: CanvasItem, base: Vector2, item: Dictionary, tick: int, pr
 	var spread: Array = item.get("spread", [12, 6])
 	var hold := maxi(1, int(item.get("hold", 12)))
 	var t := int(tick / hold)
-	var alpha := 0.5
+	var alpha := 0.32
 	if _pref(prefs, "reduced_flash"):
 		alpha *= 0.75
 	for i in count:
-		var x := int(origin.x) + posmod(i * 17 + t, maxi(1, int(spread[0]))) - int(spread[0]) / 2
+		var x := int(origin.x) + posmod(i * 17 + t / 2, maxi(1, int(spread[0]))) - int(spread[0]) / 2
 		var y := int(origin.y) + posmod(i * 3, maxi(1, int(spread[1])))
 		var col: Color = palette.get(str(cols[i % cols.size()]), Color.WHITE)
 		col.a = alpha

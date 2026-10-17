@@ -470,8 +470,8 @@
           "id": "lore",
           "name": "矿工刻字",
           "pos": [
-            74,
-            60
+            278,
+            146
           ],
           "kind": "lore",
           "dialogue": "L01"

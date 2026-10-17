@@ -1,6 +1,6 @@
-# G3-006 底部 RPG 对话框（DialogueBox）设计与集成
+# G3-006/007 底部 RPG 对话框（DialogueBox）设计与集成
 
-状态：组件与 headless 自测完成（`DIALOGUE_TEST checks=167 failures=0`）；`campaign.gd` 的接入由 Lead 完成，本组件不依赖也不修改 campaign、graybox、review 或 project.godot。
+状态：组件与 headless 自测完成（`DIALOGUE_TEST checks=175 failures=0`，G3-007 增加字形覆盖断言）；`campaign.gd` 的接入由 Lead 完成，本组件不依赖也不修改 campaign、graybox、review 或 project.godot。
 
 ## 1. 文件
 
@@ -9,7 +9,7 @@
 | `game/scripts/dialogue_box.gd` | 自包含底部对话框组件（`class_name DialogueBox`，`extends Control`） |
 | `game/scripts/test_dialogue.gd` | headless 自测（`extends SceneTree`） |
 
-字体不随组件打包：组件从 theme / `ThemeDB.fallback_font` 读取项目像素字体（方舟像素 12px），并复制一份关闭抗锯齿、hinting、亚像素定位。Lead 在 `boot.gd` / `graybox.gd` 设置的 `ThemeDB.fallback_font = load("res://assets/fonts/ArkPixel12px-zh_hans.ttf")` 会自动生效；若项目 theme 显式提供非引擎默认字体，则优先使用 theme 字体。
+字体不随组件打包：组件从 theme / `ThemeDB.fallback_font` 读取项目像素字体（缝合像素 Fusion Pixel 12px），并复制一份关闭抗锯齿、hinting、亚像素定位。Lead 在 `boot.gd` / `graybox.gd` 设置的 `ThemeDB.fallback_font = load("res://assets/fonts/FusionPixel12px-zh_hans.ttf")` 会自动生效；若项目 theme 显式提供非引擎默认字体，则优先使用 theme 字体。
 
 ## 2. 布局（整数像素，固定屏幕下部）
 
@@ -192,10 +192,10 @@ func choose_growth(option: String) -> void:
 godot --headless --path game --script res://scripts/test_dialogue.gd
 ```
 
-输出：`DIALOGUE_TEST checks=167 failures=0`（exit code 0）。覆盖：
+输出：`DIALOGUE_TEST checks=175 failures=0`（exit code 0）。覆盖：
 
 1. 面板 1280×720 / 1920×1080 都在屏幕下部，左右 40~48px、底部 24~40px、整数像素、不越界；名字牌叠在面板左上且不越界；
-2. 名字/正文/操作提示/选项提示字号（24/24/12/24）与字体来源（ThemeDB 方舟像素），说话人四色 + 未知暖白，名字牌宽度随名字；
+2. 名字/正文/操作提示/选项提示字号（24/24/12/24）与字体来源（ThemeDB 缝合像素 Fusion Pixel），说话人四色 + 未知暖白，名字牌宽度随名字；
 3. 打字机 0.02s/字（50 字/秒）、0.1s/5 字、1.0s/50 字、播完进入 WAITING；`reveal_all()` 立即补全；同一次事件重复传入不会二次补全/推进；
 4. E/回车/空格/左键都能推进；显示中只补全不推进；`advance_requested` 语义正确、组件不自动关闭；
 5. Tab 在对白中发 `skip_requested`，同一事件只发一次；选项页 Tab 被吞且不发跳过信号；

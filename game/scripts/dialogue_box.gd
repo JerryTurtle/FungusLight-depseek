@@ -8,7 +8,7 @@ extends Control
 ##   然后手动调用 `tick(delta)`。
 ## - 输入由调用方在 `_unhandled_input` 中最先交给 `handle_input(event)`；
 ##   返回 true 表示对话框已消费该事件，调用方应 `set_input_as_handled()` 并跳过战斗输入。
-## - 字体只从 theme / `ThemeDB.fallback_font` 读取（Lead 会把它设为方舟像素字体），
+## - 字体只从 theme / `ThemeDB.fallback_font` 读取（Lead 会把它设为缝合像素字体 Fusion Pixel），
 ##   组件不 preload 任何字体文件，也不把某个字体路径当作唯一来源。
 ##
 ## 状态机：
@@ -531,7 +531,7 @@ func _ensure_font() -> void:
 
 
 ## 字体来源：优先使用项目自定义 theme 的字体；若 theme 只提供引擎默认字体，
-## 则改用 Lead 设置的 ThemeDB.fallback_font（方舟像素字体）。组件本身不加载字体文件。
+## 则改用 Lead 设置的 ThemeDB.fallback_font（缝合像素字体 Fusion Pixel）。组件本身不加载字体文件。
 func _resolve_font_source() -> Font:
 	var theme_font: Font = get_theme_font("font", "Label")
 	var default_theme := ThemeDB.get_default_theme()

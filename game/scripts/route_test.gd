@@ -1,9 +1,10 @@
 extends SceneTree
-## G3-006 normal-input slice route. Every action is fed through Godot input events
+## G3-007 normal-input slice route. Every action is fed through Godot input events
 ## (keyboard/mouse), then the campaign is advanced at its real fixed 60Hz step.
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
+const BUILD_ID := "G3-007"
 var scene
 var checks := 0
 var failures := 0
@@ -110,7 +111,7 @@ func build_route() -> void:
 		{"id":"E03","type":"combat","flag":"E03"},
 		{"id":"N1-01","type":"interact","to":Vector2(290,85),"node":"N1-01"},
 		{"id":"E04","type":"combat","flag":"E04"},
-		{"id":"L01","type":"lore","to":Vector2(74,60)},
+		{"id":"L01","type":"lore","to":Vector2(278,146)},
 		{"id":"N1-02","type":"interact","to":Vector2(292,120),"node":"N1-02"},
 		{"id":"E05","type":"combat","flag":"E05"},
 		{"id":"E06","type":"combat","flag":"E06"},
@@ -474,13 +475,13 @@ func release_all() -> void:
 	release_attack()
 
 func write_report(total_seconds: float) -> void:
-	var report := {"build_id":"G3-006","route":"N0-01→N0-04→N1-01→N1-02","tick":tick,"seconds":snappedf(total_seconds,0.1),
+	var report := {"build_id":BUILD_ID,"route":"N0-01→N0-04→N1-01→N1-02","tick":tick,"seconds":snappedf(total_seconds,0.1),
 		"wall_ms":Time.get_ticks_msec()-wall_start,"checks":checks,"failures":failures,"deaths":deaths,
 		"min_hp":min_hp,"dodges":dodges,"heals":heals,"segments":segments,"path_queries":scene.combat.path_queries,
 		"input":"Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes",
 		"dialogue_model":"每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间",
 		"failure":failed}
-	var path := ProjectSettings.globalize_path("res://").path_join("../qa/evidence/G3/G3-006-route.json").simplify_path()
+	var path := ProjectSettings.globalize_path("res://").path_join("../qa/evidence/G3/"+BUILD_ID+"-route.json").simplify_path()
 	var file := FileAccess.open(path,FileAccess.WRITE)
 	if file != null:
 		file.store_string(JSON.stringify(report,"  "))

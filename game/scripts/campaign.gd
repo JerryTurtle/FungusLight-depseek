@@ -632,18 +632,26 @@ func draw_guide_beams() -> void:
 		var dir := int(guide_dirs.get(guide.id,int(guide.dir)))
 		var target := Vector2(guide.target[0],guide.target[1])
 		var tint := guide_color(guide)
+		var origin: Vector2 = pos+Vector2(0,-17)
+		var axis: Vector2 = DIR_VECTORS[dir]
+		var perpendicular := Vector2(axis.y,axis.x)
 		if guide_aligned(guide):
-			objects_layer.draw_line(pos+DIR_VECTORS[dir]*7,target,tint,3)
-			objects_layer.draw_line(pos+DIR_VECTORS[dir]*7,target,tint.lightened(0.45),1)
-			var span: float = pos.distance_to(target)
+			objects_layer.draw_line(origin,target,tint,3)
+			objects_layer.draw_line(origin,target,tint.lightened(0.45),1)
 			for i in 2:
 				var phase := fmod(float(tick)/22.0+float(i)*0.5,1.0)
-				var dot: Vector2 = (pos+DIR_VECTORS[dir]*7).lerp(target,phase)
+				var dot: Vector2 = origin.lerp(target,phase)
 				objects_layer.draw_rect(Rect2(dot.round(),Vector2.ONE),Color(1,0.96,0.8,0.85))
-			if target.distance_to(pos) > 1: objects_layer.draw_rect(Rect2(target-Vector2(2,2),Vector2(5,5)),tint.lightened(0.3))
+			if target.distance_to(origin) > 1:
+				objects_layer.draw_rect(Rect2(target-Vector2(2,2),Vector2(5,5)),tint.lightened(0.3))
 		else:
-			var stub: Vector2 = pos+DIR_VECTORS[dir]*7
-			objects_layer.draw_line(stub,stub+DIR_VECTORS[dir]*10,Color(tint.r,tint.g,tint.b,0.35),1)
+			# Always show the current facing so turning the device is readable.
+			var tip: Vector2 = origin+axis*22
+			var dim := Color(tint.r*0.85,tint.g*0.85,tint.b*0.85,0.9)
+			objects_layer.draw_line(origin,tip,dim,2)
+			objects_layer.draw_line(tip,tip-axis*5+perpendicular*3,dim,2)
+			objects_layer.draw_line(tip,tip-axis*5-perpendicular*3,dim,2)
+			objects_layer.draw_rect(Rect2(tip-Vector2(1,1),Vector2(3,3)),Color(1,0.94,0.8,0.9))
 
 func draw_object_labels() -> void:
 	var font := ThemeDB.fallback_font
@@ -652,10 +660,15 @@ func draw_object_labels() -> void:
 		var label: String = object.name
 		if label.is_empty(): continue
 		var draw_kind: String = str(object.get("visual",object.kind))
-		var world_point := Vector2(object.pos[0],object.pos[1]) + props.label_anchor(draw_kind)
+		if str(object.kind) == "guide":
+			label += "（"+DIR_NAMES[int(guide_dirs.get(object.id,int(object.dir)))]+"）"
+		var anchor: Vector2 = props.label_anchor(draw_kind)
+		if str(object.kind) == "rong": anchor = Vector2(0,-22)
+		var world_point := Vector2(object.pos[0],object.pos[1]) + anchor
 		var at := world_point * 4.0
 		var width: float = font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
 		at.x = clampf(at.x-width/2,8,1272-width)
-		ui_layer.draw_rect(Rect2(at+Vector2(-5,-30),Vector2(width+10,30)),Color(0.035,0.045,0.04,0.85))
-		ui_layer.draw_rect(Rect2(at+Vector2(-5,-30),Vector2(width+10,30)),Color(0.35,0.33,0.24,0.9),false,1)
-		ui_layer.draw_string(font,at+Vector2(0,-7),label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("f4dfab"))
+		at.y = clampf(at.y,116,684)
+		var baseline := at+Vector2(0,-7)
+		ui_layer.draw_string_outline(font,baseline,label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,4,Color(0.02,0.03,0.035,0.95))
+		ui_layer.draw_string(font,baseline,label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("f4dfab"))

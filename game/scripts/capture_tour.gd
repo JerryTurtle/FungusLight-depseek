@@ -13,61 +13,57 @@ func shot(base: String, name: String, frames: int = 8) -> void:
 	var image := get_viewport().get_texture().get_image()
 	image.save_png(base + name + ".png")
 
+func wait_frames(frames: int) -> void:
+	for i in frames:
+		await get_tree().physics_frame
+
 func clear_enemies() -> void:
 	for enemy in combat.enemies: enemy.hp = 0
-	for i in 3:
-		await get_tree().physics_frame
+	await wait_frames(4)
 
 func tour() -> void:
 	var base := ProjectSettings.globalize_path("res://").path_join("../qa/local/cap-").simplify_path()
 	await shot(base,"title")
 	new_game()
 	await shot(base,"camp")
-	combat.player = Vector2(88,100)
-	interact()
+	for flag in ["S01","S02","tutorial","E01","M1","pipe"]: progress.flags[flag] = true
+	progress.node_id = "N0-02"
+	load_room()
+	await shot(base,"storage")
+	progress.node_id = "N0-03"
+	load_room()
+	combat.player = Vector2(190,104)
+	await shot(base,"rong")
+	progress.flags.S03 = true
+	progress.flags.E02 = true
+	progress.flags.E03 = true
+	progress.node_id = "N1-01"
+	load_room()
+	await clear_enemies()
+	combat.player = Vector2(262,132)
+	await shot(base,"lore-exit")
+	progress.flags.E04 = true
+	progress.node_id = "N1-02"
+	load_room()
+	await clear_enemies()
+	await clear_enemies()
+	await wait_frames(25)
+	await shot(base,"corpse-visible")
+	await wait_frames(230)
+	await shot(base,"corpse-gone")
+	await shot(base,"guides-unsolved")
+	for guide in progress.guides():
+		guide_dirs[guide.id] = int(guide.solution)
+	await shot(base,"guides-solved")
+	begin_lore("L01")
 	dialogue.reveal_all()
-	await shot(base,"dialog-s01")
+	await shot(base,"dialog-lore")
 	finish_dialogue()
-	progress.flags.S01 = true
-	progress.flags.S02 = true
-	progress.flags.tutorial = true
-	progress.flags.E01 = true
 	show_growth_choice()
 	await shot(base,"choice-m1")
 	choice_pending = false
 	dialogue.close()
 	resume()
-	progress.node_id = "N0-02"
-	load_room()
-	await shot(base,"storage")
-	progress.flags.pipe = true
-	progress.flags.S03 = true
-	progress.flags.E02 = true
-	progress.node_id = "N0-04"
-	load_room()
-	await shot(base,"mine-corridor")
-	await clear_enemies()
-	await shot(base,"mine-corridor-clear")
-	combat.player = Vector2(290,85)
-	interact()
-	await shot(base,"mine-entrance")
-	await clear_enemies()
-	combat.player = Vector2(292,120)
-	interact()
-	await shot(base,"light-room-enemies")
-	await clear_enemies()
-	await shot(base,"light-room-pods")
-	await clear_enemies()
-	await shot(base,"light-room-unsolved")
-	for guide in progress.guides():
-		guide_dirs[guide.id] = int(guide.solution)
-	await shot(base,"light-room-solved")
-	progress.flags.P02 = true
-	await shot(base,"light-room-open")
-	begin_lore("L01")
-	dialogue.reveal_all()
-	await shot(base,"dialog-lore")
-	finish_dialogue()
 	combat_audio.stop_all()
 	print("CAPTURE_TOUR_DONE ",base)
 	get_tree().quit()

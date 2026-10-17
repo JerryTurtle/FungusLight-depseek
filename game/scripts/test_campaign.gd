@@ -244,7 +244,7 @@ func run() -> void:
 	check(scene.combat.enemies.any(func(e): return e.get("archetype","") == "T2"),"T2 appears in main route")
 	kill_all(scene)
 	check(scene.progress.has("E04") and scene.pending_encounter == "","E04 commit")
-	scene.combat.player = Vector2(74,60)
+	scene.combat.player = Vector2(278,146)
 	scene.interact()
 	check(scene.dialogue_mode == "lore" and scene.progress.active_event.is_empty(),"lore dialogue is not a story event")
 	scene.finish_dialogue()
@@ -266,6 +266,18 @@ func run() -> void:
 			if scene.guide_aligned(guide): break
 			scene.interact()
 	check(scene.progress.has("P02") and scene.guides_correct() == 3,"three aligned guides open P02")
+	var corpse: Dictionary = scene.combat.add_enemy(Vector2(100,100))
+	corpse.hp = 0
+	var saved_tick: int = scene.combat.tick
+	scene.combat.tick = 1000
+	check(scene.corpse_alpha(corpse) == 1.0,"dead enemy visible immediately")
+	scene.combat.tick = 1190
+	var fading: float = scene.corpse_alpha(corpse)
+	check(fading > 0.0 and fading < 1.0,"dead enemy fades after a delay")
+	scene.combat.tick = 1220
+	check(scene.corpse_alpha(corpse) == 0.0,"dead enemy disappears after linger")
+	scene.combat.tick = saved_tick
+	scene.combat.enemies.erase(corpse)
 	var p02_auto: Dictionary = scene.saves.load_slot("auto").snapshot
 	check(p02_auto.puzzles.P02 and p02_auto.node_id == "N1-02","P02 auto checkpoint committed")
 	scene.combat.player = Vector2(292,130)

@@ -4983,14 +4983,14 @@
   "budget": 24,
   "kinds": {
    "spores": {
-    "base_count": 12,
+    "base_count": 7,
     "pixel": 1,
     "colors": [
      "z",
      "Z",
      "w"
     ],
-    "alpha": 0.85,
+    "alpha": 0.42,
     "span": [
      34,
      26
@@ -4999,14 +4999,14 @@
     "state_notes": "洞穴/菌丛上浮孢子：1px，慢速上浮 + 1px 横摆"
    },
    "dust": {
-    "base_count": 8,
+    "base_count": 5,
     "pixel": 1,
     "colors": [
      "P",
      "Q",
      "l"
     ],
-    "alpha": 0.55,
+    "alpha": 0.32,
     "span": [
      40,
      8
@@ -5022,7 +5022,7 @@
      "z",
      "q"
     ],
-    "alpha": 0.9,
+    "alpha": 0.65,
     "span": [
      4,
      20
@@ -5031,14 +5031,14 @@
     "state_notes": "水管滴水：下落 + 2px 溅落，循环 56 tick"
    },
    "ember": {
-    "base_count": 5,
+    "base_count": 3,
     "pixel": 1,
     "colors": [
      "F",
      "Y",
      "y"
     ],
-    "alpha": 0.85,
+    "alpha": 0.42,
     "span": [
      8,
      22
@@ -5053,7 +5053,7 @@
      "a",
      "y"
     ],
-    "alpha": 0.18,
+    "alpha": 0.12,
     "radii": [
      18,
      5
@@ -5068,7 +5068,7 @@
      "y",
      "a"
     ],
-    "alpha": 0.1,
+    "alpha": 0.07,
     "length": 26,
     "hold": 8,
     "state_notes": "吊灯摆动光锥：1px 抖动，左右 ±2px"
@@ -5166,4 +5166,4 @@
   }
  },
  "build": "59458e26ea62a10b"
-}
+}

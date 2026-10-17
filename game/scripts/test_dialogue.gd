@@ -4,7 +4,7 @@ extends SceneTree
 ## 输出：DIALOGUE_TEST checks=N failures=0
 
 const Box = preload("res://scripts/dialogue_box.gd")
-const PIXEL_FONT = preload("res://assets/fonts/ArkPixel12px-zh_hans.ttf")
+const PIXEL_FONT = preload("res://assets/fonts/FusionPixel12px-zh_hans.ttf")
 
 # 约 114 个汉字：1280 宽下应折成 3 行，1920 宽下 2 行，用于验证自动换行不溢出。
 const LONG_TEXT := "净光已解锁：右键朝向目标释放。先净化灯座右侧不攻击的教学孢囊；完成后才有主动敌人。灯线沿地面延伸，如果水位继续下降，旧矿通道里的刻痕会先变干，再被新的菌丝覆盖。把灯举高，让光落在每一道刻痕上；记住水退到哪里，也记住是谁先离开。"
@@ -176,9 +176,12 @@ func run() -> void:
 	check(box.get_prompt_label().get_theme_font_size("font_size") == 24,
 		"choice prompt font size 24")
 	var label_font: Font = box.get_body_label().get_theme_font("font")
-	check(label_font != null and label_font.get_font_name().to_lower().find("ark pixel") >= 0,
+	check(label_font != null and label_font.get_font_name().to_lower().find("fusion pixel") >= 0,
 		"label font comes from ThemeDB fallback pixel font: "
 			+ (label_font.get_font_name() if label_font != null else "<null>"))
+	var cover_font: FontFile = PIXEL_FONT
+	for glyph in ["燃","然","紫","药","避","窗","聚","苔"]:
+		check(cover_font.has_char(glyph.unicode_at(0)), "pixel font covers glyph " + glyph)
 	check(box.get_hint_text().find("Tab") >= 0, "line hint offers Tab skip")
 	check(is_integer_rect(box.get_body_rect()) and is_integer_rect(box.get_nameplate_rect()),
 		"line rects use integer pixels")

@@ -1,7 +1,10 @@
 extends Node2D
 
 const Model = preload("res://scripts/combat_model.gd")
+const CORPSE_LINGER := 210
+const CORPSE_FADE := 45
 var combat = Model.new()
+var dead_since: Dictionary = {}
 var paused := false
 var hud: Label
 var status: Label
@@ -36,7 +39,7 @@ var combat_audio = preload("res://scripts/combat_audio.gd").new()
 
 func _ready() -> void:
 	if not review_mode:
-		ThemeDB.fallback_font = load("res://assets/fonts/ArkPixel12px-zh_hans.ttf")
+		ThemeDB.fallback_font = load("res://assets/fonts/FusionPixel12px-zh_hans.ttf")
 		ThemeDB.fallback_font_size = 24
 	combat.reset()
 	add_child(combat_audio)
@@ -59,17 +62,22 @@ func _ready() -> void:
 		if not pose_view: feedback.draw_numbers(floating_ui,combat.tick,preferences))
 	add_child(floating_ui)
 	var panel := ColorRect.new()
-	panel.color = Color(0.03,0.06,0.08,0.94)
+	# Text sits directly on the world; readability comes from the label outline.
+	panel.color = Color(0.03,0.06,0.08,0.0)
 	panel.size = Vector2(1280,100)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(panel)
 	hud = Label.new()
 	hud.position = Vector2(28,12)
 	hud.add_theme_font_size_override("font_size",24)
+	hud.add_theme_constant_override("outline_size",4)
+	hud.add_theme_color_override("font_outline_color",Color(0.02,0.035,0.04,0.95))
 	add_child(hud)
 	status = Label.new()
 	status.position = Vector2(28,654)
 	status.add_theme_font_size_override("font_size",24)
+	status.add_theme_constant_override("outline_size",4)
+	status.add_theme_color_override("font_outline_color",Color(0.02,0.035,0.04,0.95))
 	add_child(status)
 	if review_mode:
 		panel.hide()
@@ -253,6 +261,17 @@ func _physics_process(_delta: float) -> void:
 		if not path.is_empty():
 			get_viewport().get_texture().get_image().save_png(path)
 
+func corpse_alpha(enemy: Dictionary) -> float:
+	# Dead bodies stay on the ground briefly, then fade out and disappear.
+	if enemy.hp > 0:
+		dead_since.erase(enemy.id)
+		return 1.0
+	if not dead_since.has(enemy.id):
+		dead_since[enemy.id] = combat.tick
+	var age: int = combat.tick-int(dead_since[enemy.id])
+	if age > CORPSE_LINGER: return 0.0
+	return clampf(float(CORPSE_LINGER-age)/float(CORPSE_FADE),0.0,1.0)
+
 func draw_world() -> void:
 	art.background(world,combat,sewer)
 	if environment_fx:
@@ -312,9 +331,11 @@ func draw_world() -> void:
 			if debug_shapes: world.draw_arc(combat.player,5,0,TAU,24,Color("9affcf"),0.5)
 		else:
 			var enemy: Dictionary = entry.enemy
-			if enemy.dummy: art.target(world,enemy.pos,enemy.hp)
-			elif enemy.get("archetype","") == "T5": art.spore_pod(world,enemy.pos,enemy.hp > 0)
-			else: art.actor(world,enemy.pos,enemy.dir,"dead" if enemy.hp <= 0 else ("melee" if enemy.state == "attack" else "idle"),int(enemy.age),combat.tick,enemy.state != "attack" and enemy.alert,false,art.enemy_texture(enemy.get("archetype","T1")))
+			var corpse := corpse_alpha(enemy)
+			if corpse <= 0.0: continue
+			if enemy.dummy: art.target(world,enemy.pos,enemy.hp,corpse)
+			elif enemy.get("archetype","") == "T5": art.spore_pod(world,enemy.pos,enemy.hp > 0,corpse)
+			else: art.actor(world,enemy.pos,enemy.dir,"dead" if enemy.hp <= 0 else ("melee" if enemy.state == "attack" else "idle"),int(enemy.age),combat.tick,enemy.state != "attack" and enemy.alert,false,art.enemy_texture(enemy.get("archetype","T1")),corpse)
 			if enemy.hp > 0:
 				for layer in int(enemy.get("armor_layers",0)):
 					world.draw_arc(enemy.pos-Vector2(0,14),10+layer*3,-PI*0.95,PI*0.15,12,Color("eac36c"),2)

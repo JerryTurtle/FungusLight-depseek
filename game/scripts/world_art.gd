@@ -21,7 +21,7 @@ func background(canvas: CanvasItem, model, sewer: bool) -> void:
 		for y in range(int(wall.position.y),int(wall.end.y),16):
 			for x in range(int(wall.position.x),int(wall.end.x),16):
 				var size := Vector2(minf(16,wall.end.x-x),minf(16,wall.end.y-y))
-				var cell := Vector2(4,36) if sewer else Vector2(2,1)
+				var cell := Vector2(2,1)
 				canvas.draw_texture_rect_region(tiles,Rect2(Vector2(x,y),size),Rect2(cell*16,size))
 	for door in model.doors:
 		canvas.draw_rect(door.rect,Color("98724b") if not door.open else Color(0.5,0.73,0.62,0.15))
@@ -61,14 +61,19 @@ func enemy_texture(kind: String) -> Texture2D:
 		"T4","EL1": return preload("res://assets/original/Characters/Fungus - King.png")
 	return fungus
 
-func spore_pod(canvas: CanvasItem, foot: Vector2, alive: bool) -> void:
+func spore_pod(canvas: CanvasItem, foot: Vector2, alive: bool, alpha: float = 1.0) -> void:
 	var color := Color("b8a15a") if alive else Color("544d3b")
-	canvas.draw_rect(Rect2(foot+Vector2(-3,-7),Vector2(6,10)),Color("574c40"))
-	canvas.draw_rect(Rect2(foot+Vector2(-8,-15),Vector2(16,8)),Color("63465b"))
-	canvas.draw_rect(Rect2(foot+Vector2(-5,-18),Vector2(10,3)),Color("63465b"))
+	var body := Color("574c40")
+	var cap := Color("63465b")
+	body.a = alpha
+	cap.a = alpha
+	color.a = alpha
+	canvas.draw_rect(Rect2(foot+Vector2(-3,-7),Vector2(6,10)),body)
+	canvas.draw_rect(Rect2(foot+Vector2(-8,-15),Vector2(16,8)),cap)
+	canvas.draw_rect(Rect2(foot+Vector2(-5,-18),Vector2(10,3)),cap)
 	for offset in [Vector2(-5,-12),Vector2(1,-16),Vector2(4,-10)]: canvas.draw_rect(Rect2(foot+offset,Vector2(2,2)),color)
 
-func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String, age: int, tick: int, moving: bool, player: bool = true, override_texture: Texture2D = null) -> void:
+func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String, age: int, tick: int, moving: bool, player: bool = true, override_texture: Texture2D = null, alpha: float = 1.0) -> void:
 	foot = foot.round()
 	var texture: Texture2D = cleric if player else fungus
 	if override_texture != null: texture = override_texture
@@ -95,9 +100,10 @@ func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String
 		if player: staff(canvas,foot+Vector2(4,5),0.15,0)
 		var fall: float = [0.2,0.8,PI/2][mini(2,int(age/9))]
 		canvas.draw_set_transform(foot,fall,Vector2.ONE)
-		canvas.draw_texture_rect_region(texture,Rect2(-8,-25,16,32),Rect2(16,row(direction)*32,16,32),Color("9c9695"))
+		canvas.draw_texture_rect_region(texture,Rect2(-8,-25,16,32),Rect2(16,row(direction)*32,16,32),Color(0.61,0.59,0.58,alpha))
 		canvas.draw_set_transform(Vector2.ZERO)
 		return
+	tint.a = alpha
 	canvas.draw_set_transform(foot,0,Vector2(1,0.35))
 	canvas.draw_circle(Vector2.ZERO,7,Color(0.02,0.04,0.04,0.45))
 	canvas.draw_set_transform(Vector2.ZERO)
@@ -115,12 +121,17 @@ func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String
 		# Re-layer only the original hand pixels over the shaft, in their original location.
 		canvas.draw_texture_rect_region(texture,Rect2(hand_origin,hand.size),Rect2(source+hand.position,hand.size),tint)
 
-func target(canvas: CanvasItem, foot: Vector2, hp: float) -> void:
-	canvas.draw_rect(Rect2(foot+Vector2(-2,-19),Vector2(4,21)),Color("775c40"))
-	canvas.draw_rect(Rect2(foot+Vector2(-9,-24),Vector2(18,17)),Color("362b29"))
-	canvas.draw_rect(Rect2(foot+Vector2(-8,-23),Vector2(16,15)),Color("c0a16e") if hp > 0 else Color("625746"))
-	canvas.draw_circle(foot+Vector2(0,-16),5,Color("765443"))
-	canvas.draw_circle(foot+Vector2(0,-16),2,Color("e5cf8c"))
+func target(canvas: CanvasItem, foot: Vector2, hp: float, alpha: float = 1.0) -> void:
+	var wood := Color("775c40"); wood.a = alpha
+	var dark := Color("362b29"); dark.a = alpha
+	var face := Color("c0a16e") if hp > 0 else Color("625746"); face.a = alpha
+	var inner := Color("765443"); inner.a = alpha
+	var glow := Color("e5cf8c"); glow.a = alpha
+	canvas.draw_rect(Rect2(foot+Vector2(-2,-19),Vector2(4,21)),wood)
+	canvas.draw_rect(Rect2(foot+Vector2(-9,-24),Vector2(18,17)),dark)
+	canvas.draw_rect(Rect2(foot+Vector2(-8,-23),Vector2(16,15)),face)
+	canvas.draw_circle(foot+Vector2(0,-16),5,inner)
+	canvas.draw_circle(foot+Vector2(0,-16),2,glow)
 
 func light_tip(foot: Vector2, direction: Vector2, age: int) -> Vector2:
 	var frame: int = mini(2,int(float(age)/12*3)) if age < 12 else 1
