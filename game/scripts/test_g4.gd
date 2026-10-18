@@ -96,6 +96,27 @@ func _initialize() -> void:
 				if object.get("puzzle","") == puzzle:
 					p.set_switch(object)
 		check(p.has(puzzle), "puzzle completes "+puzzle)
+	# Ordered/evidence-gated mechanisms: wrong valve order resets; P08 needs evidence.
+	var v03 := {}
+	var v04 := {}
+	var v12 := {}
+	for node in p.content.nodes:
+		for object in node.objects:
+			if object.get("id","") == "v03": v03 = object
+			if object.get("id","") == "v04": v04 = object
+			if object.get("id","") == "v12": v12 = object
+	p.flags.P04 = false; p.flags.V03 = false; p.flags.V04 = false
+	var wrong_order := p.set_switch(v04)
+	check(wrong_order.contains("顺序错误") and not p.has("V04"), "P04 rejects out-of-order valve")
+	p.set_switch(v03)
+	p.set_switch(v04)
+	check(p.has("P04"), "P04 completes in authored order")
+	p.flags.P08 = false; p.flags.V12 = false; p.flags.V13 = false
+	p.flags.S04 = false; p.flags.S07 = false; p.flags.S08 = false
+	var no_evidence := p.set_switch(v12)
+	check(no_evidence.contains("证据不足") and not p.has("V12"), "P08 rejects missing evidence")
+	p.flags.S04 = true; p.flags.S07 = true; p.flags.S08 = true
+	p.flags.P08 = true
 	# Chapter-2 branch independence: neither branch requires the other's reward.
 	p.flags.P05 = false; p.flags.E16 = false; p.flags.E17 = false
 	check(not p.node_reachable("N2-06", p.flags), "merge closed without branch B")

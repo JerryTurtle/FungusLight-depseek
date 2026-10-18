@@ -98,16 +98,30 @@ func set_switch(object: Dictionary) -> String:
 	var flag := str(object.get("flag", ""))
 	var puzzle := str(object.get("puzzle", ""))
 	if flag.is_empty() or not content.get("puzzles", {}).has(puzzle): return "阀门数据无效。"
+	if has(puzzle): return "这个机关已经完成了。"
 	if has(flag): return "这道阀门已经打开了。"
+	var def: Dictionary = content.puzzles[puzzle]
+	for req in def.get("requires", []):
+		if not has(str(req)): return "证据不足：先完成对应的调查/记录。"
+	var order: Array = def.get("order", [])
+	if not order.is_empty():
+		var expected := ""
+		for part in order:
+			if not has(str(part)): expected = str(part); break
+		if not expected.is_empty() and flag != expected:
+			# Wrong sequence: reset this mechanism so the player can retry.
+			for part in def.get("flags", []): flags[str(part)] = false
+			flags[puzzle] = false
+			return "顺序错误，机关已复位。按灯线顺序重新操作。"
 	flags[flag] = true
-	var parts: Array = content.puzzles[puzzle].get("flags", [])
+	var parts: Array = def.get("flags", [])
 	var complete := true
 	for part in parts:
 		if not has(str(part)): complete = false
 	if complete:
 		flags[puzzle] = true
-		return "阀门全部打开，灯线接通。"
-	return "阀门打开：%d / %d。" % [parts.filter(func(p): return has(str(p))).size(), parts.size()]
+		return "机关接通：%s 完成。" % puzzle
+	return "机关进度：%d / %d。" % [parts.filter(func(p): return has(str(p))).size(), parts.size()]
 
 func sidequest(quest: String, part: String) -> String:
 	var def: Dictionary = content.get("sidequests", {}).get(quest, {})
