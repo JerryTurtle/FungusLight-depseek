@@ -374,7 +374,7 @@ func draw_world() -> void:
 			var start_a: float = angle-1.18
 			var end_a: float = angle+1.18
 			var segments := 6 if preferences.low_effects else 16
-			for layer in [{"radius":reach+4.0,"width":12.0,"color":Color(1.0,0.48,0.10,0.20*fade)},{"radius":reach,"width":5.0,"color":Color(1.0,0.78,0.30,0.92*fade)},{"radius":reach-3.0,"width":2.0,"color":Color(1.0,0.98,0.86,0.95*fade)}]:
+			for layer in [{"radius":reach+5.0,"width":14.0,"color":Color(0.22,0.92,0.82,0.22*fade)},{"radius":reach,"width":5.0,"color":Color(0.82,1.0,0.90,0.92*fade)},{"radius":reach-1.0,"width":2.5,"color":Color(1.0,0.84,0.38,0.96*fade)},{"radius":reach-4.0,"width":1.2,"color":Color(1.0,0.99,0.90,0.95*fade)}]:
 				for i in segments:
 					var a0: float = start_a+(end_a-start_a)*float(i)/float(segments)
 					var a1: float = start_a+(end_a-start_a)*float(i+1)/float(segments)
@@ -382,17 +382,30 @@ func draw_world() -> void:
 					var c: Color = layer.color
 					c.a *= 0.45+0.55*lead
 					world.draw_arc(combat.player,float(layer.radius),a0,a1,3,c,float(layer.width))
+			# Ghost crescents and a brief star make the cut read as a spell, not a stick.
+			for ghost in 2:
+				var ghost_angle := angle-0.14*float(ghost+1)
+				world.draw_arc(combat.player,reach+7.0+float(ghost)*3.0,ghost_angle-1.15,ghost_angle+1.15,20,Color(0.20,0.84,0.76,0.12*fade),7.0)
+			var star_center: Vector2 = combat.player+combat.locked*10.0
+			for arm in 4:
+				var sa := angle+float(arm)*PI/2.0
+				world.draw_line(star_center+Vector2.from_angle(sa)*4,star_center+Vector2.from_angle(sa)*12,Color(1.0,0.96,0.72,0.55*fade),1)
+			world.draw_circle(combat.player,7.0,Color(0.45,1.0,0.86,0.12*fade))
 			# A hot leading edge and a trailing after-image: reads as one fast cut.
 			var tip: Vector2 = combat.player+Vector2.from_angle(angle+1.18)*reach
-			world.draw_line(combat.player+Vector2.from_angle(angle+0.82)*reach,tip,Color(1,0.93,0.62,0.98*fade),2.0)
-			world.draw_rect(Rect2(tip-Vector2(1,1),Vector2(3,3)),Color(1,0.98,0.78,0.95*fade))
+			world.draw_line(combat.player+Vector2.from_angle(angle+0.82)*reach,tip,Color(1,0.86,0.44,0.98*fade),2.0)
+			world.draw_circle(tip,3.0+2.0*fade,Color(0.82,1.0,0.90,0.55*fade))
+			world.draw_rect(Rect2(tip-Vector2(1,1),Vector2(3,3)),Color(1,0.99,0.86,0.95*fade))
+			world.draw_arc(combat.player,reach+8.0,angle-1.5,angle+1.5,20,Color(0.35,0.95,0.82,0.32*fade),1.0)
 			if not preferences.low_effects and not preferences.reduced_motion:
-				for i in 8:
-					var a := angle-0.9+float(i)*0.26
+				for i in 14:
+					var a := angle-1.0+float(i)*0.18
 					var d := reach-2.0-float((i*7+combat.tick)%5)*1.6
 					var p: Vector2 = combat.player+Vector2.from_angle(a)*d
-					world.draw_rect(Rect2(p.round(),Vector2(2,2)),Color(1,0.72,0.28,0.85*fade))
-					world.draw_line(p,p-Vector2.from_angle(a)*4,Color(0.9,0.42,0.16,0.5*fade),0.5)
+					var pal: Color = [Color(0.72,1.0,0.90,0.95*fade),Color(0.40,0.96,0.84,0.85*fade),Color(1.0,0.85,0.42,0.9*fade)][i%3]
+					var sz := 4 if i%4 == 0 else (3 if i%2 == 0 else 2)
+					world.draw_rect(Rect2(p.round(),Vector2(sz,sz)),pal)
+					world.draw_line(p,p-Vector2.from_angle(a)*5,Color(pal.r,pal.g,pal.b,0.5*fade),0.5)
 	if combat.action == "light":
 		var age: int = combat.age
 		var fade := clampf(1.0-float(age-12)/7.0,0.0,1.0) if age >= 12 else 0.0

@@ -343,8 +343,8 @@ d["puzzles"] = {
     "P09": {"node": "N4-03", "flags": ["V14","V15","V16"]},
 }
 d["sidequests"] = {
-    "Q1": {"name": "旧灯修复", "parts": ["a","b","c"], "reward": "clear_mirror"},
-    "Q2": {"name": "补给调查", "parts": ["a","b","c"], "reward": "ember_talisman"},
+    "Q1": {"name": "旧灯修复", "parts": ["a","b","c"], "reward": "澄明镜"},
+    "Q2": {"name": "补给调查", "parts": ["a","b","c"], "reward": "余温符"},
 }
 
 # Encounters: E12-E29 normal, E30 Boss (E01-E11 stay from G3).
@@ -404,7 +404,7 @@ D = {
     "L20": [["岚","调压前厅的根门已经打开。"],["岚","进去就是核心外廊；检查一下药剂和专注。"]],
 }
 d["dialogues"].update(D)
-d["build_id"] = "G4-007"
+d["build_id"] = "G4-008"
 d["chapter_id"] = "campaign"
 PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 print("nodes", len(d["nodes"]), [n["id"] for n in d["nodes"]])

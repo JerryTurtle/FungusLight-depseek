@@ -657,7 +657,7 @@ func update_enemies() -> void:
 				enemy.pos = enemy.spawn
 				enemy.returning = false
 				enemy.alert = false
-				enemy.hp = float(spec.hp)
+				# Returning to spawn must not heal; only position/aggro reset.
 				enemy.lost_ticks = 0
 				emit("enemy_returned", {"target":enemy.id})
 			else: navigate_enemy(enemy,enemy.spawn)

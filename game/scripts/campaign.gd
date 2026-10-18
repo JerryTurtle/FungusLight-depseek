@@ -989,12 +989,11 @@ func draw_guide_beams() -> void:
 				objects_layer.draw_rect(Rect2(target-Vector2(2,2),Vector2(5,5)),tint.lightened(0.3))
 		else:
 			# Always show the current facing so turning the device is readable.
-			var tip: Vector2 = origin+axis*22
+			var tip: Vector2 = origin+axis*18
 			var dim := Color(tint.r*0.85,tint.g*0.85,tint.b*0.85,0.9)
-			objects_layer.draw_line(origin,tip,dim,2)
-			objects_layer.draw_line(tip,tip-axis*5+perpendicular*3,dim,2)
-			objects_layer.draw_line(tip,tip-axis*5-perpendicular*3,dim,2)
-			objects_layer.draw_rect(Rect2(tip-Vector2(1,1),Vector2(3,3)),Color(1,0.94,0.8,0.9))
+			# Directional hint without arrowheads; the guide device remains readable.
+			objects_layer.draw_line(origin,tip,dim,1)
+			objects_layer.draw_rect(Rect2(origin-Vector2(1,1),Vector2(3,3)),Color(dim.r,dim.g,dim.b,0.9))
 
 func draw_object_labels() -> void:
 	var nearest := nearest_object()

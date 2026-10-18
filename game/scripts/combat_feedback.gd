@@ -61,7 +61,8 @@ func draw_sparks(canvas: CanvasItem, tick: int, preferences) -> void:
 		var t := float(age)/float(spark.life)
 		if t >= 1.0: continue
 		var p: Vector2 = spark.pos+spark.vel*float(age)*(1.0-0.45*t)
-		var color := Color(1.0,0.93,0.62,1.0-t) if spark.hot else Color(0.98,0.62,0.38,1.0-t)
+		var color := Color(0.86,1.0,0.92,1.0-t) if spark.hot else Color(0.34,0.94,0.80,1.0-t)
+		if not spark.hot and int(spark.life)%4 == 0: color = Color(1.0,0.84,0.40,1.0-t)
 		canvas.draw_rect(Rect2(p.round(),Vector2.ONE*(2 if spark.hot else 1)),color)
 		canvas.draw_line(p,p-spark.vel*2.0,Color(color.r,color.g,color.b,(1.0-t)*0.55),0.5)
 

@@ -72,9 +72,8 @@ func update_special_enemy(enemy: Dictionary) -> void:
 			enemy.pos = enemy.spawn
 			enemy.returning = false
 			enemy.alert = false
-			enemy.hp = float(spec.hp)
-			enemy.armor_layers = int(spec.get("armor",0))
-			enemy.rearm_used = false
+			# User feedback: returning to a spawn may not heal or restore shell.
+			# Keep current HP/armor so retreat is not a free reset.
 			emit("enemy_returned",{"target":enemy.id})
 		else: navigate_enemy(enemy,enemy.spawn)
 		return

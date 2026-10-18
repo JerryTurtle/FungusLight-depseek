@@ -355,7 +355,7 @@ func check_navigation() -> void:
 	enemy.hp = 36
 	enemy.alert = true
 	for frame in range(240): m.step(Vector2.ZERO,Vector2.RIGHT)
-	check(enemy.pos == enemy.spawn and enemy.hp == 72 and not enemy.alert,"A15 lost sight returns and heals at spawn")
+	check(enemy.pos == enemy.spawn and enemy.hp == 36 and not enemy.alert,"A15 lost sight returns without healing")
 	var returned := 0
 	for event in m.history:
 		if event.kind == "enemy_returned": returned += 1

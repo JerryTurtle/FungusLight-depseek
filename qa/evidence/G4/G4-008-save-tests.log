@@ -1,0 +1,7 @@
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+SAVE_TEST checks=65 failures=0
+McpInteractionServer: Listening on 127.0.0.1:9090
+McpInteractionServer: Stopped
+ERROR: Could not create directory: C:/Users/shandian/Documents/AI/FungusLight-depseek/qa/runtime-profile/save-275029/blocked/subdir
+   at: (core/io/dir_access.cpp:180)

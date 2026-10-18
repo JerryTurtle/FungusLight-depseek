@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_id": "G4-007",
+  "build_id": "G4-008",
   "nodes": [
     {
       "id": "N0-01",
@@ -5325,7 +5325,7 @@
         "b",
         "c"
       ],
-      "reward": "clear_mirror"
+      "reward": "澄明镜"
     },
     "Q2": {
       "name": "补给调查",
@@ -5334,7 +5334,7 @@
         "b",
         "c"
       ],
-      "reward": "ember_talisman"
+      "reward": "余温符"
     }
   },
   "chapter_id": "campaign"
