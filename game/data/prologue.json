@@ -1270,7 +1270,8 @@
               "label": "菌群咬断：先袭击，水才断",
               "correct": false
             }
-          ]
+          ],
+          "success": "人类先断水，菌群才转为攻击。"
         }
       ],
       "decor": [
@@ -1519,6 +1520,30 @@
           "kind": "exit",
           "target": "N2-03",
           "requires": "P04"
+        },
+        {
+          "id": "p04_choice",
+          "name": "流向图对照",
+          "pos": [
+            230,
+            80
+          ],
+          "kind": "puzzle_choice",
+          "visual": "papers",
+          "puzzle": "P04",
+          "success": "先开左阀、再开右阀，分流通道接通。",
+          "options": [
+            {
+              "id": "left_right",
+              "label": "先开左阀，再开右阀",
+              "correct": true
+            },
+            {
+              "id": "right_left",
+              "label": "先开右阀，再开左阀",
+              "correct": false
+            }
+          ]
         }
       ],
       "decor": [
@@ -1728,6 +1753,30 @@
           "kind": "exit",
           "target": "N2-05",
           "requires": "P05"
+        },
+        {
+          "id": "p05_choice",
+          "name": "污染根与门闩",
+          "pos": [
+            230,
+            80
+          ],
+          "kind": "puzzle_choice",
+          "visual": "papers",
+          "puzzle": "P05",
+          "success": "先切断污染根，再拉开门闩，被困者出口打开。",
+          "options": [
+            {
+              "id": "root_then_latch",
+              "label": "先切断污染根，再拉开门闩",
+              "correct": true
+            },
+            {
+              "id": "latch_then_root",
+              "label": "先拉门闩，再切断污染根",
+              "correct": false
+            }
+          ]
         }
       ],
       "decor": [
@@ -2197,6 +2246,30 @@
           "item": "throttle_lens",
           "flag": "EQ_THROTTLE",
           "visual": "chest"
+        },
+        {
+          "id": "p06_choice",
+          "name": "两处测量点",
+          "pos": [
+            230,
+            70
+          ],
+          "kind": "puzzle_choice",
+          "visual": "papers",
+          "puzzle": "P06",
+          "success": "两处测量点对上，备用储水启动。",
+          "options": [
+            {
+              "id": "compare_then_start",
+              "label": "对照两处读数，再启动备用储水",
+              "correct": true
+            },
+            {
+              "id": "start_first",
+              "label": "先启动储水，再对照读数",
+              "correct": false
+            }
+          ]
         }
       ],
       "decor": [
@@ -2438,6 +2511,30 @@
           "kind": "exit",
           "target": "N3-03",
           "requires": "P07"
+        },
+        {
+          "id": "p07_choice",
+          "name": "三段供给管线",
+          "pos": [
+            230,
+            80
+          ],
+          "kind": "puzzle_choice",
+          "visual": "papers",
+          "puzzle": "P07",
+          "success": "三段管线依次扫描，旧约拓文显现。",
+          "options": [
+            {
+              "id": "scan_order",
+              "label": "按管线顺序扫描三段",
+              "correct": true
+            },
+            {
+              "id": "scan_random",
+              "label": "随便扫描任意一段",
+              "correct": false
+            }
+          ]
         }
       ],
       "decor": [
@@ -3153,6 +3250,30 @@
           "kind": "exit",
           "target": "N4-04",
           "requires": "P09"
+        },
+        {
+          "id": "p09_choice",
+          "name": "三步稳压台",
+          "pos": [
+            230,
+            80
+          ],
+          "kind": "puzzle_choice",
+          "visual": "papers",
+          "puzzle": "P09",
+          "success": "主流向、支路、稳压三步完成。",
+          "options": [
+            {
+              "id": "three_step",
+              "label": "主流向→支路→稳压",
+              "correct": true
+            },
+            {
+              "id": "pressure_first",
+              "label": "先稳压，再找主流向",
+              "correct": false
+            }
+          ]
         }
       ],
       "decor": [

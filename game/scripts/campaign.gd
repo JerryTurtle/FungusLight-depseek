@@ -641,8 +641,9 @@ func choose_choice(option: String) -> void:
 		choose_growth(option)
 
 func show_puzzle_choice(object: Dictionary) -> void:
-	if progress.has("P03"):
-		notice = "断根结论已经记录。"
+	var puzzle := str(object.get("puzzle",""))
+	if puzzle.is_empty() or progress.has(puzzle):
+		notice = "这个机关已经完成了。"
 		return
 	puzzle_choice_object = object
 	choice_mode = "puzzle"
@@ -657,11 +658,12 @@ func choose_puzzle_choice(option: String) -> void:
 	var correct := false
 	for item in puzzle_choice_object.get("options", []):
 		if str(item.get("id","")) == option and bool(item.get("correct",false)): correct = true
+	var puzzle := str(puzzle_choice_object.get("puzzle",""))
 	if correct:
-		progress.flags.P03 = true
-		notice = "结论记录：人类先断水，菌群才转为攻击。"
+		if not puzzle.is_empty(): progress.flags[puzzle] = true
+		notice = "结论记录：" + str(puzzle_choice_object.get("success","机关接通。"))
 	else:
-		notice = "证据与现场不符。再看一次断根切口和抽水记录。"
+		notice = "证据与现场不符。再看一次线索和操作顺序。"
 	choice_pending = false
 	choice_mode = "growth"
 	puzzle_choice_object = {}
