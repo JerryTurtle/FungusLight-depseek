@@ -8,7 +8,7 @@
 - P0-1 读档修复、P0-2 路线/竞技场修复、P0-3 包/版本/门槛统一均已完成；第三轮按用户 8 项反馈修复箱子开启、休息灯座、冗余机关与 Boss 判定/持续伤害反馈。
 - G6-004 第四轮按用户 5 项反馈：休息灯座离出口 ≥60px 且休息为最低交互优先级；S01～S10/L01～L20 剧情重写并统一世界观；像素 HUD/技能冷却栏；治疗 +生命反馈；五幕开场动画。
 - 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation30/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 725.9 秒/0 死亡，跳过 635.9 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
-- G6-004 包：`deliverables/G6-004-Release/`，zip `deliverables/FungusLight-G6-004-Release.zip`；exe `66B26A…B7B13`，pck `3288C6…AFB50`，zip `F61166…506847`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-004 改放同级目录，PCK 审计、五目录布局通过。
+- G6-004 包：`deliverables/G6-004-Release/`，zip `deliverables/FungusLight-G6-004-Release.zip`；exe `66B26A…B7B13`，pck `3288C6…AFB50`，zip `8198BB…F030F`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-004 改放同级目录，PCK 审计、五目录布局通过。
 - 接续分支 main；release 构建默认 campaign，debug 构建仍进 G2 审核台。
 - G6 仍为 in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；HUD/开场/剧情与 20 分钟真人时长尚未人工验收。
 
