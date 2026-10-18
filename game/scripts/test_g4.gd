@@ -63,6 +63,16 @@ func _initialize() -> void:
 		if not req.is_empty() and p.has(eid) and not p.has(req): late_error += " | "+eid+"<-"+req
 	check(late_error.is_empty(), "late snapshot valid: " + late_error)
 	check(p.equipment().charm == "guardian_knot" and p.equipment().lens == "echo_lens", "equipment")
+	# Real equipment effects from optional pickups/sidequests.
+	p.flags.EQ_FOCUS = true
+	p.flags.EQ_THROTTLE = true
+	p.flags.EQ_CLASP = true
+	check(is_equal_approx(p.light_damage(),28.8), "focus lens light damage")
+	check(p.light_cost() == 17, "focus/throttle light cost")
+	check(p.shield_capacity() == 35, "artisan clasp shield capacity")
+	check(p.shield_cooldown() == 540, "artisan clasp shield cooldown")
+	p.flags.Q2 = true
+	check(p.heal_amount() == 45.0 and p.heal_windup() == 42, "ember talisman heal")
 	check(p.rewards().M4 and not p.rewards().Q1, "rewards")
 	# Second ending and optional equipment.
 	p.flags.END_RESTORE = false

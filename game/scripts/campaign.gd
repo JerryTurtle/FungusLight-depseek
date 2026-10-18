@@ -375,7 +375,12 @@ func apply_growth() -> void:
 	combat.config.actions.light.damage = progress.light_damage()
 	combat.config.actions.light.cost = progress.light_cost()
 	combat.config.actions.rain.damage = progress.rain_damage()
+	combat.config.actions.rain.cost = progress.rain_cost()
 	combat.config.actions.shield.capacity = progress.shield_capacity()
+	combat.config.actions.shield.cost = progress.shield_cost()
+	combat.config.actions.shield.cooldown = progress.shield_cooldown()
+	combat.config.actions.heal.healing = progress.heal_amount()
+	combat.config.actions.heal.windup = progress.heal_windup()
 	combat.hp = minf(combat.hp,progress.max_hp())
 	combat.focus = minf(combat.focus,progress.max_focus())
 	combat.shield_hp = minf(combat.shield_hp,float(progress.shield_capacity()))
@@ -822,6 +827,17 @@ func interact() -> void:
 				notice = "现在还不能记录。"
 		"growth":
 			show_growth_choice(str(object.get("event","M1")))
+		"equipment":
+			var eq_flag := str(object.get("flag",""))
+			if progress.has(eq_flag):
+				notice = "这里已经空了。"
+			elif eq_flag.is_empty():
+				notice = "这个箱子里没有可用的装备。"
+			else:
+				progress.flags[eq_flag] = true
+				notice = "取得 "+str(object.get("name","装备"))+"。"
+				dirty = true
+				apply_growth()
 		"sidequest":
 			notice = progress.sidequest(str(object.get("quest","")),str(object.get("part","")))
 			dirty = true
@@ -963,6 +979,8 @@ func _physics_process(delta: float) -> void:
 				notice = "你从床铺上醒来。"
 		var before: Vector2 = combat.player
 		combat.step_commands(movement,pointer-combat.player,valid,inside and pending_encounter != "tutorial" and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT))
+		if progress.has("Q1") and combat.action == "shield" and combat.age == int(combat.config.actions.shield.windup):
+			combat.poison_until = 0
 		render_curr_player = combat.player
 		render_curr_enemies.clear()
 		for enemy in combat.enemies:

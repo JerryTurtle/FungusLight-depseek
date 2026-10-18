@@ -948,6 +948,18 @@
           "quest": "Q2",
           "part": "a",
           "visual": "chest"
+        },
+        {
+          "id": "eq_focus",
+          "name": "工具箱 · 聚束镜",
+          "pos": [
+            245,
+            100
+          ],
+          "kind": "equipment",
+          "item": "focus_lens",
+          "flag": "EQ_FOCUS",
+          "visual": "chest"
         }
       ],
       "decor": [
@@ -2150,6 +2162,18 @@
           "kind": "exit",
           "target": "N2-10",
           "requires": "M3&P06&S07"
+        },
+        {
+          "id": "eq_throttle",
+          "name": "控制台 · 节流镜",
+          "pos": [
+            110,
+            110
+          ],
+          "kind": "equipment",
+          "item": "throttle_lens",
+          "flag": "EQ_THROTTLE",
+          "visual": "chest"
         }
       ],
       "decor": [

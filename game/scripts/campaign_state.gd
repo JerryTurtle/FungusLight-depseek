@@ -30,7 +30,7 @@ func _build_ids() -> void:
 	var seen := {}
 	for key in ["S01","S02","S03","S04","S05","S06","S07","S08","S09","S10","S11","S12",
 			"M1","M2","M3","M4","core","P01","P02","P03","P04","P05","P06","P07","P08","P09",
-			"pipe","tutorial","END_RESTORE","END_SEAL"]:
+			"pipe","tutorial","END_RESTORE","END_SEAL","EQ_FOCUS","EQ_THROTTLE","EQ_CLASP"]:
 		if not seen.has(key): seen[key] = true; flag_ids.append(key)
 	for id in content.get("events", {}).keys():
 		if not seen.has(id): seen[id] = true; flag_ids.append(id)
@@ -87,6 +87,7 @@ func finish_event(option: String = "") -> bool:
 		choices[active_event] = option
 		if active_event == "M1": choice = option
 	flags[active_event] = true
+	if active_event == "S07": flags.EQ_CLASP = true
 	active_event = ""
 	return true
 
@@ -184,6 +185,7 @@ func melee_damage() -> float:
 func light_damage() -> float:
 	var damage := 24.0
 	if choices.get("M1", "") == "light": damage += 4.0
+	if has("EQ_FOCUS"): damage *= 1.2
 	return damage
 
 func rain_damage() -> float:
@@ -194,13 +196,37 @@ func rain_damage() -> float:
 func light_cost() -> int:
 	var cost := 20
 	if choices.get("M3", "") == "cost": cost -= 5
+	if has("EQ_FOCUS"): cost += 5
+	if has("EQ_THROTTLE"): cost -= 3
+	return maxi(5,cost)
+
+func shield_cost() -> int:
+	var cost := 25
+	if has("Q1"): cost += 5
+	if has("EQ_THROTTLE"): cost -= 3
+	return maxi(5,cost)
+
+func rain_cost() -> int:
+	var cost := 35
+	if has("EQ_THROTTLE"): cost -= 3
 	return maxi(5,cost)
 
 func hit_focus_gain() -> int:
 	return 6 if choices.get("M2", "") == "energy" else 4
 
 func shield_capacity() -> int:
-	return 35 if choices.get("M2", "") == "shield" else 25
+	var capacity := 35 if choices.get("M2", "") == "shield" else 25
+	if has("EQ_CLASP"): capacity += 10
+	return capacity
+
+func shield_cooldown() -> int:
+	return 480 + (60 if has("EQ_CLASP") else 0)
+
+func heal_amount() -> float:
+	return 45.0 if has("Q2") else 35.0
+
+func heal_windup() -> int:
+	return 42 if has("Q2") else 36
 
 func evidence() -> Dictionary:
 	# The three mainline evidence items are carried by the event flags, so old
