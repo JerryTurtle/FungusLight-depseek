@@ -19,6 +19,7 @@
 ## 证据与限制
 
 - [门槛](../qa/gates.json)、[G2报告](../qa/evidence/G2/G2-007-gate-report.md)、[G4-001报告](../qa/evidence/G4/G4-001-progress.md)。
+- G4 人工验收包：`deliverables/G4-001-Acceptance/G4-Acceptance.cmd`、`G4-Acceptance.md`、`G4-Checklist.md`；压缩包 `deliverables/G4-001-Acceptance.zip`。
 - G2的549模型/118战斗集成/50审核集成、帧率回放和900秒负载是历史基线，不等于G3完成。
 - 用户目录可能使用exe旁后备位置；原生集成非OS键鼠自动化；原素材授权待核实；主线/Boss/G6未完成。
 

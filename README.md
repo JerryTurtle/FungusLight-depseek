@@ -7,7 +7,7 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 **G0/G1/G2 技术检查与 H2 人工审核均已通过，G3 已于 2026-10-18 通过（G3-013）；G4-001 全主线结构首版开发中，G4 未通过。** G4-001 已搭出五章 31 节点、30 遭遇、9 机关、M1～M4、6 件装备、第二章双支路、Boss 与两结局；正常输入全路线 404.3 秒、跳过 352.7 秒，距策划的快速 ≥60 分钟仍远，Boss 仅为路线验证版 150 生命，C01～C06 六条自动路线已跑，但时长与真人验收未完成。G4 仍 `in_progress`，不能宣称完成。
 
 - 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G4-001 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **默认运行仍是 G2 审核台，不是主线。** 入口为 `boot.tscn → boot.gd → review.gd`；`FungusLight.exe -- --campaign` 进入 G3 序章—菌洞切片（`deliverables/G4-001/Play-Prologue.cmd` 由 build.ps1 生成）。
+- **默认运行仍是 G2 审核台，不是主线。** 入口为 `boot.tscn → boot.gd → review.gd`；`FungusLight.exe -- --campaign` 进入 G4 五章主线。G4 人工验收包：`deliverables/G4-001-Acceptance/G4-Acceptance.cmd`（同目录 `G4-Acceptance.md` / `G4-Checklist.md`），压缩包 `deliverables/G4-001-Acceptance.zip`；G4 仍未通过。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
 - **下一项 G4-002：补有效探索/机关/剧情密度，重做 Boss 平衡，跑全两种第二章顺序×两结局与 C01～C06，完成快速 ≥60 分钟审计。** 文档维护不改变游戏构建编号。
 
@@ -16,7 +16,7 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
 ### 接续快照：已实现功能与剩余工作（2026-10-18）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-001，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3已通过，G4进行中，G5/G6未开始。当前分支main；运行入口仍是G2审核台，`-- --campaign`进入G4五章主线。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-001，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3已通过，G4进行中，G5/G6未开始。当前分支main；运行入口仍是G2审核台，`-- --campaign`进入G4五章主线；G4 人工验收包 `deliverables/G4-001-Acceptance/`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
 
 #### 已实现清单（接续时直接复用）
 
