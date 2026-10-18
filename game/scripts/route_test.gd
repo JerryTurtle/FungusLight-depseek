@@ -5,7 +5,7 @@ extends SceneTree
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
 const NAV_ARENA := Rect2(14,34,292,118)
-var BUILD_ID := str(ProjectSettings.get_setting("application/config/version","G6-002"))
+var BUILD_ID := str(ProjectSettings.get_setting("application/config/version","G6-003"))
 var scene
 var checks := 0
 var failures := 0
@@ -483,10 +483,19 @@ func do_lore() -> void:
 	if scene.dialogue_mode == "":
 		next_step()
 
+func rest_goal() -> Vector2:
+	# Rest lamps moved next to each room's forward exit; follow the data rather
+	# than the old hard-coded west-side coordinate.
+	for object in scene.progress.node().objects:
+		if str(object.get("kind","")) == "rest":
+			return Vector2(object.pos[0],object.pos[1])+Vector2(0,-14)
+	return Vector2(55,150)
+
 func do_rest() -> void:
 	var data := step()
-	if not at(data.to,12):
-		walk_to(data.to)
+	var goal := rest_goal()
+	if not at(goal,12):
+		walk_to(goal)
 		return
 	release_all()
 	if scene.combat.hp >= scene.progress.max_hp()-1:

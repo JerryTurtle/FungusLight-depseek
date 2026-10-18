@@ -1,0 +1,42 @@
+{
+  "build": "G6-003",
+  "purpose": "User feedback round 1 plus package/version/gates rebuild",
+  "version": {
+    "project.godot": "G6-003",
+    "prologue.json": "G6-003",
+    "export_presets": "G6-003",
+    "title_save_fallbacks": "G6-003",
+    "release_docs": "G6-003"
+  },
+  "feedback": {
+    "elite_damage": "EL2 charge/water damage was already applied; dot events now also produce a damage number and hurt audio",
+    "chests": "sidequest and equipment chests switch to the open variant after their own claim",
+    "deleted_assets": ["N2-02 p04_choice", "N2-04 p05_choice", "N3-05 p08_slots", "N4-03 p09_choice"],
+    "rests": "32 lamp rest seats moved beside the forward/only exit; lamps are non-blocking and route_test follows the room's rest object",
+    "boss": "BOSS is damageable at all times; hurtbox is the full 155x135 battler at 0.5 scale"
+  },
+  "package": {
+    "release": "deliverables/Release/",
+    "zip": "deliverables/FungusLight-G6-003-Release.zip",
+    "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+    "pck_sha256": "0495EAC5D84CEF8D75FDA37182693935EAF333B6CE894133186BE0651677491B",
+    "zip_sha256_note": "recorded in qa/gates.json and README after final assembly",
+    "pck_audit": "passed",
+    "five_folder_layout": "passed",
+    "clean_startup": "passed (headless, space-containing path, RELEASE_BOOT campaign)",
+    "personal_files_in_game": []
+  },
+  "not_done": [
+    "windowed title/settings persistence and two-ending play-through",
+    "20-minute human duration",
+    "user written acceptance in qa/G6-approval.md",
+    "asset redistribution permission confirmation"
+  ],
+  "passed_ai_verification": true,
+  "gates_updated": true,
+  "notes": [
+    "The package is an AI-verified candidate, not G6 passed.",
+    "The bot's 612.3s fastest replay is not human duration.",
+    "G6-002 package directory and zip remain preserved; G6-001 is also preserved."
+  ]
+}

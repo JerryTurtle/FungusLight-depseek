@@ -1,4 +1,4 @@
-﻿param([string]$BuildId = "G6-002")
+﻿param([string]$BuildId = "G6-003")
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $source = Join-Path $root "deliverables/$BuildId"
@@ -17,7 +17,13 @@ if ($project -notmatch ('config/version="' + [regex]::Escape($BuildId) + '"')) {
 & python (Join-Path $root "tools/check_release_package.py") $BuildId
 if ($LASTEXITCODE -ne 0) { throw "PCK audit failed" }
 
-if (Test-Path $release) { Remove-Item -LiteralPath $release -Recurse -Force }
+if (Test-Path $release) {
+  # Keep the Release directory itself (host ACL may deny deleting it) and
+  # replace its contents for this build.
+  Get-ChildItem -LiteralPath $release -Force | Remove-Item -Recurse -Force
+} else {
+  New-Item -ItemType Directory -Force $release | Out-Null
+}
 New-Item -ItemType Directory -Force $game,$src,$docs,$qa,$licenses | Out-Null
 Copy-Item (Join-Path $source "FungusLight.exe") $game
 Copy-Item (Join-Path $source "FungusLight.pck") $game

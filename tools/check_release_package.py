@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-002"
+BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-003"
 RELEASE = ROOT / "deliverables" / BUILD
 QA = ROOT / "deliverables" / (BUILD + "-QA")
 OUT = ROOT / "qa" / "evidence" / "G6" / f"{BUILD}-release-package.json"
@@ -21,6 +21,7 @@ FORBIDDEN = [
     "scripts/test_", "scripts/route_test", "scripts/capture_", "scripts/stress_",
     "scripts/review", "scripts/enemy_arena", "scripts/integration_test",
     "scripts/replay_driver", "scripts/asset_preview", "scripts/main.gd",
+    "scripts/tmp_",
     "scenes/capture_", "scenes/asset_preview", "scenes/main.tscn",
     "data/review_manifest", "autoload/", "McpInteractionServer",
     "用户数据/", "C:/Users/", "res://../qa",

@@ -181,7 +181,7 @@ func show_title() -> void:
 	if hud != null: hud.visible = false
 	if status != null: status.visible = false
 	clear_menu("菌灯之下")
-	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-002"))
+	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-003"))
 	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n构建 "+build_label,100)
 	button("新游戏",func():
 		if FileAccess.file_exists(saves.directory+"/auto.json"):
@@ -355,6 +355,9 @@ func setup_collision() -> void:
 		# choice marker, not cover: keeping its portal collision would block
 		# the boss line of sight and split the arena during the final fight.
 		if str(object.kind) == "ending": rect = Rect2()
+		# Rest lamps are now placed beside exits. Keep the seat walkable so it
+		# never blocks the narrow exit approach; the bed keeps its collision.
+		if str(object.kind) == "rest" and visual == "lamp": rect = Rect2()
 		if rect.size.x > 0: combat.blockers.append(rect)
 		if str(object.kind) in ["rong","npc"] or bool(object.get("npc",false)):
 			combat.npcs.append({"id":str(object.id),"pos":pos+Vector2(0,-12),"radius":7.0})
@@ -749,7 +752,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-002")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-003")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),
@@ -1228,6 +1231,13 @@ func object_state(object: Dictionary, nearest_id: String) -> Dictionary:
 		"sidequest":
 			state.complete = progress.has(str(object.get("quest","")) + str(object.get("part","")))
 			state.available = true
+			# Sidequest chests are drawn with the chest atlas. Without this
+			# open flag they stayed closed forever even after being claimed.
+			state.open = state.complete
+		"equipment":
+			state.complete = progress.has(str(object.get("flag","")))
+			state.available = not state.complete
+			state.open = state.complete
 		"ending":
 			state.available = progress.has("E30") and progress.ending_id().is_empty()
 			state.complete = not progress.ending_id().is_empty()

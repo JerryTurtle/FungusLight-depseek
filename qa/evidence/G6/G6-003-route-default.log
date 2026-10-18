@@ -1,0 +1,10 @@
+===== G6-003 default route, current source =====
+Command: godot --headless --path game --script res://scripts/route_test.gd
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+G2_READY | G2-007 | 60Hz | prototype
+ROUTE_TEST checks=9 failures=0 seconds=674.4 steps=128 deaths=0
+
+Result: PASS. Ending restore, 0 deaths.

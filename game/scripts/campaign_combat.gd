@@ -44,10 +44,17 @@ func enemy_can_react(enemy: Dictionary, request: Dictionary) -> bool:
 		return enemy.state == "attack" and enemy.age >= active_end
 	return true
 
-func enemy_damage_allowed(enemy: Dictionary) -> bool:
-	# The mother core is only reachable while its exposure window is open.
+func enemy_hurt_rect(enemy: Dictionary) -> Rect2:
 	if str(enemy.get("archetype","")) == "BOSS":
-		return bool(enemy.get("core_open",false))
+		# The mother uses the native 155x135 battler at half world scale. The
+		# foot is the anchor point, so the full drawn body is the hit target.
+		var size := Vector2(155,135)*0.5
+		return Rect2(enemy.pos+Vector2(-size.x*0.5,-size.y),size)
+	return super.enemy_hurt_rect(enemy)
+
+func enemy_damage_allowed(_enemy: Dictionary) -> bool:
+	# The mother is vulnerable at all times; core-open windows are now only a
+	# readable damage-amplification/visual cue, not a hit gate.
 	return true
 
 func enemy_on_death(enemy: Dictionary) -> void:

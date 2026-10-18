@@ -1,5 +1,5 @@
 {
- "build_id": "G6-002",
+ "build_id": "G6-003",
  "G0": {
   "status": "passed",
   "evidence": [
@@ -416,7 +416,7 @@
  },
  "G6": {
   "status": "in_progress",
-  "build_id": "G6-002",
+  "build_id": "G6-003",
   "evidence": [
    "qa/evidence/G6/G6-gap-audit.md",
    "qa/evidence/G6/G6-001-checks.json",
@@ -464,7 +464,18 @@
    "qa/evidence/G6/G6-002-p3-checks.json",
    "qa/evidence/G6/G6-002-route.json",
    "qa/evidence/G6/G6-002-clean-release.json",
-   "qa/evidence/G6/G6-002-clean-release.log"
+   "qa/evidence/G6/G6-002-clean-release.log",
+   "qa/evidence/G6/G6-003-feedback-checks.json",
+   "qa/evidence/G6/G6-003-feedback-suite.log",
+   "qa/evidence/G6/G6-003-route.json",
+   "qa/evidence/G6/G6-003-route-matrix.json",
+   "qa/evidence/G6/G6-003-route-matrix.log",
+   "qa/evidence/G6/G6-003-clean-release.json",
+   "qa/evidence/G6/G6-003-clean-release.log",
+   "qa/evidence/G6/G6-003-p3-checks.json",
+   "qa/evidence/G6/G6-003-release-package.json",
+   "qa/evidence/G6/G6-003-release-layout.json",
+   "qa/evidence/G6/G6-003-final-package.txt"
   ],
   "package": "deliverables/Release/",
   "remaining": [
@@ -472,8 +483,8 @@
    "原始 Fungus Cave 素材再分发许可确认或限定内部验收",
    "可选：音乐与完整按键重设（G5 单独阶段按用户指示跳过）"
   ],
-  "caveat": "AI 发布验证、五目录布局与 PCK 审计通过；默认路线 674.8 秒/0 死亡，8/8 路线矩阵与全量套件 0 失败。未重跑干净目录 GUI 全流程；20 分钟为真人目标，机器人 619.3 秒不构成真人时长；仅用户书面确认后可标 passed。",
-  "package_zip": "deliverables/FungusLight-G6-002-Release.zip",
-  "package_zip_sha256": "4B0E9BF0ED86591C02037DA60A4ABAE9DCC96E0114BCD149ACF579045C7B930B"
+  "caveat": "AI 发布验证、五目录布局、PCK 审计与干净目录启动烟测通过；默认路线 674.4 秒/0 死亡，8/8 路线矩阵与全量套件 0 失败。G6-003 已修用户反馈的箱子开启、休息灯座、Boss 全程受伤/整图判定、持续伤害反馈，并删除指定冗余机关/证据台。未做窗口化两结局全流程；20 分钟为真人目标，机器人 612.3 秒不构成真人时长；仅用户书面确认后可标 passed。",
+  "package_zip": "deliverables/FungusLight-G6-003-Release.zip",
+  "package_zip_sha256": "21E1CD3E643E43F78D9B52F5B9B3AE63501280E1E1EE53986EE32EA1C73BBC0A"
  }
 }

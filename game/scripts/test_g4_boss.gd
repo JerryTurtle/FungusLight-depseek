@@ -1,7 +1,7 @@
 extends SceneTree
 ## G4 Boss production kit: 2200 HP, three clamped phases, alternating phase
-## moves, safe transition windows, core-only damage, readable warnings that
-## match the hit tests, and the original BOSS battler wiring.
+## moves, safe transition windows, always-on damage with a full-battler hurtbox,
+## readable warnings that match the hit tests, and the original BOSS battler wiring.
 const Combat = preload("res://scripts/campaign_combat.gd")
 var checks := 0
 var failures := 0
@@ -32,14 +32,20 @@ func _initialize() -> void:
 	var spec: Dictionary = c.enemy_specs.BOSS
 	check(int(spec.sweep_damage) == 20 and int(spec.spore_damage) == 16 and int(spec.water_damage) == 10,"boss damage 20 / 16 / 10 per second")
 
-	# Core-only damage: closed core rejects direct and shell-stripping hits.
+	# Always vulnerable: closed core no longer rejects damage.
 	var hp0: float = boss.hp
 	hit(c,boss,18,"melee")
-	check(boss.hp == hp0,"closed core rejects melee damage")
-	check(c.history.any(func(ev): return ev.kind == "hit_rejected"),"closed core emits hit_rejected")
+	check(boss.hp < hp0,"closed core accepts melee damage")
+	check(c.enemy_damage_allowed(boss),"boss is vulnerable at all times")
 	hit(c,boss,24,"light")
-	check(boss.hp == hp0 and int(boss.armor_layers) == 2,"closed core does not strip shell")
+	check(boss.hp < hp0 and int(boss.armor_layers) == 1,"closed core still strips one shell on light hit")
 	check(not bool(boss.core_open),"core stays closed outside windows")
+	# Full-battler hurtbox, not the 10px centre point.
+	var hurt: Rect2 = c.enemy_hurt_rect(boss)
+	check(hurt.size.x >= 77.0 and hurt.size.y >= 67.0,"boss hurtbox covers the full 155x135 battler")
+	check(c.enemy_hit_at(boss,hurt.position+Vector2(2,2),0.0),"light can hit the boss top-left")
+	check(c.enemy_in_circle(boss,hurt.position+Vector2(2,2),1.0),"rain can hit the boss top-left")
+	check(c.enemy_melee_hit(boss,hurt.position+Vector2(-20,5),Vector2.RIGHT,22.0,deg_to_rad(45.0)),"melee reaches the boss side edge")
 
 	# Sector warning and hit test share one geometry helper.
 	boss.dir = Vector2.LEFT

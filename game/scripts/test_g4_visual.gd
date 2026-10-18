@@ -68,6 +68,15 @@ func run() -> void:
 	scene.handle_visual_events()
 	check(scene.shake_left > 0,"light release triggers the screen shake")
 	check(scene.combat.action == "light" and scene.combat.age >= 12,"light cast still resolves on its approved timing")
+	# Water/spore damage-over-time uses the dot event; it must not be silent.
+	scene.combat.events.clear()
+	scene.combat.events.append({"kind":"dot","damage":4,"target":0})
+	var number_count: int = scene.feedback.numbers.size()
+	var audio_count: int = scene.combat_audio.playback_count
+	scene.feedback.consume(scene.combat)
+	scene.combat_audio.consume(scene.combat.events)
+	check(scene.feedback.numbers.size() > number_count,"dot damage shows a damage number")
+	check(scene.combat_audio.playback_count > audio_count,"dot damage plays hit feedback")
 
 	scene.combat_audio.stop_all()
 	scene.queue_free()

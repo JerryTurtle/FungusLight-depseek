@@ -1,0 +1,12 @@
+===== G6-003 route matrix =====
+PASS A_restore      checks=9  failures=0  seconds=674.4
+PASS B_seal         checks=9  failures=0  seconds=667.9
+PASS A_alt_seal     checks=9  failures=0  seconds=728.3
+PASS B_alt_restore  checks=9  failures=0  seconds=727.9
+PASS C05            checks=9  failures=0  seconds=674.4
+PASS C06            checks=9  failures=0  seconds=727.9
+PASS sidequests     checks=10 failures=0  seconds=681.8
+PASS skip           checks=9  failures=0  seconds=612.3
+
+ROUTE_MATRIX passed=true variants=8 fastest_seconds=612.3 requirement_met=false
+The 1200s human-duration target is not met by the bot replay.

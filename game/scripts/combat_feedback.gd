@@ -18,7 +18,7 @@ func consume(model) -> void:
 		if kind in ["boss_phase","boss_core","boss_death"]:
 			effects.append({"kind":kind,"pos":model.player-Vector2(0,12),"tick":model.tick,"armor":0,"broken":false})
 			continue
-		if kind not in ["hit","hurt","shield_absorb","shield_end","armor_break"]: continue
+		if kind not in ["hit","hurt","dot","shield_absorb","shield_end","armor_break"]: continue
 		var position: Vector2 = model.player-Vector2(0,12)
 		if kind in ["hit","armor_break"]:
 			var target: Dictionary = model.enemy_by_id(int(event.target))
@@ -30,7 +30,7 @@ func consume(model) -> void:
 				var angle := float(i)*TAU/float(10 if kind == "armor_break" else 6) + float(model.tick%7)*0.11
 				var speed := 0.9+float((int(event.target)+i*3)%5)*0.35
 				sparks.append({"pos":position,"vel":Vector2.from_angle(angle)*speed,"tick":model.tick,"life":16+i%5,"hot":i%3==0})
-		if kind in ["hit","hurt"] and event.damage > 0:
+		if kind in ["hit","hurt","dot"] and event.damage > 0:
 			var found := false
 			for number in numbers:
 				if number.target == event.target and model.tick-number.tick < 12:
@@ -48,6 +48,7 @@ func draw(canvas: CanvasItem, tick: int, preferences) -> void:
 		var alpha := (1.0-float(age)/18.0)*(0.5 if preferences.reduced_flash else 1.0)
 		var tint := Color(1,0.88,0.6,alpha) if effect.armor > 0 or effect.kind == "armor_break" else Color(0.8,0.95,0.9,alpha)
 		if effect.kind == "hurt": tint = Color(0.9,0.5,0.4,alpha)
+		if effect.kind == "dot": tint = Color(0.45,0.78,0.95,alpha)
 		if effect.kind == "boss_phase":
 			canvas.draw_arc(effect.pos,10+age*2.2,0,TAU,28,Color(1.0,0.78,0.30,alpha),1.5)
 		elif effect.kind == "boss_core":

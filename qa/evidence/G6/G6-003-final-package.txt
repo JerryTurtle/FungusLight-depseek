@@ -1,0 +1,15 @@
+G6-003 release package
+======================
+
+Built from current main after the user feedback round. Godot 4.3.stable.
+Package: deliverables/Release/ (Game, Source, Docs, QA, Licenses)
+Zip: deliverables/FungusLight-G6-003-Release.zip
+
+exe  SHA256 66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13
+pck  SHA256 0495EAC5D84CEF8D75FDA37182693935EAF333B6CE894133186BE0651677491B
+zip: deliverables/FungusLight-G6-003-Release.zip (outer hash recorded in qa/gates.json and README)
+
+PCK audit: passed (no test/capture/review/stress/route/tmp/MCP/autoload/dev paths).
+Layout audit: passed (five folders, hashes, no personal files in Game).
+Clean-directory startup smoke: passed (space-containing path, RELEASE_BOOT campaign).
+Windowed two-ending acceptance and the 20-minute human duration remain with the user.

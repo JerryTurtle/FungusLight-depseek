@@ -1,0 +1,12 @@
+{
+  "build": "G6-003",
+  "clean_directory": "qa/local/G6-003-clean/有 空格 的目录",
+  "exit": 0,
+  "release_boot": true,
+  "debug_boot_absent": true,
+  "script_error_free": true,
+  "isolated_appdata": false,
+  "user_storage": "clean-directory fallback (用户数据/)",
+  "passed_startup": true,
+  "note": "Exported G6-003 exe+pck copied to a path containing spaces and launched headless with --quit-after 30. It printed RELEASE_BOOT campaign and no G2/debug boot. Windowed title/settings/two-ending flow remains user acceptance."
+}

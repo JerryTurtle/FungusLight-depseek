@@ -89,7 +89,8 @@ static func _draw_boss(canvas: Node2D, model, enemy: Dictionary, spec: Dictionar
 	var core_open := bool(enemy.get("core_open",false))
 	var age := int(enemy.get("age",0))
 	if core_open:
-		# The core sits at the boss's reachable ground edge; only this window hurts it.
+		# The core glow is readable feedback; the whole battler is vulnerable
+		# at all times now, so this is not a damage gate.
 		var pulse := 0.5+0.5*sin(float(model.tick)/5.0)
 		canvas.draw_circle(pos,7.0+pulse*2.0,Color(1.0,0.82,0.35,0.18))
 		canvas.draw_arc(pos,13,0,TAU,26,Color("f5d87a"),2)

@@ -524,7 +524,7 @@ func light_attack() -> void:
 			beam_end = point
 			break
 		for enemy in candidates:
-			if enemy.hp > 0 and point.distance_to(enemy.pos) <= 10:
+			if enemy.hp > 0 and enemy_hit_at(enemy,point,10):
 				selected = enemy
 				beam_end = point
 				break
@@ -556,7 +556,7 @@ func update_rains() -> void:
 		if not rain.hit and tick >= int(rain.impact_tick):
 			rain.hit = true
 			for enemy in ordered_enemies():
-				if enemy.hp > 0 and enemy.pos.distance_to(rain.pos) <= float(config.actions.rain.radius) and clear_line(rain.pos,enemy.pos):
+				if enemy.hp > 0 and enemy_in_circle(enemy,rain.pos,float(config.actions.rain.radius)) and enemy_line_clear(enemy,rain.pos):
 					queue_damage(0,int(enemy.id),int(rain.id),float(config.actions.rain.damage),"rain",{"independent":true,"origin":rain.pos})
 			emit("rain_impact", {"attack_id":rain.id,"position":rain.pos})
 	rains = rains.filter(func(item): return tick < int(item.impact_tick)+15)
@@ -625,8 +625,7 @@ func step(movement: Vector2, aim: Vector2, command: String = "", held_melee: boo
 			speed *= 0.6 if action == "melee" else 1.0
 		if action == "melee" and age >= int(spec.windup) and age < int(spec.windup+spec.active):
 			for enemy in enemies:
-				var offset: Vector2 = enemy.pos-player
-				if offset.length() <= float(spec.range) and (offset.is_zero_approx() or locked.dot(offset.normalized()) >= cos(deg_to_rad(float(spec.angle_degrees)/2))) and clear_line(player,enemy.pos):
+				if enemy_melee_hit(enemy,player,locked,float(spec.range),deg_to_rad(float(spec.angle_degrees)/2)):
 					damage_enemy(enemy,float(spec.damage))
 		if action == "light" and age == int(spec.windup):
 			light_attack()
@@ -721,6 +720,37 @@ func enemy_can_begin(_enemy: Dictionary) -> bool:
 
 func enemy_can_react(_enemy: Dictionary, _request: Dictionary) -> bool:
 	return true
+
+func enemy_hurt_rect(enemy: Dictionary) -> Rect2:
+	# Base enemies keep a point hit test. Campaign bosses override this with
+	# the full battler bounds, so the whole drawn body is one damage target.
+	return Rect2(enemy.pos,Vector2.ZERO)
+
+func closest_point_on_rect(rect: Rect2, point: Vector2) -> Vector2:
+	return Vector2(clampf(point.x,rect.position.x,rect.end.x),clampf(point.y,rect.position.y,rect.end.y))
+
+func enemy_hit_at(enemy: Dictionary, point: Vector2, radius: float = 10.0) -> bool:
+	var rect := enemy_hurt_rect(enemy)
+	if rect.size.is_zero_approx(): return enemy.pos.distance_to(point) <= radius
+	return rect.has_point(point)
+
+func enemy_in_circle(enemy: Dictionary, center: Vector2, radius: float) -> bool:
+	var rect := enemy_hurt_rect(enemy)
+	if rect.size.is_zero_approx(): return enemy.pos.distance_to(center) <= radius
+	return center.distance_to(closest_point_on_rect(rect,center)) <= radius
+
+func enemy_line_clear(enemy: Dictionary, origin: Vector2) -> bool:
+	var rect := enemy_hurt_rect(enemy)
+	if rect.size.is_zero_approx(): return clear_line(origin,enemy.pos)
+	return clear_line(origin,closest_point_on_rect(rect,origin))
+
+func enemy_melee_hit(enemy: Dictionary, origin: Vector2, direction: Vector2, reach: float, half_angle: float) -> bool:
+	var rect := enemy_hurt_rect(enemy)
+	var point: Vector2 = enemy.pos if rect.size.is_zero_approx() else closest_point_on_rect(rect,origin)
+	var offset: Vector2 = point-origin
+	if offset.length() > reach: return false
+	if not offset.is_zero_approx() and direction.dot(offset.normalized()) < cos(half_angle): return false
+	return clear_line(origin,point)
 
 func enemy_damage_allowed(_enemy: Dictionary) -> bool:
 	return true

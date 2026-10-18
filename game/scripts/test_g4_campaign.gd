@@ -27,6 +27,15 @@ func _initialize() -> void:
 	for id in ["M1","M2","M3","M4"]: progress.choices[id] = {"M1":"melee","M2":"energy","M3":"cost","M4":"life"}[id]
 	progress.choice = "melee"
 	progress.auto_equip()
+	# Sidequest/equipment chests use the chest atlas; they must switch to the
+	# open variant after their claim instead of staying closed forever.
+	progress.flags.Q2a = false
+	progress.node_id = "N1-04"
+	scene.load_room()
+	var q2a: Dictionary = progress.node().objects.filter(func(o): return o.id == "q2a")[0]
+	check(not bool(scene.object_state(q2a,"").get("open",false)), "sidequest chest starts closed")
+	progress.flags.Q2a = true
+	check(bool(scene.object_state(q2a,"").get("open",false)), "sidequest chest opens after claim")
 	progress.node_id = "N4-06"
 	scene.load_room()
 	check(scene.combat.player.x > 0 and not scene.combat.blocked(scene.combat.player,6),"G4 final room spawn")

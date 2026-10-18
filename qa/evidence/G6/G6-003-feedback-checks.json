@@ -1,0 +1,59 @@
+{
+  "build": "G6-003",
+  "purpose": "User feedback round 1: elite damage feedback, chest opening, scene asset cleanup, rest seats, boss hurtbox",
+  "items": [
+    {
+      "id": 1,
+      "request": "泵站守卫精英怪特效技能似乎没有伤害",
+      "result": "Verified EL2 charge (20) and water lane (10 x2) damage in a real N2-07 campaign probe. The damage was applied, but dot events had no damage number or audio. Added dot feedback to combat_feedback and combat_audio; test_g4_visual now checks both."
+    },
+    {
+      "id": 2,
+      "request": "菌根裂口/排水出口/安全旁室/控制室/供给回廊箱子没有打开动作",
+      "result": "Sidequest/equipment chests now set state.open from their own claimed flag; the chest atlas switches to its open variant. test_g4_campaign checks closed then open.",
+      "evidence": "test_g4_campaign 92/0"
+    },
+    {
+      "id": 3,
+      "request": "被困门外场景有一个污染根可直接删除",
+      "result": "Removed N2-04 p05_choice (污染根·对照) puzzle console."
+    },
+    {
+      "id": 4,
+      "request": "排水入口场景一个素材可直接删除",
+      "result": "Removed N2-02 p04_choice puzzle console."
+    },
+    {
+      "id": 5,
+      "request": "王庭安全区这个素材要删除",
+      "result": "Removed N3-05 p08_slots evidence-slot console. P08 remains completable through V12/V13 switches."
+    },
+    {
+      "id": 6,
+      "request": "每个场景的休息灯座应该在出口附近",
+      "result": "Moved 32 lamp rest seats next to the forward/only exit. Lamp seats are non-blocking so they cannot wedge the narrow exit approach; route_test now follows the room's actual rest object instead of hard-coded coordinates."
+    },
+    {
+      "id": 7,
+      "request": "稳压台这个素材要删除",
+      "result": "Removed N4-03 p09_choice puzzle console."
+    },
+    {
+      "id": 8,
+      "request": "最终 Boss 随时可受伤，判定范围为整个 Boss 素材",
+      "result": "Removed the core-open damage gate. BOSS hurtbox is now the full 155x135 battler at 0.5 scale (77.5x67.5 world px, foot-anchored); melee, light and rain all use that shape. test_g4_boss 71/0 checks closed-core damage, top-left light/rain hits and side-edge melee."
+    }
+  ],
+  "route": {
+    "default_seconds": 674.4,
+    "checks": 9,
+    "failures": 0,
+    "deaths": 0,
+    "matrix": "8/8"
+  },
+  "notes": [
+    "The EL2 damage itself was already applied; the missing feedback made the water lane look harmless.",
+    "The 20-minute human target is still unverified; the bot's fastest route is 612.3s.",
+    "G6 remains in_progress until the user writes qa/G6-approval.md."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_id": "G6-002",
+  "build_id": "G6-003",
   "nodes": [
     {
       "id": "N0-01",
@@ -270,8 +270,8 @@
           "id": "rest",
           "name": "安全灯座 / 休息存档",
           "pos": [
-            78,
-            126
+            265,
+            76
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -471,8 +471,8 @@
           "id": "rest",
           "name": "矿口安全灯座 / 休息存档",
           "pos": [
-            56,
-            138
+            265,
+            100
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -809,8 +809,8 @@
           "id": "rest",
           "name": "前厅灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -912,8 +912,8 @@
           "id": "rest",
           "name": "裂口灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -1056,8 +1056,8 @@
           "id": "rest",
           "name": "祭坛灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -1200,8 +1200,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -1354,8 +1354,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -1485,8 +1485,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -1525,30 +1525,6 @@
           "kind": "exit",
           "target": "N2-03",
           "requires": "P04"
-        },
-        {
-          "id": "p04_choice",
-          "name": "流向图对照",
-          "pos": [
-            230,
-            80
-          ],
-          "kind": "puzzle_choice",
-          "visual": "puzzle_console",
-          "puzzle": "P04",
-          "success": "先开左阀、再开右阀，分流通道接通。",
-          "options": [
-            {
-              "id": "left_right",
-              "label": "先开左阀，再开右阀",
-              "correct": true
-            },
-            {
-              "id": "right_left",
-              "label": "先开右阀，再开左阀",
-              "correct": false
-            }
-          ]
         }
       ],
       "decor": [
@@ -1620,8 +1596,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            57,
+            95
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -1719,8 +1695,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -1759,30 +1735,6 @@
           "kind": "exit",
           "target": "N2-05",
           "requires": "P05"
-        },
-        {
-          "id": "p05_choice",
-          "name": "污染根与门闩",
-          "pos": [
-            230,
-            80
-          ],
-          "kind": "puzzle_choice",
-          "visual": "puzzle_console",
-          "puzzle": "P05",
-          "success": "先切断污染根，再拉开门闩，被困者出口打开。",
-          "options": [
-            {
-              "id": "root_then_latch",
-              "label": "先切断污染根，再拉开门闩",
-              "correct": true
-            },
-            {
-              "id": "latch_then_root",
-              "label": "先拉门闩，再切断污染根",
-              "correct": false
-            }
-          ]
         }
       ],
       "decor": [
@@ -1854,8 +1806,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -1963,8 +1915,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -2069,8 +2021,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -2156,8 +2108,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            150
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -2349,8 +2301,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -2455,8 +2407,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -2614,8 +2566,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -2711,8 +2663,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -2805,8 +2757,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -2867,17 +2819,6 @@
           "kind": "exit",
           "target": "N3-06",
           "requires": "M4&P08"
-        },
-        {
-          "id": "p08_slots",
-          "name": "三证据刻槽",
-          "pos": [
-            230,
-            80
-          ],
-          "kind": "evidence_slots",
-          "visual": "evidence_slot",
-          "puzzle": "P08"
         }
       ],
       "decor": [
@@ -2949,8 +2890,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3036,8 +2977,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3134,8 +3075,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3232,8 +3173,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3260,30 +3201,6 @@
           "kind": "exit",
           "target": "N4-04",
           "requires": "P09"
-        },
-        {
-          "id": "p09_choice",
-          "name": "三步稳压台",
-          "pos": [
-            230,
-            80
-          ],
-          "kind": "puzzle_choice",
-          "visual": "puzzle_console",
-          "puzzle": "P09",
-          "success": "主流向、支路、稳压三步完成。",
-          "options": [
-            {
-              "id": "three_step",
-              "label": "主流向→支路→稳压",
-              "correct": true
-            },
-            {
-              "id": "pressure_first",
-              "label": "先稳压，再找主流向",
-              "correct": false
-            }
-          ]
         }
       ],
       "decor": [
@@ -3355,8 +3272,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3449,8 +3366,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3548,8 +3465,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3717,8 +3634,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            200,
+            90
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3822,8 +3739,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            200,
+            130
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -3920,8 +3837,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            200,
+            90
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -4025,8 +3942,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            200,
+            90
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -4123,8 +4040,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            200,
+            90
           ],
           "kind": "rest",
           "visual": "lamp"
@@ -4221,8 +4138,8 @@
           "id": "rest",
           "name": "休息灯座 / 休息存档",
           "pos": [
-            55,
-            135
+            265,
+            110
           ],
           "kind": "rest",
           "visual": "lamp"

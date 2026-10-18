@@ -18,7 +18,7 @@ func consume(events: Array) -> void:
 		if event.kind == "action" and event.action == "melee": kind = "swing"
 		elif event.kind == "hit": kind = "hit"
 		elif event.kind == "release": kind = "cast"
-		elif event.kind == "hurt": kind = "hurt"
+		elif event.kind in ["hurt","dot"]: kind = "hurt"
 		elif event.kind == "armor_break": kind = "shell_break"
 		elif event.kind == "shield_absorb": kind = "shield_hit"
 		elif event.kind == "rain_impact": kind = "rain_impact"
