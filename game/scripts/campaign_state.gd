@@ -19,7 +19,9 @@ var puzzle_ids: Array = []
 var reward_ids: Array = ["M1", "M2", "M3", "M4", "Q1", "Q2"]
 var choice_ids: Array = ["M1", "M2", "M3", "M4"]
 var skill_ids: Array = ["light", "shield", "rain"]
-var equipment_ids: Array = ["charm", "lens", "focus", "ward", "relic", "token"]
+var equipment_ids: Array = ["lens", "charm", "owned"]
+var lens_id := ""
+var charm_id := ""
 var quest_ids: Array = ["Q1", "Q2"]
 
 func _init() -> void:
@@ -89,6 +91,7 @@ func finish_event(option: String = "") -> bool:
 	flags[active_event] = true
 	if active_event == "S07": flags.EQ_CLASP = true
 	active_event = ""
+	auto_equip()
 	return true
 
 func set_switch(object: Dictionary) -> String:
@@ -116,6 +119,7 @@ func sidequest(quest: String, part: String) -> String:
 		if not has(quest + str(item)): complete = false
 	if complete and not has(quest):
 		flags[quest] = true
+		auto_equip()
 		return "%s 完成，取得 %s。" % [def.name, def.reward]
 	return "记录 %s：%d / %d。" % [def.name, def.parts.filter(func(p): return has(quest + str(p))).size(), def.parts.size()]
 
@@ -167,7 +171,7 @@ func growth_count() -> int:
 	return count
 
 func max_hp() -> float:
-	return max_hp_for(flags, choices)
+	return max_hp_for(flags, choices, equipment())
 
 func max_focus() -> float:
 	return max_focus_for(flags, choices)
@@ -185,7 +189,7 @@ func melee_damage() -> float:
 func light_damage() -> float:
 	var damage := 24.0
 	if choices.get("M1", "") == "light": damage += 4.0
-	if has("EQ_FOCUS"): damage *= 1.2
+	if lens_id == "focus_lens": damage *= 1.2
 	return damage
 
 func rain_damage() -> float:
@@ -196,19 +200,19 @@ func rain_damage() -> float:
 func light_cost() -> int:
 	var cost := 20
 	if choices.get("M3", "") == "cost": cost -= 5
-	if has("EQ_FOCUS"): cost += 5
-	if has("EQ_THROTTLE"): cost -= 3
+	if lens_id == "focus_lens": cost += 5
+	if lens_id == "throttle_lens": cost -= 3
 	return maxi(5,cost)
 
 func shield_cost() -> int:
 	var cost := 25
-	if has("Q1"): cost += 5
-	if has("EQ_THROTTLE"): cost -= 3
+	if lens_id == "clear_mirror": cost += 5
+	if lens_id == "throttle_lens": cost -= 3
 	return maxi(5,cost)
 
 func rain_cost() -> int:
 	var cost := 35
-	if has("EQ_THROTTLE"): cost -= 3
+	if lens_id == "throttle_lens": cost -= 3
 	return maxi(5,cost)
 
 func hit_focus_gain() -> int:
@@ -216,17 +220,17 @@ func hit_focus_gain() -> int:
 
 func shield_capacity() -> int:
 	var capacity := 35 if choices.get("M2", "") == "shield" else 25
-	if has("EQ_CLASP"): capacity += 10
+	if charm_id == "artisan_clasp": capacity += 10
 	return capacity
 
 func shield_cooldown() -> int:
-	return 480 + (60 if has("EQ_CLASP") else 0)
+	return 480 + (60 if charm_id == "artisan_clasp" else 0)
 
 func heal_amount() -> float:
-	return 45.0 if has("Q2") else 35.0
+	return 45.0 if charm_id == "ember_talisman" else 35.0
 
 func heal_windup() -> int:
-	return 42 if has("Q2") else 36
+	return 42 if charm_id == "ember_talisman" else 36
 
 func evidence() -> Dictionary:
 	# The three mainline evidence items are carried by the event flags, so old
@@ -250,15 +254,39 @@ func ending_requirements() -> Dictionary:
 		"seal": has("P06") and has("P08"),
 	}
 
+func owns(item: String) -> bool:
+	match item:
+		"focus_lens": return has("EQ_FOCUS")
+		"throttle_lens": return has("EQ_THROTTLE")
+		"clear_mirror": return has("Q1")
+		"guardian_knot": return has("M1")
+		"artisan_clasp": return has("EQ_CLASP")
+		"ember_talisman": return has("Q2")
+	return false
+
+func owned_items() -> Dictionary:
+	var out := {}
+	for item in ["focus_lens","throttle_lens","clear_mirror","guardian_knot","artisan_clasp","ember_talisman"]:
+		out[item] = owns(item)
+	return out
+
 func equipment() -> Dictionary:
-	return {
-		"charm":"guardian_knot" if has("M1") else "",
-		"lens":"echo_lens" if has("M2") else "",
-		"focus":"rain_lens" if has("M3") else "",
-		"ward":"root_ward" if has("M4") else "",
-		"relic":"clear_mirror" if has("Q1") else "",
-		"token":"ember_talisman" if has("Q2") else "",
-	}
+	return {"lens":lens_id, "charm":charm_id, "owned":owned_items()}
+
+func auto_equip() -> void:
+	if lens_id.is_empty() or not owns(lens_id):
+		for item in ["focus_lens","throttle_lens","clear_mirror"]:
+			if owns(item): lens_id = item; break
+	if charm_id.is_empty() or not owns(charm_id):
+		for item in ["guardian_knot","artisan_clasp","ember_talisman"]:
+			if owns(item): charm_id = item; break
+
+func equip(slot: String, item: String) -> bool:
+	if slot == "lens" and item in ["focus_lens","throttle_lens","clear_mirror"] and owns(item):
+		lens_id = item; return true
+	if slot == "charm" and item in ["guardian_knot","artisan_clasp","ember_talisman"] and owns(item):
+		charm_id = item; return true
+	return false
 
 func rewards() -> Dictionary:
 	var out := {}
@@ -310,7 +338,15 @@ func validate(value: Dictionary) -> String:
 		if value.rewards.get(key) != f.get(key,false): return "奖励状态不一致。"
 	if value.upgrades.size() != choice_ids.size() or not value.upgrades.keys().all(func(k): return k in choice_ids): return "强化字段未知。"
 	if value.equipment.size() != equipment_ids.size() or not value.equipment.keys().all(func(k): return k in equipment_ids): return "装备字段未知。"
-	if value.skills != skills() or value.equipment != equipment(): return "技能或装备不一致。"
+	var eq: Dictionary = value.equipment
+	if not eq.get("owned") is Dictionary or eq.owned.size() != 6: return "装备拥有字段无效。"
+	for item in ["focus_lens","throttle_lens","clear_mirror","guardian_knot","artisan_clasp","ember_talisman"]:
+		if not eq.owned.get(item) is bool: return "装备拥有状态无效。"
+	if not str(eq.get("lens","")) in ["", "focus_lens","throttle_lens","clear_mirror"]: return "灯镜槽无效。"
+	if not str(eq.get("charm","")) in ["", "guardian_knot","artisan_clasp","ember_talisman"]: return "护符槽无效。"
+	if not str(eq.lens).is_empty() and not bool(eq.owned.get(str(eq.lens),false)): return "未拥有的灯镜被装备。"
+	if not str(eq.charm).is_empty() and not bool(eq.owned.get(str(eq.charm),false)): return "未拥有的护符被装备。"
+	if value.skills != skills(): return "技能不一致。"
 	if value.quests != quests(): return "任务状态不一致。"
 	# Dependency graph: every true encounter/story flag must satisfy its data requirement.
 	var requires_map := {}
@@ -334,7 +370,7 @@ func validate(value: Dictionary) -> String:
 			for option in event_def(id).get("options", []): ids.append(str(option.id))
 			if not selected in ids: return "强化选择无效。"
 	if value.skills != skills(): return "技能不一致。"
-	if value.health > max_hp_for(f, value.upgrades) or value.focus > max_focus_for(f, value.upgrades): return "资源超过当前上限。"
+	if value.health > max_hp_for(f, value.upgrades, value.equipment) or value.focus > max_focus_for(f, value.upgrades): return "资源超过当前上限。"
 	# Every visited node must be reachable through unlocked exits from the start.
 	if not node_reachable(str(value.node_id), f): return "节点尚未解锁。"
 	var position := Vector2(value.safe_position[0],value.safe_position[1])
@@ -344,13 +380,12 @@ func validate(value: Dictionary) -> String:
 	if not validate_puzzles(): return "机关数据无效。"
 	return ""
 
-func max_hp_for(f: Dictionary, upgrades: Dictionary = {}) -> float:
+func max_hp_for(f: Dictionary, upgrades: Dictionary = {}, equipment_value: Dictionary = {}) -> float:
 	var count := 0
 	for id in choice_ids:
 		if f.get(id,false): count += 1
 	var hp := 100.0 + 10.0 * count
-	# 守灯结 is always awarded with M1, as the prologue mainline equipment.
-	if count >= 1: hp += 10.0
+	if str(equipment_value.get("charm","")) == "guardian_knot": hp += 10.0
 	if f.get("M4", false) and str(upgrades.get("M4", "")) == "life": hp += 20.0
 	return hp
 
@@ -419,5 +454,7 @@ func restore(value: Dictionary) -> bool:
 	choice = str(choices.get("M1", ""))
 	seconds = float(value.effective_seconds)
 	potions = int(value.potions)
+	lens_id = str(value.equipment.lens)
+	charm_id = str(value.equipment.charm)
 	active_event = ""
 	return true

@@ -62,17 +62,22 @@ func _initialize() -> void:
 		var req := str(p.content.encounters[eid].get("requires",""))
 		if not req.is_empty() and p.has(eid) and not p.has(req): late_error += " | "+eid+"<-"+req
 	check(late_error.is_empty(), "late snapshot valid: " + late_error)
-	check(p.equipment().charm == "guardian_knot" and p.equipment().lens == "echo_lens", "equipment")
-	# Real equipment effects from optional pickups/sidequests.
 	p.flags.EQ_FOCUS = true
 	p.flags.EQ_THROTTLE = true
 	p.flags.EQ_CLASP = true
+	p.auto_equip()
+	check(p.equipment().charm == "guardian_knot" and p.equipment().lens == "focus_lens", "equipment defaults")
 	check(is_equal_approx(p.light_damage(),28.8), "focus lens light damage")
-	check(p.light_cost() == 17, "focus/throttle light cost")
+	p.equip("lens","throttle_lens")
+	check(p.light_cost() == 12, "throttle lens light cost")
+	p.equip("charm","artisan_clasp")
 	check(p.shield_capacity() == 35, "artisan clasp shield capacity")
 	check(p.shield_cooldown() == 540, "artisan clasp shield cooldown")
 	p.flags.Q2 = true
+	p.equip("charm","ember_talisman")
 	check(p.heal_amount() == 45.0 and p.heal_windup() == 42, "ember talisman heal")
+	p.equip("charm","guardian_knot")
+	check(p.equipment().lens == "throttle_lens" and p.equipment().charm == "guardian_knot", "equipment slots independent")
 	check(p.rewards().M4 and not p.rewards().Q1, "rewards")
 	# Second ending and optional equipment.
 	p.flags.END_RESTORE = false
@@ -81,7 +86,7 @@ func _initialize() -> void:
 	check(p.ending_id() == "seal", "seal ending")
 	p.flags.Q1a = true; p.flags.Q1b = true; p.flags.Q1c = true; p.flags.Q1 = true
 	p.flags.Q2a = true; p.flags.Q2b = true; p.flags.Q2c = true; p.flags.Q2 = true
-	check(p.equipment().relic == "clear_mirror" and p.equipment().token == "ember_talisman", "optional equipment")
+	check(p.owns("clear_mirror") and p.owns("ember_talisman"), "optional equipment")
 	# Every switch puzzle can complete from its authored switches.
 	for puzzle in ["P03","P04","P05","P06","P07","P08","P09"]:
 		p.flags[puzzle] = false

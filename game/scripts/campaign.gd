@@ -522,6 +522,7 @@ func show_pause() -> void:
 			save_game(slot)
 			if menu.get_child(0).text != "覆盖存档？": show_pause())
 	button("任务与证据",show_journal)
+	button("装备配置",show_equipment)
 	button("读取存档",show_load_menu)
 	button("设置",func(): open_settings("pause"))
 	button("返回标题",func():
@@ -546,6 +547,23 @@ func show_journal() -> void:
 	branch.append("终章前置：泵站校准 %s / 撤离通路 %s" % ["已完成" if progress.has("P09") else "未完成","已完成" if progress.has("P08") else "未完成"])
 	branch.append("支线：旧灯修复 %s / 补给调查 %s" % ["已完成" if progress.has("Q1") else "进行中/未完成","已完成" if progress.has("Q2") else "进行中/未完成"])
 	paragraph("\n".join(branch),90)
+	button("返回",show_pause)
+
+func show_equipment() -> void:
+	clear_menu("装备配置 · 灯镜 / 护符")
+	var lens_names := {"focus_lens":"聚束镜（净光伤害+20%，消耗+5）","throttle_lens":"节流镜（法术消耗-3）","clear_mirror":"澄明镜（护灯清除孢毒，消耗+5）"}
+	var charm_names := {"guardian_knot":"守灯结（生命上限+10）","artisan_clasp":"工匠扣（护灯容量+10，冷却+1s）","ember_talisman":"余温符（治疗量+10，动作+0.1s）"}
+	paragraph("当前灯镜："+(lens_names.get(progress.lens_id,"未装备"))+"\n当前护符："+(charm_names.get(progress.charm_id,"未装备")),90)
+	for item in ["focus_lens","throttle_lens","clear_mirror"]:
+		if not progress.owns(item): continue
+		var captured: String = str(item)
+		button(("● " if progress.lens_id == item else "○ ")+lens_names[item],func():
+			progress.equip("lens",captured); apply_growth(); show_equipment())
+	for item in ["guardian_knot","artisan_clasp","ember_talisman"]:
+		if not progress.owns(item): continue
+		var captured_charm: String = str(item)
+		button(("● " if progress.charm_id == item else "○ ")+charm_names[item],func():
+			progress.equip("charm",captured_charm); apply_growth(); show_equipment())
 	button("返回",show_pause)
 
 func begin_dialogue(id: String) -> void:
@@ -835,6 +853,7 @@ func interact() -> void:
 				notice = "这个箱子里没有可用的装备。"
 			else:
 				progress.flags[eq_flag] = true
+				progress.auto_equip()
 				notice = "取得 "+str(object.get("name","装备"))+"。"
 				dirty = true
 				apply_growth()
@@ -979,7 +998,7 @@ func _physics_process(delta: float) -> void:
 				notice = "你从床铺上醒来。"
 		var before: Vector2 = combat.player
 		combat.step_commands(movement,pointer-combat.player,valid,inside and pending_encounter != "tutorial" and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT))
-		if progress.has("Q1") and combat.action == "shield" and combat.age == int(combat.config.actions.shield.windup):
+		if progress.lens_id == "clear_mirror" and combat.action == "shield" and combat.age == int(combat.config.actions.shield.windup):
 			combat.poison_until = 0
 		render_curr_player = combat.player
 		render_curr_enemies.clear()

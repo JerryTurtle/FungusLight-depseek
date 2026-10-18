@@ -26,6 +26,7 @@ func _initialize() -> void:
 	for id in progress.flag_ids: progress.flags[id] = true
 	for id in ["M1","M2","M3","M4"]: progress.choices[id] = {"M1":"melee","M2":"energy","M3":"cost","M4":"life"}[id]
 	progress.choice = "melee"
+	progress.auto_equip()
 	progress.node_id = "N4-06"
 	scene.load_room()
 	check(scene.combat.player.x > 0 and not scene.combat.blocked(scene.combat.player,6),"G4 final room spawn")
