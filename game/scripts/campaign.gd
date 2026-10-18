@@ -17,6 +17,9 @@ var dialogue_lines: Array = []
 var choice_pending := false
 var choice_mode := "growth"
 var run_started_ms := 0
+var chapter_start_ms := 0
+var chapter_times: Dictionary = {}
+var last_chapter := ""
 var pending_encounter := ""
 var checkpoint: Dictionary = {}
 var dirty := false
@@ -144,6 +147,9 @@ func show_title() -> void:
 
 func new_game() -> void:
 	run_started_ms = Time.get_ticks_msec()
+	chapter_start_ms = run_started_ms
+	chapter_times = {}
+	last_chapter = ""
 	progress = Progress.new()
 	checkpoint = {}
 	running = true
@@ -167,7 +173,26 @@ func start_wake() -> void:
 	combat.player = wake_to
 	combat.facing = Vector2.DOWN
 
+func chapter_name(id: String) -> String:
+	if id.begins_with("N0-"): return "序章"
+	if id.begins_with("N1-"): return "第一章"
+	if id.begins_with("N2-"): return "第二章"
+	if id.begins_with("N3-"): return "第三章"
+	return "终章"
+
+func mark_chapter() -> void:
+	var current := chapter_name(progress.node_id)
+	if last_chapter.is_empty():
+		last_chapter = current
+		chapter_start_ms = Time.get_ticks_msec()
+		return
+	if current != last_chapter:
+		chapter_times[last_chapter] = float(chapter_times.get(last_chapter,0.0)) + (Time.get_ticks_msec()-chapter_start_ms)/1000.0
+		chapter_start_ms = Time.get_ticks_msec()
+		last_chapter = current
+
 func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value: float = -1) -> void:
+	mark_chapter()
 	var prior_hp: float = combat.hp
 	var prior_focus: float = combat.focus
 	combat.reset()
@@ -337,6 +362,9 @@ func load_game(slot: String, backup: bool = false) -> void:
 		return
 	progress.restore(result.snapshot)
 	run_started_ms = Time.get_ticks_msec()
+	chapter_start_ms = run_started_ms
+	chapter_times = {}
+	last_chapter = ""
 	checkpoint = result.snapshot.duplicate(true)
 	running = true
 	dirty = false
@@ -481,9 +509,24 @@ func elapsed_text() -> String:
 	var seconds := int((Time.get_ticks_msec()-run_started_ms)/1000) if run_started_ms > 0 else int(progress.seconds)
 	return "%02d:%02d" % [int(seconds/60), seconds%60]
 
+func write_run_report() -> void:
+	if not last_chapter.is_empty():
+		chapter_times[last_chapter] = float(chapter_times.get(last_chapter,0.0)) + (Time.get_ticks_msec()-chapter_start_ms)/1000.0
+		chapter_start_ms = Time.get_ticks_msec()
+	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
+	var report := {"build":"G4-005","total_seconds":snappedf(total,0.1),"ending":progress.ending_id(),"node":progress.node_id,"chapters":chapter_times,"recorded_at":Time.get_datetime_string_from_system()}
+	var file := FileAccess.open("user://g4_run.json",FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify(report, "  "))
+		file.close()
+		notice = "本次用时 %.1f 秒，已写入用户数据/g4_run.json。" % total
+	else:
+		notice = "本次用时 %.1f 秒（记录文件写入失败）。" % total
+
 func show_credits() -> void:
 	if not progress.has("S12"): progress.flags.S12 = true
 	dirty = true
+	write_run_report()
 	var restored := progress.ending_id() == "restore"
 	clear_menu("菌灯之下 · 尾声")
 	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "本次用时 " + elapsed_text() + "。\n按 Esc 返回标题，或继续探索。")

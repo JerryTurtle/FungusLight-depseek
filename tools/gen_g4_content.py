@@ -389,7 +389,7 @@ D = {
     "L20": [["岚","调压前厅的根门已经打开。"],["岚","进去就是核心外廊；检查一下药剂和专注。"]],
 }
 d["dialogues"].update(D)
-d["build_id"] = "G4-001"
+d["build_id"] = "G4-005"
 d["chapter_id"] = "campaign"
 PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 print("nodes", len(d["nodes"]), [n["id"] for n in d["nodes"]])
