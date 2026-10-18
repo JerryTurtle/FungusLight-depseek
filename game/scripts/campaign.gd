@@ -16,6 +16,7 @@ var dialogue_mode := ""
 var dialogue_lines: Array = []
 var choice_pending := false
 var choice_mode := "growth"
+var puzzle_choice_object: Dictionary = {}
 var run_started_ms := 0
 var chapter_start_ms := 0
 var chapter_times: Dictionary = {}
@@ -633,8 +634,39 @@ func show_growth_choice(event_id: String = "M1") -> void:
 func choose_choice(option: String) -> void:
 	if choice_mode == "ending":
 		choose_ending(option)
+	elif choice_mode == "puzzle":
+		choose_puzzle_choice(option)
 	else:
 		choose_growth(option)
+
+func show_puzzle_choice(object: Dictionary) -> void:
+	if progress.has("P03"):
+		notice = "断根结论已经记录。"
+		return
+	puzzle_choice_object = object
+	choice_mode = "puzzle"
+	choice_pending = true
+	paused = true
+	overlay.hide()
+	if status != null: status.visible = false
+	dialogue.show_choices(str(object.get("name","证据对照")), object.get("options", []))
+
+func choose_puzzle_choice(option: String) -> void:
+	if choice_mode != "puzzle" or puzzle_choice_object.is_empty(): return
+	var correct := false
+	for item in puzzle_choice_object.get("options", []):
+		if str(item.get("id","")) == option and bool(item.get("correct",false)): correct = true
+	if correct:
+		progress.flags.P03 = true
+		notice = "结论记录：人类先断水，菌群才转为攻击。"
+	else:
+		notice = "证据与现场不符。再看一次断根切口和抽水记录。"
+	choice_pending = false
+	choice_mode = "growth"
+	puzzle_choice_object = {}
+	dialogue.close()
+	resume()
+	dirty = true
 
 func choose_growth(option: String) -> void:
 	if choice_mode != "growth" or not progress.finish_event(option): return
@@ -848,6 +880,17 @@ func interact() -> void:
 				notice = "现在还不能记录。"
 		"growth":
 			show_growth_choice(str(object.get("event","M1")))
+		"puzzle_choice":
+			show_puzzle_choice(object)
+		"evidence_slots":
+			if progress.has("P08"):
+				notice = "刻槽已经记录过这段因果。"
+			elif progress.evidence_count() < 3:
+				notice = "三证据不足：还需要断根、抽水记录与旧约拓文。"
+			else:
+				progress.flags.P08 = true
+				notice = "三证据嵌入刻槽，旧约机关完成。"
+				dirty = true
 		"equipment":
 			var eq_flag := str(object.get("flag",""))
 			if progress.has(eq_flag):

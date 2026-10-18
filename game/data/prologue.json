@@ -1248,6 +1248,29 @@
           "kind": "exit",
           "target": "N1-07",
           "requires": "P03&S04"
+        },
+        {
+          "id": "p03_choice",
+          "name": "断根记录对照",
+          "pos": [
+            230,
+            80
+          ],
+          "kind": "puzzle_choice",
+          "visual": "papers",
+          "puzzle": "P03",
+          "options": [
+            {
+              "id": "human",
+              "label": "人类斧痕：先断水，菌群才攻击",
+              "correct": true
+            },
+            {
+              "id": "fungus",
+              "label": "菌群咬断：先袭击，水才断",
+              "correct": false
+            }
+          ]
         }
       ],
       "decor": [
@@ -2737,6 +2760,17 @@
           "kind": "exit",
           "target": "N3-06",
           "requires": "M4&P08"
+        },
+        {
+          "id": "p08_slots",
+          "name": "三证据刻槽",
+          "pos": [
+            230,
+            80
+          ],
+          "kind": "evidence_slots",
+          "visual": "papers",
+          "puzzle": "P08"
         }
       ],
       "decor": [
