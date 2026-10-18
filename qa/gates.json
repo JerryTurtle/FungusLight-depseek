@@ -336,7 +336,8 @@
    "qa/evidence/G4/G4-001-route-C05.json",
    "qa/evidence/G4/G4-001-route-C06.json",
    "qa/evidence/G4/G4-001-route-sidequests.json",
-   "qa/evidence/G4/G4-001-route-matrix.json"
+   "qa/evidence/G4/G4-001-route-matrix.json",
+   "qa/evidence/G4/G4-001-g4_boss-tests.log"
   ],
   "remaining": [
    "完整快速路线≥60分钟：矩阵最快352.7秒，未达标",

@@ -19,6 +19,7 @@ build = sys.argv[1] if len(sys.argv) > 1 else 'G3-006'
 CHECKS = [
     ("campaign", "scripts/test_g4_campaign.gd", r"G4_CAMPAIGN_TEST checks=(\d+) failures=(\d+)", 180),
     ("g4_state", "scripts/test_g4.gd", r"G4_TEST checks=(\d+) failures=(\d+)", 120),
+    ("g4_boss", "scripts/test_g4_boss.gd", r"G4_BOSS_TEST checks=(\d+) failures=(\d+)", 120),
     ("save", "scripts/test_save.gd", r"SAVE_TEST checks=(\d+) failures=(\d+)", 120),
     ("enemies", "scripts/test_enemies.gd", r"ENEMY_TEST checks=(\d+) failures=(\d+)", 120),
     ("dialogue", "scripts/test_dialogue.gd", r"DIALOGUE_TEST checks=(\d+) failures=(\d+)", 120),
@@ -53,7 +54,7 @@ for entry in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 76, 'g4_state': 34, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2490, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
+    expected = {'campaign': 76, 'g4_state': 34, 'g4_boss': 5, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2490, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1

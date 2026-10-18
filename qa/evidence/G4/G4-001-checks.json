@@ -9,7 +9,7 @@
       "checks": 76,
       "failures": 0,
       "expected_min_checks": 76,
-      "seconds": 0.55,
+      "seconds": 0.57,
       "log": "qa/evidence/G3/G4-001-campaign-tests.log",
       "passed": true
     },
@@ -20,8 +20,19 @@
       "checks": 34,
       "failures": 0,
       "expected_min_checks": 34,
-      "seconds": 0.27,
+      "seconds": 0.3,
       "log": "qa/evidence/G3/G4-001-g4_state-tests.log",
+      "passed": true
+    },
+    {
+      "check": "g4_boss",
+      "script": "scripts/test_g4_boss.gd",
+      "exit": 0,
+      "checks": 5,
+      "failures": 0,
+      "expected_min_checks": 5,
+      "seconds": 0.29,
+      "log": "qa/evidence/G3/G4-001-g4_boss-tests.log",
       "passed": true
     },
     {
@@ -31,7 +42,7 @@
       "checks": 65,
       "failures": 0,
       "expected_min_checks": 65,
-      "seconds": 0.32,
+      "seconds": 0.27,
       "log": "qa/evidence/G3/G4-001-save-tests.log",
       "passed": true
     },
@@ -42,7 +53,7 @@
       "checks": 35,
       "failures": 0,
       "expected_min_checks": 35,
-      "seconds": 0.3,
+      "seconds": 0.28,
       "log": "qa/evidence/G3/G4-001-enemies-tests.log",
       "passed": true
     },
@@ -75,7 +86,7 @@
       "checks": 5,
       "failures": 0,
       "expected_min_checks": 5,
-      "seconds": 6.85,
+      "seconds": 6.94,
       "log": "qa/evidence/G3/G4-001-pressure-tests.log",
       "passed": true
     },
@@ -86,7 +97,7 @@
       "checks": 9,
       "failures": 0,
       "expected_min_checks": 9,
-      "seconds": 9.93,
+      "seconds": 10.12,
       "log": "qa/evidence/G3/G4-001-route-tests.log",
       "passed": true,
       "simulated_seconds": 404.3
@@ -98,13 +109,13 @@
       "checks": 9,
       "failures": 0,
       "expected_min_checks": 9,
-      "seconds": 10.01,
+      "seconds": 10.02,
       "log": "qa/evidence/G3/G4-001-skip_route-tests.log",
       "passed": true,
       "simulated_seconds": 352.7
     }
   ],
   "failures": 0,
-  "seconds": 29.06,
+  "seconds": 29.62,
   "passed": true
 }

@@ -24,6 +24,7 @@
 | --- | --- | --- |
 | G4 场景冒烟 | 76 项通过 | `qa/evidence/G4/G4-001-campaign-tests.log` |
 | G4 状态/结局/机关/支路 | 34 项通过 | `qa/evidence/G4/G4-001-g4_state-tests.log` |
+| G4 Boss 设计生命/三阶段 | 5 项通过（2200 HP、70%/35% 阶段、护壳/核心） | `qa/evidence/G4/G4-001-g4_boss-tests.log` |
 | 存档 / 敌人 / 对话 / 交互物 | 65 / 35 / 175 / 2508 项 | `qa/evidence/G4/G4-001-*.log` |
 | A15 压力 | 5 项 | `qa/evidence/G4/G4-001-pressure-tests.log` |
 | 正常输入全路线（A 后 B、恢复结局） | 9 项，404.3 秒，0 死亡 | `G4-001-route-A_restore.json` |
