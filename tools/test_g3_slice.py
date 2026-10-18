@@ -41,7 +41,7 @@ for entry in CHECKS:
     try:
         result = subprocess.run(
             [engine, '--headless', '--path', str(root / 'game'), '--script', 'res://' + script],
-            capture_output=True, timeout=timeout, env={**os.environ, **extra_env})
+            capture_output=True, timeout=timeout, env={**os.environ, 'FUNGUS_BUILD_ID': build, **extra_env})
         output = result.stdout.decode(errors='replace') + result.stderr.decode(errors='replace')
         code = result.returncode
     except subprocess.TimeoutExpired as error:
@@ -57,7 +57,7 @@ for entry in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 88, 'g6_release': 38, 'g4_state': 34, 'g4_boss': 8, 'g4_death': 5, 'g4_visual': 12, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2400, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
+    expected = {'campaign': 90, 'g6_release': 38, 'g4_state': 48, 'g4_boss': 67, 'g4_death': 5, 'g4_visual': 12, 'save': 65, 'enemies': 73, 'dialogue': 175, 'props': 2472, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1

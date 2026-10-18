@@ -1,0 +1,18 @@
+===== Preserved failure: alternate growth build at N3-04 E25 =====
+Captured before the low-HP potion fix. The passing per-variant JSON reports were
+regenerated after the fix; this text preserves the failed observation.
+
+A_alt_seal / B_alt_restore:
+ROUTE_TEST checks=1 failures=1 seconds=473.1 steps=96 deaths=1
+FAIL route finished: player died at step N3-04 pending=E25 hp=0 enemies=[
+  ["T1",(152.4701,105.8269),0],
+  ["T6",(306.9657,148.8098),0],
+  ["T1",(142.9612,117.934),0],
+  ["T1",(271.1295,60.06823),0],
+  ["T4",(277.4845,67.33375),13.5],
+  ["T2",(237.3325,37),0]
+]
+
+Cause: the bot had three unused potions. The nearest target was a T1, so the
+elite-only and distance-gated heal paths did not fire; the low-HP retreat walked
+toward the right wall. Added a low-HP potion response for ordinary groups.

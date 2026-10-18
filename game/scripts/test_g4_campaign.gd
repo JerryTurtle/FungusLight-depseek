@@ -77,6 +77,11 @@ func _initialize() -> void:
 	scene.load_room()
 	check(scene.pending_encounter == "E30" and scene.combat.enemies.any(func(e): return e.get("archetype","") == "BOSS"), "Boss spawns")
 	var boss: Dictionary = scene.combat.enemies.filter(func(e): return e.get("archetype","") == "BOSS")[0]
+	# The ending choice sits between the core-room entrance and the mother.
+	# It is a marker, not cover: its old portal collision split the arena and
+	# blocked the light line to a boss standing only 45px behind it.
+	check(scene.combat.clear_line(Vector2(130,96),boss.pos), "ending marker does not block boss sight")
+	check(not scene.combat.blocked(Vector2(150,100),5), "ending marker is walkable")
 	boss.hp = boss.max_hp * 0.7
 	scene.combat.step(Vector2.ZERO,Vector2.RIGHT)
 	check(int(boss.phase) == 1 and int(boss.armor_layers) == 2, "Boss phase 1")

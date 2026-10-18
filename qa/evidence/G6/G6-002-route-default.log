@@ -1,0 +1,12 @@
+===== G6-002 default route, current source =====
+Command: godot --headless --path game --script res://scripts/tmp_route_default.gd
+(the wrapper only sets BUILD_ID=G6-002 and route_tag=default; route_test logic is the repo script)
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+G2_READY | G2-007 | 60Hz | prototype
+ROUTE_TEST checks=9 failures=0 seconds=674.8 steps=128 deaths=0
+
+Result: PASS. checks=9 failures=0, 0 deaths, ending restore.
+Boss-step segment: 136.4s (N4-06), min_hp 42 over the whole route.

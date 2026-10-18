@@ -2,20 +2,20 @@
 
 更新：2026-10-18。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
 
-## 当前状态（G6-001 发布候选，等待用户最终验收）
+## 当前状态（G6-002 本地修复，G6/G7 仍 in_progress）
 
 - G0/G1/G2技术通过；H2用户明确批准，无问题：[原文](../qa/H2-approval.md)。G3、G4已通过；G4-009完成五项试玩修复。
-- G6-001：release 默认主线，test/capture/review/MCP 资源从 PCK 剔除；标题/继续/读取/设置、双槽/坏档、死亡三选项、两结局统计与结局前备份、发布五目录与 Windows zip 完成。
-- 验证：全量13组引擎套件失败0（88/31/34/8/5/12/65/35/175/2450/5/9/9）；路线矩阵8/8；导出QA集成118、审核台50、G6流程31；30/60/144回放一致；发布PCK审计、布局哈希、干净目录启动通过。
-- 包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-001-Release.zip`；exe `66B26A…B7B13`，pck `7D6C34…06DAA`，zip `1E6EE8F1…DB1E979`。
+- G6-001 发布包与历史证据保留；当前源码已加 P0-1 读档修复与 P0-2 路线/竞技场修复，但包、版本、`qa/gates.json` 尚未同步到 G6-002。
+- 当前源码验证：全量13组引擎套件失败0（campaign90/g6_release38/g4_state48/g4_boss67/g4_death5/g4_visual12/save65/enemies73/dialogue175/props2472/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 674.8秒/0死亡，8条路线矩阵全过（619.3～706.0秒）。
+- G6-001包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-001-Release.zip`；exe `66B26A…B7B13`，pck `7D6C34…06DAA`，zip `1E6EE8F1…DB1E979`。该包不含本轮修复，不能当作 G6-002。
 - 接续分支 main；release 构建默认 campaign，debug 构建仍进 G2 审核台。
-- G6仍为in_progress：用户需按 `docs/g6/release/验收说明.md` 在干净目录完成最终验收并填写 `qa/G6-approval.md`，不得提前称整款交付完成。
+- G6/G7仍为in_progress：先完成 P0-3 包/版本/门槛统一，再由用户按 `docs/g6/release/验收说明.md` 在干净目录完成最终验收并填写 `qa/G6-approval.md`；20分钟真人时长尚未由本轮机器人证明。
 
 ## 2026-10-18 第二轮：剧情收敛与成长/证据接线（进行中）
 
 - 用户授权削减剧情，只保留完整逻辑闭环；策划 §5.1/§5.2 已改写，其余系统仍按原策划实现。
 - 已接线：S04～S09 短对白；S04/S07/S08 三证据门禁；结局条件与独立 `ending_pre.json`；死亡最近检查点；清场自动存档；`no_elite_battle` 实际计算；M1～M4 策划选项与生命/专注曲线；护灯 P02 后解锁；选强化不再满血；灯击范围恢复 22。
-- 验证：test_g4 39/0、test_g4_campaign 88/0、test_g4_death 5/0、test_g6_release 34/0；test_enemies 73/0、test_g4_boss 67/0。`route_test` 当前失败（N3-07/N2-07 测试机器人路径/战斗平衡），未通过，待路线机器人适配后重跑。
+- 验证：test_g4 39/0、test_g4_campaign 88/0、test_g4_death 5/0、test_g6_release 34/0；test_enemies 73/0、test_g4_boss 67/0。该轮 `route_test` 失败（N3-07/N2-07 测试机器人路径/战斗平衡）；P0-2 已修复并重跑，见下方。
 - 已接入：T6 双弹投孢、EL2 冲锋/水道、EL1 半血补壳、Boss 2200 HP 三阶段/核心窗口/预警几何，Boss 使用原 BOSS.png；移除主线 hp_mult 缩血。
 - 装备：聚束镜/节流镜拾取、工匠扣、澄明镜、余温符、守灯结已接入真实效果；暂停菜单“装备配置”已有灯镜/护符二选一槽位，休息点限定与专属界面待完善。
 - HUD 已增加护盾/技能冷却与孢毒剩余时间；Boss 阶段/核心/死亡事件接入轻震、状态提示与反馈环；孢毒新增角色周围脉冲环；装备配置改为休息点可用。
@@ -23,22 +23,22 @@
 - 回声扫描新增证据/交互物高亮；release 构建拒绝 FUNGUS_SAVE_DIR/--campaign-capture；Release 目录运行产物已清理（zip 仍旧包）；设置新增独立震屏开关。
 - 已组装本地候选 `deliverables/G7-Release/{Game,Source,Docs,QA,Licenses}` 与 zip `deliverables/FungusLight-G7-001-Candidate.zip`（SHA256 `4536DCF8…9BB224F`）；exe `66B26AD9…B7B13`、pck `A4FF9901…3408C`；PCK 只读检查无 test/capture/review/MCP/autoload，含 BOSS.png 与语义道具；Game 目录无个人存档/日志；capture_g4 实机截图验证语义道具。未做 release GUI 干净目录全流程。
 - 纸张占位按语义拆分：`wall_inscription`/`document`/`puzzle_console`/`evidence_slot`/`npc`；墙壁仍用暗色石砖，不再把纸张图用于墙面。`test_props` 2472/0。
-- 待续：其余 12 类特效、route_test 适配、G7 发布验收。G6/G7 仍 in_progress。
+- 待续：其余 12 类特效、route_test 适配（P0-2 已完成）、G7 发布验收。G6/G7 仍 in_progress。
 
 ## P0-1 读档校验修复（G6-002，本地修复迭代）
 
 - 根因：`campaign_state.validate` 用当前进度 `skills()/quests()` 比较快照，重启后或读更早存档时会误报“技能/任务不一致”，有效存档无法读取。
 - 修复：新增 `skills_for(flags)/quests_for(flags)`，校验改为按快照自身 story 推导；删除重复的技能检查。
 - 验证：跨进程重启读档 write 2/0 + load 8/0（修复前 load 8/5，失败日志保留 `qa/evidence/G6/G6-002-prefix-restart-load.log`）；`test_g6_release` 38/0（新增旧档/新实例回读）、`g4_campaign` 88/0、`save` 65/0、`g4` 48/0、`g4_death` 5/0。通过证据 `qa/evidence/G6/G6-002-*`。
-- 限制：只修读档，不改变 gates/包/版本；G6/G7 仍 in_progress，route_test 仍失败，全量路线与发布验收未完成。下一项 P0-2（当前源码重跑路线）与 P0-3（包/门槛/版本统一）。
+- 限制：只修读档，不改变 gates/包/版本；G6/G7 仍 in_progress。P0-2 已在该修复后重跑并修复路线；全量发布验收仍未完成。下一项 P0-3（包/门槛/版本统一）。
 
-## P0-2 当前源码路线复现（进行中）
+## P0-2 当前源码路线修复与矩阵（G6-002）
 
-- 当前 HEAD 复跑与历史失败一致：100.4 秒卡在 N1-03，机器人在距 EL1 约 27px 处停住，未进入 22px 近战；README 写的 N3-07/N2-07 与证据不符。
-- 已修 route_test 适配：近距直走补足到 22px、EL2 冲锋/水道回避、N3-04 空导航空洞的环形接近、精英/Boss 恢复窗口治疗、按住移动取消治疗。游戏侧另修：击退把玩家/敌人推出竞技场（新增 `PLAYABLE_AREA` 夹取）；指针在场地外时自施护灯被 `valid` 过滤器丢弃（护灯改为与闪避/治疗一样放行）。
-- 当前进展：route 已到 N4-06 Boss，但阶段一死亡（Boss 1554.25/2200）；默认路线未通过，8 条路线矩阵未跑。证据 `qa/evidence/G6/G6-002-route-current.json/.log` 与 `G6-002-route-progress.md`。
-- 受影响套件：test_combat 549/0、enemies 73/0、g4_campaign 88/0、g6_release 38/0、g4 48/0、g4_boss 67/0、g4_death 5/0、save 65/0。route 仍失败，不得标通过。
-- 下一步：Boss 机器人策略/平衡；之后才跑 8 路线矩阵、G7 包与门槛（P0-3）。G6/G7 仍 in_progress。
+- 当前 HEAD 首跑复现 N1-03：100.4 秒，机器人在距 EL1 约 27px 处停住；README 的 N3-07/N2-07 与证据不符。
+- 修复 route_test：近距补足到 22px、EL2 冲锋/水道回避、N3-04 空导航空洞环形接近、Boss 孢荚/横扫回避、低血药剂、支线装备字段；修掉历史 `relic/token` 访问导致的脚本异常。游戏侧：`PLAYABLE_AREA` 击退夹取、指针场外自施护灯放行、移除 N4-06 结局标记实体碰撞（此前挡住 Boss 视线）。
+- 最终：默认 route 674.8 秒/0 死亡；8 条矩阵 A_restore/B_seal/A_alt_seal/B_alt_restore/C05/C06/sidequests/skip 全过（9/9/9/9/9/9/10/9，619.3～706.0 秒）。证据 `qa/evidence/G6/G6-002-route-default.json/.log`、`G6-002-route-matrix.json/.log`、`G6-002-route-progress.md`。
+- 全套件：campaign90、g6_release38、g4_state48、g4_boss67、g4_death5、g4_visual12、save65、enemies73、dialogue175、props2472、pressure5、route9、skip9，全 0 失败；另 test_combat549、restart write2/load8。
+- 限制：机器人最快 619.3 秒不是 20 分钟真人时长；历史 `test_campaign.gd` 不在当前套件且旧断言已失效，未作为门禁。未改包/版本/gates；下一步 P0-3（G6-002/G7 包与门槛统一），G6/G7 仍 in_progress。
 
 ## 下一项：P0-2 剩余（N4-06 Boss）/P0-3（其后才是用户验收）
 

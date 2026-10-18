@@ -1,0 +1,75 @@
+{
+  "build_id": "G6-002",
+  "variants": [
+    {
+      "tag": "A_restore",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 674.8,
+      "passed": true
+    },
+    {
+      "tag": "B_seal",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 678.0,
+      "passed": true
+    },
+    {
+      "tag": "A_alt_seal",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 706.0,
+      "passed": true
+    },
+    {
+      "tag": "B_alt_restore",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 705.5,
+      "passed": true
+    },
+    {
+      "tag": "C05",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 674.8,
+      "passed": true
+    },
+    {
+      "tag": "C06",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 705.5,
+      "passed": true
+    },
+    {
+      "tag": "sidequests",
+      "exit": 0,
+      "checks": 10,
+      "failures": 0,
+      "seconds": 687.5,
+      "passed": true
+    },
+    {
+      "tag": "skip",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 619.3,
+      "passed": true
+    }
+  ],
+  "fastest_seconds": 619.3,
+  "requirement_seconds": 1200,
+  "requirement_met": false,
+  "passed": true,
+  "seconds": 300.0,
+  "note": "All eight normal-input variants passed on current source. The fastest bot replay is 619.3s; this is a harness duration, not human play time, so the 20-minute target remains unverified."
+}

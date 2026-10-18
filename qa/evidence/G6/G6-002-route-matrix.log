@@ -1,0 +1,19 @@
+===== G6-002 route matrix, current source =====
+Runs used the repo route_test logic through per-variant wrappers that set BUILD_ID=G6-002,
+route_tag and the documented branch/ending/growth/sidequest/skip options.
+Godot 4.3 stable, headless, fixed 60 Hz; no teleport and no direct flag writes.
+
+PASS A_restore      checks=9  failures=0  seconds=674.8
+PASS B_seal         checks=9  failures=0  seconds=678.0
+PASS A_alt_seal     checks=9  failures=0  seconds=706.0
+PASS B_alt_restore  checks=9  failures=0  seconds=705.5
+PASS C05            checks=9  failures=0  seconds=674.8
+PASS C06            checks=9  failures=0  seconds=705.5
+PASS sidequests     checks=10 failures=0  seconds=687.5
+PASS skip           checks=9  failures=0  seconds=619.3
+
+ROUTE_MATRIX passed=true variants=8 fastest_seconds=619.3 requirement_met=false
+
+The 1200s requirement is not met by the bot replay. That requirement describes
+human play length; the route bot's 619-706s is not a substitute. No human
+20-minute play-through was done in this iteration.

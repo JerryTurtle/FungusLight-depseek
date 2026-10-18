@@ -1,0 +1,29 @@
+===== G6-002 P0-2 final suite, current source =====
+Godot 4.3.stable.official.77dcf97d8, headless. Each entry was launched through
+the Godot tool channel (never the shell) and completed with exit 0.
+
+G4_CAMPAIGN_TEST checks=90 failures=0
+G6_RELEASE_TEST checks=38 failures=0
+G4_TEST checks=48 failures=0
+G4_BOSS_TEST checks=67 failures=0 hp=4960 phase=2
+G4_DEATH_TEST checks=5 failures=0 node=N2-04
+G4_VISUAL_TEST checks=12 failures=0
+SAVE_TEST checks=65 failures=0
+ENEMY_TEST checks=73 failures=0
+DIALOGUE_TEST checks=175 failures=0
+PROP_TEST checks=2472 failures=0
+PRESSURE_TEST checks=5 failures=0 path_queries=528 crossed=1 ms=6495
+ROUTE_TEST checks=9 failures=0 seconds=674.8 steps=128 deaths=0
+ROUTE_SKIP_TEST checks=9 failures=0 seconds=619.3 steps=128 deaths=0
+
+Additional:
+G1_INITIAL_TESTS checks=549 failures=0
+RESTART_WRITE checks=2 failures=0
+RESTART_LOAD checks=8 failures=0
+
+Route matrix (8/8, separate log):
+A_restore 674.8s, B_seal 678.0s, A_alt_seal 706.0s, B_alt_restore 705.5s,
+C05 674.8s, C06 705.5s, sidequests 687.5s, skip 619.3s.
+
+Known non-gate item: historical test_campaign.gd is not in this suite and its
+old G3 assertions still fail/time out. It was not used as evidence.

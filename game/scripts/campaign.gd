@@ -351,6 +351,10 @@ func setup_collision() -> void:
 		if str(object.kind) == "exit": visual = "portal"
 		var rect: Rect2 = solid_rect(visual,pos)
 		if str(object.kind) in ["switch"]: rect = Rect2()
+		# The ending choice stands in the middle of the core room. It is a
+		# choice marker, not cover: keeping its portal collision would block
+		# the boss line of sight and split the arena during the final fight.
+		if str(object.kind) == "ending": rect = Rect2()
 		if rect.size.x > 0: combat.blockers.append(rect)
 		if str(object.kind) in ["rong","npc"] or bool(object.get("npc",false)):
 			combat.npcs.append({"id":str(object.id),"pos":pos+Vector2(0,-12),"radius":7.0})

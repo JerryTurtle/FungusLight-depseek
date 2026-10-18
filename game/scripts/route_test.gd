@@ -42,6 +42,11 @@ var combat_stall := 0
 var dodge_sign := 1
 var dodges := 0
 var heals := 0
+var boss_trace_enabled := OS.get_environment("FUNGUS_BOSS_TRACE") == "1"
+var boss_trace: Array = []
+var combat_trace_node := ""
+var combat_trace: Array = []
+var progress_path := ""
 
 func check(condition: bool, label: String) -> void:
 	checks += 1
@@ -50,6 +55,10 @@ func check(condition: bool, label: String) -> void:
 		printerr("FAIL ", label)
 
 func _initialize() -> void:
+	# Test tools may write a new build's evidence while project.godot still
+	# advertises the previous candidate. Keep the report path honest.
+	var env_build := OS.get_environment("FUNGUS_BUILD_ID")
+	if not env_build.is_empty(): BUILD_ID = env_build
 	call_deferred("run")
 
 func run() -> void:
@@ -71,9 +80,12 @@ func run() -> void:
 		if failed != "":
 			break
 		scene._physics_process(1.0/60)
+		if boss_trace_enabled: trace_boss_step()
+		if not combat_trace_node.is_empty() and scene.progress.node_id == combat_trace_node: trace_combat_step()
 		for event in scene.combat.events:
 			if event.kind == "heal": heals += 1
 		update_dialogue(1.0/60)
+		if not progress_path.is_empty() and tick % 300 == 0: write_progress()
 		if scene.overlay.visible:
 			await process_frame
 		min_hp = minf(min_hp,scene.combat.hp)
@@ -98,11 +110,14 @@ func run() -> void:
 		check(scene.progress.seconds > 30.0 and scene.progress.seconds <= float(tick)/60.0 + 0.5,"effective time excludes paused dialogue")
 		check(scene.progress.node_id == "N4-07" and scene.progress.ending_id() == ("seal" if seal_ending else "restore") and scene.progress.has("S12"),"G4 full route and ending")
 		if sidequest_route:
-			check(scene.progress.has("Q1") and scene.progress.has("Q2") and scene.progress.equipment().relic == "clear_mirror" and scene.progress.equipment().token == "ember_talisman","G4 both sidequests and equipment")
+			var equipment: Dictionary = scene.progress.equipment()
+			check(scene.progress.has("Q1") and scene.progress.has("Q2") and bool(equipment.owned.get("clear_mirror",false)) and bool(equipment.owned.get("ember_talisman",false)),"G4 both sidequests and equipment")
 	else:
 		check(false,"route finished: "+failed)
 	var total := float(tick)/60.0
 	write_report(total)
+	if boss_trace_enabled: write_boss_trace()
+	if not combat_trace_node.is_empty(): write_combat_trace()
 	var report_prefix := "ROUTE_SKIP_TEST" if skip_dialogue else "ROUTE_TEST"
 	print("%s checks=%d failures=%d seconds=%.1f steps=%d deaths=%d" % [report_prefix,checks,failures,total,segments.size(),deaths])
 	release_all()
@@ -548,13 +563,32 @@ func combat(enemies: Array) -> void:
 	if archetype == "BOSS":
 		# The mother only takes damage during core-open windows; stay out of the
 		# telegraphed spore circles and the two water bands while it is closed.
+		var spore_near := false
 		for hazard in combat_model.field_hazards:
 			if str(hazard.get("kind","")) != "spore": continue
 			var hazard_pos: Vector2 = hazard.get("pos",combat_model.player)
 			var hazard_radius := float(hazard.get("radius",24.0))+8.0
 			if combat_model.player.distance_to(hazard_pos) < hazard_radius:
+				spore_near = true
+				break
+		if spore_near:
+			# A spore burst is centred exactly on the player's tick-start position;
+			# (player-hazard_pos) is zero at that moment, so a simple "walk away
+			# from the circle" input does nothing. Probe several clear directions
+			# and pick the one that ends farthest outside every live spore circle.
+			var spore_escape := boss_spore_escape(target.pos)
+			if not spore_escape.is_zero_approx():
 				walk_reason = "boss-spore-escape"
-				walk_direct((combat_model.player-hazard_pos).normalized())
+				walk_direct(spore_escape)
+				return
+		if str(target.get("boss_attack","")) == "sweep" and target.state == "attack" and int(target.age) < 60 and distance < 80.0:
+			# The sweep is a 72px, 100-degree sector locked at the warning start.
+			# A 34px sidestep at 56px is still inside that sector; increase the
+			# distance beyond the radius instead of dodging into the arc.
+			var sweep_escape := boss_retreat_escape(target.pos)
+			if not sweep_escape.is_zero_approx():
+				walk_reason = "boss-sweep-escape"
+				walk_direct(sweep_escape)
 				return
 		if str(target.get("boss_attack","")) == "water" and target.state == "attack" and absf(combat_model.player.y-90.0) > 6.0:
 			walk_reason = "boss-water-safe"
@@ -562,6 +596,13 @@ func combat(enemies: Array) -> void:
 			return
 	if bool(scene.progress.skills().get("shield",false)) and combat_model.hp < 62 and combat_model.focus >= 25 and int(combat_model.cooldowns.get("shield",0)) <= 0 and combat_model.action == "idle" and distance > 34 and distance < 120:
 		press_key(KEY_1)
+		return
+	if combat_model.hp < 45 and combat_model.potions > 0 and combat_model.action == "idle" and archetype not in ["EL1","BOSS"] and distance > 26:
+		# Ordinary groups can leave the nearest target as a T1, which used to
+		# bypass the elite-only heal path. Spend a potion before the next swing
+		# instead of walking into the nearest wall with three unused bottles.
+		release_all()
+		press_key(KEY_R)
 		return
 	if int(target.get("armor_layers",0)) > 0 and (archetype != "BOSS" or bool(target.get("core_open",false))) and distance <= 96 and combat_model.focus >= 20 and int(combat_model.cooldowns.get("light",0)) <= 0 and combat_model.action == "idle" and combat_model.clear_line(combat_model.player,target.pos):
 		# Net light strips one shell before damage; use it instead of grinding
@@ -698,6 +739,53 @@ func combat(enemies: Array) -> void:
 		return
 	hold_attack(target.pos)
 
+func boss_spore_escape(boss_pos: Vector2) -> Vector2:
+	var combat_model = scene.combat
+	var spores: Array = combat_model.field_hazards.filter(func(h): return str(h.get("kind","")) == "spore")
+	if spores.is_empty(): return Vector2.ZERO
+	var best := Vector2.ZERO
+	var best_score := -INF
+	var toward_safe: Vector2 = (combat_model.player-boss_pos)
+	if toward_safe.length_squared() < 0.0001: toward_safe = Vector2.DOWN
+	toward_safe = toward_safe.normalized()
+	for i in 24:
+		var direction := Vector2.from_angle(TAU*float(i)/24.0)
+		var probe: Vector2 = combat_model.player+direction*34.0
+		if not NAV_ARENA.has_point(probe): continue
+		if not combat_model.clear_body_path(combat_model.player,probe): continue
+		var score := 0.0
+		for hazard in spores:
+			var hazard_pos: Vector2 = hazard.get("pos",combat_model.player)
+			var after := probe.distance_to(hazard_pos)
+			score += after-combat_model.player.distance_to(hazard_pos)
+			if after < float(hazard.get("radius",24.0))+6.0: score -= 200.0
+		# Prefer opening distance from the mother as a tie-breaker, so a burst
+		# centred on the player does not send the bot straight into her sweep.
+		score += direction.dot(toward_safe)*2.0
+		if score > best_score:
+			best_score = score
+			best = direction
+	return best
+
+func boss_retreat_escape(boss_pos: Vector2) -> Vector2:
+	var combat_model = scene.combat
+	var best := Vector2.ZERO
+	var best_score := -INF
+	for i in 24:
+		var direction := Vector2.from_angle(TAU*float(i)/24.0)
+		var probe: Vector2 = combat_model.player+direction*40.0
+		if not NAV_ARENA.has_point(probe): continue
+		if not combat_model.clear_body_path(combat_model.player,probe): continue
+		var score := probe.distance_to(boss_pos)
+		for hazard in combat_model.field_hazards:
+			if str(hazard.get("kind","")) != "spore": continue
+			var hazard_pos: Vector2 = hazard.get("pos",probe)
+			if probe.distance_to(hazard_pos) < float(hazard.get("radius",24.0))+8.0: score -= 100.0
+		if score > best_score:
+			best_score = score
+			best = direction
+	return best
+
 func hold_attack(aim: Vector2) -> void:
 	for code in [KEY_W,KEY_A,KEY_S,KEY_D]:
 		apply_key(code,false)
@@ -810,6 +898,68 @@ func release_all() -> void:
 	for code in [KEY_W,KEY_A,KEY_S,KEY_D]:
 		apply_key(code,false)
 	release_attack()
+
+func trace_boss_step() -> void:
+	var boss: Dictionary = {}
+	for enemy in scene.combat.enemies:
+		if str(enemy.get("archetype","")) == "BOSS": boss = enemy; break
+	if boss.is_empty(): return
+	var rows: Array = []
+	for event in scene.combat.events:
+		var kind := str(event.get("kind",""))
+		if not (kind in ["hit","hit_rejected","damage","hurt","dot","rejected_hit","heal","heal_cancel","shield_start","shield_absorb","shield_end","boss_attack","boss_core","boss_phase","hazard_fire","hazard_warn","death"]): continue
+		var row := {"kind":kind}
+		for key in ["action","attack","amount","source","target","remaining","open","window","phase","reason","hit","damage","hp"]:
+			if event.has(key): row[key] = event[key]
+		rows.append(row)
+	if tick % 6 != 0 and rows.is_empty(): return
+	var hazards: Array = []
+	for hazard in scene.combat.field_hazards:
+		hazards.append({"kind":hazard.kind,"shape":hazard.shape,"pos":[hazard.pos.x,hazard.pos.y],"radius":hazard.radius,"warn_until":hazard.warn_until,"active_end":hazard.active_end,"next_tick":hazard.next_tick})
+	boss_trace.append({
+		"tick":tick,"hp":scene.combat.hp,"focus":scene.combat.focus,"potions":scene.combat.potions,
+		"action":scene.combat.action,"action_age":scene.combat.age,"player":[scene.combat.player.x,scene.combat.player.y],
+		"boss_hp":boss.hp,"phase":boss.phase,"state":boss.state,"state_age":boss.age,"core_open":boss.core_open,
+		"armor":boss.armor_layers,"attack":boss.boss_attack,"boss_pos":[boss.pos.x,boss.pos.y],
+		"hazards":hazards,"events":rows})
+
+func trace_combat_step() -> void:
+	var rows: Array = []
+	for event in scene.combat.events:
+		var kind := str(event.get("kind",""))
+		if not (kind in ["hit","hit_rejected","damage","hurt","dot","rejected_hit","death","heal","heal_cancel","shield_start","shield_absorb","shield_end","boss_attack","boss_core","boss_phase","hazard_fire","hazard_warn"]): continue
+		var row := {"kind":kind}
+		for key in ["action","attack","amount","source","target","remaining","open","window","phase","reason","hit","damage","hp"]:
+			if event.has(key): row[key] = event[key]
+		rows.append(row)
+	if step_ticks % 3 != 0 and rows.is_empty(): return
+	var enemies: Array = []
+	for enemy in scene.combat.enemies:
+		enemies.append({"kind":enemy.get("archetype","T1"),"hp":enemy.hp,"pos":[enemy.pos.x,enemy.pos.y],"state":enemy.state,"age":enemy.age,"armor":enemy.get("armor_layers",0),"core":enemy.get("core_open",false),"attack":enemy.get("boss_attack","")})
+	combat_trace.append({
+		"tick":tick,"step":str(step().id),"pending":scene.pending_encounter,"hp":scene.combat.hp,"focus":scene.combat.focus,"potions":scene.combat.potions,
+		"action":scene.combat.action,"action_age":scene.combat.age,"cooldowns":scene.combat.cooldowns.duplicate(),
+		"player":[scene.combat.player.x,scene.combat.player.y],"enemies":enemies,"events":rows})
+
+func write_progress() -> void:
+	var file := FileAccess.open(progress_path,FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify({"tick":tick,"step":str(step().id),"node":scene.progress.node_id,"pending":scene.pending_encounter,"hp":scene.combat.hp,"player":[scene.combat.player.x,scene.combat.player.y],"notice":scene.notice,"dialogue":scene.dialogue_mode,"paused":scene.paused}))
+		file.close()
+
+func write_combat_trace() -> void:
+	var path := ProjectSettings.globalize_path("res://").path_join("../qa/local/G6-002-combat-trace.json").simplify_path()
+	var file := FileAccess.open(path,FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify(combat_trace,"  "))
+		file.close()
+
+func write_boss_trace() -> void:
+	var path := ProjectSettings.globalize_path("res://").path_join("../qa/local/G6-002-boss-trace.json").simplify_path()
+	var file := FileAccess.open(path,FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify(boss_trace,"  "))
+		file.close()
 
 func write_report(total_seconds: float) -> void:
 	var report := {"build_id":BUILD_ID,"route":"N0-01→N0-04→N1-01→N1-05→N2-01→N2-06→N3-06→N4-07","tick":tick,"seconds":snappedf(total_seconds,0.1),

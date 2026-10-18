@@ -1,0 +1,14 @@
+===== Preserved failure: sidequests route script error =====
+Captured before the equipment-field fix.
+
+stdout:
+Godot Engine v4.3.stable.official.77dcf97d8
+G2_READY | G2-007 | 60Hz | prototype
+
+stderr:
+SCRIPT ERROR: Invalid access to property or key 'relic' on a base object of type 'Dictionary'.
+    at: run (res://scripts/route_test.gd:113)
+
+The route's final sidequest check still read equipment().relic/token from the
+old schema. The write report/quit path was never reached, so the headless run
+did not exit and the matrix runner timed out. Fixed to inspect equipment().owned.

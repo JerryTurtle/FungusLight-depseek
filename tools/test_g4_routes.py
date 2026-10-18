@@ -32,7 +32,7 @@ summary = {'build_id': build, 'variants': [], 'fastest_seconds': None,
 pattern = re.compile(r'ROUTE(?:_SKIP)?_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)')
 started = time.time()
 for tag, env_extra in VARIANTS:
-    env = {**os.environ, 'FUNGUS_ROUTE_TAG': tag, **env_extra}
+    env = {**os.environ, 'FUNGUS_ROUTE_TAG': tag, 'FUNGUS_BUILD_ID': build, **env_extra}
     result = subprocess.run(
         [ENGINE, '--headless', '--path', str(ROOT / 'game'), '--script', 'res://scripts/route_test.gd'],
         capture_output=True, timeout=900, env=env)

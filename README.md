@@ -4,20 +4,20 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 ## 1. 当前状态（2026-10-18）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。G4-009 完成试玩反馈修复；G6-001 发布候选包已构建并通过 AI 发布验证，等待用户最终验收。2026-10-18 第二轮已按用户授权把剧情收敛为最小逻辑闭环，并接入成长/证据/精英/Boss 机制；G6-001 包对应旧源码，需重新构建后再验收。** 2026-10-18 P0-1 已修复读档校验（G6-002），P0-2 已将 route 推进到 N4-06 Boss 但仍失败；包/门槛/全路线未变。G4-009：初燃余烬/轻震、动态灯焰、导光光束增强、37 节点重叠清理、四分之一像素+刷新率插值移动。G6-001：release 默认主线、剔除测试/采集/审核/MCP 资源、标题—继续—读取—双槽—死亡—两结局—返回闭环、发布四件套与 Windows 包。自动路线 484.6 秒、跳过 434.2 秒，8/8 路线矩阵通过（第二轮前证据；当前源码 route_test 仍失败，待 P0-2 重跑）；G6 最终用户验收未完成前不称整款交付。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。G4-009 完成试玩反馈修复；G6-001 发布候选包已构建并通过 AI 发布验证，等待用户最终验收。2026-10-18 第二轮已按用户授权把剧情收敛为最小逻辑闭环，并接入成长/证据/精英/Boss 机制；G6-001 包对应旧源码，需重新构建后再验收。** 2026-10-18 P0-1 已修复读档校验（G6-002），P0-2 已在当前源码跑通默认路线（674.8 秒/0 死亡）和 8/8 路线矩阵，全量套件 0 失败；包/版本/门槛尚未同步，G6/G7 仍为 in_progress。G4-009：初燃余烬/轻震、动态灯焰、导光光束增强、37 节点重叠清理、四分之一像素+刷新率插值移动。G6-001：release 默认主线、剔除测试/采集/审核/MCP 资源、标题—继续—读取—双槽—死亡—两结局—返回闭环、发布四件套与 Windows 包。自动路线 484.6 秒、跳过 434.2 秒，8/8 路线矩阵通过（第二轮前证据；当前源码 route_test 仍失败，待 P0-2 重跑）；G6 最终用户验收未完成前不称整款交付。
 
 - 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-001 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
 - **G6-001 发布包：** [deliverables/Release](deliverables/Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-001-Release.zip`。exe `66B26A…B7B13`，pck `7D6C34…06DAA`，zip SHA256 `1E6EE8F1…DB1E979`；完整哈希见 `qa/evidence/G6/G6-001-final-package.txt`。
 - **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G4-009 证据见 `qa/evidence/G4/G4-009-*`。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
-- **下一项：P0-2 用当前源码重跑路线、P0-3 统一包/门槛/版本；完成后再请用户验收。** 验收条目仍为两结局、双槽/坏档、设置、37 节点、手感/字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
+- **下一项：P0-3 统一 G6-002/G7 包、版本与门槛；完成后再请用户验收。** 验收条目仍为两结局、双槽/坏档、设置、37 节点、手感/字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
 
 状态依据：用户最新要求、[AGENTS.md](AGENTS.md)、[qa/gates.json](qa/gates.json)和[game/DEV_STATE.md](game/DEV_STATE.md)的最新条目。旧报告中的“待H2/禁止G3”是历史状态，已被批准记录取代。发现文件与实际Git状态不符时先核对，不自行推定完成。
 
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
 ### 接续快照：已实现功能与剩余工作（2026-10-18）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-001，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-001为发布候选，等待用户最终验收。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/Release/`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-001，当前源码另含P0-1/P0-2修复；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-001为发布候选，等待用户最终验收。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/Release/`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
 
 #### 已实现清单（接续时直接复用）
 
@@ -179,9 +179,9 @@ G4-001 搭出五章31节点（N0/N1/N2/N3/N4）、30个主线遭遇（tutorial+E
 
 修复 `campaign_state.validate` 用当前进度比较快照 `skills/quests` 导致重启后“继续/读取”及读旧档被拒的问题；改为按快照自身 story 推导（`skills_for/quests_for`）。新增跨进程重启读档检查（先写中局档、再全新进程读取）与 `test_g6_release` 旧档/新实例回读检查。G6-002 证据：`qa/evidence/G6/G6-002-restart-load.log`、`G6-002-prefix-restart-load.log`、`G6-002-g6_release-tests.log`、`G6-002-save-tests.log`。本轮只修读档，不改变 gates/包/版本；G6/G7 仍 `in_progress`，route_test 仍失败，全量路线与发布验收未完成。
 
-#### P0-2 当前源码路线复现（进行中）
+#### P0-2 当前源码路线修复与矩阵（G6-002，本地修复迭代）
 
-当前 HEAD 复跑与历史失败一致：100.4 秒卡在 N1-03（机器人在距 EL1 约 27px 处停住，未进入 22px 近战；README 写的 N3-07/N2-07 与证据不符）。已补 route_test 近距直走、EL2 冲锋/水道回避、N3-04 空导航空洞的环形接近、精英/Boss 恢复窗口治疗；游戏侧修正击退把玩家/敌人推出竞技场（`PLAYABLE_AREA` 夹取）与指针在场地外时自施护灯被过滤。当前 route 已到 N4-06 Boss，但阶段一死亡（Boss 1554.25/2200）；默认路线未通过，8 条矩阵未跑。受影响套件 test_combat 549/0、enemies 73/0、g4_campaign 88/0、g6_release 38/0、g4 48/0、g4_boss 67/0、g4_death 5/0、save 65/0。证据 `qa/evidence/G6/G6-002-route-*`。G6/G7 仍 `in_progress`，route_test 仍失败，不得标通过。
+当前 HEAD 首跑复现 N1-03：100.4 秒，机器人在距 EL1 约 27px 处停住；README 的 N3-07/N2-07 与证据不符。修复 route_test 的近距补足、EL2 冲锋/水道、N3-04 空导航空洞环形接近、Boss 孢荚/横扫回避、低血药剂与支线装备字段；游戏侧夹取 `PLAYABLE_AREA` 击退、放行指针场外自施护灯、移除 N4-06 结局标记的实体碰撞（此前挡住 Boss 视线）。最终默认路线 674.8 秒/0 死亡；8 条矩阵 A_restore/B_seal/A_alt_seal/B_alt_restore/C05/C06/sidequests/skip 全过（9/9/9/9/9/9/10/9，619.3～706.0 秒）。全量套件 campaign90、g6_release38、g4_state48、g4_boss67、g4_death5、g4_visual12、save65、enemies73、dialogue175、props2472、pressure5、route9、skip9 全 0 失败；另 test_combat549、restart write2/load8。证据 `qa/evidence/G6/G6-002-route-default.*`、`G6-002-route-matrix.*`、`G6-002-route-progress.md`。限制：机器人最短 619.3 秒，不是 20 分钟真人时长；未改包/版本/gates，G6/G7 仍 `in_progress`，不得称交付完成。
 
 <!-- HANDOFF_SNAPSHOT_END -->
 
