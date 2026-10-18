@@ -15,6 +15,9 @@ func consume(model) -> void:
 	sparks = sparks.filter(func(e): return model.tick-e.tick < 22)
 	for event in model.events:
 		var kind: String = event.kind
+		if kind in ["boss_phase","boss_core","boss_death"]:
+			effects.append({"kind":kind,"pos":model.player-Vector2(0,12),"tick":model.tick,"armor":0,"broken":false})
+			continue
 		if kind not in ["hit","hurt","shield_absorb","shield_end","armor_break"]: continue
 		var position: Vector2 = model.player-Vector2(0,12)
 		if kind in ["hit","armor_break"]:
@@ -45,7 +48,13 @@ func draw(canvas: CanvasItem, tick: int, preferences) -> void:
 		var alpha := (1.0-float(age)/18.0)*(0.5 if preferences.reduced_flash else 1.0)
 		var tint := Color(1,0.88,0.6,alpha) if effect.armor > 0 or effect.kind == "armor_break" else Color(0.8,0.95,0.9,alpha)
 		if effect.kind == "hurt": tint = Color(0.9,0.5,0.4,alpha)
-		if effect.kind in ["shield_absorb","shield_end"]:
+		if effect.kind == "boss_phase":
+			canvas.draw_arc(effect.pos,10+age*2.2,0,TAU,28,Color(1.0,0.78,0.30,alpha),1.5)
+		elif effect.kind == "boss_core":
+			canvas.draw_arc(effect.pos,8+age*1.4,0,TAU,24,Color(0.65,1.0,0.78,alpha),1.2)
+		elif effect.kind == "boss_death":
+			canvas.draw_arc(effect.pos,12+age*3.0,0,TAU,32,Color(0.90,0.52,0.42,alpha),2.0)
+		elif effect.kind in ["shield_absorb","shield_end"]:
 			canvas.draw_arc(effect.pos,17,0,TAU,24,tint,1)
 		elif preferences.low_effects or preferences.reduced_motion:
 			canvas.draw_arc(effect.pos,5,0,TAU,12,tint,1)

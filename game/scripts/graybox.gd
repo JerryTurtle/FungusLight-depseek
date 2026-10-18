@@ -374,6 +374,10 @@ func draw_world() -> void:
 		world.draw_arc(combat.player-Vector2(0,12),17,0,TAU,32,Color("a2e7df"),1)
 		world.draw_rect(Rect2(combat.player+Vector2(-10,-34),Vector2(20,2)),Color("23484e"))
 		world.draw_rect(Rect2(combat.player+Vector2(-10,-34),Vector2(20*combat.shield_hp/float(combat.config.actions.shield.capacity),2)),Color("a2e7df"))
+	if combat.poison_until > combat.tick:
+		# Poison status is read from the same timer that drives the damage ticks.
+		var poison_pulse := 0.5+0.5*sin(float(combat.tick)/6.0)
+		world.draw_arc(combat.player-Vector2(0,12),10.0+poison_pulse*2.0,0,TAU,24,Color(0.55,0.92,0.42,0.55),1)
 	if demo_driver != null and demo_driver.charge_preview:
 		var radius: float = combat.config.hazards.projectile.radius
 		world.draw_line(combat.player,combat.player+Vector2(70,0),Color(0.98,0.6,0.45,0.35),radius*2)

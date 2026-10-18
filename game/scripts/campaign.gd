@@ -24,6 +24,7 @@ var pending_encounter := ""
 var checkpoint: Dictionary = {}
 var room_checkpoint: Dictionary = {}
 var dirty := false
+var rest_ready := false
 var tutorial_target := -1
 var guide_dirs: Dictionary = {}
 var wake_left := 0
@@ -307,6 +308,7 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	dialogue_lines = []
 	wake_left = 0
 	hide_player = false
+	rest_ready = false
 	reset_guides()
 	start_encounters()
 	reset_render_tracking()
@@ -522,7 +524,8 @@ func show_pause() -> void:
 			save_game(slot)
 			if menu.get_child(0).text != "覆盖存档？": show_pause())
 	button("任务与证据",show_journal)
-	button("装备配置",show_equipment)
+	if rest_ready: button("装备配置（休息点）",show_equipment)
+	else: paragraph("装备只能在休息点配置。",36)
 	button("读取存档",show_load_menu)
 	button("设置",func(): open_settings("pause"))
 	button("返回标题",func():
@@ -866,9 +869,10 @@ func interact() -> void:
 			show_credits()
 		"rest":
 			combat.hp = progress.max_hp()
-			combat.focus = 100
+			combat.focus = progress.max_focus()
 			progress.potions = 3
 			combat.potions = 3
+			rest_ready = true
 			var rest_bed: bool = str(object.get("visual","")) == "bed"
 			save_game("auto",true)
 			notice = "已休息并保存。"
