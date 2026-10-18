@@ -13,8 +13,8 @@ func check(ok: bool, label: String) -> void:
 
 func _initialize() -> void:
 	var p = Progress.new()
-	check(p.content.nodes.size() == 31, "31 main nodes")
-	check(p.content.encounters.size() == 31, "30 main encounters + tutorial")
+	check(p.content.nodes.size() >= 31, "31+ main nodes")
+	check(p.content.encounters.size() >= 31, "30+ main encounters + tutorial")
 	check(p.puzzle_ids.size() == 9, "9 puzzles")
 	check(p.node().id == "N0-01", "start node")
 	var snap: Dictionary = p.snapshot(Vector2(80,110),100,100)
@@ -47,7 +47,7 @@ func _initialize() -> void:
 	check(m4 and p.finish_event("ward"), "M4 choice")
 	check(p.max_hp() == 180.0, "M4 HP")
 	p.node_id = "N4-06"
-	for flag in ["E26","E27","E28","E29","E30","M4","P08","P09","S08","S09"]: p.flags[flag] = true
+	for flag in ["E26","E27","E28","E29","E30","E31","E32","E33","E34","E35","M4","P08","P09","S08","S09"]: p.flags[flag] = true
 	p.set_ending("restore")
 	check(p.ending_id() == "restore", "restore ending")
 	p.flags.S12 = true

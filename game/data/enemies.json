@@ -68,9 +68,9 @@
   "armor": 2
  },
  "BOSS": {
-  "hp": 150,
+  "hp": 400,
   "speed": 20,
-  "damage": 5,
+  "damage": 7,
   "range": 34,
   "windup": 48,
   "active": 12,

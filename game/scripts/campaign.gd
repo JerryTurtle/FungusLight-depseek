@@ -485,12 +485,12 @@ func show_credits() -> void:
 
 func nearest_object() -> Dictionary:
 	var nearest: Dictionary = {}
-	var distance := 28.01
+	var distance := 30.01
 	for object in progress.node().objects:
 		if object.kind == "guide_target": continue
 		var pos := Vector2(object.pos[0],object.pos[1])
 		var d: float = combat.player.distance_to(pos)
-		if d <= 28 and d < distance and combat.clear_wall_line(combat.player,pos):
+		if d <= 30 and d < distance and combat.clear_wall_line(combat.player,pos):
 			distance = d
 			nearest = object
 	return nearest
@@ -516,7 +516,7 @@ func interact() -> void:
 		return
 	var object := nearest_object()
 	if object.is_empty():
-		notice = "靠近有标记的物件（28像素内），按 E。"
+		notice = "靠近有标记的物件（30像素内），按 E。"
 		return
 	if str(object.kind) in ["exit","end"] and not bool(object_state(object,"").get("available",true)):
 		if str(object.kind) == "end":

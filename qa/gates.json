@@ -312,16 +312,13 @@
  },
  "G4": {
   "status": "in_progress",
-  "iteration": "G4-001",
+  "iteration": "G4-002",
   "evidence": [
    "qa/evidence/G4/G4-001-progress.md",
    "qa/evidence/G4/G4-001-checks.json",
    "qa/evidence/G4/G4-001-campaign-tests.log",
    "qa/evidence/G4/G4-001-g4_state-tests.log",
-   "qa/evidence/G4/G4-001-route-tests.log",
    "qa/evidence/G4/G4-001-skip_route-tests.log",
-   "qa/evidence/G4/G4-001-route.json",
-   "qa/evidence/G4/G4-001-route-skip.json",
    "qa/evidence/G4/G4-001-integration.json",
    "qa/evidence/G4/G4-001-review/checks.json",
    "qa/evidence/G4/G4-001-hashes.txt",
@@ -329,22 +326,20 @@
    "qa/evidence/G4/G4-001-branch.png",
    "qa/evidence/G4/G4-001-ending.png",
    "qa/evidence/G4/G4-001-package-camp.png",
-   "qa/evidence/G4/G4-001-route-A_restore.json",
-   "qa/evidence/G4/G4-001-route-B_seal.json",
-   "qa/evidence/G4/G4-001-route-A_alt_seal.json",
-   "qa/evidence/G4/G4-001-route-B_alt_restore.json",
-   "qa/evidence/G4/G4-001-route-C05.json",
-   "qa/evidence/G4/G4-001-route-C06.json",
-   "qa/evidence/G4/G4-001-route-sidequests.json",
-   "qa/evidence/G4/G4-001-route-matrix.json",
-   "qa/evidence/G4/G4-001-g4_boss-tests.log"
+   "qa/evidence/G4/G4-001-g4_boss-tests.log",
+   "qa/evidence/G4/G4-002-progress.md",
+   "qa/evidence/G4/G4-002-checks.json",
+   "qa/evidence/G4/G4-002-route-matrix.json",
+   "qa/evidence/G4/G4-002-route-A_restore.json",
+   "qa/evidence/G4/G4-002-route-B_seal.json",
+   "qa/evidence/G4/G4-002-hashes.txt"
   ],
   "remaining": [
-   "完整快速路线≥60分钟：矩阵最快352.7秒，未达标",
-   "Boss 150生命是路线验证版，未达2200初始生命/5～7分钟三阶段目标",
-   "真人G4完整时长与最终验收未完成"
+   "20分钟人工快速路线复测：自动496.3秒/446.4秒，不是人类时长",
+   "G4-002 验收包 deliverables/G4-002-Acceptance/ 的真人分项时间未回填",
+   "Boss 400 仍是路线平衡版，2200设计版仅机制测试"
   ],
-  "caveat": "G4-001 is a structural first pass: 31 nodes, 30 encounters, 9 puzzles, M1-M4, six equipment and two endings exist, but duration, four representative routes and Boss balance are not yet acceptable."
+  "caveat": "G4-002 adds five interlude areas and E31-E35; user approved a revised 20-minute duration target. Automated route times do not substitute for the human 20-minute playtest."
  },
  "G5": {
   "status": "not_started"
