@@ -1,0 +1,65 @@
+[
+  {
+    "requested_fps": 30,
+    "measured_fps": 29.9918339599392,
+    "drawn_frames": 177,
+    "elapsed_seconds": 5.87901,
+    "events": {
+      "action": 7,
+      "hit": 3,
+      "knockback": 3,
+      "release": 3,
+      "door_changed": 2,
+      "projectile_spawn": 1,
+      "shield_absorb": 1,
+      "dot": 1,
+      "projectile_wall": 1,
+      "rain_impact": 1,
+      "shield_end": 1
+    },
+    "trace_equal": true,
+    "pause_frozen": true
+  },
+  {
+    "requested_fps": 60,
+    "measured_fps": 60.00896274215446,
+    "drawn_frames": 352,
+    "elapsed_seconds": 5.87566,
+    "events": {
+      "action": 7,
+      "hit": 3,
+      "knockback": 3,
+      "release": 3,
+      "door_changed": 2,
+      "projectile_spawn": 1,
+      "shield_absorb": 1,
+      "dot": 1,
+      "projectile_wall": 1,
+      "rain_impact": 1,
+      "shield_end": 1
+    },
+    "trace_equal": true,
+    "pause_frozen": true
+  },
+  {
+    "requested_fps": 144,
+    "measured_fps": 144.2244925431531,
+    "drawn_frames": 839,
+    "elapsed_seconds": 5.853927,
+    "events": {
+      "action": 7,
+      "hit": 3,
+      "knockback": 3,
+      "release": 3,
+      "door_changed": 2,
+      "projectile_spawn": 1,
+      "shield_absorb": 1,
+      "dot": 1,
+      "projectile_wall": 1,
+      "rain_impact": 1,
+      "shield_end": 1
+    },
+    "trace_equal": true,
+    "pause_frozen": true
+  }
+]

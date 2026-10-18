@@ -1,0 +1,201 @@
+{
+  "build_id": "G3-011",
+  "checks": 8,
+  "deaths": 0,
+  "dialogue_model": "每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间",
+  "dodges": 30,
+  "failure": "",
+  "failures": 0,
+  "heals": 1,
+  "input": "Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes",
+  "min_hp": 62,
+  "path_queries": 0,
+  "route": "N0-01→N0-04→N1-01→N1-03",
+  "seconds": 100.5,
+  "segments": [
+    {
+      "hp": 100,
+      "id": "S01",
+      "seconds": 6.3,
+      "ticks": 380,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "N0-02",
+      "seconds": 2.8,
+      "ticks": 170,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "core",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "P01",
+      "seconds": 7.5,
+      "ticks": 452,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "tutorial",
+      "seconds": 0.6,
+      "ticks": 34,
+      "type": "light_target"
+    },
+    {
+      "hp": 100,
+      "id": "E01",
+      "seconds": 2.4,
+      "ticks": 141,
+      "type": "combat"
+    },
+    {
+      "hp": 100,
+      "id": "M1",
+      "seconds": 4.9,
+      "ticks": 295,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "N0-03",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "scan",
+      "seconds": 1.6,
+      "ticks": 97,
+      "type": "press"
+    },
+    {
+      "hp": 100,
+      "id": "pipe",
+      "seconds": 0,
+      "ticks": 2,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "S03",
+      "seconds": 8.6,
+      "ticks": 514,
+      "type": "interact"
+    },
+    {
+      "hp": 88,
+      "id": "N0-04",
+      "seconds": 8.9,
+      "ticks": 532,
+      "type": "interact"
+    },
+    {
+      "hp": 88,
+      "id": "E02",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 88,
+      "id": "E03",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 66,
+      "id": "N1-01",
+      "seconds": 13.4,
+      "ticks": 806,
+      "type": "interact"
+    },
+    {
+      "hp": 66,
+      "id": "E04",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 97,
+      "id": "L01",
+      "seconds": 6.3,
+      "ticks": 376,
+      "type": "lore"
+    },
+    {
+      "hp": 97,
+      "id": "N1-02",
+      "seconds": 12.6,
+      "ticks": 754,
+      "type": "interact"
+    },
+    {
+      "hp": 97,
+      "id": "E05",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 97,
+      "id": "E06",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 97,
+      "id": "P02",
+      "seconds": 7,
+      "ticks": 422,
+      "type": "guides"
+    },
+    {
+      "hp": 79,
+      "id": "N1-03",
+      "seconds": 14.1,
+      "ticks": 847,
+      "type": "interact"
+    },
+    {
+      "hp": 79,
+      "id": "E07",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 79,
+      "id": "E08",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 79,
+      "id": "end",
+      "seconds": 1.6,
+      "ticks": 98,
+      "type": "interact"
+    },
+    {
+      "hp": 79,
+      "id": "done",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "finish"
+    }
+  ],
+  "tick": 6028,
+  "wall_ms": 1431
+}

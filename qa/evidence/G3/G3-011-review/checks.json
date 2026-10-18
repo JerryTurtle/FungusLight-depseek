@@ -1,0 +1,206 @@
+{
+	"checks": 50,
+	"failures": 1,
+	"results": [
+		{
+			"check": "H01 complete demonstration timeline",
+			"passed": true
+		},
+		{
+			"check": "bounded feedback H01",
+			"passed": true
+		},
+		{
+			"check": "native screenshot H01",
+			"passed": true
+		},
+		{
+			"check": "H02 complete demonstration timeline",
+			"passed": true
+		},
+		{
+			"check": "bounded feedback H02",
+			"passed": true
+		},
+		{
+			"check": "native screenshot H02",
+			"passed": true
+		},
+		{
+			"check": "H03 complete demonstration timeline",
+			"passed": true
+		},
+		{
+			"check": "bounded feedback H03",
+			"passed": true
+		},
+		{
+			"check": "native screenshot H03",
+			"passed": true
+		},
+		{
+			"check": "H04 complete demonstration timeline",
+			"passed": true
+		},
+		{
+			"check": "bounded feedback H04",
+			"passed": true
+		},
+		{
+			"check": "native screenshot H04",
+			"passed": true
+		},
+		{
+			"check": "H05 complete demonstration timeline",
+			"passed": true
+		},
+		{
+			"check": "bounded feedback H05",
+			"passed": true
+		},
+		{
+			"check": "native screenshot H05",
+			"passed": true
+		},
+		{
+			"check": "H02 quality0 audio exactly matches simulation events",
+			"passed": true
+		},
+		{
+			"check": "H02 quality1 audio exactly matches simulation events",
+			"passed": true
+		},
+		{
+			"check": "H02 low settings preserve entire combat timeline",
+			"passed": true
+		},
+		{
+			"check": "H02 really hits and breaks armor",
+			"passed": true
+		},
+		{
+			"check": "H03 quality0 audio exactly matches simulation events",
+			"passed": true
+		},
+		{
+			"check": "H03 quality1 audio exactly matches simulation events",
+			"passed": true
+		},
+		{
+			"check": "H03 low settings preserve entire combat timeline",
+			"passed": true
+		},
+		{
+			"check": "H03 really absorbs shield and resolves rain",
+			"passed": true
+		},
+		{
+			"check": "H04 quality0 audio exactly matches simulation events",
+			"passed": true
+		},
+		{
+			"check": "H04 quality1 audio exactly matches simulation events",
+			"passed": true
+		},
+		{
+			"check": "H04 low settings preserve entire combat timeline",
+			"passed": true
+		},
+		{
+			"check": "H04 hazards really cause damage",
+			"passed": true
+		},
+		{
+			"check": "H05 quality0 audio exactly matches simulation events",
+			"passed": true
+		},
+		{
+			"check": "H05 quality1 audio exactly matches simulation events",
+			"passed": true
+		},
+		{
+			"check": "H05 low settings preserve entire combat timeline",
+			"passed": true
+		},
+		{
+			"check": "one-frame playback remains paused",
+			"passed": true
+		},
+		{
+			"check": "manual direction selection",
+			"passed": true
+		},
+		{
+			"check": "one-times pixel scale",
+			"passed": true
+		},
+		{
+			"check": "review viewport routes left click to melee command",
+			"passed": true
+		},
+		{
+			"check": "review mouse coordinate converts through camera",
+			"passed": true
+		},
+		{
+			"check": "free trial uses normal resources",
+			"passed": true
+		},
+		{
+			"check": "free trial pause button pauses",
+			"passed": true
+		},
+		{
+			"check": "free trial play button resumes",
+			"passed": true
+		},
+		{
+			"check": "review root keyboard event moves trial player",
+			"passed": true
+		},
+		{
+			"check": "review root key1 reaches combat controller",
+			"passed": true
+		},
+		{
+			"check": "camera preserves head near top world boundary",
+			"passed": true
+		},
+		{
+			"check": "review reset clears hazards and feedback",
+			"passed": true
+		},
+		{
+			"check": "issue record includes screenshot",
+			"passed": true
+		},
+		{
+			"check": "readable feedback export exists",
+			"passed": true
+		},
+		{
+			"check": "feedback reload preserves status and note",
+			"passed": true
+		},
+		{
+			"check": "QA never confirms H2 approval",
+			"passed": true
+		},
+		{
+			"check": "copy feedback matches exported text",
+			"passed": false
+		},
+		{
+			"check": "save failure reported",
+			"passed": true
+		},
+		{
+			"check": "feedback text remains available after failed save",
+			"passed": true
+		},
+		{
+			"check": "settings pauses review world",
+			"passed": true
+		}
+	]
+}
