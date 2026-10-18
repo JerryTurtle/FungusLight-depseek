@@ -20,6 +20,10 @@ var checkpoint: Dictionary = {}
 var dirty := false
 var tutorial_target := -1
 var guide_dirs: Dictionary = {}
+var wake_left := 0
+var wake_total := 0
+var wake_from := Vector2(38,108)
+var wake_to := Vector2(66,124)
 var objects_layer: Node2D
 var ui_layer: Node2D
 var dialogue
@@ -143,6 +147,22 @@ func new_game() -> void:
 	load_room(Vector2.INF,100,100)
 	resume()
 	save_game("auto",true)
+	if DisplayServer.get_name() != "headless":
+		start_wake()
+
+func start_wake() -> void:
+	var bed := {}
+	for object in progress.node().objects:
+		if str(object.get("visual",object.kind)) == "bed": bed = object
+	if bed.is_empty(): return
+	wake_total = 108
+	wake_left = wake_total
+	hide_player = true
+	notice = "……"
+	wake_from = Vector2(bed.pos[0],bed.pos[1])+Vector2(-10,-20)
+	wake_to = Vector2(bed.pos[0],bed.pos[1])+Vector2(18,-4)
+	combat.player = wake_to
+	combat.facing = Vector2.DOWN
 
 func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value: float = -1) -> void:
 	var prior_hp: float = combat.hp
@@ -155,6 +175,7 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	for wall in progress.node().walls: combat.walls.append(Rect2(wall[0],wall[1],wall[2],wall[3]))
 	combat.doors.clear()
 	combat.doors.append({"id":"unused","rect":Rect2(0,0,1,1),"open":true})
+	setup_collision()
 	var spawn: Array = progress.node().spawn
 	combat.player = Vector2(spawn[0],spawn[1]) if not position.is_finite() else position
 	combat.hp = clampf(prior_hp if health < 0 else health,1,progress.max_hp())
@@ -173,6 +194,8 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	tutorial_target = -1
 	dialogue_mode = ""
 	dialogue_lines = []
+	wake_left = 0
+	hide_player = false
 	reset_guides()
 	start_encounters()
 
@@ -180,6 +203,28 @@ func reset_guides() -> void:
 	guide_dirs.clear()
 	for object in progress.guides():
 		guide_dirs[object.id] = int(object.solution) if progress.has("P02") else int(object.dir)
+
+func solid_rect(kind: String, pos: Vector2) -> Rect2:
+	match kind:
+		"chest": return Rect2(pos+Vector2(-7,-8),Vector2(14,9))
+		"crates": return Rect2(pos+Vector2(-20,-16),Vector2(40,16))
+		"cabinet": return Rect2(pos+Vector2(-7,-8),Vector2(14,10))
+		"barrel": return Rect2(pos+Vector2(-5,-5),Vector2(10,8))
+		"shelf": return Rect2(pos+Vector2(-7,-8),Vector2(14,10))
+	return Rect2()
+
+func setup_collision() -> void:
+	combat.blockers.clear()
+	combat.npcs.clear()
+	for entry in progress.node().get("decor",[]):
+		var rect: Rect2 = solid_rect(str(entry.kind),Vector2(entry.pos[0],entry.pos[1]))
+		if rect.size.x > 0: combat.blockers.append(rect)
+	for object in progress.node().objects:
+		var pos := Vector2(object.pos[0],object.pos[1])
+		var rect: Rect2 = solid_rect(str(object.kind),pos)
+		if rect.size.x > 0: combat.blockers.append(rect)
+		if str(object.kind) == "rong" or bool(object.get("npc",false)):
+			combat.npcs.append({"id":str(object.id),"pos":pos+Vector2(0,-12),"radius":7.0})
 
 func guide_aligned(object: Dictionary) -> bool:
 	return int(guide_dirs.get(object.id,int(object.dir))) == int(object.solution)
@@ -291,6 +336,7 @@ func show_load_menu() -> void:
 		else: show_title())
 
 func show_pause() -> void:
+	if wake_left > 0: return
 	clear_menu("暂停 · "+progress.node().name)
 	paragraph(("有未保存进度。\n" if dirty else "")+notice+"\nWASD移动 · 左键灯击 · 右键净光 · 空格闪避 · Q观察 · E交互")
 	button("继续",resume)
@@ -380,7 +426,7 @@ func nearest_object() -> Dictionary:
 		if object.kind == "guide_target": continue
 		var pos := Vector2(object.pos[0],object.pos[1])
 		var d: float = combat.player.distance_to(pos)
-		if d <= 24 and d < distance and combat.clear_line(combat.player,pos):
+		if d <= 24 and d < distance and combat.clear_wall_line(combat.player,pos):
 			distance = d
 			nearest = object
 	return nearest
@@ -400,12 +446,16 @@ func rotate_guide(object: Dictionary) -> void:
 		notice = "导光装置转向%s。已对准 %d / 3。" % [DIR_NAMES[(current+1)%4],guides_correct()]
 
 func interact() -> void:
+	if wake_left > 0: return
 	if not SaveStore.is_safe(safety()):
 		notice = "先避开威胁并结束动作，再交互或存档。"
 		return
 	var object := nearest_object()
 	if object.is_empty():
 		notice = "靠近有标记的物件（24像素内），按 E。"
+		return
+	if str(object.kind) in ["exit","end"] and not bool(object_state(object,"").get("available",true)):
+		notice = "门内灯线尚未接通：先把三座导光装置对准刻痕。" if str(object.kind) == "end" else "这条通路还没有打开。"
 		return
 	if object.has("requires") and not progress.has(object.requires):
 		notice = "通路未开：先完成当前目标。"
@@ -427,8 +477,10 @@ func interact() -> void:
 			combat.focus = 100
 			progress.potions = 3
 			combat.potions = 3
+			var rest_bed: bool = str(object.get("visual","")) == "bed"
 			save_game("auto",true)
-			notice = "已休息。"+notice
+			notice = "已休息并保存。"
+			if rest_bed and DisplayServer.get_name() != "headless": start_wake()
 		"exit":
 			progress.node_id = object.target
 			load_room()
@@ -492,6 +544,14 @@ func _physics_process(delta: float) -> void:
 		var pointer := world.to_local(queued_pointer if queued_pointer.is_finite() else get_global_mouse_position())
 		var inside := Rect2(0,25,320,135).has_point(pointer)
 		var valid: Array = commands.filter(func(c): return inside or c in ["dodge","heal"])
+		if wake_left > 0:
+			wake_left -= 1
+			movement = Vector2.ZERO
+			valid = []
+			pointer = combat.player
+			if wake_left == 0:
+				hide_player = false
+				notice = "你从床铺上醒来。"
 		var before: Vector2 = combat.player
 		combat.step_commands(movement,pointer-combat.player,valid,inside and pending_encounter != "tutorial" and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT))
 		combat_audio.consume(combat.events)
@@ -527,6 +587,7 @@ func _physics_process(delta: float) -> void:
 	var nearest := nearest_object()
 	status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动 · 空格闪避 · E交互 · Q观察 · R治疗 · Esc暂停")+"\n"+notice
 	if combat.action == "heal": status.text = "正在治疗 %d / 36 · 移动、闪避或受击会取消\n%s" % [combat.age,notice]
+	if wake_left > 0: status.text = "……\n睁开眼，从床铺上起身。"
 
 func current_goal() -> String:
 	match progress.node_id:
@@ -592,6 +653,24 @@ func object_state(object: Dictionary, nearest_id: String) -> Dictionary:
 			if str(object.get("visual","bed")) == "lamp": state.lit = true
 	return state
 
+func draw_floor() -> void:
+	var tick: int = combat.tick
+	for object in progress.node().objects:
+		if str(object.get("visual",object.kind)) != "bed": continue
+		var pos := Vector2(object.pos[0],object.pos[1])
+		props.draw_prop(world,"bed",pos,object_state(object,""),tick,preferences)
+		props.draw_ambient(world,"dust",pos,tick,preferences)
+	if wake_left <= 0: return
+	var t := 1.0-float(wake_left)/float(wake_total)
+	var foot := wake_from.lerp(wake_to,smoothstep(0.2,0.9,t))
+	var angle := lerpf(PI/2,0.0,clampf((t-0.2)/0.45,0.0,1.0))
+	art.sleep_pose(world,foot,angle,clampf(t/0.06,0.65,1.0))
+	var phase := float(tick)/40.0
+	for i in 3:
+		var rise := fmod(phase+float(i)*0.33,1.0)
+		var p := wake_from+Vector2(-6+i*6,-6-rise*14)
+		world.draw_rect(Rect2(p.round(),Vector2.ONE),Color(1.0,0.9,0.6,(1.0-rise)*0.45))
+
 func draw_objects() -> void:
 	preload("res://scripts/enemy_warnings.gd").draw(objects_layer,combat)
 	var tick: int = combat.tick
@@ -603,11 +682,13 @@ func draw_objects() -> void:
 		var pos := Vector2(object.pos[0],object.pos[1])
 		var state := object_state(object,nearest_id)
 		var draw_kind: String = str(object.get("visual",object.kind))
+		if draw_kind == "bed": continue
 		if draw_kind == "rong":
 			art.actor(objects_layer,pos,Vector2.LEFT,"idle",0,tick,false,false)
 			props.draw_ambient(objects_layer,"spores",pos,tick,preferences)
 			continue
-		props.draw_prop(objects_layer,draw_kind,pos,state,tick,preferences)
+		var prop_tick: int = int(tick/3) if draw_kind in ["door","mine_door","exit","end"] else tick
+		props.draw_prop(objects_layer,draw_kind,pos,state,prop_tick,preferences)
 		match draw_kind:
 			"lamp","socket":
 				props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,12),tick,preferences)
@@ -619,11 +700,36 @@ func draw_objects() -> void:
 			"reward":
 				props.draw_ambient(objects_layer,"light_pool",pos,tick,preferences)
 				props.draw_ambient(objects_layer,"ember",pos,tick,preferences)
-			"exit","end":
-				props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,16),tick,preferences)
+			"exit":
+				if bool(state.get("open",false)):
+					props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,16),tick,preferences)
+				else:
+					draw_portal(pos,state,tick)
+			"end":
+				draw_portal(pos,state,tick)
+				if bool(state.get("open",false)):
+					props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,16),tick,preferences)
 	for entry in progress.node().get("ambient",[]):
 		props.draw_ambient(objects_layer,str(entry.kind),Vector2(entry.pos[0],entry.pos[1]),tick,preferences)
 	draw_guide_beams()
+
+func draw_portal(pos: Vector2, state: Dictionary, tick: int) -> void:
+	# Slow, readable threshold: sealed doors stay cold/dark, open doors breathe
+	# warm light and slowly release motes. No fast flicker.
+	var breath: float = 0.5+0.5*sin(TAU*float(tick)/180.0)
+	if bool(state.get("open",false)):
+		objects_layer.draw_rect(Rect2(pos+Vector2(-8,-27),Vector2(16,26)),Color(1.0,0.84,0.48,0.10+0.08*breath))
+		for i in 3:
+			var rise := fmod(float(tick)/180.0+float(i)/3.0,1.0)
+			var p: Vector2 = pos+Vector2(-6+i*6,-3-rise*22)
+			objects_layer.draw_rect(Rect2(p.round(),Vector2.ONE),Color(1.0,0.93,0.7,(1.0-rise)*0.65))
+		objects_layer.draw_rect(Rect2(pos+Vector2(-7,-1),Vector2(14,2)),Color(1.0,0.9,0.55,0.4+0.25*breath))
+	else:
+		# Sealed: faint cold seam + small lock, so "not yet passable" is obvious.
+		objects_layer.draw_rect(Rect2(pos+Vector2(-7,-1),Vector2(14,1)),Color(0.55,0.5,0.42,0.4))
+		var lock: Vector2 = pos+Vector2(0,-30)
+		objects_layer.draw_rect(Rect2(lock+Vector2(-2,-3),Vector2(5,7)),Color(0.12,0.11,0.09,0.95))
+		objects_layer.draw_rect(Rect2(lock+Vector2(-1,-2),Vector2(3,4)),Color(0.82,0.66,0.32,0.95))
 
 func draw_guide_beams() -> void:
 	var tick: int = combat.tick
@@ -639,7 +745,7 @@ func draw_guide_beams() -> void:
 			objects_layer.draw_line(origin,target,tint,3)
 			objects_layer.draw_line(origin,target,tint.lightened(0.45),1)
 			for i in 2:
-				var phase := fmod(float(tick)/22.0+float(i)*0.5,1.0)
+				var phase := fmod(float(tick)/40.0+float(i)*0.5,1.0)
 				var dot: Vector2 = origin.lerp(target,phase)
 				objects_layer.draw_rect(Rect2(dot.round(),Vector2.ONE),Color(1,0.96,0.8,0.85))
 			if target.distance_to(origin) > 1:
@@ -662,6 +768,10 @@ func draw_object_labels() -> void:
 		var draw_kind: String = str(object.get("visual",object.kind))
 		if str(object.kind) == "guide":
 			label += "（"+DIR_NAMES[int(guide_dirs.get(object.id,int(object.dir)))]+"）"
+		elif str(object.kind) == "end":
+			label += "（可通过）" if progress.has("P02") else "（未开启）"
+		elif str(object.kind) == "exit" and not bool(object_state(object,"").get("available",true)):
+			label += "（不可通行）"
 		var anchor: Vector2 = props.label_anchor(draw_kind)
 		if str(object.kind) == "rong": anchor = Vector2(0,-22)
 		var world_point := Vector2(object.pos[0],object.pos[1]) + anchor

@@ -18,6 +18,8 @@ var protection := 0
 var cooldowns: Dictionary = {"dodge":0, "light":0, "shield":0, "rain":0}
 const DEFAULT_WALLS: Array[Rect2] = [Rect2(0,0,320,27),Rect2(0,159,320,21),Rect2(0,0,8,180),Rect2(312,0,8,180),Rect2(150,32,12,40),Rect2(150,110,12,38)]
 var walls: Array[Rect2] = DEFAULT_WALLS.duplicate()
+var blockers: Array[Rect2] = []
+var npcs: Array[Dictionary] = []
 var enemies: Array[Dictionary] = []
 var events: Array[Dictionary] = []
 var history: Array[Dictionary] = []
@@ -52,6 +54,8 @@ var potions := 3
 func reset() -> void:
 	clear_hazards()
 	walls = DEFAULT_WALLS.duplicate()
+	blockers.clear()
+	npcs.clear()
 	doors = [{"id":"test_gate","rect":Rect2(150,72,12,38),"open":true}]
 	navigation_revision = 0
 	path_queries = 0
@@ -108,6 +112,10 @@ func blocked(pos: Vector2, radius: float = 5.0) -> bool:
 			return true
 	for door in doors:
 		if not door.open and door.rect.grow(radius).has_point(pos): return true
+	for blocker in blockers:
+		if blocker.grow(radius).has_point(pos): return true
+	for npc in npcs:
+		if pos.distance_to(npc.pos) < radius+float(npc.radius)-0.0001: return true
 	return false
 
 func set_door_open(id: String, opened: bool) -> bool:
@@ -204,6 +212,20 @@ func move_body(pos: Vector2, displacement: Vector2, stop_on_collision: bool = fa
 		if not body_blocked(pos + Vector2(0,part.y),mover_id):
 			pos.y += part.y
 	return pos
+
+func wall_blocked(pos: Vector2, radius: float = 0.0) -> bool:
+	for wall in walls:
+		if wall.grow(radius).has_point(pos): return true
+	for door in doors:
+		if not door.open and door.rect.grow(radius).has_point(pos): return true
+	return false
+
+func clear_wall_line(start: Vector2, finish: Vector2) -> bool:
+	# Interaction sight: props may sit on the target, walls still block.
+	var count := maxi(1,ceili(start.distance_to(finish)))
+	for i in range(count+1):
+		if wall_blocked(start.lerp(finish,float(i)/count)): return false
+	return true
 
 func clear_line(start: Vector2, finish: Vector2) -> bool:
 	var count := maxi(1, ceili(start.distance_to(finish)))

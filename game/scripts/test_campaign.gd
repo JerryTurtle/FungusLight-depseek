@@ -163,6 +163,11 @@ func run() -> void:
 	scene.saves.directory = ProjectSettings.globalize_path("res://").path_join("../qa/runtime-profile/campaign-test-"+str(Time.get_ticks_usec())).simplify_path()
 	scene.new_game()
 	check(scene.running and not scene.paused and scene.combat.enemies.is_empty(),"new game safe camp")
+	check(scene.combat.blocked(Vector2(232,126),0),"crate decor blocks movement")
+	scene.start_wake()
+	check(scene.wake_left > 0 and scene.hide_player and scene.combat.player == Vector2(66,124),"wake starts hidden beside bed")
+	scene.wake_left = 0
+	scene.hide_player = false
 	check(scene.saves.load_slot("auto").ok,"new checkpoint written")
 	scene.combat.poison_until = scene.combat.tick+240
 	check(not scene.SaveStore.is_safe(scene.safety()),"active poison blocks checkpoint")
@@ -186,6 +191,7 @@ func run() -> void:
 	scene.combat.player = Vector2(285,110)
 	scene.interact()
 	check(scene.progress.node_id == "N0-02" and scene.combat.enemies.is_empty(),"door transition does not spawn combat before teaching")
+	check(scene.combat.blocked(Vector2(76,58),0),"chest blocks movement")
 	scene.combat.player = Vector2(76,80)
 	scene.interact()
 	scene.combat.player = Vector2(178,88)
@@ -233,6 +239,9 @@ func run() -> void:
 	scene.progress.flags.pipe = true
 	scene.progress.flags.S03 = true
 	scene.progress.flags.E02 = true
+	scene.progress.node_id = "N0-03"
+	scene.load_room()
+	check(scene.combat.blocked(Vector2(218,80),5),"Rong has collision")
 	scene.progress.node_id = "N0-04"
 	scene.load_room()
 	check(scene.pending_encounter == "E03" and scene.combat.enemies.any(func(e): return e.get("archetype","") == "T5"),"E03 spawns after E02")
@@ -260,6 +269,9 @@ func run() -> void:
 	check(scene.pending_encounter == "E06" and scene.combat.enemies.any(func(e): return e.get("archetype","") == "T5"),"E06 spore pods spawn")
 	kill_all(scene)
 	check(scene.progress.has("E06") and scene.pending_encounter == "","E06 commit")
+	scene.combat.player = Vector2(292,130)
+	scene.interact()
+	check(not scene.overlay.visible and scene.notice.find("灯线尚未接通") >= 0,"sealed slice end refuses interaction")
 	for guide in scene.progress.guides():
 		scene.combat.player = Vector2(guide.pos[0],guide.pos[1])
 		for i in 4:

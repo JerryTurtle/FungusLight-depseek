@@ -25,6 +25,10 @@ func tour() -> void:
 	var base := ProjectSettings.globalize_path("res://").path_join("../qa/local/cap-").simplify_path()
 	await shot(base,"title")
 	new_game()
+	await shot(base,"camp-wake",2)
+	await wait_frames(34)
+	await shot(base,"camp-wake-mid")
+	await wait_frames(90)
 	await shot(base,"camp")
 	for flag in ["S01","S02","tutorial","E01","M1","pipe"]: progress.flags[flag] = true
 	progress.node_id = "N0-02"
@@ -52,9 +56,13 @@ func tour() -> void:
 	await wait_frames(230)
 	await shot(base,"corpse-gone")
 	await shot(base,"guides-unsolved")
+	combat.player = Vector2(270,128)
+	await shot(base,"end-sealed")
 	for guide in progress.guides():
 		guide_dirs[guide.id] = int(guide.solution)
+	progress.flags.P02 = true
 	await shot(base,"guides-solved")
+	await shot(base,"end-open")
 	begin_lore("L01")
 	dialogue.reveal_all()
 	await shot(base,"dialog-lore")

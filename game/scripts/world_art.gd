@@ -73,6 +73,17 @@ func spore_pod(canvas: CanvasItem, foot: Vector2, alive: bool, alpha: float = 1.
 	canvas.draw_rect(Rect2(foot+Vector2(-5,-18),Vector2(10,3)),cap)
 	for offset in [Vector2(-5,-12),Vector2(1,-16),Vector2(4,-10)]: canvas.draw_rect(Rect2(foot+offset,Vector2(2,2)),color)
 
+func sleep_pose(canvas: CanvasItem, foot: Vector2, rotation: float, alpha: float) -> void:
+	# Flat waking pose used only for the opening bed animation. No staff/shadow:
+	# the body is drawn over the bed before the actor layer takes over.
+	canvas.draw_set_transform(foot.round(),rotation,Vector2.ONE)
+	var region := Rect2(16,0,16,32)
+	var space := Rect2(-8,-31,16,32)
+	for offset in [Vector2(-1,0),Vector2(1,0),Vector2(0,-1),Vector2(0,1)]:
+		canvas.draw_texture_rect_region(cleric,space,region,Color(0.04,0.06,0.06,alpha*0.9))
+	canvas.draw_texture_rect_region(cleric,space,region,Color(1,1,1,alpha))
+	canvas.draw_set_transform(Vector2.ZERO)
+
 func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String, age: int, tick: int, moving: bool, player: bool = true, override_texture: Texture2D = null, alpha: float = 1.0) -> void:
 	foot = foot.round()
 	var texture: Texture2D = cleric if player else fungus

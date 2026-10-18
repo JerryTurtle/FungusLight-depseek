@@ -1,10 +1,10 @@
 extends SceneTree
-## G3-007 normal-input slice route. Every action is fed through Godot input events
+## G3-008 normal-input slice route. Every action is fed through Godot input events
 ## (keyboard/mouse), then the campaign is advanced at its real fixed 60Hz step.
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G3-007"
+const BUILD_ID := "G3-008"
 var scene
 var checks := 0
 var failures := 0
@@ -97,7 +97,7 @@ func build_route() -> void:
 	route = [
 		{"id":"S01","type":"interact","to":Vector2(88,80),"flag":"S01"},
 		{"id":"N0-02","type":"interact","to":Vector2(285,90),"node":"N0-02"},
-		{"id":"core","type":"interact","to":Vector2(76,62),"flag":"core"},
+		{"id":"core","type":"interact","to":Vector2(76,74),"flag":"core"},
 		{"id":"P01","type":"interact","to":Vector2(178,68),"flag":"P01"},
 		{"id":"tutorial","type":"light_target"},
 		{"id":"E01","type":"combat","flag":"E01"},

@@ -5,6 +5,7 @@ const CORPSE_LINGER := 210
 const CORPSE_FADE := 45
 var combat = Model.new()
 var dead_since: Dictionary = {}
+var hide_player := false
 var paused := false
 var hud: Label
 var status: Label
@@ -272,8 +273,13 @@ func corpse_alpha(enemy: Dictionary) -> float:
 	if age > CORPSE_LINGER: return 0.0
 	return clampf(float(CORPSE_LINGER-age)/float(CORPSE_FADE),0.0,1.0)
 
+func draw_floor() -> void:
+	# Campaign draws flat floor props (e.g. the bed) beneath actors here.
+	pass
+
 func draw_world() -> void:
 	art.background(world,combat,sewer)
+	draw_floor()
 	if environment_fx:
 		var phase := 0.0 if preferences.reduced_motion else float(combat.tick)/60
 		for i in (8 if preferences.low_effects else 32):
@@ -326,6 +332,7 @@ func draw_world() -> void:
 	actors.sort_custom(func(a,b): return a.pos.y < b.pos.y)
 	for entry in actors:
 		if entry.is_player:
+			if hide_player: continue
 			var direction: Vector2 = combat.locked if combat.action in ["melee","light","shield","rain","dodge"] else combat.facing
 			art.actor(world,combat.player,direction,"dead" if combat.hp <= 0 else ("idle" if preferences.reduced_flash and combat.action == "hurt" else combat.action),death_age if combat.hp <= 0 else combat.age,combat.tick,player_moving)
 			if debug_shapes: world.draw_arc(combat.player,5,0,TAU,24,Color("9affcf"),0.5)
