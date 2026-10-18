@@ -334,12 +334,12 @@
    "qa/evidence/G4/G4-001-route-A_alt_seal.json",
    "qa/evidence/G4/G4-001-route-B_alt_restore.json",
    "qa/evidence/G4/G4-001-route-C05.json",
-   "qa/evidence/G4/G4-001-route-C06.json"
+   "qa/evidence/G4/G4-001-route-C06.json",
+   "qa/evidence/G4/G4-001-route-sidequests.json"
   ],
   "remaining": [
-   "完整快速路线≥60分钟：当前393.3秒/341.4秒，未达标",
+   "完整快速路线≥60分钟：当前404.3秒/352.7秒，未达标",
    "Boss 150生命是路线验证版，未达2200初始生命/5～7分钟三阶段目标",
-   "Q1/Q2支线完整路线与奖励回读未验证",
    "真人G4完整时长与最终验收未完成"
   ],
   "caveat": "G4-001 is a structural first pass: 31 nodes, 30 encounters, 9 puzzles, M1-M4, six equipment and two endings exist, but duration, four representative routes and Boss balance are not yet acceptable."

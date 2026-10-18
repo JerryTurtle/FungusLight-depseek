@@ -24,25 +24,26 @@
 | --- | --- | --- |
 | G4 场景冒烟 | 76 项通过 | `qa/evidence/G4/G4-001-campaign-tests.log` |
 | G4 状态/结局/机关/支路 | 34 项通过 | `qa/evidence/G4/G4-001-g4_state-tests.log` |
-| 存档 / 敌人 / 对话 / 交互物 | 65 / 35 / 175 / 2502 项 | `qa/evidence/G4/G4-001-*.log` |
+| 存档 / 敌人 / 对话 / 交互物 | 65 / 35 / 175 / 2508 项 | `qa/evidence/G4/G4-001-*.log` |
 | A15 压力 | 5 项 | `qa/evidence/G4/G4-001-pressure-tests.log` |
-| 正常输入全路线（A 后 B、恢复结局） | 9 项，393.3 秒，0 死亡 | `G4-001-route-A_restore.json` |
-| 整段 Tab 跳过 | 9 项，341.4 秒，0 死亡 | `G4-001-route-skip.json` |
-| C01 A→B、恢复、默认配置 | 9 项，393.3 秒，0 死亡 | `G4-001-route-A_restore.json` |
+| 正常输入全路线（A 后 B、恢复结局） | 9 项，404.3 秒，0 死亡 | `G4-001-route-A_restore.json` |
+| 整段 Tab 跳过 | 9 项，352.7 秒，0 死亡 | `G4-001-route-skip.json` |
+| C01 A→B、恢复、默认配置 | 9 项，404.3 秒，0 死亡 | `G4-001-route-A_restore.json` |
 | C02 B→A、封存、默认配置 | 9 项，389.5 秒，0 死亡 | `G4-001-route-B_seal.json` |
 | C03 A→B、封存、light/guard/focus/step | 9 项，399.9 秒，0 死亡 | `G4-001-route-A_alt_seal.json` |
 | C04 B→A、恢复、light/guard/focus/step | 9 项，399.1 秒，0 死亡 | `G4-001-route-B_alt_restore.json` |
-| C05 A→B、恢复、melee/echo/rain/ward | 9 项，393.3 秒，0 死亡 | `G4-001-route-C05.json` |
+| C05 A→B、恢复、melee/echo/rain/ward | 9 项，404.3 秒，0 死亡 | `G4-001-route-C05.json` |
 | C06 B→A、封存、light/guard/focus/step | 9 项，399.1 秒，0 死亡 | `G4-001-route-C06.json` |
+| Q1/Q2 支线全收集（B→A、封存） | 10 项，401.9 秒，0 死亡 | `G4-001-route-sidequests.json` |
 | 原生导出 | 118 项 | `qa/evidence/G4/G4-001-integration.json` |
 | 审核台 | 50/50 | `qa/evidence/G4/G4-001-review/checks.json` |
 | 30/60/144 回放 | 360 步一致 | `G4-001-framerate-summary.json` |
 
-包：`deliverables/G4-001`。PCK 哈希 `98F2ACCBEF19F097AC9511CCC95258A3E20B5BCDC5B712141923C4CCA5B88F57`。
+包：`deliverables/G4-001`。PCK 哈希 `B930127CF063741C3D4143831E00CF0342A9DF78C8F67EA68DD42A9874EFEE8F`。
 
 ## 为什么 G4 仍未通过
 
-1. **时长不合格**：正常路线 393.3 秒（6.6 分钟）、跳过 341.4 秒；策划要求允许跳文的完整快速路线 ≥60 分钟。31 个节点/30 场战斗的结构已具备，但房间探索、机关决策、剧情密度仍远不足以支撑 60 分钟；不能把 6.6 分钟写成通过。
+1. **时长不合格**：正常路线 404.3 秒（6.7 分钟）、跳过 352.7 秒；策划要求允许跳文的完整快速路线 ≥60 分钟。31 个节点/30 场战斗的结构已具备，但房间探索、机关决策、剧情密度仍远不足以支撑 60 分钟；不能把 6.7 分钟写成通过。
 2. **Boss 不合格**：当前 Boss 150 生命是为了让自动路线在合理时间通过；距离策划的 5～7 分钟三阶段体验和 2200 初始生命目标很远，需要重新平衡。
 3. **支线未跑全**：Q1/Q2 数据、奖励与状态已有，但没有完整路线验证三处旧灯/三处补给的探索时间与奖励回读。
 4. **人类时长**：没有真人 G4 完整试玩数据；AI 路线不能替代。

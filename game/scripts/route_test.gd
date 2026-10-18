@@ -23,6 +23,7 @@ var choice_m2 := OS.get_environment("FUNGUS_M2")
 var choice_m3 := OS.get_environment("FUNGUS_M3")
 var choice_m4 := OS.get_environment("FUNGUS_M4")
 var route_tag := OS.get_environment("FUNGUS_ROUTE_TAG")
+var sidequest_route := OS.get_environment("FUNGUS_SIDEQUEST") == "1"
 var min_hp := 100.0
 var deaths := 0
 var wall_start := 0
@@ -95,6 +96,8 @@ func run() -> void:
 		check(auto.ok and not str(auto.snapshot.get("node_id","")).is_empty(),"safe checkpoint loadable")
 		check(scene.progress.seconds > 30.0 and scene.progress.seconds <= float(tick)/60.0 + 0.5,"effective time excludes paused dialogue")
 		check(scene.progress.node_id == "N4-07" and scene.progress.ending_id() == ("seal" if seal_ending else "restore") and scene.progress.has("S12"),"G4 full route and ending")
+		if sidequest_route:
+			check(scene.progress.has("Q1") and scene.progress.has("Q2") and scene.progress.equipment().relic == "clear_mirror" and scene.progress.equipment().token == "ember_talisman","G4 both sidequests and equipment")
 	else:
 		check(false,"route finished: "+failed)
 	var total := float(tick)/60.0
@@ -178,8 +181,10 @@ func build_route() -> void:
 		{"id":"rest3","type":"rest","to":Vector2(55,150)},
 		{"id":"S08","type":"interact","to":Vector2(150,135),"flag":"S08"},
 		{"id":"E21","type":"combat","flag":"E21"},
+		{"id":"rest3d","type":"rest","to":Vector2(55,150)},
 		{"id":"N3-02","type":"interact","to":Vector2(292,144),"node":"N3-02"},
 		{"id":"E22","type":"combat","flag":"E22"},
+		{"id":"rest3a","type":"rest","to":Vector2(55,150)},
 		{"id":"V09","type":"interact","to":Vector2(140,116),"flag":"V09"},
 		{"id":"V10","type":"interact","to":Vector2(180,116),"flag":"V10"},
 		{"id":"V11","type":"interact","to":Vector2(220,116),"flag":"V11"},
@@ -217,6 +222,13 @@ func build_route() -> void:
 		{"id":"credits","type":"interact","to":Vector2(160,105),"flag":"S12"},
 		{"id":"done","type":"finish"}
 	]
+	if sidequest_route:
+		_insert_before("N1-03", {"id":"Q1a","type":"interact","to":Vector2(80,125),"flag":"Q1a"})
+		_insert_before("N2-01b", {"id":"Q1b","type":"interact","to":Vector2(150,125),"flag":"Q1b"})
+		_insert_before("N3-03", {"id":"Q1c","type":"interact","to":Vector2(90,125),"flag":"Q1c"})
+		_insert_before("L03", {"id":"Q2a","type":"interact","to":Vector2(190,125),"flag":"Q2a"})
+		_insert_before("N2-01c", {"id":"Q2b","type":"interact","to":Vector2(150,125),"flag":"Q2b"})
+		_insert_before("M3", {"id":"Q2c","type":"interact","to":Vector2(250,125),"flag":"Q2c"})
 	if branch_b:
 		var start_a := -1
 		var start_b := -1
@@ -232,6 +244,12 @@ func build_route() -> void:
 			var b: Array = route.slice(start_b,merge)
 			var tail: Array = route.slice(merge)
 			route = prefix + b + a + tail
+
+func _insert_before(target_id: String, item: Dictionary) -> void:
+	for i in route.size():
+		if str(route[i].id) == target_id:
+			route.insert(i,item)
+			return
 
 func step() -> Dictionary:
 	if step_index >= route.size(): return {"id":"none","type":"finish"}

@@ -4,7 +4,7 @@
   "checks": 9,
   "deaths": 0,
   "dialogue_model": "整段 Tab 跳过（选择页仍需手动确认）",
-  "dodges": 139,
+  "dodges": 140,
   "ending": "restore",
   "failure": "",
   "failures": 0,
@@ -13,7 +13,7 @@
   "min_hp": 66,
   "path_queries": 0,
   "route": "N0-01→N0-04→N1-01→N1-05→N2-01→N2-06→N3-06→N4-07",
-  "seconds": 341.4,
+  "seconds": 352.7,
   "segments": [
     {
       "hp": 100,
@@ -499,35 +499,49 @@
       "type": "combat"
     },
     {
-      "hp": 78,
+      "hp": 160,
+      "id": "rest3d",
+      "seconds": 4,
+      "ticks": 242,
+      "type": "rest"
+    },
+    {
+      "hp": 132,
       "id": "N3-02",
-      "seconds": 9.6,
-      "ticks": 576,
+      "seconds": 13.7,
+      "ticks": 823,
       "type": "interact"
     },
     {
-      "hp": 78,
+      "hp": 132,
       "id": "E22",
       "seconds": 0,
       "ticks": 1,
       "type": "combat"
     },
     {
-      "hp": 78,
+      "hp": 160,
+      "id": "rest3a",
+      "seconds": 4,
+      "ticks": 242,
+      "type": "rest"
+    },
+    {
+      "hp": 160,
       "id": "V09",
-      "seconds": 2,
-      "ticks": 122,
+      "seconds": 1.2,
+      "ticks": 74,
       "type": "interact"
     },
     {
-      "hp": 78,
+      "hp": 160,
       "id": "V10",
-      "seconds": 0.4,
-      "ticks": 26,
+      "seconds": 0.8,
+      "ticks": 50,
       "type": "interact"
     },
     {
-      "hp": 78,
+      "hp": 160,
       "id": "V11",
       "seconds": 0.8,
       "ticks": 50,
@@ -537,14 +551,14 @@
       "hp": 160,
       "id": "rest4",
       "seconds": 2.4,
-      "ticks": 146,
+      "ticks": 143,
       "type": "rest"
     },
     {
       "hp": 96,
       "id": "N3-03",
-      "seconds": 16.2,
-      "ticks": 972,
+      "seconds": 15.8,
+      "ticks": 948,
       "type": "interact"
     },
     {
@@ -766,6 +780,6 @@
     }
   ],
   "tag": "",
-  "tick": 20481,
-  "wall_ms": 9050
+  "tick": 21161,
+  "wall_ms": 9404
 }

@@ -1,9 +1,9 @@
 [
   {
     "requested_fps": 30,
-    "measured_fps": 29.999008416009275,
+    "measured_fps": 29.996835064468076,
     "drawn_frames": 177,
-    "elapsed_seconds": 5.886343,
+    "elapsed_seconds": 5.888715,
     "events": {
       "action": 7,
       "hit": 3,
@@ -22,9 +22,9 @@
   },
   {
     "requested_fps": 60,
-    "measured_fps": 60.00394261199385,
-    "drawn_frames": 350,
-    "elapsed_seconds": 5.854761,
+    "measured_fps": 60.053794815731294,
+    "drawn_frames": 351,
+    "elapsed_seconds": 5.872445,
     "events": {
       "action": 7,
       "hit": 3,
@@ -43,9 +43,9 @@
   },
   {
     "requested_fps": 144,
-    "measured_fps": 144.21535415516553,
-    "drawn_frames": 837,
-    "elapsed_seconds": 5.868443,
+    "measured_fps": 144.3349992699099,
+    "drawn_frames": 839,
+    "elapsed_seconds": 5.869217,
     "events": {
       "action": 7,
       "hit": 3,

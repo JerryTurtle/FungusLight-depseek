@@ -901,6 +901,18 @@
           "quest": "Q1",
           "part": "a",
           "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
         }
       ],
       "decor": [
@@ -1345,6 +1357,18 @@
           "quest": "Q2",
           "part": "a",
           "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
         }
       ],
       "decor": [
@@ -1524,6 +1548,17 @@
           "name": "灯根 · 选择强化",
           "pos": [
             230,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
             140
           ],
           "kind": "growth",
@@ -2977,7 +3012,7 @@
           "id": "q1c",
           "name": "旧灯修复·供给回廊",
           "pos": [
-            150,
+            90,
             140
           ],
           "kind": "sidequest",
