@@ -86,7 +86,8 @@
   "credits": "portal",
   "mushroom": "mushroom_red",
   "wall_panel_green": "wall_panel",
-  "panel": "wall_panel"
+  "panel": "wall_panel",
+  "npc": "papers"
  },
  "kinds": {
   "lamp": {

@@ -30,6 +30,17 @@ n12["objects"].append({"id": "q1a", "name": "旧灯·导光间", "pos": [80, 140
 n14 = next(n for n in d["nodes"] if n["id"] == "N1-04")
 n14["objects"].append({"id": "q2a", "name": "补给箱单·裂口", "pos": [190, 140], "kind": "sidequest", "quest": "Q2", "part": "a", "visual": "chest"})
 
+# Camp: make the injured NPC explicit; remove mushroom decor that reads as an NPC.
+n01 = next(n for n in d["nodes"] if n["id"] == "N0-01")
+n01["goal"] = "先查看床铺旁的伤员，再调查熄灭的灯座。"
+n01["objects"] = [o for o in n01.get("objects", []) if o.get("id") != "wounded"]
+n01["objects"].append({"id": "wounded", "name": "伤员", "pos": [152, 138], "kind": "npc", "visual": "wounded", "dialogue": "S01"})
+n01["decor"] = [d for d in n01.get("decor", []) if d.get("kind") != "mushroom_red" and not (d.get("kind") == "glow_mushroom" and d.get("pos") == [120, 140])]
+n01["decor"].append({"kind": "glow_mushroom", "pos": [120, 140]})
+n03 = next(n for n in d["nodes"] if n["id"] == "N0-03")
+n03["decor"] = [d for d in n03.get("decor", []) if d.get("kind") != "mushroom_red" and not (d.get("kind") == "glow_mushroom" and d.get("pos") == [186, 140])]
+n03["decor"].append({"kind": "glow_mushroom", "pos": [186, 140]})
+
 def room(nid, name, goal, walls, objects, *, decor=None, ambient=None, spawn=(35, 110)):
     return {"id": nid, "name": name, "style": "mine", "spawn": list(spawn), "walls": walls,
             "goal": goal, "objects": objects, "decor": decor or [], "ambient": ambient or []}
@@ -242,35 +253,35 @@ N.append(room("N1-07", "根桥下层", "穿过根桥下的旧支撑，清掉盘�
     pillars(True, True, 45, 120, 40, 35),
     [exit_("west", "返回 根桥", "N1-06", pos=(25, 95)), rest(),
      lore("lore", "支撑刻记", "L15", (150, 60)),
-     exit_("east", "通往 分流室", "N2-01", requires="E31")],
+     exit_("east", "北侧分流门 通往 分流室", "N2-01", requires="E31", pos=(160, 65))],
     decor=[{"kind":"torch","pos":[150,46]},{"kind":"torch","pos":[250,132]}], ambient=[{"kind":"drip","pos":[190,100]}]))
 
 N.append(room("N2-09", "泵站回廊", "沿回廊检查泵站管线，清掉守卫。",
     pillars(True, True, 40, 125, 45, 30),
     [exit_("west", "返回 泵站守卫", "N2-07", pos=(25, 95)), rest(),
      lore("lore", "泵站管线", "L16", (150, 60)),
-     exit_("east", "通往 控制室", "N2-08", requires="E32")],
+     exit_("east", "回廊下行 通往 控制室", "N2-08", requires="E32", pos=(160, 145))],
     decor=[{"kind":"torch","pos":[250,46]}], ambient=[{"kind":"light_pool","pos":[150,100]}]))
 
 N.append(room("N3-07", "王庭侧廊", "从侧廊绕到王庭前厅，避开正门的根刺。",
     pillars(True, True, 45, 120, 40, 35),
     [exit_("west", "返回 旧约墙", "N3-03", pos=(25, 95)), rest(),
      lore("lore", "侧廊壁画", "L17", (150, 60)),
-     exit_("east", "通往 王庭前厅", "N3-04", requires="E33")],
+     exit_("east", "北侧门 通往 王庭前厅", "N3-04", requires="E33", pos=(160, 65))],
     decor=[{"kind":"torch","pos":[150,46]},{"kind":"glow_mushroom","pos":[250,90]}], ambient=[{"kind":"spores","pos":[180,80]}]))
 
 N.append(room("N2-10", "试验段外廊", "沿试验段外廊进入王庭；清掉最后的泵站菌群。",
     pillars(True, True, 45, 120, 40, 35),
     [exit_("west", "返回 控制室", "N2-08", pos=(25, 95)), rest(),
      lore("lore", "试验段记录", "L18", (150, 60)),
-     exit_("east", "通往 王庭外环", "N3-01", requires="E34")],
+     exit_("east", "北侧根门 通往 王庭外环", "N3-01", requires="E34", pos=(160, 65))],
     decor=[{"kind":"torch","pos":[250,46]}], ambient=[{"kind":"spores","pos":[180,80]}]))
 
 N.append(room("N1-08", "菌灯井", "绕过菌灯井的旧井架，清掉最后的裂口菌群。",
     pillars(True, True, 45, 120, 40, 35),
     [exit_("west", "返回 菌根裂口", "N1-04", pos=(25, 95)), rest(),
      lore("lore", "井架刻记", "L19", (150, 60)),
-     exit_("east", "通往 灯根祭坛", "N1-05", requires="E35")],
+     exit_("east", "北侧灯道 通往 灯根祭坛", "N1-05", requires="E35", pos=(160, 65))],
     decor=[{"kind":"torch","pos":[150,46]}], ambient=[{"kind":"light_pool","pos":[180,100]}]))
 
 N.append(room("N3-08", "调压前厅", "穿过王庭最后的根门，检查调压管路。",
@@ -337,7 +348,7 @@ enc = {
     "E12": ("N1-06", [[180,80]], [["T4",220,90]], "E11", ""),
     "E13": ("N2-01", [[180,120]], [["T2",220,90]], "S05", ""),
     "E14": ("N2-02", [[180,110]], [["T3",230,90]], "", "排水暂时安静，但菌群仍在移动。"),
-    "E15": ("N2-03", [[180,80]], [["T3",230,100],["T5",250,130]], "E14", ""),
+    "E15": ("N2-03", [[180,80]], [["T3",230,100],["T5",230,115]], "E14", ""),
     "E16": ("N2-04", [[180,90]], [["T1",220,80],["T2",250,110]], "S05", ""),
     "E17": ("N2-05", [[180,100]], [["T3",230,90]], "E16", ""),
     "E18": ("N2-06", [[180,80]], [["T2",230,90],["T3",255,110]], "S06", ""),
@@ -389,7 +400,7 @@ D = {
     "L20": [["岚","调压前厅的根门已经打开。"],["岚","进去就是核心外廊；检查一下药剂和专注。"]],
 }
 d["dialogues"].update(D)
-d["build_id"] = "G4-005"
+d["build_id"] = "G4-006"
 d["chapter_id"] = "campaign"
 PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 print("nodes", len(d["nodes"]), [n["id"] for n in d["nodes"]])

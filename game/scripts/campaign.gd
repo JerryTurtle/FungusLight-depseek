@@ -22,6 +22,7 @@ var chapter_times: Dictionary = {}
 var last_chapter := ""
 var pending_encounter := ""
 var checkpoint: Dictionary = {}
+var room_checkpoint: Dictionary = {}
 var dirty := false
 var tutorial_target := -1
 var guide_dirs: Dictionary = {}
@@ -46,6 +47,17 @@ func _ready() -> void:
 	ui_layer = Node2D.new()
 	add_child(ui_layer)
 	ui_layer.draw.connect(draw_object_labels)
+	ui_layer.draw.connect(draw_minimap)
+	hud.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hud.custom_minimum_size = Vector2(900,0)
+	hud.size = Vector2(900,70)
+	hud.max_lines_visible = 2
+	hud.add_theme_font_size_override("font_size",20)
+	status.add_theme_font_size_override("font_size",20)
+	status.custom_minimum_size = Vector2(1040,0)
+	status.size = Vector2(1040,50)
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	status.max_lines_visible = 2
 	overlay = PanelContainer.new()
 	overlay.position = Vector2(270,140)
 	overlay.size = Vector2(740,430)
@@ -226,6 +238,9 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	hide_player = false
 	reset_guides()
 	start_encounters()
+	var room_snapshot: Dictionary = progress.snapshot(combat.player,combat.hp,combat.focus)
+	if progress.validate(room_snapshot).is_empty():
+		room_checkpoint = room_snapshot
 
 func reset_guides() -> void:
 	guide_dirs.clear()
@@ -259,8 +274,9 @@ func setup_collision() -> void:
 		if str(object.kind) == "end": visual = "portal"
 		if str(object.kind) == "exit": visual = "portal"
 		var rect: Rect2 = solid_rect(visual,pos)
+		if str(object.kind) in ["switch"]: rect = Rect2()
 		if rect.size.x > 0: combat.blockers.append(rect)
-		if str(object.kind) == "rong" or bool(object.get("npc",false)):
+		if str(object.kind) in ["rong","npc"] or bool(object.get("npc",false)):
 			combat.npcs.append({"id":str(object.id),"pos":pos+Vector2(0,-12),"radius":7.0})
 
 func guide_aligned(object: Dictionary) -> bool:
@@ -578,7 +594,12 @@ func interact() -> void:
 		notice = "通路未开：先完成当前目标。"
 		return
 	match object.kind:
-		"lamp": begin_dialogue("S01")
+		"lamp":
+			if progress.node_id == "N0-01" and not progress.has("S01"):
+				notice = "灯座还有余温。先看看床铺旁的伤员。"
+			else:
+				notice = "灯座已经完成它的使命。"
+		"npc": begin_dialogue(str(object.get("dialogue","")))
 		"chest","socket","pipe":
 			notice = progress.apply_interaction(object.kind,scanned)
 			dirty = true
@@ -687,6 +708,17 @@ func free_overlapping_player() -> void:
 		if not combat.blocked(candidate,float(combat.config.player.body_radius)):
 			combat.player = candidate
 
+func retry_from_room() -> void:
+	if not room_checkpoint.is_empty() and progress.restore(room_checkpoint):
+		load_room(Vector2(room_checkpoint.safe_position[0],room_checkpoint.safe_position[1]),room_checkpoint.health,room_checkpoint.focus)
+		resume()
+		return
+	if checkpoint.is_empty(): new_game()
+	else:
+		progress.restore(checkpoint)
+		load_room(Vector2(checkpoint.safe_position[0],checkpoint.safe_position[1]),checkpoint.health,checkpoint.focus)
+		resume()
+
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(overlay): return
 	if running and not paused:
@@ -723,27 +755,23 @@ func _physics_process(delta: float) -> void:
 		if combat.hp <= 0:
 			clear_menu("灯光暂熄")
 			paragraph("恢复最近已提交的安全进度，未保存的奖励、敌人和资源一起回退。")
-			button("从安全点重试",func():
-				if checkpoint.is_empty(): new_game()
-				else:
-					progress.restore(checkpoint)
-					load_room(Vector2(checkpoint.safe_position[0],checkpoint.safe_position[1]),checkpoint.health,checkpoint.focus)
-					resume())
+			button("从当前区域重试",retry_from_room)
 	commands.clear()
 	queued_pointer = Vector2.INF
 	world.queue_redraw()
 	floating_ui.queue_redraw()
 	objects_layer.queue_redraw()
 	ui_layer.queue_redraw()
-	hud.text = "%s   生命 %d / %d   专注 %d / 100   药剂 %d/3   净光 %s   时间 %s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,combat.potions,"已解锁" if progress.has("S02") else "未解锁",elapsed_text(),current_goal()]
+	hud.text = "%s   生命 %d/%d   专注 %d/100   药剂 %d/3   时间 %s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,combat.potions,elapsed_text(),current_goal()]
 	var nearest := nearest_object()
-	status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动 · 空格闪避 · E交互 · Q观察 · R治疗 · Esc暂停")+"\n"+notice
+	status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动  E交互  Q观察  R治疗  空格闪避")+"    "+notice
 	if combat.action == "heal": status.text = "正在治疗 %d / 36 · 移动、闪避或受击会取消\n%s" % [combat.age,notice]
 	if wake_left > 0: status.text = "……\n睁开眼，从床铺上起身。"
 
 func current_goal() -> String:
 	match progress.node_id:
-		"N0-01": return "沿灯线前往右侧储藏间。" if progress.has("S01") else progress.node().goal
+		"N0-01": return "沿灯线前往右侧储藏间。" if progress.has("S01") else "先查看床铺旁的伤员。"
+		"N0-03": return "按 Q 观察水管，靠近刻痕按 E 调查，再与绒交谈。" if not progress.has("S03") else "绒留在灯旁。沿右门进入旧矿通道。"
 		"N0-02":
 			if not progress.has("core"): return "靠近左上备用灯芯箱，按 E 取出灯芯。"
 			if not progress.has("S02"): return "靠近出口灯座，按 E 装入灯芯。"
@@ -877,6 +905,10 @@ func draw_objects() -> void:
 			art.actor(objects_layer,pos,Vector2.LEFT,"idle",0,tick,false,false)
 			props.draw_ambient(objects_layer,"spores",pos,tick,preferences)
 			continue
+		if draw_kind == "wounded":
+			art.wounded_npc(objects_layer,pos,tick)
+			props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,10),tick,preferences)
+			continue
 		var prop_tick: int = int(tick/3) if draw_kind in ["door","mine_door","exit","end"] else tick
 		props.draw_prop(objects_layer,draw_kind,pos,state,prop_tick,preferences)
 		match draw_kind:
@@ -947,35 +979,63 @@ func draw_guide_beams() -> void:
 			objects_layer.draw_rect(Rect2(tip-Vector2(1,1),Vector2(3,3)),Color(1,0.94,0.8,0.9))
 
 func draw_object_labels() -> void:
+	var nearest := nearest_object()
+	if nearest.is_empty(): return
+	var label: String = str(nearest.name)
+	if label.is_empty(): return
+	var kind := str(nearest.kind)
+	if kind == "guide":
+		label += "（"+DIR_NAMES[int(guide_dirs.get(nearest.id,int(nearest.dir)))]+"）"
+	elif kind == "end":
+		label += "（可通过）" if bool(object_state(nearest,"").get("available",true)) else "（未开启）"
+	elif kind == "exit" and not bool(object_state(nearest,"").get("available",true)):
+		label += "（未开启）"
+	elif kind == "switch":
+		label += "（已开）" if progress.has(str(nearest.get("flag",""))) else "（未开）"
+	elif kind == "story":
+		label += "（已记录）" if progress.has(str(nearest.get("event",""))) else ""
+	elif kind == "growth":
+		label += "（已强化）" if progress.has(str(nearest.get("event",""))) else "（可强化）"
+	elif kind == "sidequest":
+		label += "（已记录）" if progress.has(str(nearest.get("quest","")) + str(nearest.get("part",""))) else ""
+	elif kind == "ending":
+		label += "（已选择）" if not progress.ending_id().is_empty() else ("" if progress.has("E30") else "（先压制母体）")
+	var anchor: Vector2 = props.label_anchor(str(nearest.get("visual",kind)))
+	if kind == "rong": anchor = Vector2(0,-22)
+	if kind == "npc": anchor = Vector2(0,-24)
+	var world_point := Vector2(nearest.pos[0],nearest.pos[1]) + anchor
+	var at := world_point * 4.0
 	var font := ThemeDB.fallback_font
+	var width: float = font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
+	at.x = clampf(at.x-width/2,8,1272-width)
+	at.y = clampf(at.y,116,684)
+	ui_layer.draw_string_outline(font,at,label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,4,Color(0.02,0.03,0.035,0.95))
+	ui_layer.draw_string(font,at,label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("f4dfab"))
+
+func draw_minimap() -> void:
+	if not running or overlay.visible: return
+	var panel := Rect2(1118,16,142,92)
+	ui_layer.draw_rect(panel,Color(0.025,0.04,0.04,0.88))
+	ui_layer.draw_rect(panel,Color(0.55,0.48,0.28,0.9),false,1.5)
+	var origin := Vector2(1124,34)
+	var scale := 0.34
+	var room := Rect2(origin,Vector2(320,180)*scale)
+	ui_layer.draw_rect(room,Color(0.11,0.13,0.12,0.9))
+	for wall in combat.walls:
+		ui_layer.draw_rect(Rect2(origin+wall.position*scale,wall.size*scale),Color(0.40,0.32,0.22,0.95))
 	for object in progress.node().objects:
-		if not bool(object.get("label",true)): continue
-		var label: String = object.name
-		if label.is_empty(): continue
-		var draw_kind: String = str(object.get("visual",object.kind))
-		if str(object.kind) == "guide":
-			label += "（"+DIR_NAMES[int(guide_dirs.get(object.id,int(object.dir)))]+"）"
-		elif str(object.kind) == "end":
-			label += "（可通过）" if bool(object_state(object,"").get("available",true)) else "（未开启）"
-		elif str(object.kind) == "exit" and not bool(object_state(object,"").get("available",true)):
-			label += "（不可通行）"
-		elif str(object.kind) == "switch":
-			label += "（已开）" if progress.has(str(object.get("flag",""))) else "（未开）"
-		elif str(object.kind) == "story":
-			label += "（已记录）" if progress.has(str(object.get("event",""))) else ""
-		elif str(object.kind) == "growth":
-			label += "（已强化）" if progress.has(str(object.get("event",""))) else "（可强化）"
-		elif str(object.kind) == "sidequest":
-			label += "（已记录）" if progress.has(str(object.get("quest","")) + str(object.get("part",""))) else ""
-		elif str(object.kind) == "ending":
-			label += "（已选择）" if not progress.ending_id().is_empty() else ("" if progress.has("E30") else "（先压制母体）")
-		var anchor: Vector2 = props.label_anchor(draw_kind)
-		if str(object.kind) == "rong": anchor = Vector2(0,-22)
-		var world_point := Vector2(object.pos[0],object.pos[1]) + anchor
-		var at := world_point * 4.0
-		var width: float = font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
-		at.x = clampf(at.x-width/2,8,1272-width)
-		at.y = clampf(at.y,116,684)
-		var baseline := at+Vector2(0,-7)
-		ui_layer.draw_string_outline(font,baseline,label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,4,Color(0.02,0.03,0.035,0.95))
-		ui_layer.draw_string(font,baseline,label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("f4dfab"))
+		var kind := str(object.kind)
+		if not [ "exit","end","npc","rong" ].has(kind): continue
+		var p := origin+Vector2(object.pos[0],object.pos[1])*scale
+		var color := Color("e3c878")
+		if kind in ["exit","end"]:
+			color = Color("7fc9c4") if bool(object_state(object,"").get("available",true)) else Color("665d4e")
+		elif kind in ["npc","rong"]:
+			color = Color("e8b7a0")
+		ui_layer.draw_circle(p,2.2,color)
+	for enemy in combat.enemies:
+		if enemy.hp <= 0: continue
+		ui_layer.draw_circle(origin+enemy.pos*scale,1.8,Color("d86a5a"))
+	ui_layer.draw_circle(origin+combat.player*scale,2.6,Color("f5e4a8"))
+	var font := ThemeDB.fallback_font
+	ui_layer.draw_string(font,Vector2(1124,30),"当前区域",HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("e3d2a2"))

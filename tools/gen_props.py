@@ -1869,7 +1869,7 @@ def payload() -> dict:
             "rest": "bed", "socket": "lamp", "reward": "ring", "exit": "portal",
             "end": "portal", "storage": "door", "storage_door": "door",
             "crate": "crates", "crates_small": "crate_single", "barrel_old": "barrel",
-            "lore": "papers", "note": "papers", "switch": "lamp", "growth": "ring", "story": "papers", "sidequest": "chest", "ending": "portal", "credits": "portal",
+            "lore": "papers", "note": "papers", "switch": "lamp", "growth": "ring", "story": "papers", "sidequest": "chest", "ending": "portal", "credits": "portal", "npc": "papers",
             "mushroom": "mushroom_red", "wall_panel_green": "wall_panel",
             "panel": "wall_panel",
         },

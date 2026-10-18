@@ -1,0 +1,132 @@
+{
+  "build_id": "G4-006",
+  "engine": "C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_console.exe",
+  "checks": [
+    {
+      "check": "campaign",
+      "script": "scripts/test_g4_campaign.gd",
+      "exit": 0,
+      "checks": 88,
+      "failures": 0,
+      "expected_min_checks": 76,
+      "seconds": 0.65,
+      "log": "qa/evidence/G3/G4-006-campaign-tests.log",
+      "passed": true
+    },
+    {
+      "check": "g4_state",
+      "script": "scripts/test_g4.gd",
+      "exit": 0,
+      "checks": 34,
+      "failures": 0,
+      "expected_min_checks": 34,
+      "seconds": 0.28,
+      "log": "qa/evidence/G3/G4-006-g4_state-tests.log",
+      "passed": true
+    },
+    {
+      "check": "g4_boss",
+      "script": "scripts/test_g4_boss.gd",
+      "exit": 0,
+      "checks": 5,
+      "failures": 0,
+      "expected_min_checks": 5,
+      "seconds": 0.28,
+      "log": "qa/evidence/G3/G4-006-g4_boss-tests.log",
+      "passed": true
+    },
+    {
+      "check": "g4_death",
+      "script": "scripts/test_g4_death.gd",
+      "exit": 0,
+      "checks": 5,
+      "failures": 0,
+      "expected_min_checks": 5,
+      "seconds": 0.67,
+      "log": "qa/evidence/G3/G4-006-g4_death-tests.log",
+      "passed": true
+    },
+    {
+      "check": "save",
+      "script": "scripts/test_save.gd",
+      "exit": 0,
+      "checks": 65,
+      "failures": 0,
+      "expected_min_checks": 65,
+      "seconds": 0.28,
+      "log": "qa/evidence/G3/G4-006-save-tests.log",
+      "passed": true
+    },
+    {
+      "check": "enemies",
+      "script": "scripts/test_enemies.gd",
+      "exit": 0,
+      "checks": 35,
+      "failures": 0,
+      "expected_min_checks": 35,
+      "seconds": 0.28,
+      "log": "qa/evidence/G3/G4-006-enemies-tests.log",
+      "passed": true
+    },
+    {
+      "check": "dialogue",
+      "script": "scripts/test_dialogue.gd",
+      "exit": 0,
+      "checks": 175,
+      "failures": 0,
+      "expected_min_checks": 175,
+      "seconds": 0.37,
+      "log": "qa/evidence/G3/G4-006-dialogue-tests.log",
+      "passed": true
+    },
+    {
+      "check": "props",
+      "script": "scripts/test_props.gd",
+      "exit": 0,
+      "checks": 2632,
+      "failures": 0,
+      "expected_min_checks": 2490,
+      "seconds": 0.49,
+      "log": "qa/evidence/G3/G4-006-props-tests.log",
+      "passed": true
+    },
+    {
+      "check": "pressure",
+      "script": "scripts/test_pressure.gd",
+      "exit": 0,
+      "checks": 5,
+      "failures": 0,
+      "expected_min_checks": 5,
+      "seconds": 6.94,
+      "log": "qa/evidence/G3/G4-006-pressure-tests.log",
+      "passed": true
+    },
+    {
+      "check": "route",
+      "script": "scripts/route_test.gd",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "expected_min_checks": 9,
+      "seconds": 13.46,
+      "log": "qa/evidence/G3/G4-006-route-tests.log",
+      "passed": true,
+      "simulated_seconds": 502.9
+    },
+    {
+      "check": "skip_route",
+      "script": "scripts/route_test.gd",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "expected_min_checks": 9,
+      "seconds": 13.53,
+      "log": "qa/evidence/G3/G4-006-skip_route-tests.log",
+      "passed": true,
+      "simulated_seconds": 449.7
+    }
+  ],
+  "failures": 0,
+  "seconds": 37.23,
+  "passed": true
+}

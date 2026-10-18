@@ -132,6 +132,25 @@ func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String
 		# Re-layer only the original hand pixels over the shaft, in their original location.
 		canvas.draw_texture_rect_region(texture,Rect2(hand_origin,hand.size),Rect2(source+hand.position,hand.size),tint)
 
+func wounded_npc(canvas: CanvasItem, foot: Vector2, tick: int) -> void:
+	var breath := sin(float(tick)/34.0)*0.5
+	foot = foot.round()
+	canvas.draw_set_transform(foot,0,Vector2(1,0.35))
+	canvas.draw_circle(Vector2.ZERO,7,Color(0.02,0.04,0.04,0.45))
+	canvas.draw_set_transform(Vector2.ZERO)
+	# Seated, bandaged scout: deliberately distinct from 岚's blue cloak and staff.
+	var cloth := Color("6f5445")
+	var trim := Color("b59063")
+	canvas.draw_rect(Rect2(foot+Vector2(-6,-13+breath),Vector2(12,10)),cloth)
+	canvas.draw_rect(Rect2(foot+Vector2(-6,-13+breath),Vector2(12,2)),trim)
+	canvas.draw_rect(Rect2(foot+Vector2(-7,-4),Vector2(5,5)),Color("4a3b33"))
+	canvas.draw_rect(Rect2(foot+Vector2(2,-4),Vector2(5,5)),Color("4a3b33"))
+	canvas.draw_circle(foot+Vector2(0,-18+breath),5,Color("caa27e"))
+	canvas.draw_rect(Rect2(foot+Vector2(-6,-21+breath),Vector2(13,3)),Color("e7ddc8"))
+	canvas.draw_rect(Rect2(foot+Vector2(-1,-20+breath),Vector2(3,3)),Color("b85a4d"))
+	canvas.draw_rect(Rect2(foot+Vector2(6,-12+breath),Vector2(3,8)),Color("caa27e"))
+	canvas.draw_rect(Rect2(foot+Vector2(-9,-8+breath),Vector2(4,2)),Color("e7ddc8"))
+
 func target(canvas: CanvasItem, foot: Vector2, hp: float, alpha: float = 1.0) -> void:
 	var wood := Color("775c40"); wood.a = alpha
 	var dark := Color("362b29"); dark.a = alpha

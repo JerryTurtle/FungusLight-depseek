@@ -4,7 +4,7 @@ extends SceneTree
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G4-005"
+const BUILD_ID := "G4-006"
 var scene
 var checks := 0
 var failures := 0
@@ -112,7 +112,7 @@ func run() -> void:
 
 func build_route() -> void:
 	route = [
-		{"id":"S01","type":"interact","to":Vector2(88,92),"flag":"S01"},
+		{"id":"S01","type":"interact","to":Vector2(152,115),"flag":"S01"},
 		{"id":"N0-02","type":"interact","to":Vector2(285,104),"node":"N0-02"},
 		{"id":"core","type":"interact","to":Vector2(76,74),"flag":"core"},
 		{"id":"P01","type":"interact","to":Vector2(178,68),"flag":"P01"},
@@ -143,7 +143,7 @@ func build_route() -> void:
 		{"id":"N1-08","type":"interact","to":Vector2(292,144),"node":"N1-08"},
 		{"id":"E35","type":"combat","flag":"E35"},
 		{"id":"rest1c","type":"rest","to":Vector2(55,150)},
-		{"id":"N1-05","type":"interact","to":Vector2(292,144),"node":"N1-05"},
+		{"id":"N1-05","type":"interact","to":Vector2(160,85),"node":"N1-05"},
 		{"id":"E11","type":"combat","flag":"E11"},
 		{"id":"L04","type":"lore","to":Vector2(150,60)},
 		{"id":"M2","type":"interact","to":Vector2(180,140),"flag":"M2"},
@@ -155,7 +155,7 @@ func build_route() -> void:
 		{"id":"N1-07","type":"interact","to":Vector2(292,144),"node":"N1-07"},
 		{"id":"E31","type":"combat","flag":"E31"},
 		{"id":"rest1b","type":"rest","to":Vector2(55,150)},
-		{"id":"N2-01","type":"interact","to":Vector2(292,144),"node":"N2-01"},
+		{"id":"N2-01","type":"interact","to":Vector2(160,85),"node":"N2-01"},
 		{"id":"S05","type":"interact","to":Vector2(150,135),"flag":"S05"},
 		{"id":"E13","type":"combat","flag":"E13"},
 		{"id":"N2-02","type":"interact","to":Vector2(292,144),"node":"N2-02"},
@@ -181,15 +181,15 @@ func build_route() -> void:
 		{"id":"rest2b","type":"rest","to":Vector2(55,150)},
 		{"id":"N2-09","type":"interact","to":Vector2(292,144),"node":"N2-09"},
 		{"id":"E32","type":"combat","flag":"E32"},
-		{"id":"N2-08","type":"interact","to":Vector2(292,144),"node":"N2-08"},
+		{"id":"N2-08","type":"interact","to":Vector2(130,145),"node":"N2-08"},
 		{"id":"E20","type":"combat","flag":"E20"},
-		{"id":"V07","type":"interact","to":Vector2(145,112),"flag":"V07"},
-		{"id":"V08","type":"interact","to":Vector2(190,112),"flag":"V08"},
+		{"id":"V07","type":"interact","to":Vector2(145,100),"flag":"V07"},
+		{"id":"V08","type":"interact","to":Vector2(190,100),"flag":"V08"},
 		{"id":"M3","type":"interact","to":Vector2(180,140),"flag":"M3"},
 		{"id":"N2-10","type":"interact","to":Vector2(292,144),"node":"N2-10"},
 		{"id":"E34","type":"combat","flag":"E34"},
 		{"id":"rest2c","type":"rest","to":Vector2(55,150)},
-		{"id":"N3-01","type":"interact","to":Vector2(292,144),"node":"N3-01"},
+		{"id":"N3-01","type":"interact","to":Vector2(160,85),"node":"N3-01"},
 		{"id":"rest3","type":"rest","to":Vector2(55,150)},
 		{"id":"S08","type":"interact","to":Vector2(150,135),"flag":"S08"},
 		{"id":"E21","type":"combat","flag":"E21"},
@@ -207,7 +207,7 @@ func build_route() -> void:
 		{"id":"N3-07","type":"interact","to":Vector2(292,144),"node":"N3-07"},
 		{"id":"E33","type":"combat","flag":"E33"},
 		{"id":"rest3e","type":"rest","to":Vector2(55,150)},
-		{"id":"N3-04","type":"interact","to":Vector2(292,144),"node":"N3-04"},
+		{"id":"N3-04","type":"interact","to":Vector2(160,85),"node":"N3-04"},
 		{"id":"E24","type":"combat","flag":"E24"},
 		{"id":"E25","type":"combat","flag":"E25"},
 		{"id":"N3-05","type":"interact","to":Vector2(292,144),"node":"N3-05"},

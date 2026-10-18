@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_id": "G4-005",
+  "build_id": "G4-006",
   "nodes": [
     {
       "id": "N0-01",
@@ -24,7 +24,7 @@
           16
         ]
       ],
-      "goal": "靠近熄灭的灯座，按 E 调查。",
+      "goal": "先查看床铺旁的伤员，再调查熄灭的灯座。",
       "objects": [
         {
           "id": "lamp",
@@ -55,6 +55,17 @@
           "kind": "exit",
           "target": "N0-02",
           "requires": "S01"
+        },
+        {
+          "id": "wounded",
+          "name": "伤员",
+          "pos": [
+            152,
+            138
+          ],
+          "kind": "npc",
+          "visual": "wounded",
+          "dialogue": "S01"
         }
       ],
       "decor": [
@@ -66,10 +77,10 @@
           ]
         },
         {
-          "kind": "mushroom_red",
+          "kind": "glow_mushroom",
           "pos": [
-            152,
-            138
+            120,
+            140
           ]
         }
       ],
@@ -293,7 +304,7 @@
           ]
         },
         {
-          "kind": "mushroom_red",
+          "kind": "glow_mushroom",
           "pos": [
             186,
             140
@@ -685,6 +696,54 @@
           "kind": "exit",
           "target": "N1-03",
           "requires": "P02"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
         },
         {
           "id": "q1a",
@@ -1561,6 +1620,54 @@
           "quest": "Q2",
           "part": "a",
           "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
         }
       ],
       "decor": [
@@ -1740,6 +1847,50 @@
           "name": "灯根 · 选择强化",
           "pos": [
             230,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
             140
           ],
           "kind": "growth",
@@ -4465,10 +4616,10 @@
         },
         {
           "id": "east",
-          "name": "通往 分流室",
+          "name": "北侧分流门 通往 分流室",
           "pos": [
-            292,
-            130
+            160,
+            65
           ],
           "kind": "exit",
           "target": "N2-01",
@@ -4569,10 +4720,10 @@
         },
         {
           "id": "east",
-          "name": "通往 控制室",
+          "name": "回廊下行 通往 控制室",
           "pos": [
-            292,
-            130
+            160,
+            145
           ],
           "kind": "exit",
           "target": "N2-08",
@@ -4666,10 +4817,10 @@
         },
         {
           "id": "east",
-          "name": "通往 王庭前厅",
+          "name": "北侧门 通往 王庭前厅",
           "pos": [
-            292,
-            130
+            160,
+            65
           ],
           "kind": "exit",
           "target": "N3-04",
@@ -4770,10 +4921,10 @@
         },
         {
           "id": "east",
-          "name": "通往 王庭外环",
+          "name": "北侧根门 通往 王庭外环",
           "pos": [
-            292,
-            130
+            160,
+            65
           ],
           "kind": "exit",
           "target": "N3-01",
@@ -4867,10 +5018,10 @@
         },
         {
           "id": "east",
-          "name": "通往 灯根祭坛",
+          "name": "北侧灯道 通往 灯根祭坛",
           "pos": [
-            292,
-            130
+            160,
+            65
           ],
           "kind": "exit",
           "target": "N1-05",
@@ -5506,8 +5657,8 @@
         ],
         [
           "T5",
-          250,
-          130
+          230,
+          115
         ]
       ],
       "requires": "E14"
