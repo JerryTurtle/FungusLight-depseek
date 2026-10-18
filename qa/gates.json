@@ -1,5 +1,5 @@
 {
- "build_id": "G2-007",
+ "build_id": "G4-009",
  "G0": {
   "status": "passed",
   "evidence": [
@@ -312,7 +312,7 @@
  },
  "G4": {
   "status": "passed",
-  "iteration": "G4-008",
+  "iteration": "G4-009",
   "evidence": [
    "qa/evidence/G4/G4-001-progress.md",
    "qa/evidence/G4/G4-001-checks.json",
@@ -365,10 +365,42 @@
    "qa/evidence/G4/G4-008-hashes.txt",
    "qa/evidence/G4/G4-008-light.png",
    "qa/evidence/G4/G4-008-melee.png",
-   "qa/evidence/G4/G4-008-wounded.png"
+   "qa/evidence/G4/G4-008-wounded.png",
+   "qa/evidence/G4/G4-009-progress.md",
+   "qa/evidence/G4/G4-009-fixes.md",
+   "qa/evidence/G4/G4-009-checks.json",
+   "qa/evidence/G4/G4-009-campaign-tests.log",
+   "qa/evidence/G4/G4-009-g4_state-tests.log",
+   "qa/evidence/G4/G4-009-g4_boss-tests.log",
+   "qa/evidence/G4/G4-009-g4_death-tests.log",
+   "qa/evidence/G4/G4-009-g4_visual-tests.log",
+   "qa/evidence/G4/G4-009-save-tests.log",
+   "qa/evidence/G4/G4-009-enemies-tests.log",
+   "qa/evidence/G4/G4-009-dialogue-tests.log",
+   "qa/evidence/G4/G4-009-props-tests.log",
+   "qa/evidence/G4/G4-009-pressure-tests.log",
+   "qa/evidence/G4/G4-009-route-tests.log",
+   "qa/evidence/G4/G4-009-skip_route-tests.log",
+   "qa/evidence/G4/G4-009-route.json",
+   "qa/evidence/G4/G4-009-title.png",
+   "qa/evidence/G4/G4-009-camp.png",
+   "qa/evidence/G4/G4-009-flame.png",
+   "qa/evidence/G4/G4-009-light.png",
+   "qa/evidence/G4/G4-009-light-linger.png",
+   "qa/evidence/G4/G4-009-lightroom.png",
+   "qa/evidence/G4/G4-009-room-n1-07.png",
+   "qa/evidence/G4/G4-009-room-n2-08.png",
+   "qa/evidence/G4/G4-009-overlap-audit-detailed.md",
+   "qa/evidence/G4/G4-009-overlap-audit-detailed.json",
+   "qa/evidence/G4/G4-009-overlap-audit-static.md",
+   "qa/evidence/G4/G4-009-overlap-audit-static.json",
+   "qa/evidence/G4/G4-009-route-matrix.json",
+   "qa/evidence/G4/G4-009-route-A_restore.json",
+   "qa/evidence/G4/G4-009-route-B_seal.json",
+   "qa/evidence/G4/G4-009-route-sidequests.json"
   ],
   "remaining": [],
-  "caveat": "G4 passed; G4-008 removes guide arrows, enriches melee mint/gold crescent + particles, localizes Q1/Q2 rewards, and stops returning enemies from healing. Human spot-check of effects/readability recommended.",
+  "caveat": "G4 passed; G4-009 is post-pass polish for the five playtest items: light particle linger + shake, animated lamp flame, brighter guide beams, 37-room overlap cleanup, quarter-pixel/interpolated movement. Human feel check of the new effects remains recommended; G6 release work is separate.",
   "passed_at": "2026-10-18"
  },
  "G5": {

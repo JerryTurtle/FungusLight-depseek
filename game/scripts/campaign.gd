@@ -34,12 +34,22 @@ var objects_layer: Node2D
 var ui_layer: Node2D
 var dialogue
 var props = preload("res://scripts/prop_art.gd").new()
+var settings_return := "title"
+var render_prev_player := Vector2.ZERO
+var render_curr_player := Vector2.ZERO
+var render_prev_enemies: Dictionary = {}
+var render_curr_enemies: Dictionary = {}
+var render_ready := false
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
 	combat = preload("res://scripts/campaign_combat.gd").new()
 	show_rain_aim = false
 	super._ready()
+	# Quarter-pixel rendering removes the 4-pixel stepping that made horizontal
+	# walking (especially to the right) read as a stutter. Review bench keeps
+	# the accepted integer snapping.
+	art.subpixel_actors = true
 	if not OS.get_environment("FUNGUS_SAVE_DIR").is_empty(): saves.directory = OS.get_environment("FUNGUS_SAVE_DIR")
 	objects_layer = Node2D.new()
 	world.add_child(objects_layer)
@@ -70,6 +80,7 @@ func _ready() -> void:
 	dialogue.advance_requested.connect(advance_dialogue)
 	dialogue.skip_requested.connect(finish_dialogue)
 	dialogue.choice_selected.connect(choose_choice)
+	settings_panel.dismissed.connect(on_settings_closed)
 	show_title()
 	if "--campaign-capture" in OS.get_cmdline_user_args(): call_deferred("capture_preview")
 	get_window().focus_exited.connect(func():
@@ -106,6 +117,7 @@ func capture_preview() -> void:
 
 func clear_menu(title: String) -> void:
 	if dialogue != null and dialogue.is_open(): dialogue.close()
+	reset_screen_shake()
 	paused = true
 	commands.clear()
 	combat.clear_input_buffer()
@@ -137,6 +149,11 @@ func button(text: String, action: Callable) -> void:
 func resume() -> void:
 	overlay.hide()
 	if dialogue != null and dialogue.is_open(): dialogue.close()
+	world.visible = true
+	objects_layer.visible = true
+	ui_layer.visible = true
+	floating_ui.visible = true
+	if hud != null: hud.visible = true
 	if status != null: status.visible = true
 	paused = false
 	commands.clear()
@@ -144,8 +161,15 @@ func resume() -> void:
 
 func show_title() -> void:
 	running = false
-	clear_menu("菌灯之下 · 序章")
-	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\nG3 开发切片：营地与旧矿通道，完整主线尚未完成。")
+	# A clean title screen: no test-room actors, minimap or HUD behind the menu.
+	world.visible = false
+	objects_layer.visible = false
+	ui_layer.visible = false
+	floating_ui.visible = false
+	if hud != null: hud.visible = false
+	if status != null: status.visible = false
+	clear_menu("菌灯之下")
+	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\n五章主线 · 两种结局 · 自动存档与三个手动存档。")
 	button("新游戏",func():
 		if FileAccess.file_exists(saves.directory+"/auto.json"):
 			clear_menu("开始新旅程？")
@@ -153,8 +177,15 @@ func show_title() -> void:
 			button("确认新游戏",new_game)
 			button("返回",show_title)
 		else: new_game())
-	button("继续（自动槽）",func(): load_game("auto"))
+	var auto_available := FileAccess.file_exists(saves.directory+"/auto.json")
+	var continue_button := Button.new()
+	continue_button.text = "继续（自动存档）" if auto_available else "继续（暂无自动存档）"
+	continue_button.disabled = not auto_available
+	continue_button.add_theme_font_size_override("font_size",24)
+	continue_button.pressed.connect(func(): load_game("auto"))
+	menu.add_child(continue_button)
 	button("读取存档",show_load_menu)
+	button("设置",func(): open_settings("title"))
 	button("退出",func(): get_tree().quit())
 
 func new_game() -> void:
@@ -203,8 +234,34 @@ func mark_chapter() -> void:
 		chapter_start_ms = Time.get_ticks_msec()
 		last_chapter = current
 
+func draw_player_position() -> Vector2:
+	if not render_ready or paused or overlay.visible or (dialogue != null and dialogue.is_open()):
+		return combat.player
+	var fraction: float = clampf(Engine.get_physics_interpolation_fraction(),0.0,1.0)
+	return render_prev_player.lerp(render_curr_player,fraction)
+
+func draw_enemy_position(enemy: Dictionary) -> Vector2:
+	if not render_ready or paused or overlay.visible or (dialogue != null and dialogue.is_open()):
+		return enemy.pos
+	var previous = render_prev_enemies.get(enemy.id,null)
+	if previous == null:
+		return enemy.pos
+	var fraction: float = clampf(Engine.get_physics_interpolation_fraction(),0.0,1.0)
+	return (previous as Vector2).lerp(enemy.pos,fraction)
+
+func reset_render_tracking() -> void:
+	render_prev_player = combat.player
+	render_curr_player = combat.player
+	render_prev_enemies.clear()
+	render_curr_enemies.clear()
+	for enemy in combat.enemies:
+		render_prev_enemies[enemy.id] = enemy.pos
+		render_curr_enemies[enemy.id] = enemy.pos
+	render_ready = true
+
 func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value: float = -1) -> void:
 	mark_chapter()
+	reset_screen_shake()
 	var prior_hp: float = combat.hp
 	var prior_focus: float = combat.focus
 	combat.reset()
@@ -242,6 +299,7 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	hide_player = false
 	reset_guides()
 	start_encounters()
+	reset_render_tracking()
 	var room_snapshot: Dictionary = progress.snapshot(combat.player,combat.hp,combat.focus)
 	if progress.validate(room_snapshot).is_empty():
 		room_checkpoint = room_snapshot
@@ -392,10 +450,40 @@ func load_game(slot: String, backup: bool = false) -> void:
 	resume()
 	notice = "已读取"+("备份，部分进度可能回退。" if backup else "存档。")
 
+func open_settings(return_to: String) -> void:
+	settings_return = return_to
+	settings_was_paused = paused
+	if overlay != null: overlay.hide()
+	paused = true
+	settings_panel.show()
+
+func on_settings_closed() -> void:
+	settings_panel.hide()
+	if running: show_pause()
+	else: show_title()
+
+func slot_label(slot: String) -> String:
+	var names := {"auto":"自动存档","manual_1":"手动存档 1","manual_2":"手动存档 2","manual_3":"手动存档 3"}
+	var title: String = names.get(slot,slot)
+	var result: Dictionary = saves.load_slot(slot)
+	if not result.ok: return title+"（空）"
+	var snap: Dictionary = result.snapshot
+	var node_def: Dictionary = progress.node(str(snap.get("node_id","")))
+	var place: String = str(node_def.get("name","未知区域"))
+	var seconds := int(float(snap.get("effective_seconds",0)))
+	return "%s · %s · %02d:%02d" % [title,place,int(seconds/60),seconds%60]
+
 func show_load_menu() -> void:
 	clear_menu("读取安全进度")
+	paragraph("自动存档在安全检查点写入；手动存档覆盖前会再次确认。")
 	for slot in SaveStore.SLOTS:
-		button(str(slot),func(): load_game(slot))
+		var has_slot := FileAccess.file_exists(saves.directory+"/"+slot+".json")
+		var load_button := Button.new()
+		load_button.text = slot_label(slot)
+		load_button.disabled = not has_slot
+		load_button.add_theme_font_size_override("font_size",24)
+		load_button.pressed.connect(func(): load_game(slot))
+		menu.add_child(load_button)
 	button("返回",func():
 		if running: show_pause()
 		else: show_title())
@@ -406,10 +494,11 @@ func show_pause() -> void:
 	paragraph(("有未保存进度。\n" if dirty else "")+notice+"\nWASD移动 · 左键灯击 · 右键净光 · 空格闪避 · Q观察 · E交互")
 	button("继续",resume)
 	for slot in ["manual_1","manual_2","manual_3"]:
-		button("保存到 "+slot,func():
+		button("保存到 手动 "+slot.right(1),func():
 			save_game(slot)
 			if menu.get_child(0).text != "覆盖存档？": show_pause())
 	button("读取存档",show_load_menu)
+	button("设置",func(): open_settings("pause"))
 	button("返回标题",func():
 		clear_menu("离开当前进度？")
 		paragraph("未保存进度将回退到最近存档。")
@@ -534,7 +623,7 @@ func write_run_report() -> void:
 		chapter_times[last_chapter] = float(chapter_times.get(last_chapter,0.0)) + (Time.get_ticks_msec()-chapter_start_ms)/1000.0
 		chapter_start_ms = Time.get_ticks_msec()
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
-	var report := {"build":"G4-005","total_seconds":snappedf(total,0.1),"ending":progress.ending_id(),"node":progress.node_id,"chapters":chapter_times,"recorded_at":Time.get_datetime_string_from_system()}
+	var report := {"build":str(ProjectSettings.get_setting("application/config/version","G6-001")),"total_seconds":snappedf(total,0.1),"ending":progress.ending_id(),"node":progress.node_id,"chapters":chapter_times,"recorded_at":Time.get_datetime_string_from_system()}
 	var file := FileAccess.open("user://g4_run.json",FileAccess.WRITE)
 	if file != null:
 		file.store_string(JSON.stringify(report, "  "))
@@ -549,8 +638,10 @@ func show_credits() -> void:
 	write_run_report()
 	var restored := progress.ending_id() == "restore"
 	clear_menu("菌灯之下 · 尾声")
-	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "本次用时 " + elapsed_text() + "。\n按 Esc 返回标题，或继续探索。")
+	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "本次用时 " + elapsed_text() + "。\n选择返回标题，或读取结局前的自动备份继续探索。")
 	button("返回标题", show_title)
+	if saves.load_slot("auto",true).ok:
+		button("读取结局前存档（自动备份）", func(): load_game("auto",true))
 	button("继续探索", resume)
 
 func nearest_object() -> Dictionary:
@@ -661,6 +752,19 @@ func interact() -> void:
 			button("保存当前进度",func(): save_game("auto",true))
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.physical_keycode == KEY_F1:
+			if settings_panel.visible:
+				on_settings_closed()
+			elif not dialogue.is_open():
+				open_settings("pause" if running else "title")
+			get_viewport().set_input_as_handled()
+			return
+		if settings_panel.visible and event.physical_keycode == KEY_ESCAPE:
+			on_settings_closed()
+			get_viewport().set_input_as_handled()
+			return
+	if settings_panel.visible: return
 	if not running: return
 	if dialogue.is_open() and dialogue.handle_input(event):
 		get_viewport().set_input_as_handled()
@@ -723,10 +827,23 @@ func retry_from_room() -> void:
 		load_room(Vector2(checkpoint.safe_position[0],checkpoint.safe_position[1]),checkpoint.health,checkpoint.focus)
 		resume()
 
+func _process(_delta: float) -> void:
+	# The simulation is fixed at 60 Hz; draw interpolated actor positions at the
+	# display refresh rate. Without this, a 120/144 Hz monitor repeats or skips
+	# 60 Hz movement steps and horizontal walking reads as a stutter.
+	if not is_instance_valid(world) or not render_ready: return
+	if running and not paused and not overlay.visible and (dialogue == null or not dialogue.is_open()):
+		world.queue_redraw()
+		floating_ui.queue_redraw()
+
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(overlay): return
 	if running and not paused:
 		free_overlapping_player()
+		render_prev_player = combat.player
+		render_prev_enemies.clear()
+		for enemy in combat.enemies:
+			render_prev_enemies[enemy.id] = enemy.pos
 		var movement := Vector2(float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),float(Input.is_physical_key_pressed(KEY_S))-float(Input.is_physical_key_pressed(KEY_W)))
 		var pointer := world.to_local(queued_pointer if queued_pointer.is_finite() else get_global_mouse_position())
 		var inside := Rect2(0,25,320,135).has_point(pointer)
@@ -741,8 +858,14 @@ func _physics_process(delta: float) -> void:
 				notice = "你从床铺上醒来。"
 		var before: Vector2 = combat.player
 		combat.step_commands(movement,pointer-combat.player,valid,inside and pending_encounter != "tutorial" and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT))
+		render_curr_player = combat.player
+		render_curr_enemies.clear()
+		for enemy in combat.enemies:
+			render_curr_enemies[enemy.id] = enemy.pos
 		combat_audio.consume(combat.events)
 		feedback.consume(combat)
+		handle_visual_events()
+		update_screen_shake()
 		progress.potions = combat.potions
 		for event in combat.events:
 			if event.kind == "heal": notice = "治疗完成，恢复%d生命。" % event.amount
@@ -979,14 +1102,20 @@ func draw_guide_beams() -> void:
 		var axis: Vector2 = DIR_VECTORS[dir]
 		var perpendicular := Vector2(axis.y,axis.x)
 		if guide_aligned(guide):
-			objects_layer.draw_line(origin,target,tint,3)
-			objects_layer.draw_line(origin,target,tint.lightened(0.45),1)
-			for i in 2:
-				var phase := fmod(float(tick)/40.0+float(i)*0.5,1.0)
+			# Each aligned lamp now casts a slightly stronger, softly breathing
+			# beam: a low alpha halo, a wider body, then a bright core and bead.
+			var pulse: float = 0.0 if preferences.reduced_motion else 0.06*sin(float(tick)/28.0)
+			objects_layer.draw_line(origin,target,Color(tint.r,tint.g,tint.b,0.11+pulse),9)
+			objects_layer.draw_line(origin,target,Color(tint.r,tint.g,tint.b,0.38+pulse),4.5)
+			objects_layer.draw_line(origin,target,Color(tint.r,tint.g,tint.b,0.92),2.5)
+			objects_layer.draw_line(origin,target,tint.lightened(0.55),1.4)
+			for i in 3:
+				var phase := fmod(float(tick)/38.0+float(i)/3.0,1.0)
 				var dot: Vector2 = origin.lerp(target,phase)
-				objects_layer.draw_rect(Rect2(dot.round(),Vector2.ONE),Color(1,0.96,0.8,0.85))
+				objects_layer.draw_rect(Rect2(dot.round(),Vector2.ONE*(2 if i==1 else 1)),Color(1,0.98,0.86,0.9))
 			if target.distance_to(origin) > 1:
-				objects_layer.draw_rect(Rect2(target-Vector2(2,2),Vector2(5,5)),tint.lightened(0.3))
+				objects_layer.draw_circle(target,4.0,Color(tint.r,tint.g,tint.b,0.18))
+				objects_layer.draw_rect(Rect2(target-Vector2(2,2),Vector2(5,5)),tint.lightened(0.4))
 		else:
 			# Always show the current facing so turning the device is readable.
 			var tip: Vector2 = origin+axis*18
@@ -996,6 +1125,7 @@ func draw_guide_beams() -> void:
 			objects_layer.draw_rect(Rect2(origin-Vector2(1,1),Vector2(3,3)),Color(dim.r,dim.g,dim.b,0.9))
 
 func draw_object_labels() -> void:
+	if not running or paused or overlay.visible or (dialogue != null and dialogue.is_open()): return
 	var nearest := nearest_object()
 	if nearest.is_empty(): return
 	var label: String = str(nearest.name)
@@ -1025,7 +1155,8 @@ func draw_object_labels() -> void:
 	var font := ThemeDB.fallback_font
 	var width: float = font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,24).x
 	at.x = clampf(at.x-width/2,8,1272-width)
-	at.y = clampf(at.y,116,684)
+	# Keep names above the two-line bottom status bar and below the top HUD.
+	at.y = clampf(at.y,136,640)
 	ui_layer.draw_string_outline(font,at,label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,4,Color(0.02,0.03,0.035,0.95))
 	ui_layer.draw_string(font,at,label,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color("f4dfab"))
 

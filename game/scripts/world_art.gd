@@ -3,6 +3,13 @@ extends RefCounted
 var cleric: Texture2D = preload("res://assets/original/Characters/Cleric.png")
 var fungus: Texture2D = preload("res://assets/original/Characters/Fungus - red.png")
 var tiles: Texture2D = preload("res://assets/original/Tilesets/Complete.png")
+## Campaign actors render on a quarter-pixel grid (one physical screen pixel at
+## the 4x world scale). The G2 review bench keeps the accepted integer snapping.
+var subpixel_actors := false
+
+func snap_actor(p: Vector2) -> Vector2:
+	if not subpixel_actors: return p.round()
+	return (p * 4.0).round() / 4.0
 
 func row(direction: Vector2) -> int:
 	if absf(direction.x) > absf(direction.y): return 2 if direction.x > 0 else 1
@@ -41,17 +48,35 @@ func hand_region(direction: Vector2, frame: int) -> Rect2:
 	]
 	return Rect2(positions[row(direction)][frame],Vector2(2,2))
 
-func staff(canvas: CanvasItem, grip: Vector2, angle: float, extension: float) -> void:
+func staff(canvas: CanvasItem, grip: Vector2, angle: float, extension: float, visual_tick: int = 0, preferences = null) -> void:
 	var axis := Vector2.from_angle(angle)
 	# Same 17px staff, held 2px from the butt instead of 5px.
 	# Draw one continuous shaft through the original hand's centre.
-	var tip := (grip + axis*(15+extension)).round()
-	var butt := (grip-axis*2).round()
+	var tip := snap_actor(grip + axis*(15+extension))
+	var butt := snap_actor(grip-axis*2)
 	canvas.draw_line(butt,tip,Color("292224"),3)
 	canvas.draw_line(butt,tip,Color("b18a55"),1)
 	canvas.draw_rect(Rect2(tip-Vector2(3,3),Vector2(7,7)),Color("332c34"))
-	canvas.draw_rect(Rect2(tip-Vector2(2,2),Vector2(5,5)),Color("ce9256"))
-	canvas.draw_rect(Rect2(tip-Vector2(1,2),Vector2(3,4)),Color("fff1b0"))
+	# Dark lantern glass with a breathing hard-pixel flame inside. The old
+	# solid amber block read as a held torch; this keeps a lantern silhouette.
+	canvas.draw_rect(Rect2(tip-Vector2(2,2),Vector2(5,5)),Color("4a2c25"))
+	canvas.draw_rect(Rect2(tip+Vector2(-2,-2),Vector2(1,5)),Color("d5a062"))
+	canvas.draw_rect(Rect2(tip+Vector2(2,-2),Vector2(1,5)),Color("d5a062"))
+	var rest: bool = preferences != null and preferences.reduced_motion
+	var frame: int = 0 if rest else int(visual_tick/7)%4
+	var lean: int = [0,1,0,-1][frame]
+	var flame_height: int = 3 if rest else [4,5,4,3][frame]
+	var flame_base := tip+Vector2(0,2)
+	canvas.draw_circle(tip+Vector2(0,-1),7.0,Color(1.0,0.62,0.22,0.06 if not rest else 0.04))
+	canvas.draw_rect(Rect2(flame_base+Vector2(-1,0),Vector2(3,1)),Color(1.0,0.50,0.18,0.96))
+	canvas.draw_rect(Rect2(flame_base+Vector2(-1,-1),Vector2(2,1)),Color(1.0,0.72,0.26,0.98))
+	canvas.draw_rect(Rect2(flame_base+Vector2(lean,-2),Vector2(1,mini(2,flame_height-1))),Color(1.0,0.94,0.58,1.0))
+	canvas.draw_rect(Rect2(flame_base+Vector2(lean,-1),Vector2(1,1)),Color(1.0,1.0,0.88,1.0))
+	if not rest and not (preferences != null and preferences.low_effects):
+		for i in 2:
+			var rise := fmod(float(visual_tick)/18.0+float(i)*0.5,1.0)
+			var mote := tip+Vector2(lean*2+(-1 if i==0 else 1),-4.0-rise*7.0)
+			canvas.draw_rect(Rect2(mote.round(),Vector2.ONE),Color(1.0,0.72,0.28,(1.0-rise)*0.65))
 
 
 func enemy_texture(kind: String) -> Texture2D:
@@ -84,8 +109,8 @@ func sleep_pose(canvas: CanvasItem, foot: Vector2, rotation: float, alpha: float
 	canvas.draw_texture_rect_region(cleric,space,region,Color(1,1,1,alpha))
 	canvas.draw_set_transform(Vector2.ZERO)
 
-func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String, age: int, tick: int, moving: bool, player: bool = true, override_texture: Texture2D = null, alpha: float = 1.0, body_tint: Color = Color.WHITE) -> void:
-	foot = foot.round()
+func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String, age: int, tick: int, moving: bool, player: bool = true, override_texture: Texture2D = null, alpha: float = 1.0, body_tint: Color = Color.WHITE, preferences = null) -> void:
+	foot = snap_actor(foot)
 	var texture: Texture2D = cleric if player else fungus
 	if override_texture != null: texture = override_texture
 	var frame: int = [1,0,1,2][int(tick/8)%4] if moving else 1
@@ -108,7 +133,7 @@ func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String
 	elif action == "hurt":
 		tint = Color("ffb5a3") if age < 5 else Color.WHITE
 	elif action == "dead":
-		if player: staff(canvas,foot+Vector2(4,5),0.15,0)
+		if player: staff(canvas,foot+Vector2(4,5),0.15,0,0,preferences)
 		var fall: float = [0.2,0.8,PI/2][mini(2,int(age/9))]
 		canvas.draw_set_transform(foot,fall,Vector2.ONE)
 		canvas.draw_texture_rect_region(texture,Rect2(-8,-25,16,32),Rect2(16,row(direction)*32,16,32),Color(0.61,0.59,0.58,alpha))
@@ -120,15 +145,15 @@ func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String
 	canvas.draw_set_transform(Vector2.ZERO)
 	var body_origin := foot
 	var hand := hand_region(direction,frame)
-	var hand_origin := (body_origin+Vector2(-8,-31)+hand.position).round()
-	var grip := hand_origin+Vector2.ONE
+	var hand_origin := snap_actor(body_origin+Vector2(-8,-31)+hand.position)
+	var grip := hand_origin+Vector2(0.25,0.25)
 	var behind := row(direction) == 3
-	if player and behind: staff(canvas,grip,angle,extension)
+	if player and behind: staff(canvas,grip,angle,extension,tick,preferences)
 	# Render the original full frame intact: no invented arms or split torso.
 	var source := Vector2(frame*16,row(direction)*32)
 	canvas.draw_texture_rect_region(texture,Rect2(body_origin+Vector2(-8,-31),Vector2(16,32)),Rect2(source,Vector2(16,32)),tint)
 	if player and not behind:
-		staff(canvas,grip,angle,extension)
+		staff(canvas,grip,angle,extension,tick,preferences)
 		# Re-layer only the original hand pixels over the shaft, in their original location.
 		canvas.draw_texture_rect_region(texture,Rect2(hand_origin,hand.size),Rect2(source+hand.position,hand.size),tint)
 

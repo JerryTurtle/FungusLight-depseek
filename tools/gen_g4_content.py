@@ -27,9 +27,30 @@ for o in n15["objects"]:
 n15 = next(n for n in d["nodes"] if n["id"] == "N1-05")
 n15["objects"] = [o for o in n15["objects"] if o.get("id") != "m2"]
 n15["objects"].append({"id": "m2", "name": "灯根 · 选择强化", "pos": [180, 140], "kind": "growth", "event": "M2", "visual": "ring"})
+for decor_item in n15.get("decor", []):
+    if decor_item.get("kind") == "torch" and decor_item.get("pos") == [150, 46]:
+        decor_item["pos"] = [90, 46]
+
+# G4-009 wall-overlap cleanup in two kept rooms.
+n01 = next(n for n in d["nodes"] if n["id"] == "N0-01")
+for decor_item in n01.get("decor", []):
+    if decor_item.get("kind") == "crates" and decor_item.get("pos") in ([232, 132], [232, 150]):
+        decor_item["pos"] = [190, 160]
+n11 = next(n for n in d["nodes"] if n["id"] == "N1-01")
+for o in n11.get("objects", []):
+    if o.get("id") == "lore":
+        o["pos"] = [278, 155]
 n12 = next(n for n in d["nodes"] if n["id"] == "N1-02")
 n12["objects"] = [o for o in n12["objects"] if o.get("id") != "q1a"]
 n12["objects"].append({"id": "q1a", "name": "旧灯·导光间", "pos": [80, 140], "kind": "sidequest", "quest": "Q1", "part": "a", "visual": "chest"})
+# G4-009 overlap cleanup: the guide, lore sheet, chest and torch were sharing
+# the same corner of the light room. Keep each readable and walkable.
+for o in n12["objects"]:
+    if o.get("id") == "guide_c": o["pos"] = [265, 95]
+    if o.get("id") == "lore": o["pos"] = [50, 135]
+for decor_item in n12.get("decor", []):
+    if decor_item.get("kind") == "torch" and decor_item.get("pos") == [150, 46]:
+        decor_item["pos"] = [250, 46]
 n14 = next(n for n in d["nodes"] if n["id"] == "N1-04")
 n14["objects"] = [o for o in n14["objects"] if o.get("id") != "q2a"]
 n14["objects"].append({"id": "q2a", "name": "补给箱单·裂口", "pos": [190, 140], "kind": "sidequest", "quest": "Q2", "part": "a", "visual": "chest"})
@@ -101,7 +122,7 @@ N.append(room("N2-01", "分流室", "读过分流图，进入排水入口。",
      lore("lore", "分流图", "L06", (150, 60)),
      story("s05", "分流图前", "S05", (150, 135), "L06"),
      exit_("east", "支路 A · 排水入口", "N2-02", requires="S05", pos=(292,130)),
-     exit_("north", "支路 B · 被困门外", "N2-04", pos=(280,60)),
+     exit_("north", "支路 B · 被困门外", "N2-04", pos=(250,60)),
      exit_("merge", "合流通道（需两条支路）", "N2-06", requires="P04&P05", pos=(160,80))],
     decor=[{"kind":"torch","pos":[150,46]}], ambient=[{"kind":"dust","pos":[240,120]}]))
 
@@ -111,7 +132,7 @@ N.append(room("N2-02", "排水入口", "关闭两道排水阀，排干前段积�
      switch("v03", "排水阀·一", "P04", "V03", (145, 100)),
      switch("v04", "排水阀·二", "P04", "V04", (190, 100)),
      exit_("east", "通往 排水出口", "N2-03", requires="P04")],
-    decor=[{"kind":"torch","pos":[240,46]}], ambient=[{"kind":"drip","pos":[150,90]}]))
+    decor=[{"kind":"torch","pos":[246,46]}], ambient=[{"kind":"drip","pos":[150,90]}]))
 
 N.append(room("N2-03", "排水出口", "确认排水完成，检查旧灯。",
     pillars(True, True, 45, 120, 40, 35),
@@ -166,14 +187,14 @@ N.append(room("N3-01", "王庭外环", "观察根与管的连接，沿清晰通�
     [exit_("west", "返回 试验段外廊", "N2-10", pos=(25, 95)), rest(),
      story("s08", "王庭外环", "S08", (150, 135), "L11"),
      exit_("east", "通往 供给回廊", "N3-02", requires="S08")],
-    decor=[{"kind":"torch","pos":[150,46]},{"kind":"glow_mushroom","pos":[240,70]}], ambient=[{"kind":"dust","pos":[240,120]}]))
+    decor=[{"kind":"torch","pos":[90,46]},{"kind":"glow_mushroom","pos":[245,70]}], ambient=[{"kind":"dust","pos":[240,120]}]))
 
 N.append(room("N3-02", "供给回廊", "扫描前两处供给点，打开回廊。",
     pillars(True, True, 40, 125, 45, 30),
     [exit_("west", "返回 王庭外环", "N3-01", pos=(25, 95)), rest(),
      switch("v09", "供给阀·一", "P07", "V09", (140, 100)),
      switch("v10", "供给阀·二", "P07", "V10", (180, 100)),
-     switch("v11", "供给阀·三", "P07", "V11", (220, 100)),
+     switch("v11", "供给阀·三", "P07", "V11", (205, 100)),
      side("q1c", "旧灯修复·供给回廊", "Q1", "c", (90, 140)),
      exit_("east", "通往 旧约墙", "N3-03", requires="P07")],
     decor=[{"kind":"torch","pos":[250,46]}], ambient=[{"kind":"light_pool","pos":[150,100]}]))
@@ -295,6 +316,25 @@ N.append(room("N3-08", "调压前厅", "穿过王庭最后的根门，检查调�
      exit_("east", "通往 调压入口", "N4-01", requires="E36")],
     decor=[{"kind":"torch","pos":[150,46]}], ambient=[{"kind":"drip","pos":[200,100]}]))
 
+# G4-009 overlap cleanup for the generated rooms. The old template stacked the
+# lore sheet under the centre torch and, in the central-exit rooms, directly on
+# top of the exit portal. Move the torch off the centre line and separate the
+# few authored story/record props from torches and growth rings.
+for n in N:
+    lore_spot = {"N1-07":[150,140], "N1-08":[150,140], "N2-01":[252,140], "N2-10":[252,140], "N3-07":[252,140]}
+    for o in n["objects"]:
+        if o.get("id") == "lore" and n["id"] in lore_spot:
+            o["pos"] = lore_spot[n["id"]]
+        if n["id"] == "N1-06" and o.get("id") == "s04":
+            o["pos"] = [250, 140]
+        if n["id"] == "N2-08" and o.get("id") == "s07":
+            o["pos"] = [80, 60]
+    for decor_item in n.get("decor", []):
+        if decor_item.get("kind") == "torch" and decor_item.get("pos") == [150, 46]:
+            decor_item["pos"] = [90, 46]
+        if n["id"] == "N1-06" and decor_item.get("kind") == "torch" and decor_item.get("pos") == [250, 132]:
+            decor_item["pos"] = [270, 46]
+
 d["nodes"].extend(N)
 
 # Story / growth / ending metadata.
@@ -404,7 +444,7 @@ D = {
     "L20": [["岚","调压前厅的根门已经打开。"],["岚","进去就是核心外廊；检查一下药剂和专注。"]],
 }
 d["dialogues"].update(D)
-d["build_id"] = "G4-008"
+d["build_id"] = "G4-009"
 d["chapter_id"] = "campaign"
 PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 print("nodes", len(d["nodes"]), [n["id"] for n in d["nodes"]])

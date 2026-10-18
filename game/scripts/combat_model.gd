@@ -188,7 +188,8 @@ func recover_stuck_enemy(enemy: Dictionary) -> void:
 	enemy.lost_ticks = 0
 	enemy.path.clear()
 	enemy.stuck = 0
-	enemy.hp = float(enemy.get("max_hp",config.enemy_t1.hp))
+	# Path recovery is only a position/aggro reset; it must not heal the enemy
+	# or restore its shell. The same rule applies to leash returns.
 	emit("enemy_recovered", {"target":enemy.id})
 
 func body_blocked(pos: Vector2, mover_id: int) -> bool:

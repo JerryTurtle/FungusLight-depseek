@@ -23,6 +23,9 @@ var grip_review := false
 var pose_playing := true
 var pose_tick := 0
 var player_moving := false
+var shake_left := 0
+var shake_total := 1
+var shake_strength := 0.0
 var preferences = preload("res://scripts/presentation_settings.gd").new()
 var settings_panel = preload("res://scripts/settings_panel.gd").new()
 var feedback = preload("res://scripts/combat_feedback.gd").new()
@@ -235,6 +238,8 @@ func _physics_process(_delta: float) -> void:
 		player_moving = combat.player.distance_squared_to(previous) > 0.001
 	commands.clear()
 	queued_pointer = Vector2.INF
+	handle_visual_events()
+	if not review_mode: update_screen_shake()
 	if not paused: death_age = death_age+1 if combat.hp <= 0 else 0
 	if review_mode:
 		world.scale = Vector2.ONE*review_zoom
@@ -272,6 +277,12 @@ func corpse_alpha(enemy: Dictionary) -> float:
 	var age: int = combat.tick-int(dead_since[enemy.id])
 	if age > CORPSE_LINGER: return 0.0
 	return clampf(float(CORPSE_LINGER-age)/float(CORPSE_FADE),0.0,1.0)
+
+func draw_player_position() -> Vector2:
+	return combat.player
+
+func draw_enemy_position(enemy: Dictionary) -> Vector2:
+	return enemy.pos
 
 func draw_floor() -> void:
 	# Campaign draws flat floor props (e.g. the bed) beneath actors here.
@@ -334,26 +345,28 @@ func draw_world() -> void:
 		if entry.is_player:
 			if hide_player: continue
 			var direction: Vector2 = combat.locked if combat.action in ["melee","light","shield","rain","dodge"] else combat.facing
-			art.actor(world,combat.player,direction,"dead" if combat.hp <= 0 else ("idle" if preferences.reduced_flash and combat.action == "hurt" else combat.action),death_age if combat.hp <= 0 else combat.age,combat.tick,player_moving)
-			if debug_shapes: world.draw_arc(combat.player,5,0,TAU,24,Color("9affcf"),0.5)
+			var player_pos: Vector2 = draw_player_position()
+			art.actor(world,player_pos,direction,"dead" if combat.hp <= 0 else ("idle" if preferences.reduced_flash and combat.action == "hurt" else combat.action),death_age if combat.hp <= 0 else combat.age,combat.tick,player_moving,true,null,1.0,Color.WHITE,preferences)
+			if debug_shapes: world.draw_arc(player_pos,5,0,TAU,24,Color("9affcf"),0.5)
 		else:
 			var enemy: Dictionary = entry.enemy
 			var corpse := corpse_alpha(enemy)
 			if corpse <= 0.0: continue
-			if enemy.dummy: art.target(world,enemy.pos,enemy.hp,corpse)
-			elif enemy.get("archetype","") == "T5": art.spore_pod(world,enemy.pos,enemy.hp > 0,corpse)
-			else: art.actor(world,enemy.pos,enemy.dir,"dead" if enemy.hp <= 0 else ("melee" if enemy.state == "attack" else "idle"),int(enemy.age),combat.tick,enemy.state != "attack" and enemy.alert,false,art.enemy_texture(enemy.get("archetype","T1")),corpse)
+			var enemy_pos: Vector2 = draw_enemy_position(enemy)
+			if enemy.dummy: art.target(world,enemy_pos,enemy.hp,corpse)
+			elif enemy.get("archetype","") == "T5": art.spore_pod(world,enemy_pos,enemy.hp > 0,corpse)
+			else: art.actor(world,enemy_pos,enemy.dir,"dead" if enemy.hp <= 0 else ("melee" if enemy.state == "attack" else "idle"),int(enemy.age),combat.tick,enemy.state != "attack" and enemy.alert,false,art.enemy_texture(enemy.get("archetype","T1")),corpse,Color.WHITE,preferences)
 			if enemy.hp > 0:
 				for layer in int(enemy.get("armor_layers",0)):
-					world.draw_arc(enemy.pos-Vector2(0,14),10+layer*3,-PI*0.95,PI*0.15,12,Color("eac36c"),2)
-				world.draw_rect(Rect2(enemy.pos+Vector2(-9,-29),Vector2(18,2)),Color("402d36"))
-				world.draw_rect(Rect2(enemy.pos+Vector2(-9,-29),Vector2(18*clampf(enemy.hp/float(enemy.get("max_hp",72)),0,1),2)),Color("dfba84"))
+					world.draw_arc(enemy_pos-Vector2(0,14),10+layer*3,-PI*0.95,PI*0.15,12,Color("eac36c"),2)
+				world.draw_rect(Rect2(enemy_pos+Vector2(-9,-29),Vector2(18,2)),Color("402d36"))
+				world.draw_rect(Rect2(enemy_pos+Vector2(-9,-29),Vector2(18*clampf(enemy.hp/float(enemy.get("max_hp",72)),0,1),2)),Color("dfba84"))
 			if enemy.get("archetype","T1") == "T1" and enemy.state == "attack" and enemy.age < combat.config.enemy_t1.windup+combat.config.enemy_t1.active:
 				var angle: float = enemy.dir.angle()
 				var radius: float = combat.config.enemy_t1.range
 				var warning := Color("ff9c87") if enemy.age < combat.config.enemy_t1.windup else Color("ff6055")
-				world.draw_arc(enemy.pos,radius,angle-PI/4,angle+PI/4,18,warning,1)
-				for edge in [-PI/4,PI/4]: world.draw_line(enemy.pos,enemy.pos+Vector2.from_angle(angle+edge)*radius,warning,0.5)
+				world.draw_arc(enemy_pos,radius,angle-PI/4,angle+PI/4,18,warning,1)
+				for edge in [-PI/4,PI/4]: world.draw_line(enemy_pos,enemy_pos+Vector2.from_angle(angle+edge)*radius,warning,0.5)
 	if combat.shield_hp > 0:
 		world.draw_arc(combat.player-Vector2(0,12),17,0,TAU,32,Color("a2e7df"),1)
 		world.draw_rect(Rect2(combat.player+Vector2(-10,-34),Vector2(20,2)),Color("23484e"))
@@ -414,36 +427,96 @@ func draw_world() -> void:
 			var charge_tip: Vector2 = art.light_tip(combat.beam_from,combat.locked,age)
 			world.draw_circle(charge_tip,2.0+float(age-8)*0.8,Color(0.7,1.0,0.86,0.35))
 			world.draw_circle(charge_tip,7.0+float(age-8)*1.5,Color(0.45,0.85,0.70,0.12))
-		if age >= 12 and age < 18:
+		if age >= 12 and age < 30:
 			var lamp_tip: Vector2 = art.light_tip(combat.beam_from,combat.locked,age)
 			var join: Vector2 = combat.beam_from+combat.locked*clampf((lamp_tip-combat.beam_from).dot(combat.locked),0,combat.beam_from.distance_to(combat.beam_end))
 			var endp: Vector2 = combat.beam_end
-			# Layered burst: broad pressure halo, hot core, then a white seam.
-			world.draw_line(join,endp,Color(0.30,0.72,0.62,0.18*fade),24)
-			world.draw_line(join,endp,Color(0.38,0.92,0.78,0.42*fade),12)
-			world.draw_line(join,endp,Color(0.62,1.0,0.84,0.72*fade),6)
-			world.draw_line(join,endp,Color(0.94,1.0,0.93,0.98*fade),3)
-			world.draw_line(join,endp,Color(1,1,0.97,1.0*fade),1.5)
-			world.draw_circle(join,4.0+float(18-age)*0.4,Color(0.8,1,0.9,0.7*fade))
-			world.draw_circle(join,10.0+float(18-age)*0.7,Color(0.55,0.9,0.75,0.16*fade))
-			# Expanding shock ring at the impact point.
-			var ring := 3.0+float(age-12)*4.0
-			world.draw_arc(endp,ring,0,TAU,24,Color(0.85,1.0,0.90,0.85*fade),3)
-			world.draw_arc(endp,ring+3.0,0,TAU,24,Color(0.52,0.95,0.76,0.35*fade),1.5)
-			world.draw_arc(endp,ring+7.0,0,TAU,24,Color(0.32,0.72,0.62,0.16*fade),1)
-			# Impact sparks/debris, deterministic per tick.
+			# The active beam is bright for six ticks; after that only a thin
+			# mint afterimage remains while the released sparks settle. Damage
+			# is already resolved by the time this render state exists.
+			if age < 18:
+				var beam_fade := clampf(1.0-float(age-12)/6.0,0.0,1.0)
+				# Layered burst: broad pressure halo, hot core, then a white seam.
+				world.draw_line(join,endp,Color(0.30,0.72,0.62,0.18*beam_fade),24)
+				world.draw_line(join,endp,Color(0.38,0.92,0.78,0.42*beam_fade),12)
+				world.draw_line(join,endp,Color(0.62,1.0,0.84,0.72*beam_fade),6)
+				world.draw_line(join,endp,Color(0.94,1.0,0.93,0.98*beam_fade),3)
+				world.draw_line(join,endp,Color(1,1,0.97,1.0*beam_fade),1.5)
+				world.draw_circle(join,4.0+float(18-age)*0.3,Color(0.8,1,0.9,0.66*beam_fade))
+				world.draw_circle(join,8.0+float(18-age)*0.5,Color(0.42,0.9,0.74,0.10*beam_fade))
+				# One short shock ring, gone before the lingering sparks.
+				var ring_age := mini(age-12,6)
+				var ring_fade := clampf(1.0-float(age-12)/8.0,0.0,1.0)
+				var ring := 3.0+float(ring_age)*2.4
+				world.draw_arc(endp,ring,0,TAU,24,Color(0.62,0.98,0.84,0.62*ring_fade),2)
+				world.draw_arc(endp,ring+2.0,0,TAU,24,Color(0.34,0.84,0.72,0.22*ring_fade),1)
+			else:
+				var afterglow := clampf(1.0-float(age-18)/9.0,0.0,1.0)*0.22
+				world.draw_line(join,endp,Color(0.48,0.96,0.80,afterglow*1.2),3)
+				world.draw_line(join,endp,Color(0.94,1.0,0.90,afterglow*1.6),1)
 			if not preferences.low_effects and not preferences.reduced_motion:
+				# Initial sparks decelerate, then fade in place instead of
+				# exploding into a large debug-looking circle.
+				var spark_fade := clampf(1.0-float(age-18)/12.0,0.0,1.0)
+				var settle := clampf(float(age-12)/18.0,0.0,1.0)
 				for i in 12:
 					var a := float(i)*TAU/12.0+float(combat.tick%5)*0.3
-					var d := 5.0+float(age-12)*3.0+float((i*3)%4)*2.0
+					var d := 5.0+float(mini(age-12,6))*1.3+float((i*3)%4)*1.5
 					var p: Vector2 = endp+Vector2.from_angle(a)*d
 					var sz := 3 if i%3==0 else 2
-					world.draw_rect(Rect2(p.round(),Vector2(sz,sz)),Color(1,0.93,0.62,0.9*fade))
-					world.draw_line(p,p-Vector2.from_angle(a)*5,Color(1,0.58,0.24,0.6*fade),0.5)
+					var alpha := (0.9-0.2*settle)*spark_fade
+					world.draw_rect(Rect2(p.round(),Vector2(sz,sz)),Color(1,0.93,0.62,alpha))
+					world.draw_line(p,p-Vector2.from_angle(a)*(5.0-2.0*settle),Color(1,0.64,0.28,0.55*spark_fade),0.5)
+				# Slow mint/gold motes drift upward for roughly 0.3 seconds.
+				for i in 8:
+					var rise := float(((age-12)*2+i*5)%34)
+					var side := sin(float(i)*2.1+float(combat.tick%7)*0.13)*6.0
+					var mote := endp+Vector2(side,7.0-rise*0.55)
+					var mote_alpha := clampf(1.0-rise/32.0,0.0,1.0)*0.8
+					var mote_col := Color(0.86,1.0,0.82,mote_alpha) if i%3 else Color(1.0,0.86,0.48,mote_alpha)
+					world.draw_rect(Rect2(mote.round(),Vector2.ONE*(2 if i%2==0 else 1)),mote_col)
+					world.draw_line(mote,mote+Vector2(0,3),Color(0.45,0.94,0.78,mote_alpha*0.45),0.5)
 	# Sustained overlay for the (short) beam window.
 	feedback.draw(world,combat.tick,preferences)
 	feedback.draw_sparks(world,combat.tick,preferences)
 	feedback.draw(world,combat.tick,preferences)
+
+func handle_visual_events() -> void:
+	for event in combat.events:
+		if event.kind == "release" and str(event.get("action","")) == "light":
+			start_screen_shake(4.0,10)
+			break
+
+func start_screen_shake(strength: float, ticks: int) -> void:
+	if preferences.reduced_motion: return
+	if shake_left <= 0:
+		shake_strength = strength
+		shake_total = maxi(1,ticks)
+	elif strength >= shake_strength:
+		shake_strength = strength
+	shake_left = maxi(shake_left,ticks)
+	shake_total = maxi(shake_total,shake_left)
+
+func reset_screen_shake() -> void:
+	shake_left = 0
+	shake_strength = 0.0
+	if not review_mode:
+		world.position = Vector2.ZERO
+		floating_ui.position = Vector2.ZERO
+
+func update_screen_shake() -> void:
+	if review_mode: return
+	if shake_left <= 0:
+		world.position = Vector2.ZERO
+		floating_ui.position = Vector2.ZERO
+		return
+	var falloff := float(shake_left)/float(maxi(1,shake_total))
+	var phase := int(combat.tick/2)%4
+	var axis: Vector2 = [Vector2(1,0),Vector2(0,1),Vector2(-1,0),Vector2(0,-1)][phase]
+	var amount := maxf(1.0,roundf(shake_strength*falloff))
+	world.position = axis*amount
+	floating_ui.position = world.position
+	shake_left -= 1
 
 func toggle_settings() -> void:
 	commands.clear()

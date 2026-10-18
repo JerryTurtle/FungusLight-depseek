@@ -21,6 +21,7 @@ CHECKS = [
     ("g4_state", "scripts/test_g4.gd", r"G4_TEST checks=(\d+) failures=(\d+)", 120),
     ("g4_boss", "scripts/test_g4_boss.gd", r"G4_BOSS_TEST checks=(\d+) failures=(\d+)", 120),
     ("g4_death", "scripts/test_g4_death.gd", r"G4_DEATH_TEST checks=(\d+) failures=(\d+)", 120),
+    ("g4_visual", "scripts/test_g4_visual.gd", r"G4_VISUAL_TEST checks=(\d+) failures=(\d+)", 120),
     ("save", "scripts/test_save.gd", r"SAVE_TEST checks=(\d+) failures=(\d+)", 120),
     ("enemies", "scripts/test_enemies.gd", r"ENEMY_TEST checks=(\d+) failures=(\d+)", 120),
     ("dialogue", "scripts/test_dialogue.gd", r"DIALOGUE_TEST checks=(\d+) failures=(\d+)", 120),
@@ -55,7 +56,7 @@ for entry in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 76, 'g4_state': 34, 'g4_boss': 8, 'g4_death': 5, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2400, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
+    expected = {'campaign': 88, 'g4_state': 34, 'g4_boss': 8, 'g4_death': 5, 'g4_visual': 12, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2400, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1
@@ -67,7 +68,7 @@ for entry in CHECKS:
         "failures": int(match.group(2)) if match else None,
         "expected_min_checks": expected,
         "seconds": round(time.time() - at, 2),
-        "log": f'qa/evidence/G3/{build}-{name}-tests.log',
+        "log": f'qa/evidence/{build[:2]}/{build}-{name}-tests.log',
         "passed": passed and enough,
     }
     if name in ('route','skip_route') and match:

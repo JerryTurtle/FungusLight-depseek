@@ -3,6 +3,12 @@ func _ready() -> void:
 	# Pixel font is a project-wide baseline: 12px glyph grid, used at 12/24/36 only.
 	ThemeDB.fallback_font = load("res://assets/fonts/FusionPixel12px-zh_hans.ttf")
 	ThemeDB.fallback_font_size = 24
+	# Release exports always open the story and ignore every test/demo switch.
+	# A debug export keeps the G2 review bench and the automated entry points.
+	if not OS.is_debug_build():
+		add_child(preload("res://scripts/campaign.gd").new())
+		print("RELEASE_BOOT campaign")
+		return
 	if "--enemy-arena" in OS.get_cmdline_user_args():
 		add_child(preload("res://scripts/enemy_arena.gd").new())
 		return

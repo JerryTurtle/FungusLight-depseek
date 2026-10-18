@@ -4,12 +4,12 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 ## 1. 当前状态（2026-10-18）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3 已于 2026-10-18 通过（G3-013）；G4-008 已完成并修复试玩反馈；用户确认时长达到 20 分钟要求，G4 通过。** 按用户要求从 60 分钟改为 20 分钟，G4-001 人工约15分钟，新增6个过渡区/E31-E36/Boss400；G4-008 再修小地图、传送门方向、营地与水管 NPC、文字重叠、支路B死亡重开、上下墙碰撞；完成初燃粒子光束、近战月牙、伤亡员素材和守门者修复；并移除导光间箭头、重做青绿/金色近战粒子、将Q1/Q2奖励改为澄明镜/余温符、敌人返回不再回血。自动路线487.4秒、跳过437.5秒，C01-C06/支线/跳过8/8。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3 已于 2026-10-18 通过（G3-013）；G4 已通过（用户确认 20 分钟）。G4-009 完成试玩反馈修复：初燃余烬与轻震、动态灯焰、导光光束增强、37 节点重叠清理、四分之一像素+显示刷新率插值移动。** 按用户要求从 60 分钟改为 20 分钟，G4-001 人工约15分钟，新增6个过渡区/E31-E36/Boss400；G4-008 修小地图、传送门方向、营地与水管 NPC、文字重叠、支路B死亡重开、上下墙碰撞；G4-009 再修五项反馈。自动路线484.6秒、跳过434.2秒；G4-009 全量 12 组引擎测试失败 0。用户已指示修复后直接进入 G6。
 
 - 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G4-008 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **默认运行仍是 G2 审核台，不是主线。** 入口为 `boot.tscn → boot.gd → review.gd`；`FungusLight.exe -- --campaign` 进入 G4 五章主线。G4 验收包：`deliverables/G4-008-Acceptance/G4-Acceptance.cmd`（同目录 `G4-Acceptance.md` / `G4-Checklist.md`），压缩包 `deliverables/G4-008-Acceptance.zip`；G4已通过，下一步G5。
+- **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台；`FungusLight.exe -- --campaign` 可用于 debug 验证。G4 验收包：`deliverables/G4-008-Acceptance/G4-Acceptance.cmd`（同目录 `G4-Acceptance.md` / `G4-Checklist.md`）；G4-009 证据见 `qa/evidence/G4/G4-009-*`。G6 发布包在 `deliverables/Release/`（构建完成后更新）。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
-- **下一项 G5：全量回归、音频/设置/键位/难度/资源清理与代表负载；先按 G4-008 包复核小地图、传送门、NPC、文字、死亡重开与墙碰撞。** 文档维护不改变游戏构建编号。
+- **下一项 G6（用户已明确跳过 G5 单独阶段）：正式 Windows 包、默认主线入口、调试/测试资源剔除、标题—继续—读取—双槽—死亡—两结局—返回闭环、发布 Docs/QA/Licenses/Source 与干净目录验收。** 用户最终验收通过前不得称整款游戏交付完成。
 
 状态依据：用户最新要求、[AGENTS.md](AGENTS.md)、[qa/gates.json](qa/gates.json)和[game/DEV_STATE.md](game/DEV_STATE.md)的最新条目。旧报告中的“待H2/禁止G3”是历史状态，已被批准记录取代。发现文件与实际Git状态不符时先核对，不自行推定完成。
 

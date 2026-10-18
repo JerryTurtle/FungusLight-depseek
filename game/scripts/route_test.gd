@@ -4,7 +4,7 @@ extends SceneTree
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G4-008"
+const BUILD_ID := "G4-009"
 var scene
 var checks := 0
 var failures := 0
@@ -128,7 +128,7 @@ func build_route() -> void:
 		{"id":"E03","type":"combat","flag":"E03"},
 		{"id":"N1-01","type":"interact","to":Vector2(290,99),"node":"N1-01"},
 		{"id":"E04","type":"combat","flag":"E04"},
-		{"id":"L01","type":"lore","to":Vector2(278,146)},
+		{"id":"L01","type":"lore","to":Vector2(278,155)},
 		{"id":"N1-02","type":"interact","to":Vector2(300,130),"node":"N1-02"},
 		{"id":"E05","type":"combat","flag":"E05"},
 		{"id":"E06","type":"combat","flag":"E06"},
@@ -165,7 +165,7 @@ func build_route() -> void:
 		{"id":"N2-03","type":"interact","to":Vector2(292,144),"node":"N2-03"},
 		{"id":"E15","type":"combat","flag":"E15"},
 		{"id":"N2-01b","type":"interact","to":Vector2(25,110),"node":"N2-01"},
-		{"id":"N2-04","type":"interact","to":Vector2(280,75),"node":"N2-04"},
+		{"id":"N2-04","type":"interact","to":Vector2(250,75),"node":"N2-04"},
 		{"id":"E16","type":"combat","flag":"E16"},
 		{"id":"V05","type":"interact","to":Vector2(145,116),"flag":"V05"},
 		{"id":"V06","type":"interact","to":Vector2(190,116),"flag":"V06"},
@@ -199,7 +199,7 @@ func build_route() -> void:
 		{"id":"rest3a","type":"rest","to":Vector2(55,150)},
 		{"id":"V09","type":"interact","to":Vector2(140,116),"flag":"V09"},
 		{"id":"V10","type":"interact","to":Vector2(180,116),"flag":"V10"},
-		{"id":"V11","type":"interact","to":Vector2(220,116),"flag":"V11"},
+		{"id":"V11","type":"interact","to":Vector2(205,116),"flag":"V11"},
 		{"id":"rest4","type":"rest","to":Vector2(55,150)},
 		{"id":"N3-03","type":"interact","to":Vector2(292,144),"node":"N3-03"},
 		{"id":"E23","type":"combat","flag":"E23"},
@@ -456,7 +456,11 @@ func do_rest() -> void:
 	if scene.combat.hp >= scene.progress.max_hp()-1:
 		next_step(); return
 	if int(data.get("attempts",0)) > 20:
-		failed = "rest timeout "+str(data.id)+" hp="+str(scene.combat.hp)
+		var near: Dictionary = scene.nearest_object()
+		var near_dump := []
+		for obj in scene.progress.node().objects:
+			near_dump.append([obj.id,obj.kind,obj.pos,scene.combat.player.distance_to(Vector2(obj.pos[0],obj.pos[1]))])
+		failed = "rest timeout "+str(data.id)+" hp="+str(scene.combat.hp)+" max="+str(scene.progress.max_hp())+" player="+str(scene.combat.player)+" near="+str(near.get("id",""))+" notice="+scene.notice+" paused="+str(scene.paused)+" safe="+str(scene.SaveStore.is_safe(scene.safety()))+" objects="+str(near_dump)
 		return
 	if step_ticks % 24 == 1:
 		press_key(KEY_E)
