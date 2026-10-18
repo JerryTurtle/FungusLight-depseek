@@ -52,7 +52,8 @@ func _ready() -> void:
 	# walking (especially to the right) read as a stutter. Review bench keeps
 	# the accepted integer snapping.
 	art.subpixel_actors = true
-	if not OS.get_environment("FUNGUS_SAVE_DIR").is_empty(): saves.directory = OS.get_environment("FUNGUS_SAVE_DIR")
+	if OS.is_debug_build() and not OS.get_environment("FUNGUS_SAVE_DIR").is_empty():
+		saves.directory = OS.get_environment("FUNGUS_SAVE_DIR")
 	objects_layer = Node2D.new()
 	world.add_child(objects_layer)
 	objects_layer.draw.connect(draw_objects)
@@ -89,7 +90,7 @@ func _ready() -> void:
 	dialogue.choice_selected.connect(choose_choice)
 	settings_panel.dismissed.connect(on_settings_closed)
 	show_title()
-	if "--campaign-capture" in OS.get_cmdline_user_args(): call_deferred("capture_preview")
+	if OS.is_debug_build() and "--campaign-capture" in OS.get_cmdline_user_args(): call_deferred("capture_preview")
 	get_window().focus_exited.connect(func():
 		if running and not overlay.visible and not dialogue.is_open(): show_pause())
 
@@ -1292,7 +1293,18 @@ func draw_objects() -> void:
 					props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,16),tick,preferences)
 	for entry in progress.node().get("ambient",[]):
 		props.draw_ambient(objects_layer,str(entry.kind),Vector2(entry.pos[0],entry.pos[1]),tick,preferences)
+	draw_scan_highlights(tick)
 	draw_guide_beams()
+
+func draw_scan_highlights(tick: int) -> void:
+	if not scanned or tick-scan_tick >= 60: return
+	var fade := clampf(1.0-float(tick-scan_tick)/60.0,0.0,1.0)
+	for object in progress.node().objects:
+		if str(object.kind) not in ["story","sidequest","lore","equipment","puzzle_choice","evidence_slots","switch"]: continue
+		var pos := Vector2(object.pos[0],object.pos[1])
+		var color := Color(0.62,0.92,0.74,0.55*fade)
+		objects_layer.draw_rect(Rect2(pos-Vector2(10,16),Vector2(20,20)),color,false,1.0)
+		objects_layer.draw_line(pos-Vector2(10,16),pos-Vector2(4,16),Color(0.85,1.0,0.86,0.8*fade),1.5)
 
 func draw_portal(pos: Vector2, state: Dictionary, tick: int) -> void:
 	# Slow, readable threshold: sealed doors stay cold/dark, open doors breathe
