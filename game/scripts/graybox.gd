@@ -495,7 +495,7 @@ func handle_visual_events() -> void:
 			break
 
 func start_screen_shake(strength: float, ticks: int) -> void:
-	if preferences.reduced_motion: return
+	if preferences.reduced_motion or not preferences.shake_enabled: return
 	if shake_left <= 0:
 		shake_strength = strength
 		shake_total = maxi(1,ticks)

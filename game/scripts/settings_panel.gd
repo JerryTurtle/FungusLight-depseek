@@ -23,7 +23,7 @@ func _ready() -> void:
 	title.text = "画面与声音设置"
 	title.add_theme_font_size_override("font_size",36)
 	box.add_child(title)
-	for item in [["全屏窗口","fullscreen"],["低特效（保留全部危险预告）","low_effects"],["减少动态（关闭碎片飞散）","reduced_motion"],["降低闪光（保留命中轮廓）","reduced_flash"]]:
+	for item in [["全屏窗口","fullscreen"],["低特效（保留全部危险预告）","low_effects"],["减少动态（关闭碎片飞散）","reduced_motion"],["降低闪光（保留命中轮廓）","reduced_flash"],["开启震屏（重击/阶段反馈）","shake_enabled"]]:
 		var checkbox := CheckButton.new()
 		checkbox.text = item[0]
 		checkbox.button_pressed = preferences.get(item[1])
