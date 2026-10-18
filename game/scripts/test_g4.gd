@@ -47,7 +47,7 @@ func _initialize() -> void:
 	check(m4 and p.finish_event("ward"), "M4 choice")
 	check(p.max_hp() == 180.0, "M4 HP")
 	p.node_id = "N4-06"
-	for flag in ["E26","E27","E28","E29","E30","E31","E32","E33","E34","E35","M4","P08","P09","S08","S09"]: p.flags[flag] = true
+	for flag in ["E26","E27","E28","E29","E30","E31","E32","E33","E34","E35","E36","M4","P08","P09","S08","S09"]: p.flags[flag] = true
 	p.set_ending("restore")
 	check(p.ending_id() == "restore", "restore ending")
 	p.flags.S12 = true

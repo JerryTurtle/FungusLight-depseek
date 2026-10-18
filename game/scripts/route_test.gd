@@ -4,7 +4,7 @@ extends SceneTree
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G4-003"
+const BUILD_ID := "G4-004"
 var scene
 var checks := 0
 var failures := 0
@@ -217,6 +217,9 @@ func build_route() -> void:
 		{"id":"M4","type":"interact","to":Vector2(180,140),"flag":"M4"},
 		{"id":"N3-06","type":"interact","to":Vector2(292,144),"node":"N3-06"},
 		{"id":"E26","type":"combat","flag":"E26"},
+		{"id":"N3-08","type":"interact","to":Vector2(292,144),"node":"N3-08"},
+		{"id":"E36","type":"combat","flag":"E36"},
+		{"id":"rest3f","type":"rest","to":Vector2(55,150)},
 		{"id":"N4-01","type":"interact","to":Vector2(292,144),"node":"N4-01"},
 		{"id":"E27","type":"combat","flag":"E27"},
 		{"id":"V14","type":"interact","to":Vector2(150,116),"flag":"V14"},

@@ -312,7 +312,7 @@
  },
  "G4": {
   "status": "in_progress",
-  "iteration": "G4-003",
+  "iteration": "G4-004",
   "evidence": [
    "qa/evidence/G4/G4-001-progress.md",
    "qa/evidence/G4/G4-001-checks.json",
@@ -336,12 +336,16 @@
    "qa/evidence/G4/G4-003-progress.md",
    "qa/evidence/G4/G4-003-checks.json",
    "qa/evidence/G4/G4-003-route-matrix.json",
-   "qa/evidence/G4/G4-003-hashes.txt"
+   "qa/evidence/G4/G4-003-hashes.txt",
+   "qa/evidence/G4/G4-004-progress.md",
+   "qa/evidence/G4/G4-004-checks.json",
+   "qa/evidence/G4/G4-004-route-matrix.json",
+   "qa/evidence/G4/G4-004-hashes.txt"
   ],
   "remaining": [
-   "20分钟人工快速路线复测：自动496.3秒/446.4秒，不是人类时长",
-   "G4-002 验收包 deliverables/G4-002-Acceptance/ 的真人分项时间未回填",
-   "Boss 400 仍是路线平衡版，2200设计版仅机制测试"
+   "20分钟人工快速路线复测：自动514.3秒/464.4秒，不是人类时长",
+   "G4-004 验收包 deliverables/G4-004-Acceptance/ 的真人分项时间未回填",
+   "Boss 400 仍是路线平衡版；2200设计版仅机制测试；审核台H05时间线本次受DirectInput环境影响"
   ],
   "caveat": "G4-002 adds five interlude areas and E31-E35; user approved a revised 20-minute duration target. Automated route times do not substitute for the human 20-minute playtest."
  },
