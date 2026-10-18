@@ -99,7 +99,7 @@
   },
   "G3": {
     "status": "in_progress",
-    "iteration": "G3-008",
+    "iteration": "G3-009",
     "evidence": [
       "qa/evidence/G3/G3-001-save-tests.log",
       "qa/evidence/G3/G3-001-progress.md",
@@ -174,7 +174,26 @@
       "qa/evidence/G3/G3-008-camp.png",
       "qa/evidence/G3/G3-008-end-sealed.png",
       "qa/evidence/G3/G3-008-end-open.png",
-      "qa/evidence/G3/G3-008-package-camp.png"
+      "qa/evidence/G3/G3-008-package-camp.png",
+      "qa/evidence/G3/G3-009-progress.md",
+      "qa/evidence/G3/G3-009-checks.json",
+      "qa/evidence/G3/G3-009-campaign-tests.log",
+      "qa/evidence/G3/G3-009-dialogue-tests.log",
+      "qa/evidence/G3/G3-009-props-tests.log",
+      "qa/evidence/G3/G3-009-route-tests.log",
+      "qa/evidence/G3/G3-009-route.json",
+      "qa/evidence/G3/G3-009-save-tests.log",
+      "qa/evidence/G3/G3-009-enemies-tests.log",
+      "qa/evidence/G3/G3-009-integration.json",
+      "qa/evidence/G3/G3-009-review/checks.json",
+      "qa/evidence/G3/G3-009-framerate-summary.json",
+      "qa/evidence/G3/G3-009-hashes.txt",
+      "qa/evidence/G3/G3-009-wake.png",
+      "qa/evidence/G3/G3-009-camp.png",
+      "qa/evidence/G3/G3-009-end-sealed.png",
+      "qa/evidence/G3/G3-009-end-open.png",
+      "qa/evidence/G3/props/kind_portal.png",
+      "qa/evidence/G3/G3-009-package-camp.png"
     ],
     "remaining": [
       "10～15分钟人类首次游玩时长实测（当前AI快速路线89.6秒，不能替代）",
