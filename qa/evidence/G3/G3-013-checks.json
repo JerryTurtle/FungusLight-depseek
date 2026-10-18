@@ -1,0 +1,99 @@
+{
+  "build_id": "G3-013",
+  "engine": "C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_console.exe",
+  "checks": [
+    {
+      "check": "campaign",
+      "script": "scripts/test_campaign.gd",
+      "exit": 0,
+      "checks": 180,
+      "failures": 0,
+      "expected_min_checks": 180,
+      "seconds": 1.12,
+      "log": "qa/evidence/G3/G3-013-campaign-tests.log",
+      "passed": true
+    },
+    {
+      "check": "save",
+      "script": "scripts/test_save.gd",
+      "exit": 0,
+      "checks": 65,
+      "failures": 0,
+      "expected_min_checks": 65,
+      "seconds": 0.28,
+      "log": "qa/evidence/G3/G3-013-save-tests.log",
+      "passed": true
+    },
+    {
+      "check": "enemies",
+      "script": "scripts/test_enemies.gd",
+      "exit": 0,
+      "checks": 35,
+      "failures": 0,
+      "expected_min_checks": 35,
+      "seconds": 0.28,
+      "log": "qa/evidence/G3/G3-013-enemies-tests.log",
+      "passed": true
+    },
+    {
+      "check": "dialogue",
+      "script": "scripts/test_dialogue.gd",
+      "exit": 0,
+      "checks": 175,
+      "failures": 0,
+      "expected_min_checks": 175,
+      "seconds": 0.38,
+      "log": "qa/evidence/G3/G3-013-dialogue-tests.log",
+      "passed": true
+    },
+    {
+      "check": "props",
+      "script": "scripts/test_props.gd",
+      "exit": 0,
+      "checks": 2178,
+      "failures": 0,
+      "expected_min_checks": 2178,
+      "seconds": 0.49,
+      "log": "qa/evidence/G3/G3-013-props-tests.log",
+      "passed": true
+    },
+    {
+      "check": "pressure",
+      "script": "scripts/test_pressure.gd",
+      "exit": 0,
+      "checks": 5,
+      "failures": 0,
+      "expected_min_checks": 5,
+      "seconds": 6.87,
+      "log": "qa/evidence/G3/G3-013-pressure-tests.log",
+      "passed": true
+    },
+    {
+      "check": "route",
+      "script": "scripts/route_test.gd",
+      "exit": 0,
+      "checks": 8,
+      "failures": 0,
+      "expected_min_checks": 8,
+      "seconds": 2.79,
+      "log": "qa/evidence/G3/G3-013-route-tests.log",
+      "passed": true,
+      "simulated_seconds": 127.8
+    },
+    {
+      "check": "skip_route",
+      "script": "scripts/route_test.gd",
+      "exit": 0,
+      "checks": 8,
+      "failures": 0,
+      "expected_min_checks": 8,
+      "seconds": 2.77,
+      "log": "qa/evidence/G3/G3-013-skip_route-tests.log",
+      "passed": true,
+      "simulated_seconds": 98.6
+    }
+  ],
+  "failures": 0,
+  "seconds": 14.98,
+  "passed": true
+}
