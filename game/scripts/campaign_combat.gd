@@ -91,17 +91,10 @@ func update_special_enemy(enemy: Dictionary) -> void:
 		enemy.age += 1
 		if enemy.age >= 7: enemy.state = "idle"
 		return
-	if kind == "EL1" and enemy.hp <= float(spec.hp)/2 and not enemy.rearm_used and enemy.state == "idle":
-		enemy.rearm_used = true
-		enemy.state = "rearm"
-		enemy.age = 0
-	if enemy.state == "rearm":
-		enemy.age += 1
-		if enemy.age >= 48:
-			enemy.armor_layers = 2
-			enemy.state = "idle"
-			emit("enemy_rearm",{"target":enemy.id})
-		return
+	# G4-006: the old EL1 half-health rearm restored two shell layers and made
+	# the gatekeeper read as unkillable in the front hall. Shell damage already
+	# gives the fight its pacing; no second shell is granted.
+	enemy.rearm_used = true
 	if enemy.state == "idle":
 		if kind == "T2" and visible and offset.length() < 60:
 			var previous: Vector2 = enemy.pos

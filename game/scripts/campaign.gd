@@ -212,6 +212,10 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	combat.potions = progress.potions
 	combat.enemies.clear()
 	combat.walls = combat.DEFAULT_WALLS.slice(0,4)
+	# G4-006 campaign-only trim: keep the G2 baseline intact while matching the
+	# visible top/bottom wall pixels more closely in the story rooms.
+	combat.walls[0] = Rect2(0,0,320,24)
+	combat.walls[1] = Rect2(0,162,320,18)
 	for wall in progress.node().walls: combat.walls.append(Rect2(wall[0],wall[1],wall[2],wall[3]))
 	combat.doors.clear()
 	combat.doors.append({"id":"unused","rect":Rect2(0,0,1,1),"open":true})
@@ -764,9 +768,23 @@ func _physics_process(delta: float) -> void:
 	ui_layer.queue_redraw()
 	hud.text = "%s   生命 %d/%d   专注 %d/100   药剂 %d/3   时间 %s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,combat.potions,elapsed_text(),current_goal()]
 	var nearest := nearest_object()
-	status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动  E交互  Q观察  R治疗  空格闪避")+"    "+notice
+	var boss := boss_target()
+	if not boss.is_empty():
+		status.text = "目标：%s  生命 %d/%d  护甲 %d\n%s" % [boss_label(boss),int(boss.hp),int(boss.max_hp),int(boss.armor_layers),notice]
+	else:
+		status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动  E交互  Q观察  R治疗  空格闪避")+"    "+notice
 	if combat.action == "heal": status.text = "正在治疗 %d / 36 · 移动、闪避或受击会取消\n%s" % [combat.age,notice]
 	if wake_left > 0: status.text = "……\n睁开眼，从床铺上起身。"
+
+func boss_target() -> Dictionary:
+	for enemy in combat.enemies:
+		if enemy.hp > 0 and str(enemy.get("archetype","")) in ["EL1","EL2","T6","BOSS"]:
+			return enemy
+	return {}
+
+func boss_label(enemy: Dictionary) -> String:
+	var names := {"EL1":"守门者","EL2":"重甲守卫","T6":"甲片守卫","BOSS":"母体"}
+	return names.get(str(enemy.get("archetype","")),"精英")
 
 func current_goal() -> String:
 	match progress.node_id:

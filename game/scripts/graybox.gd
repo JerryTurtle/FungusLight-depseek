@@ -366,22 +366,70 @@ func draw_world() -> void:
 		world.draw_circle(shot.pos,shot.radius,Color("ea9dac"))
 		world.draw_line(shot.pos,shot.pos-shot.velocity.normalized()*6,Color("aa617d"),1)
 	if combat.action == "melee":
-		var angle: float = combat.locked.angle()
-		var active: bool = combat.age >= 6 and combat.age < 11
-		if active or debug_shapes:
-			world.draw_arc(combat.player,22,angle-PI/4,angle+PI/4,20,Color("ffe1a1") if active else Color("807659"),2 if active else 0.5)
-	if combat.action == "light" and combat.age >= 12 and combat.age < 18:
-		var lamp_tip: Vector2 = art.light_tip(combat.beam_from,combat.locked,combat.age)
-		# Main core follows the authoritative collision ray. A short lamp connector is visual only.
-		var join: Vector2 = combat.beam_from+combat.locked*clampf((lamp_tip-combat.beam_from).dot(combat.locked),0,combat.beam_from.distance_to(combat.beam_end))
-		var glow := Color(0.55,0.85,0.76,0.55 if preferences.reduced_flash else 1.0)
-		var core := Color(1,0.95,0.82,0.55 if preferences.reduced_flash else 1.0)
-		world.draw_line(join,combat.beam_end,glow,float(combat.config.actions.light.width))
-		world.draw_line(join,combat.beam_end,core,2)
-		if combat.clear_line(combat.beam_from,lamp_tip) and combat.clear_line(lamp_tip,join):
-			world.draw_line(lamp_tip,join,glow,4)
-			world.draw_line(lamp_tip,join,core,2)
-
+		var age: int = combat.age
+		if age >= 3 and age < 20:
+			var angle: float = combat.locked.angle()
+			var fade := clampf(1.0-float(age-3)/17.0,0.0,1.0)
+			var reach := float(combat.config.actions.melee.range)+3.0
+			var start_a: float = angle-1.18
+			var end_a: float = angle+1.18
+			var segments := 6 if preferences.low_effects else 16
+			for layer in [{"radius":reach+4.0,"width":12.0,"color":Color(1.0,0.48,0.10,0.20*fade)},{"radius":reach,"width":5.0,"color":Color(1.0,0.78,0.30,0.92*fade)},{"radius":reach-3.0,"width":2.0,"color":Color(1.0,0.98,0.86,0.95*fade)}]:
+				for i in segments:
+					var a0: float = start_a+(end_a-start_a)*float(i)/float(segments)
+					var a1: float = start_a+(end_a-start_a)*float(i+1)/float(segments)
+					var lead := float(i)/float(segments-1)
+					var c: Color = layer.color
+					c.a *= 0.45+0.55*lead
+					world.draw_arc(combat.player,float(layer.radius),a0,a1,3,c,float(layer.width))
+			# A hot leading edge and a trailing after-image: reads as one fast cut.
+			var tip: Vector2 = combat.player+Vector2.from_angle(angle+1.18)*reach
+			world.draw_line(combat.player+Vector2.from_angle(angle+0.82)*reach,tip,Color(1,0.93,0.62,0.98*fade),2.0)
+			world.draw_rect(Rect2(tip-Vector2(1,1),Vector2(3,3)),Color(1,0.98,0.78,0.95*fade))
+			if not preferences.low_effects and not preferences.reduced_motion:
+				for i in 8:
+					var a := angle-0.9+float(i)*0.26
+					var d := reach-2.0-float((i*7+combat.tick)%5)*1.6
+					var p: Vector2 = combat.player+Vector2.from_angle(a)*d
+					world.draw_rect(Rect2(p.round(),Vector2(2,2)),Color(1,0.72,0.28,0.85*fade))
+					world.draw_line(p,p-Vector2.from_angle(a)*4,Color(0.9,0.42,0.16,0.5*fade),0.5)
+	if combat.action == "light":
+		var age: int = combat.age
+		var fade := clampf(1.0-float(age-12)/7.0,0.0,1.0) if age >= 12 else 0.0
+		if age >= 8 and age < 12:
+			# Charging pressure: a small hot point at the lamp before release.
+			var charge_tip: Vector2 = art.light_tip(combat.beam_from,combat.locked,age)
+			world.draw_circle(charge_tip,2.0+float(age-8)*0.8,Color(0.7,1.0,0.86,0.35))
+			world.draw_circle(charge_tip,7.0+float(age-8)*1.5,Color(0.45,0.85,0.70,0.12))
+		if age >= 12 and age < 18:
+			var lamp_tip: Vector2 = art.light_tip(combat.beam_from,combat.locked,age)
+			var join: Vector2 = combat.beam_from+combat.locked*clampf((lamp_tip-combat.beam_from).dot(combat.locked),0,combat.beam_from.distance_to(combat.beam_end))
+			var endp: Vector2 = combat.beam_end
+			# Layered burst: broad pressure halo, hot core, then a white seam.
+			world.draw_line(join,endp,Color(0.30,0.72,0.62,0.18*fade),24)
+			world.draw_line(join,endp,Color(0.38,0.92,0.78,0.42*fade),12)
+			world.draw_line(join,endp,Color(0.62,1.0,0.84,0.72*fade),6)
+			world.draw_line(join,endp,Color(0.94,1.0,0.93,0.98*fade),3)
+			world.draw_line(join,endp,Color(1,1,0.97,1.0*fade),1.5)
+			world.draw_circle(join,4.0+float(18-age)*0.4,Color(0.8,1,0.9,0.7*fade))
+			world.draw_circle(join,10.0+float(18-age)*0.7,Color(0.55,0.9,0.75,0.16*fade))
+			# Expanding shock ring at the impact point.
+			var ring := 3.0+float(age-12)*4.0
+			world.draw_arc(endp,ring,0,TAU,24,Color(0.85,1.0,0.90,0.85*fade),3)
+			world.draw_arc(endp,ring+3.0,0,TAU,24,Color(0.52,0.95,0.76,0.35*fade),1.5)
+			world.draw_arc(endp,ring+7.0,0,TAU,24,Color(0.32,0.72,0.62,0.16*fade),1)
+			# Impact sparks/debris, deterministic per tick.
+			if not preferences.low_effects and not preferences.reduced_motion:
+				for i in 12:
+					var a := float(i)*TAU/12.0+float(combat.tick%5)*0.3
+					var d := 5.0+float(age-12)*3.0+float((i*3)%4)*2.0
+					var p: Vector2 = endp+Vector2.from_angle(a)*d
+					var sz := 3 if i%3==0 else 2
+					world.draw_rect(Rect2(p.round(),Vector2(sz,sz)),Color(1,0.93,0.62,0.9*fade))
+					world.draw_line(p,p-Vector2.from_angle(a)*5,Color(1,0.58,0.24,0.6*fade),0.5)
+	# Sustained overlay for the (short) beam window.
+	feedback.draw(world,combat.tick,preferences)
+	feedback.draw_sparks(world,combat.tick,preferences)
 	feedback.draw(world,combat.tick,preferences)
 
 func toggle_settings() -> void:

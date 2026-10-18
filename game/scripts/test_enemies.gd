@@ -126,13 +126,13 @@ func _initialize() -> void:
 	e.hp = 224
 	e.state = "idle"
 	advance(m,1)
-	check(e.state == "rearm" and e.armor_layers == 0,"half health has visible rearm delay")
+	check(e.state != "rearm" and e.armor_layers == 0,"EL1 half health no longer enters rearm")
 	advance(m,47)
-	check(e.armor_layers == 2 and e.rearm_used,"elite rearms once after warning")
+	check(e.armor_layers == 0 and e.rearm_used,"EL1 does not regain a second shell")
 	e.state = "idle"
 	e.armor_layers = 0
 	advance(m,1)
-	check(e.state != "rearm" and e.armor_layers == 0,"elite cannot rearm repeatedly")
+	check(e.state != "rearm" and e.armor_layers == 0,"EL1 cannot rearm repeatedly")
 	m = arena()
 	for i in 4: m.add_archetype("T4",Vector2(116,84+i*9))
 	advance(m,1)

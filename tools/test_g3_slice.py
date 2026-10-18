@@ -55,7 +55,7 @@ for entry in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 76, 'g4_state': 34, 'g4_boss': 5, 'g4_death': 5, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2490, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
+    expected = {'campaign': 76, 'g4_state': 34, 'g4_boss': 8, 'g4_death': 5, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2400, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1

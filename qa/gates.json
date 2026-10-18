@@ -312,7 +312,7 @@
  },
  "G4": {
   "status": "passed",
-  "iteration": "G4-006",
+  "iteration": "G4-007",
   "evidence": [
    "qa/evidence/G4/G4-001-progress.md",
    "qa/evidence/G4/G4-001-checks.json",
@@ -349,10 +349,18 @@
    "qa/evidence/G4/G4-006-fixes.md",
    "qa/evidence/G4/G4-006-checks.json",
    "qa/evidence/G4/G4-006-route-matrix.json",
-   "qa/evidence/G4/G4-006-hashes.txt"
+   "qa/evidence/G4/G4-006-hashes.txt",
+   "qa/evidence/G4/G4-007-progress.md",
+   "qa/evidence/G4/G4-007-fixes.md",
+   "qa/evidence/G4/G4-007-checks.json",
+   "qa/evidence/G4/G4-007-route-matrix.json",
+   "qa/evidence/G4/G4-007-hashes.txt",
+   "qa/evidence/G4/G4-007-light.png",
+   "qa/evidence/G4/G4-007-melee.png",
+   "qa/evidence/G4/G4-007-wounded.png"
   ],
   "remaining": [],
-  "caveat": "User confirmed the 20-minute duration. G4-006 fixes minimap, portal directions, camp/water NPC clarity, text overlap, branch-B room retry, and top/bottom wall collision. Human spot-check of the seven fixes is still recommended; automated suite/matrix pass.",
+  "caveat": "G4 passed; G4-007 is post-pass VFX/presentation polish: layered light burst + sparks/shockwave, melee crescent + sparks, melee range 26, Cleric-derived wounded NPC, EL1 rearm removed and elite HP HUD. Human spot-check of feel still recommended.",
   "passed_at": "2026-10-18"
  },
  "G5": {

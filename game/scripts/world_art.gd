@@ -84,14 +84,14 @@ func sleep_pose(canvas: CanvasItem, foot: Vector2, rotation: float, alpha: float
 	canvas.draw_texture_rect_region(cleric,space,region,Color(1,1,1,alpha))
 	canvas.draw_set_transform(Vector2.ZERO)
 
-func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String, age: int, tick: int, moving: bool, player: bool = true, override_texture: Texture2D = null, alpha: float = 1.0) -> void:
+func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String, age: int, tick: int, moving: bool, player: bool = true, override_texture: Texture2D = null, alpha: float = 1.0, body_tint: Color = Color.WHITE) -> void:
 	foot = foot.round()
 	var texture: Texture2D = cleric if player else fungus
 	if override_texture != null: texture = override_texture
 	var frame: int = [1,0,1,2][int(tick/8)%4] if moving else 1
 	var angle := -PI/2 + (0.28 if row(direction) in [0,3] else (-0.8 if row(direction) == 1 else 0.8))
 	var extension := 0.0
-	var tint := Color.WHITE
+	var tint := body_tint
 	if action == "melee":
 		var keyframe: int = 0 if age < 3 else (1 if age < 6 else (2 if age < 8 else (3 if age < 11 else (4 if age < 16 else 5))))
 		var sweep: Array[float] = [-1.0,-0.8,-0.45,0.65,0.85,0.25]
@@ -133,23 +133,15 @@ func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String
 		canvas.draw_texture_rect_region(texture,Rect2(hand_origin,hand.size),Rect2(source+hand.position,hand.size),tint)
 
 func wounded_npc(canvas: CanvasItem, foot: Vector2, tick: int) -> void:
-	var breath := sin(float(tick)/34.0)*0.5
-	foot = foot.round()
-	canvas.draw_set_transform(foot,0,Vector2(1,0.35))
-	canvas.draw_circle(Vector2.ZERO,7,Color(0.02,0.04,0.04,0.45))
-	canvas.draw_set_transform(Vector2.ZERO)
-	# Seated, bandaged scout: deliberately distinct from 岚's blue cloak and staff.
-	var cloth := Color("6f5445")
-	var trim := Color("b59063")
-	canvas.draw_rect(Rect2(foot+Vector2(-6,-13+breath),Vector2(12,10)),cloth)
-	canvas.draw_rect(Rect2(foot+Vector2(-6,-13+breath),Vector2(12,2)),trim)
-	canvas.draw_rect(Rect2(foot+Vector2(-7,-4),Vector2(5,5)),Color("4a3b33"))
-	canvas.draw_rect(Rect2(foot+Vector2(2,-4),Vector2(5,5)),Color("4a3b33"))
-	canvas.draw_circle(foot+Vector2(0,-18+breath),5,Color("caa27e"))
-	canvas.draw_rect(Rect2(foot+Vector2(-6,-21+breath),Vector2(13,3)),Color("e7ddc8"))
-	canvas.draw_rect(Rect2(foot+Vector2(-1,-20+breath),Vector2(3,3)),Color("b85a4d"))
-	canvas.draw_rect(Rect2(foot+Vector2(6,-12+breath),Vector2(3,8)),Color("caa27e"))
-	canvas.draw_rect(Rect2(foot+Vector2(-9,-8+breath),Vector2(4,2)),Color("e7ddc8"))
+	# Based on the accepted Cleric sheet: muted umber cloak, no staff, bandage.
+	actor(canvas,foot,Vector2.DOWN,"idle",0,tick,false,false,cleric,1.0,Color(0.82,0.86,0.68))
+	canvas.draw_rect(Rect2(foot+Vector2(-6,-22),Vector2(12,3)),Color("e7ddc8"))
+	canvas.draw_rect(Rect2(foot+Vector2(-1,-22),Vector2(3,3)),Color("b85a4d"))
+	canvas.draw_rect(Rect2(foot+Vector2(-8,-13),Vector2(3,2)),Color("e7ddc8"))
+	canvas.draw_rect(Rect2(foot+Vector2(5,-13),Vector2(3,2)),Color("e7ddc8"))
+	# A simple wooden crutch keeps the silhouette readable as the camp's wounded scout.
+	canvas.draw_line(foot+Vector2(-12,-21),foot+Vector2(-14,0),Color("6b4c32"),2)
+	canvas.draw_line(foot+Vector2(-14,0),foot+Vector2(-10,1),Color("6b4c32"),2)
 
 func target(canvas: CanvasItem, foot: Vector2, hp: float, alpha: float = 1.0) -> void:
 	var wood := Color("775c40"); wood.a = alpha

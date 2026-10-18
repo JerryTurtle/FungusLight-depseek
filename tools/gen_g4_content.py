@@ -24,10 +24,14 @@ n15 = next(n for n in d["nodes"] if n["id"] == "N1-05")
 for o in n15["objects"]:
     if o["id"] == "east":
         o.clear(); o.update({"id": "east", "name": "通往 根桥", "pos": [292, 130], "kind": "exit", "target": "N1-06", "requires": "E11&M2"})
+n15 = next(n for n in d["nodes"] if n["id"] == "N1-05")
+n15["objects"] = [o for o in n15["objects"] if o.get("id") != "m2"]
 n15["objects"].append({"id": "m2", "name": "灯根 · 选择强化", "pos": [180, 140], "kind": "growth", "event": "M2", "visual": "ring"})
 n12 = next(n for n in d["nodes"] if n["id"] == "N1-02")
+n12["objects"] = [o for o in n12["objects"] if o.get("id") != "q1a"]
 n12["objects"].append({"id": "q1a", "name": "旧灯·导光间", "pos": [80, 140], "kind": "sidequest", "quest": "Q1", "part": "a", "visual": "chest"})
 n14 = next(n for n in d["nodes"] if n["id"] == "N1-04")
+n14["objects"] = [o for o in n14["objects"] if o.get("id") != "q2a"]
 n14["objects"].append({"id": "q2a", "name": "补给箱单·裂口", "pos": [190, 140], "kind": "sidequest", "quest": "Q2", "part": "a", "visual": "chest"})
 
 # Camp: make the injured NPC explicit; remove mushroom decor that reads as an NPC.
@@ -400,7 +404,7 @@ D = {
     "L20": [["岚","调压前厅的根门已经打开。"],["岚","进去就是核心外廊；检查一下药剂和专注。"]],
 }
 d["dialogues"].update(D)
-d["build_id"] = "G4-006"
+d["build_id"] = "G4-007"
 d["chapter_id"] = "campaign"
 PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 print("nodes", len(d["nodes"]), [n["id"] for n in d["nodes"]])

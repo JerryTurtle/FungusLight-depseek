@@ -21,7 +21,7 @@ $cmds = @{
 foreach ($name in $cmds.Keys) { $cmds[$name] | Set-Content -Encoding ascii (Join-Path $output $name) }
 $ev = Join-Path $output "evidence"
 New-Item -ItemType Directory -Path $ev -Force | Out-Null
-foreach ($name in @("$BuildId-progress.md","$BuildId-route-matrix.json","$BuildId-hashes.txt","$BuildId-camp.png","$BuildId-fixes.md","G4-001-boss.png","G4-001-boss-phase.png","G4-001-branch.png","G4-001-ending.png","G4-001-court.png","G4-001-rootbridge.png")) {
+foreach ($name in @("$BuildId-progress.md","$BuildId-route-matrix.json","$BuildId-hashes.txt","$BuildId-camp.png","$BuildId-fixes.md","$BuildId-light.png","$BuildId-melee.png","$BuildId-wounded.png","G4-001-boss.png","G4-001-boss-phase.png","G4-001-branch.png","G4-001-ending.png","G4-001-court.png","G4-001-rootbridge.png")) {
   $path = Join-Path $evidence $name
   if (Test-Path $path) { Copy-Item $path $ev }
 }

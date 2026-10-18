@@ -30,5 +30,19 @@ func _initialize() -> void:
 		c.step(Vector2.ZERO,Vector2.RIGHT)
 	check(c.hp > 0, "boss phase 2 does not immediately kill full-health player")
 	check(c.enemies.size() == 1 and boss.hp > 0, "boss remains controllable")
+
+	var elite_model = Combat.new()
+	elite_model.reset()
+	var elite: Dictionary = elite_model.add_archetype("EL1",Vector2(200,90))
+	check(elite.max_hp == 450 and elite.armor_layers == 2, "EL1 gatekeeper shell")
+	elite.hp = 220
+	elite_model.step(Vector2.ZERO,Vector2.RIGHT)
+	check(elite.state != "rearm", "EL1 no longer rearms at half health")
+	elite.hp = 5
+	elite.armor_layers = 0
+	elite_model.snapshot_living()
+	elite_model.queue_damage(0,int(elite.id),elite_model.allocate_attack_id(),100,"melee",{"independent":true,"origin":Vector2(200,90)})
+	elite_model.resolve_damage_batch()
+	check(elite.hp <= 0 and elite.state == "dead", "EL1 gatekeeper killable")
 	print("G4_BOSS_TEST checks=%d failures=%d hp=%d phase=%d" % [checks,failures,int(c.hp),int(boss.phase)])
 	quit(1 if failures else 0)

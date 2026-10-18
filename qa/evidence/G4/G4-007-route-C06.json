@@ -1,0 +1,911 @@
+{
+  "branch": "B",
+  "build_id": "G4-007",
+  "checks": 9,
+  "deaths": 0,
+  "dialogue_model": "每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间",
+  "dodges": 242,
+  "ending": "seal",
+  "failure": "",
+  "failures": 0,
+  "heals": 4,
+  "input": "Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes",
+  "min_hp": 56,
+  "path_queries": 0,
+  "route": "N0-01→N0-04→N1-01→N1-05→N2-01→N2-06→N3-06→N4-07",
+  "seconds": 508.4,
+  "segments": [
+    {
+      "hp": 100,
+      "id": "S01",
+      "seconds": 6.7,
+      "ticks": 404,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "N0-02",
+      "seconds": 2,
+      "ticks": 122,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "core",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "P01",
+      "seconds": 7.5,
+      "ticks": 452,
+      "type": "interact"
+    },
+    {
+      "hp": 100,
+      "id": "tutorial",
+      "seconds": 0.6,
+      "ticks": 34,
+      "type": "light_target"
+    },
+    {
+      "hp": 100,
+      "id": "E01",
+      "seconds": 2.4,
+      "ticks": 141,
+      "type": "combat"
+    },
+    {
+      "hp": 120,
+      "id": "M1",
+      "seconds": 4.9,
+      "ticks": 295,
+      "type": "interact"
+    },
+    {
+      "hp": 120,
+      "id": "N0-03",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 120,
+      "id": "scan",
+      "seconds": 1.6,
+      "ticks": 97,
+      "type": "press"
+    },
+    {
+      "hp": 120,
+      "id": "pipe",
+      "seconds": 0,
+      "ticks": 2,
+      "type": "interact"
+    },
+    {
+      "hp": 120,
+      "id": "S03",
+      "seconds": 8.6,
+      "ticks": 514,
+      "type": "interact"
+    },
+    {
+      "hp": 108,
+      "id": "N0-04",
+      "seconds": 8.9,
+      "ticks": 532,
+      "type": "interact"
+    },
+    {
+      "hp": 108,
+      "id": "E02",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 108,
+      "id": "E03",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 86,
+      "id": "N1-01",
+      "seconds": 11,
+      "ticks": 662,
+      "type": "interact"
+    },
+    {
+      "hp": 86,
+      "id": "E04",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 86,
+      "id": "L01",
+      "seconds": 5.9,
+      "ticks": 352,
+      "type": "lore"
+    },
+    {
+      "hp": 86,
+      "id": "N1-02",
+      "seconds": 12.6,
+      "ticks": 754,
+      "type": "interact"
+    },
+    {
+      "hp": 86,
+      "id": "E05",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 86,
+      "id": "E06",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 86,
+      "id": "P02",
+      "seconds": 7,
+      "ticks": 422,
+      "type": "guides"
+    },
+    {
+      "hp": 68,
+      "id": "N1-03",
+      "seconds": 9.5,
+      "ticks": 570,
+      "type": "interact"
+    },
+    {
+      "hp": 68,
+      "id": "E07",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 68,
+      "id": "E08",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 103,
+      "id": "N1-04",
+      "seconds": 10.2,
+      "ticks": 614,
+      "type": "interact"
+    },
+    {
+      "hp": 103,
+      "id": "E09",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 103,
+      "id": "E10",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 103,
+      "id": "L03",
+      "seconds": 4.7,
+      "ticks": 282,
+      "type": "lore"
+    },
+    {
+      "hp": 103,
+      "id": "N1-08",
+      "seconds": 11,
+      "ticks": 662,
+      "type": "interact"
+    },
+    {
+      "hp": 103,
+      "id": "E35",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 120,
+      "id": "rest1c",
+      "seconds": 4.4,
+      "ticks": 266,
+      "type": "rest"
+    },
+    {
+      "hp": 120,
+      "id": "N1-05",
+      "seconds": 9.8,
+      "ticks": 587,
+      "type": "interact"
+    },
+    {
+      "hp": 120,
+      "id": "E11",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 120,
+      "id": "L04",
+      "seconds": 5.3,
+      "ticks": 320,
+      "type": "lore"
+    },
+    {
+      "hp": 140,
+      "id": "M2",
+      "seconds": 1.3,
+      "ticks": 75,
+      "type": "interact"
+    },
+    {
+      "hp": 76,
+      "id": "N1-06",
+      "seconds": 10.8,
+      "ticks": 645,
+      "type": "interact"
+    },
+    {
+      "hp": 76,
+      "id": "E12",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 76,
+      "id": "S04",
+      "seconds": 5.3,
+      "ticks": 318,
+      "type": "interact"
+    },
+    {
+      "hp": 76,
+      "id": "V01",
+      "seconds": 2,
+      "ticks": 122,
+      "type": "interact"
+    },
+    {
+      "hp": 76,
+      "id": "V02",
+      "seconds": 0.4,
+      "ticks": 26,
+      "type": "interact"
+    },
+    {
+      "hp": 62,
+      "id": "N1-07",
+      "seconds": 9.5,
+      "ticks": 569,
+      "type": "interact"
+    },
+    {
+      "hp": 62,
+      "id": "E31",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 140,
+      "id": "rest1b",
+      "seconds": 3.6,
+      "ticks": 218,
+      "type": "rest"
+    },
+    {
+      "hp": 140,
+      "id": "N2-01",
+      "seconds": 2,
+      "ticks": 122,
+      "type": "interact"
+    },
+    {
+      "hp": 140,
+      "id": "S05",
+      "seconds": 11.4,
+      "ticks": 684,
+      "type": "interact"
+    },
+    {
+      "hp": 140,
+      "id": "E13",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 112,
+      "id": "N2-04",
+      "seconds": 9.8,
+      "ticks": 590,
+      "type": "interact"
+    },
+    {
+      "hp": 112,
+      "id": "E16",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 112,
+      "id": "V05",
+      "seconds": 2,
+      "ticks": 122,
+      "type": "interact"
+    },
+    {
+      "hp": 112,
+      "id": "V06",
+      "seconds": 0.4,
+      "ticks": 26,
+      "type": "interact"
+    },
+    {
+      "hp": 94,
+      "id": "N2-05",
+      "seconds": 10.3,
+      "ticks": 620,
+      "type": "interact"
+    },
+    {
+      "hp": 94,
+      "id": "E17",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 94,
+      "id": "N2-01c",
+      "seconds": 3.2,
+      "ticks": 194,
+      "type": "interact"
+    },
+    {
+      "hp": 94,
+      "id": "N2-02",
+      "seconds": 13,
+      "ticks": 778,
+      "type": "interact"
+    },
+    {
+      "hp": 94,
+      "id": "E14",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 94,
+      "id": "V03",
+      "seconds": 0.4,
+      "ticks": 26,
+      "type": "interact"
+    },
+    {
+      "hp": 94,
+      "id": "V04",
+      "seconds": 0.4,
+      "ticks": 26,
+      "type": "interact"
+    },
+    {
+      "hp": 94,
+      "id": "N2-03",
+      "seconds": 12.2,
+      "ticks": 734,
+      "type": "interact"
+    },
+    {
+      "hp": 94,
+      "id": "E15",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 94,
+      "id": "N2-01b",
+      "seconds": 2.4,
+      "ticks": 146,
+      "type": "interact"
+    },
+    {
+      "hp": 94,
+      "id": "N2-06",
+      "seconds": 1.6,
+      "ticks": 98,
+      "type": "interact"
+    },
+    {
+      "hp": 140,
+      "id": "rest2",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "rest"
+    },
+    {
+      "hp": 84,
+      "id": "S06",
+      "seconds": 16.3,
+      "ticks": 980,
+      "type": "interact"
+    },
+    {
+      "hp": 84,
+      "id": "E18",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 56,
+      "id": "N2-07",
+      "seconds": 6.4,
+      "ticks": 384,
+      "type": "interact"
+    },
+    {
+      "hp": 56,
+      "id": "E19",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 140,
+      "id": "rest2b",
+      "seconds": 3.6,
+      "ticks": 218,
+      "type": "rest"
+    },
+    {
+      "hp": 122,
+      "id": "N2-09",
+      "seconds": 17.3,
+      "ticks": 1040,
+      "type": "interact"
+    },
+    {
+      "hp": 122,
+      "id": "E32",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 122,
+      "id": "N2-08",
+      "seconds": 6.9,
+      "ticks": 414,
+      "type": "interact"
+    },
+    {
+      "hp": 122,
+      "id": "E20",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 122,
+      "id": "V07",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 122,
+      "id": "V08",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "M3",
+      "seconds": 0.5,
+      "ticks": 27,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "N2-10",
+      "seconds": 12.9,
+      "ticks": 774,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "E34",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 160,
+      "id": "rest2c",
+      "seconds": 2.2,
+      "ticks": 133,
+      "type": "rest"
+    },
+    {
+      "hp": 160,
+      "id": "N3-01",
+      "seconds": 2,
+      "ticks": 122,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "rest3",
+      "seconds": 0.6,
+      "ticks": 35,
+      "type": "rest"
+    },
+    {
+      "hp": 96,
+      "id": "S08",
+      "seconds": 17.4,
+      "ticks": 1046,
+      "type": "interact"
+    },
+    {
+      "hp": 96,
+      "id": "E21",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 160,
+      "id": "rest3d",
+      "seconds": 3.6,
+      "ticks": 218,
+      "type": "rest"
+    },
+    {
+      "hp": 114,
+      "id": "N3-02",
+      "seconds": 13.4,
+      "ticks": 806,
+      "type": "interact"
+    },
+    {
+      "hp": 114,
+      "id": "E22",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 160,
+      "id": "rest3a",
+      "seconds": 3.6,
+      "ticks": 218,
+      "type": "rest"
+    },
+    {
+      "hp": 160,
+      "id": "V09",
+      "seconds": 1.2,
+      "ticks": 74,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "V10",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "V11",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "rest4",
+      "seconds": 2.4,
+      "ticks": 141,
+      "type": "rest"
+    },
+    {
+      "hp": 96,
+      "id": "N3-03",
+      "seconds": 18.4,
+      "ticks": 1104,
+      "type": "interact"
+    },
+    {
+      "hp": 96,
+      "id": "E23",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 160,
+      "id": "rest3b",
+      "seconds": 3.6,
+      "ticks": 218,
+      "type": "rest"
+    },
+    {
+      "hp": 60,
+      "id": "N3-07",
+      "seconds": 16.4,
+      "ticks": 987,
+      "type": "interact"
+    },
+    {
+      "hp": 60,
+      "id": "E33",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 160,
+      "id": "rest3e",
+      "seconds": 4.8,
+      "ticks": 290,
+      "type": "rest"
+    },
+    {
+      "hp": 88,
+      "id": "N3-04",
+      "seconds": 16.2,
+      "ticks": 974,
+      "type": "interact"
+    },
+    {
+      "hp": 88,
+      "id": "E24",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 88,
+      "id": "E25",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 88,
+      "id": "N3-05",
+      "seconds": 1.6,
+      "ticks": 98,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "rest3c",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "rest"
+    },
+    {
+      "hp": 160,
+      "id": "V12",
+      "seconds": 2,
+      "ticks": 122,
+      "type": "interact"
+    },
+    {
+      "hp": 160,
+      "id": "V13",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 180,
+      "id": "M4",
+      "seconds": 0.5,
+      "ticks": 27,
+      "type": "interact"
+    },
+    {
+      "hp": 164,
+      "id": "N3-06",
+      "seconds": 10.8,
+      "ticks": 649,
+      "type": "interact"
+    },
+    {
+      "hp": 164,
+      "id": "E26",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 138,
+      "id": "N3-08",
+      "seconds": 10.7,
+      "ticks": 643,
+      "type": "interact"
+    },
+    {
+      "hp": 138,
+      "id": "E36",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 180,
+      "id": "rest3f",
+      "seconds": 4,
+      "ticks": 242,
+      "type": "rest"
+    },
+    {
+      "hp": 148,
+      "id": "N4-01",
+      "seconds": 11.4,
+      "ticks": 682,
+      "type": "interact"
+    },
+    {
+      "hp": 148,
+      "id": "E27",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 148,
+      "id": "V14",
+      "seconds": 1.2,
+      "ticks": 74,
+      "type": "interact"
+    },
+    {
+      "hp": 124,
+      "id": "N4-02",
+      "seconds": 6.1,
+      "ticks": 365,
+      "type": "interact"
+    },
+    {
+      "hp": 124,
+      "id": "E28",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 124,
+      "id": "V15",
+      "seconds": 0.4,
+      "ticks": 26,
+      "type": "interact"
+    },
+    {
+      "hp": 92,
+      "id": "N4-03",
+      "seconds": 9.3,
+      "ticks": 555,
+      "type": "interact"
+    },
+    {
+      "hp": 92,
+      "id": "E29",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 92,
+      "id": "V16",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "interact"
+    },
+    {
+      "hp": 92,
+      "id": "N4-04",
+      "seconds": 2.4,
+      "ticks": 146,
+      "type": "interact"
+    },
+    {
+      "hp": 92,
+      "id": "N4-05",
+      "seconds": 3.6,
+      "ticks": 218,
+      "type": "interact"
+    },
+    {
+      "hp": 180,
+      "id": "rest5",
+      "seconds": 0.8,
+      "ticks": 50,
+      "type": "rest"
+    },
+    {
+      "hp": 180,
+      "id": "S09",
+      "seconds": 6.1,
+      "ticks": 366,
+      "type": "interact"
+    },
+    {
+      "hp": 117,
+      "id": "N4-06",
+      "seconds": 16.4,
+      "ticks": 984,
+      "type": "interact"
+    },
+    {
+      "hp": 117,
+      "id": "E30",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "combat"
+    },
+    {
+      "hp": 117,
+      "id": "ending",
+      "seconds": 0.9,
+      "ticks": 51,
+      "type": "interact"
+    },
+    {
+      "hp": 117,
+      "id": "N4-07",
+      "seconds": 2.4,
+      "ticks": 146,
+      "type": "interact"
+    },
+    {
+      "hp": 117,
+      "id": "credits",
+      "seconds": 1.6,
+      "ticks": 98,
+      "type": "interact"
+    },
+    {
+      "hp": 117,
+      "id": "done",
+      "seconds": 0,
+      "ticks": 1,
+      "type": "finish"
+    }
+  ],
+  "tag": "C06",
+  "tick": 30504,
+  "wall_ms": 12798
+}

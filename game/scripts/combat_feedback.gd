@@ -2,14 +2,17 @@ extends RefCounted
 ## Bounded visual records, advanced exclusively by simulation ticks.
 var effects: Array[Dictionary] = []
 var numbers: Array[Dictionary] = []
+var sparks: Array[Dictionary] = []
 
 func reset() -> void:
 	effects.clear()
 	numbers.clear()
+	sparks.clear()
 
 func consume(model) -> void:
 	effects = effects.filter(func(e): return model.tick-e.tick < 18)
 	numbers = numbers.filter(func(e): return model.tick-e.tick < 36)
+	sparks = sparks.filter(func(e): return model.tick-e.tick < 22)
 	for event in model.events:
 		var kind: String = event.kind
 		if kind not in ["hit","hurt","shield_absorb","shield_end","armor_break"]: continue
@@ -19,6 +22,11 @@ func consume(model) -> void:
 			if target.is_empty(): continue
 			position = target.pos-Vector2(0,14)
 		effects.append({"kind":kind,"pos":position,"tick":model.tick,"armor":int(event.get("armor_layers",0)),"broken":event.get("reason","") == "broken"})
+		if kind in ["hit","armor_break"]:
+			for i in (10 if kind == "armor_break" else 6):
+				var angle := float(i)*TAU/float(10 if kind == "armor_break" else 6) + float(model.tick%7)*0.11
+				var speed := 0.9+float((int(event.target)+i*3)%5)*0.35
+				sparks.append({"pos":position,"vel":Vector2.from_angle(angle)*speed,"tick":model.tick,"life":16+i%5,"hot":i%3==0})
 		if kind in ["hit","hurt"] and event.damage > 0:
 			var found := false
 			for number in numbers:
@@ -29,6 +37,7 @@ func consume(model) -> void:
 			if not found: numbers.append({"target":event.target,"pos":position-Vector2(0,17),"amount":event.damage,"tick":model.tick})
 	while effects.size() > 64: effects.pop_front()
 	while numbers.size() > 16: numbers.pop_front()
+	while sparks.size() > 96: sparks.pop_front()
 
 func draw(canvas: CanvasItem, tick: int, preferences) -> void:
 	for effect in effects:
@@ -44,6 +53,17 @@ func draw(canvas: CanvasItem, tick: int, preferences) -> void:
 			for piece in (8 if effect.kind == "armor_break" else 4):
 				var axis := Vector2.from_angle(piece*TAU/(8 if effect.kind == "armor_break" else 4))
 				canvas.draw_line(effect.pos+axis*(3+age*0.5),effect.pos+axis*(5+age*0.7),tint,1)
+
+func draw_sparks(canvas: CanvasItem, tick: int, preferences) -> void:
+	if preferences.low_effects or preferences.reduced_motion: return
+	for spark in sparks:
+		var age: int = tick-spark.tick
+		var t := float(age)/float(spark.life)
+		if t >= 1.0: continue
+		var p: Vector2 = spark.pos+spark.vel*float(age)*(1.0-0.45*t)
+		var color := Color(1.0,0.93,0.62,1.0-t) if spark.hot else Color(0.98,0.62,0.38,1.0-t)
+		canvas.draw_rect(Rect2(p.round(),Vector2.ONE*(2 if spark.hot else 1)),color)
+		canvas.draw_line(p,p-spark.vel*2.0,Color(color.r,color.g,color.b,(1.0-t)*0.55),0.5)
 
 func draw_numbers(canvas: CanvasItem, tick: int, preferences) -> void:
 	for number in numbers:
