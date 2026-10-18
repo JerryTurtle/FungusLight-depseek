@@ -15,6 +15,7 @@ var dialogue_index := 0
 var dialogue_mode := ""
 var dialogue_lines: Array = []
 var choice_pending := false
+var choice_mode := "growth"
 var pending_encounter := ""
 var checkpoint: Dictionary = {}
 var dirty := false
@@ -52,7 +53,7 @@ func _ready() -> void:
 	add_child(dialogue)
 	dialogue.advance_requested.connect(advance_dialogue)
 	dialogue.skip_requested.connect(finish_dialogue)
-	dialogue.choice_selected.connect(func(id: String): choose_growth(id))
+	dialogue.choice_selected.connect(choose_choice)
 	show_title()
 	if "--campaign-capture" in OS.get_cmdline_user_args(): call_deferred("capture_preview")
 	get_window().focus_exited.connect(func():
@@ -253,9 +254,10 @@ func guides_correct() -> int:
 
 func apply_growth() -> void:
 	combat.config.player.hp = progress.max_hp()
-	combat.config.actions.melee.damage = 21 if progress.choice == "melee" else 18
-	combat.config.actions.light.damage = 28 if progress.choice == "light" else 24
+	combat.config.actions.melee.damage = progress.melee_damage()
+	combat.config.actions.light.damage = progress.light_damage()
 	combat.hp = minf(combat.hp,progress.max_hp())
+	combat.focus = minf(combat.focus,progress.max_focus())
 
 func start_encounters() -> void:
 	if not pending_encounter.is_empty(): return
@@ -393,8 +395,8 @@ func advance_dialogue() -> void:
 	else: show_dialogue()
 
 func finish_dialogue() -> void:
-	if dialogue_mode == "event" and progress.active_event == "M1":
-		show_growth_choice()
+	if dialogue_mode == "event" and progress.active_event in ["M1","M2","M3","M4"]:
+		show_growth_choice(progress.active_event)
 		return
 	if dialogue_mode == "event":
 		progress.finish_event()
@@ -411,34 +413,84 @@ func finish_dialogue() -> void:
 	dialogue.close()
 	resume()
 
-func show_growth_choice() -> void:
+func show_growth_choice(event_id: String = "M1") -> void:
+	if not progress.active_event.is_empty() and progress.active_event != event_id: return
+	if progress.active_event.is_empty() and not progress.start_event(event_id):
+		notice = "这里还不能进行强化。"
+		return
+	choice_mode = "growth"
 	choice_pending = true
 	paused = true
 	overlay.hide()
 	if status != null: status.visible = false
-	dialogue.show_choices("初燃 · 选择一项强化（生命上限100→120）",[
-		{"id":"melee","label":"灯击伤害 +15%","desc":"18 → 21（四舍五入）"},
-		{"id":"light","label":"净光伤害 +15%","desc":"24 → 28（四舍五入）"}])
+	var def := progress.event_def(event_id)
+	dialogue.show_choices(str(def.get("title", "选择一项强化")), def.get("options", []))
+
+func choose_choice(option: String) -> void:
+	if choice_mode == "ending":
+		choose_ending(option)
+	else:
+		choose_growth(option)
 
 func choose_growth(option: String) -> void:
-	if not progress.finish_event(option): return
+	if choice_mode != "growth" or not progress.finish_event(option): return
 	dialogue_mode = ""
 	dialogue_lines = []
 	choice_pending = false
+	choice_mode = "growth"
 	dialogue.close()
 	apply_growth()
+	combat.hp = progress.max_hp()
+	combat.focus = progress.max_focus()
 	dirty = true
 	resume()
 	save_game("auto",true)
 
+func show_ending_choice() -> void:
+	if not progress.has("E30"):
+		notice = "母体还没有被压制。"
+		return
+	if not progress.ending_id().is_empty():
+		notice = "灯根的选择已经写下了。"
+		return
+	choice_mode = "ending"
+	choice_pending = true
+	paused = true
+	overlay.hide()
+	if status != null: status.visible = false
+	dialogue.show_choices("灯根核心 · 最后的选择", [
+		{"id": "restore", "label": "恢复共生循环", "desc": "让灯与水重新流动"},
+		{"id": "seal", "label": "封存并撤离", "desc": "把灯根留在黑暗里"}])
+
+func choose_ending(option: String) -> void:
+	if choice_mode != "ending" or option not in ["restore","seal"]: return
+	progress.set_ending(option)
+	choice_pending = false
+	choice_mode = "growth"
+	dialogue.close()
+	notice = "灯根选择了" + ("共生。" if option == "restore" else "封存。")
+	dirty = true
+	apply_growth()
+	resume()
+	save_game("auto",true)
+
+func show_credits() -> void:
+	if not progress.has("S12"): progress.flags.S12 = true
+	dirty = true
+	var restored := progress.ending_id() == "restore"
+	clear_menu("菌灯之下 · 尾声")
+	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "按 Esc 返回标题，或继续探索。")
+	button("返回标题", show_title)
+	button("继续探索", resume)
+
 func nearest_object() -> Dictionary:
 	var nearest: Dictionary = {}
-	var distance := 24.01
+	var distance := 28.01
 	for object in progress.node().objects:
 		if object.kind == "guide_target": continue
 		var pos := Vector2(object.pos[0],object.pos[1])
 		var d: float = combat.player.distance_to(pos)
-		if d <= 24 and d < distance and combat.clear_wall_line(combat.player,pos):
+		if d <= 28 and d < distance and combat.clear_wall_line(combat.player,pos):
 			distance = d
 			nearest = object
 	return nearest
@@ -464,7 +516,7 @@ func interact() -> void:
 		return
 	var object := nearest_object()
 	if object.is_empty():
-		notice = "靠近有标记的物件（24像素内），按 E。"
+		notice = "靠近有标记的物件（28像素内），按 E。"
 		return
 	if str(object.kind) in ["exit","end"] and not bool(object_state(object,"").get("available",true)):
 		if str(object.kind) == "end":
@@ -472,7 +524,7 @@ func interact() -> void:
 		else:
 			notice = "这条通路还没有打开。"
 		return
-	if object.has("requires") and not progress.has(object.requires):
+	if object.has("requires") and not progress.requirement_met(str(object.requires),progress.flags):
 		notice = "通路未开：先完成当前目标。"
 		return
 	match object.kind:
@@ -487,6 +539,32 @@ func interact() -> void:
 		"reward": begin_dialogue("M1")
 		"lore": begin_lore(str(object.get("dialogue","")))
 		"guide": rotate_guide(object)
+		"switch":
+			notice = progress.set_switch(object)
+			dirty = true
+			start_encounters()
+		"story":
+			var event := str(object.get("event",""))
+			if progress.has(event):
+				notice = "这里已经记录过了。"
+			elif progress.start_event(event):
+				progress.finish_event()
+				dirty = true
+				if not str(object.get("dialogue","")).is_empty(): begin_lore(str(object.get("dialogue","")))
+				else: notice = "记录完成。"
+				start_encounters()
+				if SaveStore.is_safe(safety()): save_game("auto",true)
+			else:
+				notice = "现在还不能记录。"
+		"growth":
+			show_growth_choice(str(object.get("event","M1")))
+		"sidequest":
+			notice = progress.sidequest(str(object.get("quest","")),str(object.get("part","")))
+			dirty = true
+		"ending":
+			show_ending_choice()
+		"credits":
+			show_credits()
 		"rest":
 			combat.hp = progress.max_hp()
 			combat.focus = 100
@@ -529,6 +607,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				scan_tick = combat.tick
 				notice = "回声：水管上的刻痕从高处逐格下降。" if progress.node_id == "N0-03" else "灯光沿着地面延伸；寻找带名字的物件。"
 			KEY_SPACE: commands.append("dodge")
+			KEY_1:
+				if progress.skills().shield: commands.append("shield")
+				else: notice = "护灯尚未解锁。"
+			KEY_2:
+				if progress.skills().rain:
+					queued_pointer = get_global_mouse_position()
+					commands.append("rain")
+				else: notice = "灯雨尚未解锁。"
 			KEY_R:
 				if combat.potions == 0: notice = "药剂已用完，回安全灯座休息补满。"
 				elif combat.hp >= progress.max_hp(): notice = "生命已满。"
@@ -580,6 +666,7 @@ func _physics_process(delta: float) -> void:
 		if not pending_encounter.is_empty() and combat.enemies.all(func(e): return e.hp <= 0):
 			var cleared := pending_encounter
 			progress.flags[cleared] = true
+			combat.clear_hazards()
 			notice = str(progress.content.encounters[cleared].get("clear_notice","威胁解除。靠近灯环或继续探索。"))
 			pending_encounter = ""
 			start_encounters()
@@ -640,7 +727,14 @@ func current_goal() -> String:
 			return "裂口已安静。沿东侧灯线进入灯根祭坛。"
 		"N1-05":
 			if not progress.has("E11"): return "清理祭坛的守坛者，别让灯根再次熄灭。"
-			return "灯根已清。进入菌根深处（当前切片边界）。"
+			if not progress.has("M2"): return "灯根已清。在祭坛旁选择一次强化。"
+			return "灯根已清。前往根桥。"
+		"N4-06":
+			if not progress.has("E30"): return "压制母体。"
+			if progress.ending_id().is_empty(): return "母体已被压制。靠近灯根核心做出选择。"
+			return "灯根的选择已经写下。前往尾声。"
+		"N4-07":
+			return "回看这段路，或返回标题。"
 	return progress.node().goal
 
 func guide_color(object: Dictionary) -> Color:
@@ -665,10 +759,10 @@ func object_state(object: Dictionary, nearest_id: String) -> Dictionary:
 			state.complete = progress.has("M1")
 			state.available = progress.has("E01")
 		"exit":
-			state.available = not object.has("requires") or progress.has(object.requires)
+			state.available = progress.requirement_met(str(object.get("requires","")),progress.flags)
 			state.open = state.available
 		"end":
-			state.available = not object.has("requires") or progress.has(object.requires)
+			state.available = progress.requirement_met(str(object.get("requires","")),progress.flags)
 			state.open = state.available
 		"guide":
 			state.dir = int(guide_dirs.get(object.id,int(object.dir)))
@@ -677,6 +771,26 @@ func object_state(object: Dictionary, nearest_id: String) -> Dictionary:
 		"guide_target": state.available = true
 		"rest":
 			if str(object.get("visual","bed")) == "lamp": state.lit = true
+		"switch":
+			state.lit = progress.has(str(object.get("flag","")))
+			state.available = true
+		"story":
+			state.complete = progress.has(str(object.get("event","")))
+			state.available = true
+		"growth":
+			state.complete = progress.has(str(object.get("event","")))
+			state.available = true
+			state.lit = state.complete
+		"sidequest":
+			state.complete = progress.has(str(object.get("quest","")) + str(object.get("part","")))
+			state.available = true
+		"ending":
+			state.available = progress.has("E30") and progress.ending_id().is_empty()
+			state.complete = not progress.ending_id().is_empty()
+			state.open = state.available
+		"credits":
+			state.available = true
+			state.complete = progress.has("S11")
 	return state
 
 func draw_floor() -> void:
@@ -795,6 +909,16 @@ func draw_object_labels() -> void:
 			label += "（可通过）" if bool(object_state(object,"").get("available",true)) else "（未开启）"
 		elif str(object.kind) == "exit" and not bool(object_state(object,"").get("available",true)):
 			label += "（不可通行）"
+		elif str(object.kind) == "switch":
+			label += "（已开）" if progress.has(str(object.get("flag",""))) else "（未开）"
+		elif str(object.kind) == "story":
+			label += "（已记录）" if progress.has(str(object.get("event",""))) else ""
+		elif str(object.kind) == "growth":
+			label += "（已强化）" if progress.has(str(object.get("event",""))) else "（可强化）"
+		elif str(object.kind) == "sidequest":
+			label += "（已记录）" if progress.has(str(object.get("quest","")) + str(object.get("part",""))) else ""
+		elif str(object.kind) == "ending":
+			label += "（已选择）" if not progress.ending_id().is_empty() else ("" if progress.has("E30") else "（先压制母体）")
 		var anchor: Vector2 = props.label_anchor(draw_kind)
 		if str(object.kind) == "rong": anchor = Vector2(0,-22)
 		var world_point := Vector2(object.pos[0],object.pos[1]) + anchor

@@ -78,6 +78,12 @@
   "barrel_old": "barrel",
   "lore": "papers",
   "note": "papers",
+  "switch": "lamp",
+  "growth": "ring",
+  "story": "papers",
+  "sidequest": "chest",
+  "ending": "portal",
+  "credits": "portal",
   "mushroom": "mushroom_red",
   "wall_panel_green": "wall_panel",
   "panel": "wall_panel"
@@ -5528,5 +5534,5 @@
    ]
   }
  },
- "build": "761eb99a5489ba61"
+ "build": "eec17ccc8be7abc1"
 }

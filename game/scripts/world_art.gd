@@ -58,7 +58,7 @@ func enemy_texture(kind: String) -> Texture2D:
 	match kind:
 		"T2": return preload("res://assets/original/Characters/Fungus - violet.png")
 		"T3": return preload("res://assets/original/Characters/Sewers monster.png")
-		"T4","EL1": return preload("res://assets/original/Characters/Fungus - King.png")
+		"T4","T6","EL1","EL2","BOSS": return preload("res://assets/original/Characters/Fungus - King.png")
 	return fungus
 
 func spore_pod(canvas: CanvasItem, foot: Vector2, alive: bool, alpha: float = 1.0) -> void:

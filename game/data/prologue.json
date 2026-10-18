@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_id": "G3-013",
+  "build_id": "G4-001",
   "nodes": [
     {
       "id": "N0-01",
@@ -685,6 +685,198 @@
           "kind": "exit",
           "target": "N1-03",
           "requires": "P02"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q1a",
+          "name": "旧灯·导光间",
+          "pos": [
+            80,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "a",
+          "visual": "chest"
         }
       ],
       "decor": [
@@ -913,6 +1105,198 @@
           "kind": "exit",
           "target": "N1-05",
           "requires": "E10"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
+        },
+        {
+          "id": "q2a",
+          "name": "补给箱单·裂口",
+          "pos": [
+            190,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "a",
+          "visual": "chest"
         }
       ],
       "decor": [
@@ -1024,13 +1408,200 @@
         },
         {
           "id": "east",
-          "name": "通往 菌根深处",
+          "name": "通往 根桥",
           "pos": [
             292,
             130
           ],
-          "kind": "end",
-          "requires": "E11"
+          "kind": "exit",
+          "target": "N1-06",
+          "requires": "E11&M2"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            230,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            230,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            230,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            230,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            230,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            230,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
+        },
+        {
+          "id": "m2",
+          "name": "灯根 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M2",
+          "visual": "ring"
         }
       ],
       "decor": [
@@ -1083,6 +1654,2360 @@
           "pos": [
             292,
             130
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-06",
+      "name": "根桥",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "清掉守桥的菌群，转动桥压阀让根桥接上。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 灯根祭坛",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N1-05"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "lore",
+          "name": "桥头记录",
+          "pos": [
+            150,
+            60
+          ],
+          "kind": "lore",
+          "dialogue": "L05"
+        },
+        {
+          "id": "s04",
+          "name": "桥头记录",
+          "pos": [
+            250,
+            140
+          ],
+          "kind": "story",
+          "event": "S04",
+          "visual": "papers",
+          "dialogue": "L05"
+        },
+        {
+          "id": "v01",
+          "name": "桥压阀·一",
+          "pos": [
+            150,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P03",
+          "flag": "V01",
+          "visual": "lamp"
+        },
+        {
+          "id": "v02",
+          "name": "桥压阀·二",
+          "pos": [
+            190,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P03",
+          "flag": "V02",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 分流室",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N2-01",
+          "requires": "P03"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        },
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            132
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "spores",
+          "pos": [
+            170,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-01",
+      "name": "分流室",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          125,
+          20,
+          30
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          125,
+          20,
+          30
+        ]
+      ],
+      "goal": "读过分流图，进入排水入口。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 根桥",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N1-06"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "lore",
+          "name": "分流图",
+          "pos": [
+            150,
+            60
+          ],
+          "kind": "lore",
+          "dialogue": "L06"
+        },
+        {
+          "id": "s05",
+          "name": "分流图前",
+          "pos": [
+            150,
+            135
+          ],
+          "kind": "story",
+          "event": "S05",
+          "visual": "papers",
+          "dialogue": "L06"
+        },
+        {
+          "id": "east",
+          "name": "支路 A · 排水入口",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N2-02",
+          "requires": "S05"
+        },
+        {
+          "id": "north",
+          "name": "支路 B · 被困门外",
+          "pos": [
+            280,
+            60
+          ],
+          "kind": "exit",
+          "target": "N2-04"
+        },
+        {
+          "id": "merge",
+          "name": "合流通道（需两条支路）",
+          "pos": [
+            160,
+            80
+          ],
+          "kind": "exit",
+          "target": "N2-06",
+          "requires": "P04&P05"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "dust",
+          "pos": [
+            240,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-02",
+      "name": "排水入口",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "关闭两道排水阀，排干前段积水。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 分流室",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N2-01"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "v03",
+          "name": "排水阀·一",
+          "pos": [
+            145,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P04",
+          "flag": "V03",
+          "visual": "lamp"
+        },
+        {
+          "id": "v04",
+          "name": "排水阀·二",
+          "pos": [
+            190,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P04",
+          "flag": "V04",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 排水出口",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N2-03",
+          "requires": "P04"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            240,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "drip",
+          "pos": [
+            150,
+            90
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-03",
+      "name": "排水出口",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "确认排水完成，检查旧灯。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 分流室",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N2-01"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "lamp",
+          "name": "旧灯·排水口",
+          "pos": [
+            150,
+            60
+          ],
+          "kind": "lore",
+          "dialogue": "L07"
+        },
+        {
+          "id": "q1b",
+          "name": "旧灯修复·排水口",
+          "pos": [
+            150,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "b",
+          "visual": "chest"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            150,
+            60
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-04",
+      "name": "被困门外",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          40
+        ],
+        [
+          100,
+          125,
+          20,
+          30
+        ],
+        [
+          215,
+          40,
+          20,
+          40
+        ],
+        [
+          215,
+          125,
+          20,
+          30
+        ]
+      ],
+      "goal": "从安全侧清除污染根，打开门。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 分流室",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N2-01"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "v05",
+          "name": "污染根阀·一",
+          "pos": [
+            145,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P05",
+          "flag": "V05",
+          "visual": "lamp"
+        },
+        {
+          "id": "v06",
+          "name": "污染根阀·二",
+          "pos": [
+            190,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P05",
+          "flag": "V06",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 安全旁室",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N2-05",
+          "requires": "P05"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "spores",
+          "pos": [
+            180,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-05",
+      "name": "安全旁室",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "砾留在旁室；检查另一出口。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 被困门外",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N2-04"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "lore",
+          "name": "砾的留条",
+          "pos": [
+            150,
+            60
+          ],
+          "kind": "lore",
+          "dialogue": "L08"
+        },
+        {
+          "id": "q2b",
+          "name": "补给箱单·旁室",
+          "pos": [
+            150,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "b",
+          "visual": "chest"
+        },
+        {
+          "id": "east",
+          "name": "返回 分流室",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N2-01"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "dust",
+          "pos": [
+            250,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-06",
+      "name": "合流通道",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          125,
+          20,
+          30
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          125,
+          20,
+          30
+        ]
+      ],
+      "goal": "两条水路都合到这里；清开通道。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 分流室",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N2-01"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "s06",
+          "name": "合流标记",
+          "pos": [
+            150,
+            135
+          ],
+          "kind": "story",
+          "event": "S06",
+          "visual": "papers",
+          "dialogue": "L09"
+        },
+        {
+          "id": "east",
+          "name": "通往 泵站守卫",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N2-07",
+          "requires": "S06"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        },
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            132
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "drip",
+          "pos": [
+            200,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-07",
+      "name": "泵站守卫",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "击破泵站守卫，打开控制室。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 合流通道",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N2-06"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 控制室",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N2-08",
+          "requires": "E19"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            250,
+            90
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2-08",
+      "name": "控制室 / 试验段",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "启动储水，校准灯雨；选择第三次强化。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 泵站守卫",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N2-07"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "lore",
+          "name": "抽水记录",
+          "pos": [
+            150,
+            60
+          ],
+          "kind": "lore",
+          "dialogue": "L10"
+        },
+        {
+          "id": "s07",
+          "name": "抽水记录前",
+          "pos": [
+            170,
+            140
+          ],
+          "kind": "story",
+          "event": "S07",
+          "visual": "papers",
+          "dialogue": "L10"
+        },
+        {
+          "id": "v07",
+          "name": "稳压阀·一",
+          "pos": [
+            145,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P06",
+          "flag": "V07",
+          "visual": "lamp"
+        },
+        {
+          "id": "v08",
+          "name": "稳压阀·二",
+          "pos": [
+            190,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P06",
+          "flag": "V08",
+          "visual": "lamp"
+        },
+        {
+          "id": "q2c",
+          "name": "补给箱单·控制室",
+          "pos": [
+            150,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q2",
+          "part": "c",
+          "visual": "chest"
+        },
+        {
+          "id": "m3",
+          "name": "控制室 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M3",
+          "visual": "ring"
+        },
+        {
+          "id": "east",
+          "name": "通往 王庭外环",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N3-01",
+          "requires": "M3&P06"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "spores",
+          "pos": [
+            180,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-01",
+      "name": "王庭外环",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "观察根与管的连接，沿清晰通路前进。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 控制室",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N2-08"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "s08",
+          "name": "王庭外环",
+          "pos": [
+            150,
+            135
+          ],
+          "kind": "story",
+          "event": "S08",
+          "visual": "papers",
+          "dialogue": "L11"
+        },
+        {
+          "id": "east",
+          "name": "通往 供给回廊",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N3-02",
+          "requires": "S08"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        },
+        {
+          "kind": "glow_mushroom",
+          "pos": [
+            240,
+            70
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "dust",
+          "pos": [
+            240,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-02",
+      "name": "供给回廊",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          125,
+          20,
+          30
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          125,
+          20,
+          30
+        ]
+      ],
+      "goal": "扫描前两处供给点，打开回廊。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 王庭外环",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N3-01"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "v09",
+          "name": "供给阀·一",
+          "pos": [
+            140,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P07",
+          "flag": "V09",
+          "visual": "lamp"
+        },
+        {
+          "id": "v10",
+          "name": "供给阀·二",
+          "pos": [
+            180,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P07",
+          "flag": "V10",
+          "visual": "lamp"
+        },
+        {
+          "id": "v11",
+          "name": "供给阀·三",
+          "pos": [
+            220,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P07",
+          "flag": "V11",
+          "visual": "lamp"
+        },
+        {
+          "id": "q1c",
+          "name": "旧灯修复·供给回廊",
+          "pos": [
+            150,
+            140
+          ],
+          "kind": "sidequest",
+          "quest": "Q1",
+          "part": "c",
+          "visual": "chest"
+        },
+        {
+          "id": "east",
+          "name": "通往 旧约墙",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N3-03",
+          "requires": "P07"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            150,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-03",
+      "name": "旧约墙",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "取得旧约拓文，沿墙后通道前进。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 供给回廊",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N3-02"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "lore",
+          "name": "旧约拓文",
+          "pos": [
+            150,
+            60
+          ],
+          "kind": "lore",
+          "dialogue": "L12"
+        },
+        {
+          "id": "east",
+          "name": "通往 王庭前厅",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N3-04"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "spores",
+          "pos": [
+            200,
+            90
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-04",
+      "name": "王庭前厅",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          125,
+          20,
+          30
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          125,
+          20,
+          30
+        ]
+      ],
+      "goal": "清掉前厅的两段守卫，进入安全王庭。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 旧约墙",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N3-03"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 王庭安全区",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N3-05",
+          "requires": "E25"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        },
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            132
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "dust",
+          "pos": [
+            240,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-05",
+      "name": "王庭安全区",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "完成旧约校准，选择最后的强化。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 王庭前厅",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N3-04"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "lore",
+          "name": "菌王的留声",
+          "pos": [
+            150,
+            60
+          ],
+          "kind": "lore",
+          "dialogue": "L13"
+        },
+        {
+          "id": "v12",
+          "name": "旧约阀·一",
+          "pos": [
+            145,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P08",
+          "flag": "V12",
+          "visual": "lamp"
+        },
+        {
+          "id": "v13",
+          "name": "旧约阀·二",
+          "pos": [
+            190,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P08",
+          "flag": "V13",
+          "visual": "lamp"
+        },
+        {
+          "id": "m4",
+          "name": "王庭 · 选择强化",
+          "pos": [
+            180,
+            140
+          ],
+          "kind": "growth",
+          "event": "M4",
+          "visual": "ring"
+        },
+        {
+          "id": "east",
+          "name": "通往 回流桥",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N3-06",
+          "requires": "M4&P08"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            150,
+            60
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3-06",
+      "name": "回流桥",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          125,
+          20,
+          30
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          125,
+          20,
+          30
+        ]
+      ],
+      "goal": "用最后的强化清开回流桥。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 王庭安全区",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N3-05"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 调压入口",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N4-01",
+          "requires": "E26"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "drip",
+          "pos": [
+            220,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-01",
+      "name": "调压入口",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "读取主流向，开始调压。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 回流桥",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N3-06"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "v14",
+          "name": "调压阀·一",
+          "pos": [
+            150,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P09",
+          "flag": "V14",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 调压中段",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N4-02"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            150,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-02",
+      "name": "调压中段",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          125,
+          20,
+          30
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          125,
+          20,
+          30
+        ]
+      ],
+      "goal": "切换支路，稳定中段压力。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 调压入口",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N4-01"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "v15",
+          "name": "调压阀·二",
+          "pos": [
+            150,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P09",
+          "flag": "V15",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 稳压台",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N4-03"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "dust",
+          "pos": [
+            240,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-03",
+      "name": "稳压台",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "稳定压力，打开核心外廊。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 调压中段",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N4-02"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "v16",
+          "name": "调压阀·三",
+          "pos": [
+            150,
+            100
+          ],
+          "kind": "switch",
+          "puzzle": "P09",
+          "flag": "V16",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 核心外廊",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N4-04",
+          "requires": "P09"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            150,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-04",
+      "name": "核心外廊",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          45
+        ],
+        [
+          100,
+          125,
+          20,
+          30
+        ],
+        [
+          215,
+          40,
+          20,
+          45
+        ],
+        [
+          215,
+          125,
+          20,
+          30
+        ]
+      ],
+      "goal": "穿过最后两段战前压力。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 稳压台",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N4-03"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 最后灯座",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N4-05",
+          "requires": "E29"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        },
+        {
+          "kind": "glow_mushroom",
+          "pos": [
+            250,
+            90
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "spores",
+          "pos": [
+            200,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-05",
+      "name": "最后灯座",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "检查配置、保存，确认进入核心室。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 核心外廊",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N4-04"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "s09",
+          "name": "最后灯座",
+          "pos": [
+            150,
+            60
+          ],
+          "kind": "story",
+          "event": "S09",
+          "visual": "papers",
+          "dialogue": "L14"
+        },
+        {
+          "id": "east",
+          "name": "进入 核心室",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N4-06",
+          "requires": "S09"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            150,
+            60
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-06",
+      "name": "核心室",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          40,
+          20,
+          40
+        ],
+        [
+          100,
+          130,
+          20,
+          25
+        ],
+        [
+          215,
+          40,
+          20,
+          40
+        ],
+        [
+          215,
+          130,
+          20,
+          25
+        ]
+      ],
+      "goal": "压制母体，然后选择灯根的去向。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "撤离核心室",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N4-05"
+        },
+        {
+          "id": "rest",
+          "name": "休息灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "ending",
+          "name": "灯根核心 / 做出选择",
+          "pos": [
+            150,
+            100
+          ],
+          "kind": "ending",
+          "visual": "portal"
+        },
+        {
+          "id": "east",
+          "name": "通往 尾声",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "exit",
+          "target": "N4-07",
+          "requires": "S11"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        },
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            132
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            230,
+            140
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4-07",
+      "name": "尾声",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          45,
+          20,
+          40
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          215,
+          45,
+          20,
+          40
+        ],
+        [
+          215,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "灯根的选择已经写下。",
+      "objects": [
+        {
+          "id": "credits",
+          "name": "回看这段路",
+          "pos": [
+            160,
+            90
+          ],
+          "kind": "credits"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "light_pool",
+          "pos": [
+            160,
+            90
           ]
         }
       ]
@@ -1183,6 +4108,106 @@
       [
         "岚",
         "……绒说过类似的话。先把这里清干净。"
+      ]
+    ],
+    "L05": [
+      [
+        "岚",
+        "根桥的纤维在动。桥压阀被缠住了。"
+      ],
+      [
+        "岚",
+        "把两处阀门都转开，桥面才会接上。"
+      ]
+    ],
+    "L06": [
+      [
+        "岚",
+        "分流图把上下两条水路画得很清楚。"
+      ],
+      [
+        "岚",
+        "先去排水入口；另一条路等这边稳定再说。"
+      ]
+    ],
+    "L07": [
+      [
+        "岚",
+        "旧灯的灯芯还在，只是被水泡过。"
+      ],
+      [
+        "岚",
+        "把三处旧灯都修好，也许能换一件护具。"
+      ]
+    ],
+    "L08": [
+      [
+        "砾",
+        "我没事，只是腿被压住了。"
+      ],
+      [
+        "砾",
+        "你别管我，另一侧的出口更重要。"
+      ]
+    ],
+    "L09": [
+      [
+        "岚",
+        "两条水路在这里合流。"
+      ],
+      [
+        "岚",
+        "前面的泵站有重甲守卫，准备好再进去。"
+      ]
+    ],
+    "L10": [
+      [
+        "岚",
+        "抽水记录停在一个不自然的刻度。"
+      ],
+      [
+        "岚",
+        "有人提前把水放干了——和绒说的一样。"
+      ]
+    ],
+    "L11": [
+      [
+        "岚",
+        "王庭的根须是从这里接上管道的。"
+      ],
+      [
+        "岚",
+        "不是寄生，更像是某种很久以前的约定。"
+      ]
+    ],
+    "L12": [
+      [
+        "岚",
+        "旧约拓文：灯与根，共享同一口水。"
+      ],
+      [
+        "岚",
+        "如果这是真的，母体也许并不只是敌人。"
+      ]
+    ],
+    "L13": [
+      [
+        "菌王",
+        "你们终于走到这里了。"
+      ],
+      [
+        "菌王",
+        "灯根的选择不该由一个人决定——但门已经为你打开。"
+      ]
+    ],
+    "L14": [
+      [
+        "岚",
+        "最后一段路。灯根就在门后。"
+      ],
+      [
+        "岚",
+        "检查装备，保存；进去以后就没有回头路了。"
       ]
     ]
   },
@@ -1318,7 +4343,7 @@
         ]
       ],
       "requires": "E07",
-      "hp_mult": 0.25,
+      "hp_mult": 0.15,
       "clear_notice": "守门者倒下。菌根深处的门灯亮起。"
     },
     "E09": {
@@ -1371,6 +4396,681 @@
       ],
       "requires": "E10",
       "clear_notice": "守坛者倒地。灯根深处的门灯亮起。"
+    },
+    "E12": {
+      "node": "N1-06",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T4",
+          220,
+          90
+        ]
+      ],
+      "requires": "E11"
+    },
+    "E13": {
+      "node": "N2-01",
+      "positions": [
+        [
+          180,
+          120
+        ]
+      ],
+      "members": [
+        [
+          "T2",
+          220,
+          90
+        ]
+      ],
+      "requires": "S05"
+    },
+    "E14": {
+      "node": "N2-02",
+      "positions": [
+        [
+          180,
+          110
+        ]
+      ],
+      "members": [
+        [
+          "T3",
+          230,
+          90
+        ]
+      ],
+      "requires": "",
+      "clear_notice": "排水暂时安静，但菌群仍在移动。"
+    },
+    "E15": {
+      "node": "N2-03",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T3",
+          230,
+          100
+        ],
+        [
+          "T5",
+          250,
+          130
+        ]
+      ],
+      "requires": "E14"
+    },
+    "E16": {
+      "node": "N2-04",
+      "positions": [
+        [
+          180,
+          90
+        ]
+      ],
+      "members": [
+        [
+          "T1",
+          220,
+          80
+        ],
+        [
+          "T2",
+          250,
+          110
+        ]
+      ],
+      "requires": "S05"
+    },
+    "E17": {
+      "node": "N2-05",
+      "positions": [
+        [
+          180,
+          100
+        ]
+      ],
+      "members": [
+        [
+          "T3",
+          230,
+          90
+        ]
+      ],
+      "requires": "E16"
+    },
+    "E18": {
+      "node": "N2-06",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T2",
+          230,
+          90
+        ],
+        [
+          "T3",
+          255,
+          110
+        ]
+      ],
+      "requires": "S06"
+    },
+    "E19": {
+      "node": "N2-07",
+      "positions": [],
+      "members": [
+        [
+          "EL2",
+          235,
+          90
+        ]
+      ],
+      "requires": "E18",
+      "hp_mult": 0.25,
+      "clear_notice": "泵站守卫倒下，控制室的门开了。"
+    },
+    "E20": {
+      "node": "N2-08",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T1",
+          220,
+          100
+        ],
+        [
+          "T5",
+          255,
+          120
+        ]
+      ],
+      "requires": "E19"
+    },
+    "E21": {
+      "node": "N3-01",
+      "positions": [
+        [
+          180,
+          90
+        ]
+      ],
+      "members": [
+        [
+          "T4",
+          230,
+          80
+        ],
+        [
+          "T2",
+          255,
+          120
+        ]
+      ],
+      "requires": "S08"
+    },
+    "E22": {
+      "node": "N3-02",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T2",
+          230,
+          90
+        ],
+        [
+          "T5",
+          255,
+          120
+        ]
+      ],
+      "requires": "E21"
+    },
+    "E23": {
+      "node": "N3-03",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T4",
+          230,
+          90
+        ],
+        [
+          "T3",
+          255,
+          120
+        ]
+      ],
+      "requires": "P07"
+    },
+    "E24": {
+      "node": "N3-04",
+      "positions": [
+        [
+          180,
+          100
+        ]
+      ],
+      "members": [
+        [
+          "T6",
+          230,
+          80
+        ],
+        [
+          "T1",
+          180,
+          130
+        ]
+      ],
+      "requires": "S08",
+      "hp_mult": 0.55
+    },
+    "E25": {
+      "node": "N3-04",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T4",
+          230,
+          110
+        ],
+        [
+          "T2",
+          255,
+          90
+        ]
+      ],
+      "requires": "E24",
+      "hp_mult": 0.55,
+      "clear_notice": "前厅安静下来，安全王庭的门开了。"
+    },
+    "E26": {
+      "node": "N3-06",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T3",
+          230,
+          90
+        ],
+        [
+          "T6",
+          255,
+          120
+        ]
+      ],
+      "requires": "M4",
+      "hp_mult": 0.4
+    },
+    "E27": {
+      "node": "N4-01",
+      "positions": [
+        [
+          180,
+          120
+        ]
+      ],
+      "members": [
+        [
+          "T4",
+          230,
+          90
+        ],
+        [
+          "T1",
+          255,
+          120
+        ]
+      ],
+      "requires": "E26",
+      "hp_mult": 0.4
+    },
+    "E28": {
+      "node": "N4-02",
+      "positions": [
+        [
+          160,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T2",
+          190,
+          90
+        ]
+      ],
+      "requires": "E27",
+      "hp_mult": 0.4
+    },
+    "E29": {
+      "node": "N4-03",
+      "positions": [
+        [
+          180,
+          80
+        ]
+      ],
+      "members": [
+        [
+          "T4",
+          230,
+          100
+        ],
+        [
+          "T6",
+          255,
+          120
+        ]
+      ],
+      "requires": "E28",
+      "hp_mult": 0.4,
+      "clear_notice": "稳压完成，核心外廊打开。"
+    },
+    "E30": {
+      "node": "N4-06",
+      "positions": [],
+      "members": [
+        [
+          "BOSS",
+          175,
+          105
+        ]
+      ],
+      "requires": "S09",
+      "boss": true,
+      "clear_notice": "母体被压制，灯根核心暴露。"
     }
-  }
+  },
+  "chapters": [
+    {
+      "id": "prologue",
+      "name": "序章",
+      "nodes": [
+        "N0-01",
+        "N0-02",
+        "N0-03",
+        "N0-04"
+      ]
+    },
+    {
+      "id": "chapter1",
+      "name": "第一章 · 断根",
+      "nodes": [
+        "N1-01",
+        "N1-02",
+        "N1-03",
+        "N1-04",
+        "N1-05",
+        "N1-06"
+      ]
+    },
+    {
+      "id": "chapter2",
+      "name": "第二章 · 排水",
+      "nodes": [
+        "N2-01",
+        "N2-02",
+        "N2-03",
+        "N2-04",
+        "N2-05",
+        "N2-06",
+        "N2-07",
+        "N2-08"
+      ]
+    },
+    {
+      "id": "chapter3",
+      "name": "第三章 · 王庭",
+      "nodes": [
+        "N3-01",
+        "N3-02",
+        "N3-03",
+        "N3-04",
+        "N3-05",
+        "N3-06"
+      ]
+    },
+    {
+      "id": "finale",
+      "name": "终章 · 灯根",
+      "nodes": [
+        "N4-01",
+        "N4-02",
+        "N4-03",
+        "N4-04",
+        "N4-05",
+        "N4-06",
+        "N4-07"
+      ]
+    }
+  ],
+  "events": {
+    "S01": {
+      "node": "N0-01",
+      "requires": []
+    },
+    "S02": {
+      "node": "N0-02",
+      "requires": [
+        "P01"
+      ]
+    },
+    "M1": {
+      "node": "N0-02",
+      "requires": [
+        "E01",
+        "S02"
+      ],
+      "title": "初燃 · 选择一项强化",
+      "options": [
+        {
+          "id": "melee",
+          "label": "灯击伤害 +15%",
+          "desc": "18 → 21"
+        },
+        {
+          "id": "light",
+          "label": "净光伤害 +15%",
+          "desc": "24 → 28"
+        }
+      ]
+    },
+    "S03": {
+      "node": "N0-03",
+      "requires": [
+        "pipe"
+      ]
+    },
+    "S04": {
+      "node": "N1-06",
+      "requires": []
+    },
+    "S05": {
+      "node": "N2-01",
+      "requires": []
+    },
+    "S06": {
+      "node": "N2-06",
+      "requires": []
+    },
+    "S07": {
+      "node": "N2-08",
+      "requires": [
+        "E20"
+      ]
+    },
+    "S08": {
+      "node": "N3-01",
+      "requires": []
+    },
+    "S09": {
+      "node": "N4-05",
+      "requires": [
+        "E29"
+      ]
+    },
+    "S10": {
+      "node": "N4-06",
+      "requires": [
+        "E30"
+      ]
+    },
+    "S11": {
+      "node": "N4-06",
+      "requires": [
+        "S10"
+      ]
+    },
+    "S12": {
+      "node": "N4-07",
+      "requires": [
+        "S11"
+      ]
+    },
+    "M2": {
+      "node": "N1-05",
+      "requires": [
+        "E11"
+      ],
+      "title": "回响 · 选择一项强化（生命上限120→140）",
+      "options": [
+        {
+          "id": "echo",
+          "label": "回响范围 +20%",
+          "desc": "Q 扫描半径 80 → 96"
+        },
+        {
+          "id": "guard",
+          "label": "护灯上限 +20%",
+          "desc": "护盾值 40 → 48"
+        }
+      ]
+    },
+    "M3": {
+      "node": "N2-08",
+      "requires": [
+        "E20"
+      ],
+      "title": "灯雨 · 选择一项强化（生命上限140→160）",
+      "options": [
+        {
+          "id": "rain",
+          "label": "灯雨伤害 +15%",
+          "desc": "24 → 28"
+        },
+        {
+          "id": "focus",
+          "label": "专注回复 +20%",
+          "desc": "专注回复 8 → 10"
+        }
+      ]
+    },
+    "M4": {
+      "node": "N3-05",
+      "requires": [
+        "P08"
+      ],
+      "title": "澄明 · 选择一项强化（生命上限160→180）",
+      "options": [
+        {
+          "id": "ward",
+          "label": "护盾反伤 +2",
+          "desc": "破盾时对周围造成伤害"
+        },
+        {
+          "id": "step",
+          "label": "闪避冷却 -15%",
+          "desc": "闪避冷却 0.8s → 0.68s"
+        }
+      ]
+    }
+  },
+  "puzzles": {
+    "P01": {
+      "node": "N0-02",
+      "flags": [
+        "core",
+        "P01"
+      ]
+    },
+    "P02": {
+      "node": "N1-02",
+      "flags": []
+    },
+    "P03": {
+      "node": "N1-06",
+      "flags": [
+        "V01",
+        "V02"
+      ]
+    },
+    "P04": {
+      "node": "N2-02",
+      "flags": [
+        "V03",
+        "V04"
+      ]
+    },
+    "P05": {
+      "node": "N2-04",
+      "flags": [
+        "V05",
+        "V06"
+      ]
+    },
+    "P06": {
+      "node": "N2-08",
+      "flags": [
+        "V07",
+        "V08"
+      ]
+    },
+    "P07": {
+      "node": "N3-02",
+      "flags": [
+        "V09",
+        "V10",
+        "V11"
+      ]
+    },
+    "P08": {
+      "node": "N3-05",
+      "flags": [
+        "V12",
+        "V13"
+      ]
+    },
+    "P09": {
+      "node": "N4-03",
+      "flags": [
+        "V14",
+        "V15",
+        "V16"
+      ]
+    }
+  },
+  "sidequests": {
+    "Q1": {
+      "name": "旧灯修复",
+      "parts": [
+        "a",
+        "b",
+        "c"
+      ],
+      "reward": "clear_mirror"
+    },
+    "Q2": {
+      "name": "补给调查",
+      "parts": [
+        "a",
+        "b",
+        "c"
+      ],
+      "reward": "ember_talisman"
+    }
+  },
+  "chapter_id": "campaign"
 }

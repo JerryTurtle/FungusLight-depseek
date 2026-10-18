@@ -1,4 +1,4 @@
-"""Run the G3-006 slice checks (campaign, save, enemies, dialogue, props, pressure, normal-input route).
+"""Run the G4 campaign checks (campaign, save, enemies, dialogue, props, pressure, normal-input route).
 
 Each check runs the real Godot engine headlessly and writes its own evidence log.
 This entry point does not replace human review and does not claim OS keyboard input.
@@ -17,7 +17,8 @@ engine = 'C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_consol
 build = sys.argv[1] if len(sys.argv) > 1 else 'G3-006'
 
 CHECKS = [
-    ("campaign", "scripts/test_campaign.gd", r"CAMPAIGN_TEST checks=(\d+) failures=(\d+)", 180),
+    ("campaign", "scripts/test_g4_campaign.gd", r"G4_CAMPAIGN_TEST checks=(\d+) failures=(\d+)", 180),
+    ("g4_state", "scripts/test_g4.gd", r"G4_TEST checks=(\d+) failures=(\d+)", 120),
     ("save", "scripts/test_save.gd", r"SAVE_TEST checks=(\d+) failures=(\d+)", 120),
     ("enemies", "scripts/test_enemies.gd", r"ENEMY_TEST checks=(\d+) failures=(\d+)", 120),
     ("dialogue", "scripts/test_dialogue.gd", r"DIALOGUE_TEST checks=(\d+) failures=(\d+)", 120),
@@ -52,7 +53,7 @@ for entry in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 180, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2178, 'pressure': 5, 'route': 8, 'skip_route': 8}[name]
+    expected = {'campaign': 76, 'g4_state': 34, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2490, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1

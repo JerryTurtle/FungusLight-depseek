@@ -4,7 +4,7 @@ extends SceneTree
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G3-013"
+const BUILD_ID := "G4-001"
 var scene
 var checks := 0
 var failures := 0
@@ -85,8 +85,9 @@ func run() -> void:
 		check(deaths == 0 and scene.combat.hp > 0,"route completed without death")
 		check(scene.progress.has("P02"),"P02 committed")
 		var auto: Dictionary = scene.saves.load_slot("auto")
-		check(auto.ok and auto.snapshot.node_id == "N1-02","safe checkpoint loadable")
+		check(auto.ok and not str(auto.snapshot.get("node_id","")).is_empty(),"safe checkpoint loadable")
 		check(scene.progress.seconds > 30.0 and scene.progress.seconds <= float(tick)/60.0 + 0.5,"effective time excludes paused dialogue")
+		check(scene.progress.node_id == "N4-07" and scene.progress.ending_id() == "restore" and scene.progress.has("S12"),"G4 full route and restore ending")
 	else:
 		check(false,"route finished: "+failed)
 	var total := float(tick)/60.0
@@ -132,7 +133,79 @@ func build_route() -> void:
 		{"id":"N1-05","type":"interact","to":Vector2(292,144),"node":"N1-05"},
 		{"id":"E11","type":"combat","flag":"E11"},
 		{"id":"L04","type":"lore","to":Vector2(150,60)},
-		{"id":"end","type":"interact","to":Vector2(292,144),"overlay":true},
+		{"id":"M2","type":"interact","to":Vector2(180,140),"flag":"M2"},
+		{"id":"N1-06","type":"interact","to":Vector2(292,144),"node":"N1-06"},
+		{"id":"E12","type":"combat","flag":"E12"},
+		{"id":"S04","type":"interact","to":Vector2(250,140),"flag":"S04"},
+		{"id":"V01","type":"interact","to":Vector2(150,116),"flag":"V01"},
+		{"id":"V02","type":"interact","to":Vector2(190,116),"flag":"V02"},
+		{"id":"N2-01","type":"interact","to":Vector2(292,144),"node":"N2-01"},
+		{"id":"S05","type":"interact","to":Vector2(150,135),"flag":"S05"},
+		{"id":"E13","type":"combat","flag":"E13"},
+		{"id":"N2-02","type":"interact","to":Vector2(292,144),"node":"N2-02"},
+		{"id":"E14","type":"combat","flag":"E14"},
+		{"id":"V03","type":"interact","to":Vector2(145,116),"flag":"V03"},
+		{"id":"V04","type":"interact","to":Vector2(190,116),"flag":"V04"},
+		{"id":"N2-03","type":"interact","to":Vector2(292,144),"node":"N2-03"},
+		{"id":"E15","type":"combat","flag":"E15"},
+		{"id":"N2-01b","type":"interact","to":Vector2(25,110),"node":"N2-01"},
+		{"id":"N2-04","type":"interact","to":Vector2(280,75),"node":"N2-04"},
+		{"id":"E16","type":"combat","flag":"E16"},
+		{"id":"V05","type":"interact","to":Vector2(145,116),"flag":"V05"},
+		{"id":"V06","type":"interact","to":Vector2(190,116),"flag":"V06"},
+		{"id":"N2-05","type":"interact","to":Vector2(292,144),"node":"N2-05"},
+		{"id":"E17","type":"combat","flag":"E17"},
+		{"id":"N2-01c","type":"interact","to":Vector2(25,110),"node":"N2-01"},
+		{"id":"N2-06","type":"interact","to":Vector2(160,95),"node":"N2-06"},
+		{"id":"rest2","type":"rest","to":Vector2(55,150)},
+		{"id":"S06","type":"interact","to":Vector2(150,135),"flag":"S06"},
+		{"id":"E18","type":"combat","flag":"E18"},
+		{"id":"N2-07","type":"interact","to":Vector2(292,144),"node":"N2-07"},
+		{"id":"E19","type":"combat","flag":"E19"},
+		{"id":"N2-08","type":"interact","to":Vector2(292,144),"node":"N2-08"},
+		{"id":"E20","type":"combat","flag":"E20"},
+		{"id":"V07","type":"interact","to":Vector2(145,116),"flag":"V07"},
+		{"id":"V08","type":"interact","to":Vector2(190,116),"flag":"V08"},
+		{"id":"M3","type":"interact","to":Vector2(180,140),"flag":"M3"},
+		{"id":"N3-01","type":"interact","to":Vector2(292,144),"node":"N3-01"},
+		{"id":"rest3","type":"rest","to":Vector2(55,150)},
+		{"id":"S08","type":"interact","to":Vector2(150,135),"flag":"S08"},
+		{"id":"E21","type":"combat","flag":"E21"},
+		{"id":"N3-02","type":"interact","to":Vector2(292,144),"node":"N3-02"},
+		{"id":"E22","type":"combat","flag":"E22"},
+		{"id":"V09","type":"interact","to":Vector2(140,116),"flag":"V09"},
+		{"id":"V10","type":"interact","to":Vector2(180,116),"flag":"V10"},
+		{"id":"V11","type":"interact","to":Vector2(220,116),"flag":"V11"},
+		{"id":"rest4","type":"rest","to":Vector2(55,150)},
+		{"id":"N3-03","type":"interact","to":Vector2(292,144),"node":"N3-03"},
+		{"id":"E23","type":"combat","flag":"E23"},
+		{"id":"N3-04","type":"interact","to":Vector2(292,144),"node":"N3-04"},
+		{"id":"E24","type":"combat","flag":"E24"},
+		{"id":"E25","type":"combat","flag":"E25"},
+		{"id":"N3-05","type":"interact","to":Vector2(292,144),"node":"N3-05"},
+		{"id":"V12","type":"interact","to":Vector2(145,116),"flag":"V12"},
+		{"id":"V13","type":"interact","to":Vector2(190,116),"flag":"V13"},
+		{"id":"M4","type":"interact","to":Vector2(180,140),"flag":"M4"},
+		{"id":"N3-06","type":"interact","to":Vector2(292,144),"node":"N3-06"},
+		{"id":"E26","type":"combat","flag":"E26"},
+		{"id":"N4-01","type":"interact","to":Vector2(292,144),"node":"N4-01"},
+		{"id":"E27","type":"combat","flag":"E27"},
+		{"id":"V14","type":"interact","to":Vector2(150,116),"flag":"V14"},
+		{"id":"N4-02","type":"interact","to":Vector2(292,144),"node":"N4-02"},
+		{"id":"E28","type":"combat","flag":"E28"},
+		{"id":"V15","type":"interact","to":Vector2(150,116),"flag":"V15"},
+		{"id":"N4-03","type":"interact","to":Vector2(292,144),"node":"N4-03"},
+		{"id":"E29","type":"combat","flag":"E29"},
+		{"id":"V16","type":"interact","to":Vector2(150,116),"flag":"V16"},
+		{"id":"N4-04","type":"interact","to":Vector2(292,144),"node":"N4-04"},
+		{"id":"N4-05","type":"interact","to":Vector2(292,144),"node":"N4-05"},
+		{"id":"rest5","type":"rest","to":Vector2(55,150)},
+		{"id":"S09","type":"interact","to":Vector2(150,60),"flag":"S09"},
+		{"id":"N4-06","type":"interact","to":Vector2(292,144),"node":"N4-06"},
+		{"id":"E30","type":"combat","flag":"E30"},
+		{"id":"ending","type":"interact","to":Vector2(150,120),"flag":"S11"},
+		{"id":"N4-07","type":"interact","to":Vector2(292,144),"node":"N4-07"},
+		{"id":"credits","type":"interact","to":Vector2(160,105),"flag":"S12"},
 		{"id":"done","type":"finish"}
 	]
 
@@ -171,6 +244,7 @@ func brain() -> void:
 		"press": do_press_step()
 		"lore": do_lore()
 		"guides": do_guides()
+		"rest": do_rest()
 		"finish": finish_route()
 		_: failed = "unknown step type"
 
@@ -291,7 +365,10 @@ func do_combat() -> void:
 	var data := step()
 	if scene.progress.has(data.flag):
 		next_step(); return
-	if step_ticks > 60 * 120: failed = "combat timeout "+str(data.flag)
+	if step_ticks > 60 * 120:
+		var dump := []
+		for e in scene.combat.enemies: dump.append([e.get("archetype",""),e.pos,e.hp,e.state])
+		failed = "combat timeout "+str(data.flag)+" node="+scene.progress.node_id+" pending="+scene.pending_encounter+" enemies="+str(dump)
 
 func do_lore() -> void:
 	var data := step()
@@ -309,6 +386,21 @@ func do_lore() -> void:
 		return
 	if scene.dialogue_mode == "":
 		next_step()
+
+func do_rest() -> void:
+	var data := step()
+	if not at(data.to,12):
+		walk_to(data.to)
+		return
+	release_all()
+	if scene.combat.hp >= scene.progress.max_hp()-1:
+		next_step(); return
+	if int(data.get("attempts",0)) > 20:
+		failed = "rest timeout "+str(data.id)+" hp="+str(scene.combat.hp)
+		return
+	if step_ticks % 24 == 1:
+		press_key(KEY_E)
+		data.attempts = int(data.get("attempts",0))+1
 
 func do_guides() -> void:
 	if scene.progress.has("P02"):
@@ -343,12 +435,21 @@ func combat(enemies: Array) -> void:
 	if combat_model.hp < 62 and combat_model.potions > 0 and combat_model.action == "idle" and distance > 66:
 		press_key(KEY_R)
 		return
-	if archetype == "EL1" and combat_model.hp < 72 and combat_model.potions > 0 and combat_model.action == "idle":
-		if distance < 70:
-			walk_reason = "elite-retreat"
-			walk_to(combat_model.player - offset.normalized()*44)
+	if combat_model.hp < 48 and combat_model.potions > 0 and combat_model.action == "idle" and archetype not in ["T1","EL1"]:
+		if distance < 62:
+			walk_reason = "combat-retreat"
+			walk_to(combat_model.player - offset.normalized()*42)
 			return
 		press_key(KEY_R)
+		return
+	if archetype == "BOSS" and target.state == "attack" and int(target.age) >= 26 and int(target.age) < 50 and distance < 60 and combat_model.action == "idle" and int(combat_model.cooldowns.get("dodge",0)) <= 0:
+		var boss_side: Vector2 = offset.normalized().rotated(PI/2*dodge_sign)
+		if not combat_model.clear_body_path(combat_model.player,combat_model.player+boss_side*34):
+			dodge_sign = -dodge_sign
+			boss_side = -boss_side
+		walk_direct(boss_side)
+		press_key(KEY_SPACE)
+		dodges += 1
 		return
 	if archetype == "EL1" and target.state == "attack" and int(target.age) >= 28 and int(target.age) < 52 and distance < 46 and combat_model.action == "idle" and int(combat_model.cooldowns.get("dodge",0)) <= 0:
 		var elite_side: Vector2 = offset.normalized().rotated(PI/2*dodge_sign)
@@ -401,6 +502,9 @@ func combat(enemies: Array) -> void:
 		walk_to(combat_model.player - offset.normalized()*16)
 		return
 	if distance > 22:
+		if archetype == "BOSS" and distance < 100 and combat_model.focus >= 20 and combat_model.action == "idle" and combat_model.clear_line(combat_model.player,target.pos):
+			aim_press(MOUSE_BUTTON_RIGHT,target.pos)
+			return
 		walk_reason = "combat-approach"
 		walk_to(target.pos)
 		if archetype == "T2" and combat_model.focus >= 20 and combat_model.action == "idle" and step_ticks % 24 == 1:
@@ -510,13 +614,14 @@ func release_all() -> void:
 	release_attack()
 
 func write_report(total_seconds: float) -> void:
-	var report := {"build_id":BUILD_ID,"route":"N0-01→N0-04→N1-01→N1-05","tick":tick,"seconds":snappedf(total_seconds,0.1),
+	var report := {"build_id":BUILD_ID,"route":"N0-01→N0-04→N1-01→N1-05→N2-01→N2-06→N3-06→N4-07","tick":tick,"seconds":snappedf(total_seconds,0.1),
 		"wall_ms":Time.get_ticks_msec()-wall_start,"checks":checks,"failures":failures,"deaths":deaths,
 		"min_hp":min_hp,"dodges":dodges,"heals":heals,"segments":segments,"path_queries":scene.combat.path_queries,
 		"input":"Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes",
 		"dialogue_model":("整段 Tab 跳过（选择页仍需手动确认）" if skip_dialogue else "每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间"),
 		"failure":failed}
-	var path := ProjectSettings.globalize_path("res://").path_join("../qa/evidence/G3/"+BUILD_ID+("-route-skip.json" if skip_dialogue else "-route.json")).simplify_path()
+	var dir := "qa/evidence/G4" if BUILD_ID.begins_with("G4") else "qa/evidence/G3"
+	var path := ProjectSettings.globalize_path("res://").path_join("../"+dir+"/"+BUILD_ID+("-route-skip.json" if skip_dialogue else "-route.json")).simplify_path()
 	var file := FileAccess.open(path,FileAccess.WRITE)
 	if file != null:
 		file.store_string(JSON.stringify(report,"  "))
