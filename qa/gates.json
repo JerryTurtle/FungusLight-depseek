@@ -99,7 +99,7 @@
   },
   "G3": {
     "status": "in_progress",
-    "iteration": "G3-007",
+    "iteration": "G3-008",
     "evidence": [
       "qa/evidence/G3/G3-001-save-tests.log",
       "qa/evidence/G3/G3-001-progress.md",
@@ -155,7 +155,26 @@
       "qa/evidence/G3/G3-007-guides-unsolved.png",
       "qa/evidence/G3/G3-007-corpse-visible.png",
       "qa/evidence/G3/G3-007-corpse-gone.png",
-      "qa/evidence/G3/G3-007-package-camp.png"
+      "qa/evidence/G3/G3-007-package-camp.png",
+      "qa/evidence/G3/G3-008-progress.md",
+      "qa/evidence/G3/G3-008-checks.json",
+      "qa/evidence/G3/G3-008-campaign-tests.log",
+      "qa/evidence/G3/G3-008-dialogue-tests.log",
+      "qa/evidence/G3/G3-008-props-tests.log",
+      "qa/evidence/G3/G3-008-route-tests.log",
+      "qa/evidence/G3/G3-008-route.json",
+      "qa/evidence/G3/G3-008-save-tests.log",
+      "qa/evidence/G3/G3-008-enemies-tests.log",
+      "qa/evidence/G3/G3-008-integration.json",
+      "qa/evidence/G3/G3-008-review/checks.json",
+      "qa/evidence/G3/G3-008-framerate-summary.json",
+      "qa/evidence/G3/G3-008-hashes.txt",
+      "qa/evidence/G3/G3-008-wake.png",
+      "qa/evidence/G3/G3-008-wake-mid.png",
+      "qa/evidence/G3/G3-008-camp.png",
+      "qa/evidence/G3/G3-008-end-sealed.png",
+      "qa/evidence/G3/G3-008-end-open.png",
+      "qa/evidence/G3/G3-008-package-camp.png"
     ],
     "remaining": [
       "10～15分钟人类首次游玩时长实测（当前AI快速路线89.6秒，不能替代）",

@@ -1,0 +1,76 @@
+{
+  "build_id": "G3-008",
+  "engine": "C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_console.exe",
+  "checks": [
+    {
+      "check": "campaign",
+      "script": "scripts/test_campaign.gd",
+      "exit": 0,
+      "checks": 137,
+      "failures": 0,
+      "expected_min_checks": 137,
+      "seconds": 0.73,
+      "log": "qa/evidence/G3/G3-008-campaign-tests.log",
+      "passed": true
+    },
+    {
+      "check": "save",
+      "script": "scripts/test_save.gd",
+      "exit": 0,
+      "checks": 65,
+      "failures": 0,
+      "expected_min_checks": 65,
+      "seconds": 0.27,
+      "log": "qa/evidence/G3/G3-008-save-tests.log",
+      "passed": true
+    },
+    {
+      "check": "enemies",
+      "script": "scripts/test_enemies.gd",
+      "exit": 0,
+      "checks": 35,
+      "failures": 0,
+      "expected_min_checks": 35,
+      "seconds": 0.27,
+      "log": "qa/evidence/G3/G3-008-enemies-tests.log",
+      "passed": true
+    },
+    {
+      "check": "dialogue",
+      "script": "scripts/test_dialogue.gd",
+      "exit": 0,
+      "checks": 175,
+      "failures": 0,
+      "expected_min_checks": 175,
+      "seconds": 0.36,
+      "log": "qa/evidence/G3/G3-008-dialogue-tests.log",
+      "passed": true
+    },
+    {
+      "check": "props",
+      "script": "scripts/test_props.gd",
+      "exit": 0,
+      "checks": 2059,
+      "failures": 0,
+      "expected_min_checks": 2059,
+      "seconds": 0.37,
+      "log": "qa/evidence/G3/G3-008-props-tests.log",
+      "passed": true
+    },
+    {
+      "check": "route",
+      "script": "scripts/route_test.gd",
+      "exit": 0,
+      "checks": 8,
+      "failures": 0,
+      "expected_min_checks": 8,
+      "seconds": 1.76,
+      "log": "qa/evidence/G3/G3-008-route-tests.log",
+      "passed": true,
+      "simulated_seconds": 83.2
+    }
+  ],
+  "failures": 0,
+  "seconds": 3.75,
+  "passed": true
+}
