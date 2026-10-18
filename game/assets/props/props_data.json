@@ -76,18 +76,21 @@
   "crate": "crates",
   "crates_small": "crate_single",
   "barrel_old": "barrel",
-  "lore": "papers",
-  "note": "papers",
+  "lore": "document",
+  "note": "document",
   "switch": "lamp",
   "growth": "ring",
-  "story": "papers",
+  "story": "document",
   "sidequest": "chest",
   "ending": "portal",
   "credits": "portal",
   "mushroom": "mushroom_red",
   "wall_panel_green": "wall_panel",
   "panel": "wall_panel",
-  "npc": "papers"
+  "npc": "npc",
+  "puzzle_choice": "puzzle_console",
+  "evidence_slots": "evidence_slot",
+  "equipment": "chest"
  },
  "kinds": {
   "lamp": {

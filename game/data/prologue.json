@@ -485,7 +485,8 @@
             155
           ],
           "kind": "lore",
-          "dialogue": "L01"
+          "dialogue": "L01",
+          "visual": "wall_inscription"
         },
         {
           "id": "east",
@@ -684,7 +685,8 @@
             135
           ],
           "kind": "lore",
-          "dialogue": "L02"
+          "dialogue": "L02",
+          "visual": "document"
         },
         {
           "id": "east",
@@ -924,7 +926,8 @@
             140
           ],
           "kind": "lore",
-          "dialogue": "L03"
+          "dialogue": "L03",
+          "visual": "wall_inscription"
         },
         {
           "id": "east",
@@ -1067,7 +1070,8 @@
             60
           ],
           "kind": "lore",
-          "dialogue": "L04"
+          "dialogue": "L04",
+          "visual": "wall_inscription"
         },
         {
           "id": "east",
@@ -1211,7 +1215,7 @@
           ],
           "kind": "story",
           "event": "S04",
-          "visual": "papers",
+          "visual": "document",
           "dialogue": "S04"
         },
         {
@@ -1257,7 +1261,7 @@
             80
           ],
           "kind": "puzzle_choice",
-          "visual": "papers",
+          "visual": "puzzle_console",
           "puzzle": "P03",
           "options": [
             {
@@ -1364,7 +1368,8 @@
             140
           ],
           "kind": "lore",
-          "dialogue": "L06"
+          "dialogue": "L06",
+          "visual": "document"
         },
         {
           "id": "s05",
@@ -1375,7 +1380,7 @@
           ],
           "kind": "story",
           "event": "S05",
-          "visual": "papers",
+          "visual": "document",
           "dialogue": "S05"
         },
         {
@@ -1529,7 +1534,7 @@
             80
           ],
           "kind": "puzzle_choice",
-          "visual": "papers",
+          "visual": "puzzle_console",
           "puzzle": "P04",
           "success": "先开左阀、再开右阀，分流通道接通。",
           "options": [
@@ -1629,7 +1634,8 @@
             60
           ],
           "kind": "lore",
-          "dialogue": "L07"
+          "dialogue": "L07",
+          "visual": "document"
         },
         {
           "id": "q1b",
@@ -1762,7 +1768,7 @@
             80
           ],
           "kind": "puzzle_choice",
-          "visual": "papers",
+          "visual": "puzzle_console",
           "puzzle": "P05",
           "success": "先切断污染根，再拉开门闩，被困者出口打开。",
           "options": [
@@ -1862,7 +1868,8 @@
             60
           ],
           "kind": "lore",
-          "dialogue": "L08"
+          "dialogue": "L08",
+          "visual": "document"
         },
         {
           "id": "q2b",
@@ -1971,7 +1978,7 @@
           ],
           "kind": "story",
           "event": "S06",
-          "visual": "papers",
+          "visual": "document",
           "dialogue": "S06"
         },
         {
@@ -2163,7 +2170,8 @@
             60
           ],
           "kind": "lore",
-          "dialogue": "L10"
+          "dialogue": "L10",
+          "visual": "document"
         },
         {
           "id": "s07",
@@ -2174,7 +2182,7 @@
           ],
           "kind": "story",
           "event": "S07",
-          "visual": "papers",
+          "visual": "document",
           "dialogue": "S07"
         },
         {
@@ -2255,7 +2263,7 @@
             70
           ],
           "kind": "puzzle_choice",
-          "visual": "papers",
+          "visual": "puzzle_console",
           "puzzle": "P06",
           "success": "两处测量点对上，备用储水启动。",
           "options": [
@@ -2356,7 +2364,7 @@
           ],
           "kind": "story",
           "event": "S08",
-          "visual": "papers",
+          "visual": "document",
           "dialogue": "S08"
         },
         {
@@ -2520,7 +2528,7 @@
             80
           ],
           "kind": "puzzle_choice",
-          "visual": "papers",
+          "visual": "puzzle_console",
           "puzzle": "P07",
           "success": "三段管线依次扫描，旧约拓文显现。",
           "options": [
@@ -2620,7 +2628,8 @@
             60
           ],
           "kind": "lore",
-          "dialogue": "L12"
+          "dialogue": "L12",
+          "visual": "wall_inscription"
         },
         {
           "id": "east",
@@ -2810,7 +2819,8 @@
             60
           ],
           "kind": "lore",
-          "dialogue": "L13"
+          "dialogue": "L13",
+          "visual": "document"
         },
         {
           "id": "v12",
@@ -2866,7 +2876,7 @@
             80
           ],
           "kind": "evidence_slots",
-          "visual": "papers",
+          "visual": "evidence_slot",
           "puzzle": "P08"
         }
       ],
@@ -3259,7 +3269,7 @@
             80
           ],
           "kind": "puzzle_choice",
-          "visual": "papers",
+          "visual": "puzzle_console",
           "puzzle": "P09",
           "success": "主流向、支路、稳压三步完成。",
           "options": [
@@ -3454,7 +3464,7 @@
           ],
           "kind": "story",
           "event": "S09",
-          "visual": "papers",
+          "visual": "document",
           "dialogue": "S09"
         },
         {
@@ -3721,7 +3731,8 @@
             140
           ],
           "kind": "lore",
-          "dialogue": "L15"
+          "dialogue": "L15",
+          "visual": "wall_inscription"
         },
         {
           "id": "east",
@@ -3825,7 +3836,8 @@
             60
           ],
           "kind": "lore",
-          "dialogue": "L16"
+          "dialogue": "L16",
+          "visual": "document"
         },
         {
           "id": "east",
@@ -3922,7 +3934,8 @@
             140
           ],
           "kind": "lore",
-          "dialogue": "L17"
+          "dialogue": "L17",
+          "visual": "wall_inscription"
         },
         {
           "id": "east",
@@ -4026,7 +4039,8 @@
             140
           ],
           "kind": "lore",
-          "dialogue": "L18"
+          "dialogue": "L18",
+          "visual": "document"
         },
         {
           "id": "east",
@@ -4123,7 +4137,8 @@
             140
           ],
           "kind": "lore",
-          "dialogue": "L19"
+          "dialogue": "L19",
+          "visual": "wall_inscription"
         },
         {
           "id": "east",
@@ -4220,7 +4235,8 @@
             60
           ],
           "kind": "lore",
-          "dialogue": "L20"
+          "dialogue": "L20",
+          "visual": "document"
         },
         {
           "id": "east",

@@ -25,6 +25,7 @@ extends RefCounted
 
 const DATA_PATH := "res://assets/props/props_data.json"
 const TILESET := preload("res://assets/original/Tilesets/Complete.png")
+const CUSTOM_PROPS := ["wall_inscription", "document", "puzzle_console", "evidence_slot", "npc"]
 const GUIDE_DIRS := {
 	0: Vector2.UP,
 	1: Vector2.RIGHT,
@@ -83,6 +84,8 @@ func load_data() -> void:
 # ---------------------------------------------------------------------------
 func resolve_kind(kind: String) -> String:
 	var k := kind
+	if k in CUSTOM_PROPS:
+		return k
 	var aliases: Dictionary = data.get("aliases", {})
 	var kinds: Dictionary = data.get("kinds", {})
 	var furniture: Dictionary = data.get("furniture", {})
@@ -97,7 +100,7 @@ func resolve_kind(kind: String) -> String:
 
 func has_kind(kind: String) -> bool:
 	var k := resolve_kind(kind)
-	return data.get("kinds", {}).has(k) or data.get("furniture", {}).has(k)
+	return k in CUSTOM_PROPS or data.get("kinds", {}).has(k) or data.get("furniture", {}).has(k)
 
 
 func is_furniture(kind: String) -> bool:
@@ -252,6 +255,12 @@ func furniture_rect(kind: String, pos: Vector2) -> Rect2:
 
 func label_anchor(kind: String) -> Vector2:
 	var k := resolve_kind(kind)
+	match k:
+		"wall_inscription": return Vector2(0,-21)
+		"document": return Vector2(0,-19)
+		"puzzle_console": return Vector2(0,-27)
+		"evidence_slot": return Vector2(0,-21)
+		"npc": return Vector2(0,-34)
 	var source: Dictionary = data.get("kinds", {})
 	if not source.has(k):
 		source = data.get("furniture", {})
@@ -282,11 +291,69 @@ func draw_prop(canvas: CanvasItem, kind: String, pos: Vector2, state: Dictionary
 	if canvas == null:
 		return
 	var k := resolve_kind(kind)
-	if data.get("kinds", {}).has(k):
+	if k in CUSTOM_PROPS:
+		_draw_custom(canvas, k, pos, state, tick, prefs)
+	elif data.get("kinds", {}).has(k):
 		_draw_prop_sprite(canvas, k, pos, state, tick, prefs)
 	elif data.get("furniture", {}).has(k):
 		draw_furniture(canvas, k, pos, tick, prefs, state)
 
+
+func _draw_custom(canvas: CanvasItem, kind: String, pos: Vector2, state: Dictionary, tick: int, prefs) -> void:
+	var base := pos.round()
+	var dark := Color("1e1713")
+	var stone := Color("6f5c43")
+	var stone_light := Color("a88a5c")
+	var gold := Color("e3c878")
+	var teal := Color("7fc9c4")
+	var red := Color("a85243")
+	match kind:
+		"wall_inscription":
+			var o := base+Vector2(-8,-17)
+			canvas.draw_rect(Rect2(o,Vector2(16,17)),dark)
+			canvas.draw_rect(Rect2(o+Vector2(1,1),Vector2(14,15)),stone)
+			canvas.draw_rect(Rect2(o+Vector2(2,2),Vector2(12,3)),stone_light)
+			for y in [6,9,12]:
+				canvas.draw_rect(Rect2(o+Vector2(3,y),Vector2(10,1)),Color("d8c08a"))
+			canvas.draw_rect(Rect2(o+Vector2(3,4),Vector2(3,1)),gold)
+		"document":
+			var o := base+Vector2(-7,-15)
+			canvas.draw_rect(Rect2(o,Vector2(14,15)),dark)
+			canvas.draw_rect(Rect2(o+Vector2(1,1),Vector2(12,13)),Color("d3b36c"))
+			canvas.draw_rect(Rect2(o+Vector2(2,3),Vector2(10,1)),Color("8d6f3c"))
+			canvas.draw_rect(Rect2(o+Vector2(2,6),Vector2(8,1)),Color("8d6f3c"))
+			canvas.draw_rect(Rect2(o+Vector2(2,9),Vector2(9,1)),Color("8d6f3c"))
+			canvas.draw_rect(Rect2(o+Vector2(10,10),Vector2(3,3)),red)
+			canvas.draw_rect(Rect2(o+Vector2(11,9),Vector2(1,5)),Color("e0c59a"))
+		"puzzle_console":
+			var o := base+Vector2(-8,-23)
+			canvas.draw_rect(Rect2(o+Vector2(1,4),Vector2(14,19)),dark)
+			canvas.draw_rect(Rect2(o+Vector2(2,5),Vector2(12,17)),stone)
+			canvas.draw_rect(Rect2(o+Vector2(3,2),Vector2(10,7)),Color("4e4032"))
+			canvas.draw_circle(o+Vector2(5,7),2.0,gold)
+			canvas.draw_circle(o+Vector2(8,7),2.0,teal)
+			canvas.draw_circle(o+Vector2(11,7),2.0,red)
+			canvas.draw_rect(Rect2(o+Vector2(4,12),Vector2(8,2)),stone_light)
+			canvas.draw_rect(Rect2(o+Vector2(7,14),Vector2(2,5)),gold)
+		"evidence_slot":
+			var o := base+Vector2(-9,-17)
+			canvas.draw_rect(Rect2(o,Vector2(18,17)),dark)
+			canvas.draw_rect(Rect2(o+Vector2(1,1),Vector2(16,15)),stone)
+			for x in [3,7,11]:
+				canvas.draw_rect(Rect2(o+Vector2(x,6),Vector2(3,3)),Color("332a24"))
+			canvas.draw_rect(Rect2(o+Vector2(4,7),Vector2(1,1)),gold)
+			canvas.draw_rect(Rect2(o+Vector2(8,7),Vector2(1,1)),teal)
+			canvas.draw_rect(Rect2(o+Vector2(12,7),Vector2(1,1)),red)
+			canvas.draw_rect(Rect2(o+Vector2(3,12),Vector2(12,1)),stone_light)
+		"npc":
+			var o := base+Vector2(-8,-30)
+			canvas.draw_rect(Rect2(o+Vector2(4,0),Vector2(8,7)),dark)
+			canvas.draw_rect(Rect2(o+Vector2(5,1),Vector2(6,5)),Color("d7b58c"))
+			canvas.draw_rect(Rect2(o+Vector2(3,7),Vector2(10,12)),dark)
+			canvas.draw_rect(Rect2(o+Vector2(4,8),Vector2(8,10)),Color("6f7d68"))
+			canvas.draw_rect(Rect2(o+Vector2(5,10),Vector2(2,2)),Color("d7b58c"))
+			canvas.draw_rect(Rect2(o+Vector2(4,19),Vector2(3,9)),dark)
+			canvas.draw_rect(Rect2(o+Vector2(9,19),Vector2(3,9)),dark)
 
 func draw_furniture(canvas: CanvasItem, kind: String, pos: Vector2, tick: int, prefs, state: Dictionary = {}) -> void:
 	furniture_draws += 1
