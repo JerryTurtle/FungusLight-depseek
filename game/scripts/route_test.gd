@@ -1,10 +1,10 @@
 extends SceneTree
-## G3-011 normal-input slice route. Every action is fed through Godot input events
+## G3-012 normal-input slice route. Every action is fed through Godot input events
 ## (keyboard/mouse), then the campaign is advanced at its real fixed 60Hz step.
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G3-011"
+const BUILD_ID := "G3-012"
 var scene
 var checks := 0
 var failures := 0
@@ -73,7 +73,9 @@ func run() -> void:
 			for e in scene.combat.enemies: death_dump.append([e.get("archetype","T1"),e.pos,e.hp])
 			failed = "player died at step "+str(step().id)+" pending="+str(scene.pending_encounter)+" hp="+str(scene.combat.hp)+" enemies="+str(death_dump)
 	if not finished and failed == "":
-		failed = "route tick cap at step "+str(step().id)+" player="+str(scene.combat.player)
+		var cap_dump := []
+		for e in scene.combat.enemies: cap_dump.append([e.get("archetype","T1"),e.pos,e.hp,e.state])
+		failed = "route tick cap at step "+str(step().id)+" pending="+str(scene.pending_encounter)+" player="+str(scene.combat.player)+" enemies="+str(cap_dump)
 	if failed == "":
 		check(scene.progress.has("S01") and scene.progress.has("P01") and scene.progress.has("S02"),"prologue main path committed")
 		check(scene.progress.has("M1") and scene.progress.choice == "melee","M1 choice committed")
@@ -121,6 +123,13 @@ func build_route() -> void:
 		{"id":"N1-03","type":"interact","to":Vector2(292,144),"node":"N1-03"},
 		{"id":"E07","type":"combat","flag":"E07"},
 		{"id":"E08","type":"combat","flag":"E08"},
+		{"id":"N1-04","type":"interact","to":Vector2(292,144),"node":"N1-04"},
+		{"id":"E09","type":"combat","flag":"E09"},
+		{"id":"E10","type":"combat","flag":"E10"},
+		{"id":"L03","type":"lore","to":Vector2(150,140)},
+		{"id":"N1-05","type":"interact","to":Vector2(292,144),"node":"N1-05"},
+		{"id":"E11","type":"combat","flag":"E11"},
+		{"id":"L04","type":"lore","to":Vector2(150,60)},
 		{"id":"end","type":"interact","to":Vector2(292,144),"overlay":true},
 		{"id":"done","type":"finish"}
 	]
@@ -496,7 +505,7 @@ func release_all() -> void:
 	release_attack()
 
 func write_report(total_seconds: float) -> void:
-	var report := {"build_id":BUILD_ID,"route":"N0-01→N0-04→N1-01→N1-03","tick":tick,"seconds":snappedf(total_seconds,0.1),
+	var report := {"build_id":BUILD_ID,"route":"N0-01→N0-04→N1-01→N1-05","tick":tick,"seconds":snappedf(total_seconds,0.1),
 		"wall_ms":Time.get_ticks_msec()-wall_start,"checks":checks,"failures":failures,"deaths":deaths,
 		"min_hp":min_hp,"dodges":dodges,"heals":heals,"segments":segments,"path_queries":scene.combat.path_queries,
 		"input":"Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes",

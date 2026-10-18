@@ -314,13 +314,25 @@ func run() -> void:
 	check(scene.progress.has("E07") and scene.pending_encounter == "E08","E07 commit and E08 spawn")
 	var guard: Dictionary = scene.combat.enemies.filter(func(e): return e.get("archetype","") == "EL1")[0]
 	check(guard.get("archetype","") == "EL1" and guard.max_hp < 450.0,"EL1 slice guard uses reduced HP")
-	var hall_end: Dictionary = scene.progress.node("N1-03").objects.filter(func(o): return o.kind == "end")[0]
-	check(not scene.object_state(hall_end,"").available,"hall end gated by E08")
 	kill_all(scene)
 	check(scene.progress.has("E08") and scene.pending_encounter == "","E08 commit")
 	scene.combat.player = Vector2(292,144)
 	scene.interact()
-	check(scene.progress.active_event.is_empty() and scene.overlay.visible and scene.menu.get_child(0).text == "菌根深处","N1-03 end opens after E08")
+	check(scene.progress.node_id == "N1-04" and scene.pending_encounter == "E09","N1-04 transition")
+	kill_all(scene)
+	check(scene.progress.has("E09") and scene.pending_encounter == "E10","E09 commit and E10")
+	kill_all(scene)
+	check(scene.progress.has("E10") and scene.pending_encounter == "","E10 commit")
+	scene.combat.player = Vector2(292,144)
+	scene.interact()
+	check(scene.progress.node_id == "N1-05" and scene.pending_encounter == "E11","N1-05 transition")
+	var final_end: Dictionary = scene.progress.node("N1-05").objects.filter(func(o): return o.kind == "end")[0]
+	check(not scene.object_state(final_end,"").available,"final end gated by E11")
+	kill_all(scene)
+	check(scene.progress.has("E11") and scene.pending_encounter == "","E11 commit")
+	scene.combat.player = Vector2(292,144)
+	scene.interact()
+	check(scene.progress.active_event.is_empty() and scene.overlay.visible and scene.menu.get_child(0).text == "菌根深处","N1-05 end opens after E11")
 	scene.resume()
 	var old_tick: int = scene.combat.tick
 	scene.show_pause()

@@ -1,10 +1,10 @@
 extends RefCounted
 ## Serializable prologue progression. Rendering and input cannot award rewards directly.
 const Store = preload("res://scripts/save_store.gd")
-const FLAGS := ["S01","core","P01","S02","tutorial","E01","M1","pipe","S03","E02","E03","E04","E05","E06","P02","E07","E08"]
-const ENCOUNTERS := ["tutorial","E01","E02","E03","E04","E05","E06","E07","E08"]
-const DEPENDENCIES := {"core":"S01","P01":"core","S02":"P01","tutorial":"S02","E01":"tutorial","M1":"E01","pipe":"M1","S03":"pipe","E02":"S03","E03":"E02","E04":"E03","E05":"E04","E06":"E05","P02":"E06","E07":"P02","E08":"E07"}
-const GATES := {"N0-02":"S01","N0-03":"M1","N0-04":"S03","N1-01":"E03","N1-02":"E04","N1-03":"P02"}
+const FLAGS := ["S01","core","P01","S02","tutorial","E01","M1","pipe","S03","E02","E03","E04","E05","E06","P02","E07","E08","E09","E10","E11"]
+const ENCOUNTERS := ["tutorial","E01","E02","E03","E04","E05","E06","E07","E08","E09","E10","E11"]
+const DEPENDENCIES := {"core":"S01","P01":"core","S02":"P01","tutorial":"S02","E01":"tutorial","M1":"E01","pipe":"M1","S03":"pipe","E02":"S03","E03":"E02","E04":"E03","E05":"E04","E06":"E05","P02":"E06","E07":"P02","E08":"E07","E09":"E08","E10":"E09","E11":"E10"}
+const GATES := {"N0-02":"S01","N0-03":"M1","N0-04":"S03","N1-01":"E03","N1-02":"E04","N1-03":"P02","N1-04":"E08","N1-05":"E10"}
 var content: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/prologue.json"))
 var node_id := "N0-01"
 var flags: Dictionary = {}
@@ -83,7 +83,7 @@ func skills() -> Dictionary:
 func snapshot(position: Vector2, health: float, focus: float) -> Dictionary:
 	var encounters := {}
 	for id in ENCOUNTERS: encounters[id] = has(id)
-	return {"schema_version":1,"build_id":"G3-011","chapter_id":"prologue","node_id":node_id,
+	return {"schema_version":1,"build_id":"G3-012","chapter_id":"prologue","node_id":node_id,
 		"safe_position":[position.x,position.y],"health":health,"focus":focus,"potions":potions,"effective_seconds":seconds,
 		"quests":{},"story":flags.duplicate(true),"puzzles":{"P01":has("P01"),"P02":has("P02")},"encounters":encounters,
 		"rewards":{"M1":has("M1")},"skills":skills(),"upgrades":{"M1":choice},"equipment":{"charm":"guardian_knot" if has("M1") else ""}}

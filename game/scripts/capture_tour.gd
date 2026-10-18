@@ -77,6 +77,17 @@ func tour() -> void:
 	await wait_frames(6)
 	combat.player = Vector2(292,144)
 	await shot(base,"hall-end")
+	progress.flags.E09 = true
+	progress.flags.E10 = true
+	progress.node_id = "N1-04"
+	load_room()
+	combat.player = Vector2(150,110)
+	await shot(base,"hall4")
+	progress.flags.E11 = true
+	progress.node_id = "N1-05"
+	load_room()
+	combat.player = Vector2(150,110)
+	await shot(base,"hall5")
 	begin_lore("L01")
 	dialogue.reveal_all()
 	await shot(base,"dialog-lore")

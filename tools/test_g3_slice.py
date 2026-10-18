@@ -48,7 +48,7 @@ for name, script, pattern, timeout in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 154, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2156, 'pressure': 5, 'route': 8}[name]
+    expected = {'campaign': 173, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2178, 'pressure': 5, 'route': 8}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1

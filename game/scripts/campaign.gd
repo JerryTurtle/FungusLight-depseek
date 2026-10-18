@@ -633,7 +633,14 @@ func current_goal() -> String:
 		"N1-03":
 			if not progress.has("E07"): return "清理前厅的菌人与冲锋菌人。"
 			if not progress.has("E08"): return "守门者已现身；击破它的护壳后再开门。"
-			return "前厅已清空。进入菌根深处（当前切片边界）。"
+			return "前厅已清空。进入菌根裂口。"
+		"N1-04":
+			if not progress.has("E09"): return "清理裂口的菌人与投孢者。"
+			if not progress.has("E10"): return "击破裂口深处的孢囊，别让它封住灯线。"
+			return "裂口已安静。沿东侧灯线进入灯根祭坛。"
+		"N1-05":
+			if not progress.has("E11"): return "清理祭坛的守坛者，别让灯根再次熄灭。"
+			return "灯根已清。进入菌根深处（当前切片边界）。"
 	return progress.node().goal
 
 func guide_color(object: Dictionary) -> Color:
