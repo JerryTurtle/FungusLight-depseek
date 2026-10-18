@@ -71,6 +71,11 @@ func _ready() -> void:
 	overlay = PanelContainer.new()
 	overlay.position = Vector2(270,140)
 	overlay.size = Vector2(740,430)
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.015,0.035,0.040,0.97)
+	panel_style.border_color = Color(0.46,0.38,0.23,0.9)
+	panel_style.set_border_width_all(2)
+	overlay.add_theme_stylebox_override("panel", panel_style)
 	add_child(overlay)
 	menu = VBoxContainer.new()
 	menu.add_theme_constant_override("separation",10)
@@ -118,7 +123,11 @@ func capture_preview() -> void:
 func clear_menu(title: String) -> void:
 	if dialogue != null and dialogue.is_open(): dialogue.close()
 	reset_screen_shake()
+	overlay.position = Vector2(270,140)
+	overlay.size = Vector2(740,430)
 	paused = true
+	if hud != null: hud.visible = false
+	if status != null: status.visible = false
 	commands.clear()
 	combat.clear_input_buffer()
 	combat_audio.stop_all()
@@ -131,11 +140,11 @@ func clear_menu(title: String) -> void:
 	heading.add_theme_font_size_override("font_size",36)
 	menu.add_child(heading)
 
-func paragraph(text: String) -> void:
+func paragraph(text: String, min_height: float = 65.0) -> void:
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.custom_minimum_size = Vector2(700,65)
+	label.custom_minimum_size = Vector2(700,min_height)
 	label.add_theme_font_size_override("font_size",24)
 	menu.add_child(label)
 
@@ -169,7 +178,8 @@ func show_title() -> void:
 	if hud != null: hud.visible = false
 	if status != null: status.visible = false
 	clear_menu("菌灯之下")
-	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\n五章主线 · 两种结局 · 自动存档与三个手动存档。")
+	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-001"))
+	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n构建 "+build_label,100)
 	button("新游戏",func():
 		if FileAccess.file_exists(saves.directory+"/auto.json"):
 			clear_menu("开始新旅程？")
@@ -618,17 +628,36 @@ func elapsed_text() -> String:
 	var seconds := int((Time.get_ticks_msec()-run_started_ms)/1000) if run_started_ms > 0 else int(progress.seconds)
 	return "%02d:%02d" % [int(seconds/60), seconds%60]
 
+func chapter_report_text() -> String:
+	if chapter_times.is_empty(): return "章节记录：本次未切换章节。"
+	var parts := PackedStringArray()
+	for key in chapter_times.keys():
+		var value := int(round(float(chapter_times[key])))
+		parts.append("%s %02d:%02d" % [str(key),int(value/60),value%60])
+	return "章节记录：" + " · ".join(parts)
+
 func write_run_report() -> void:
 	if not last_chapter.is_empty():
 		chapter_times[last_chapter] = float(chapter_times.get(last_chapter,0.0)) + (Time.get_ticks_msec()-chapter_start_ms)/1000.0
 		chapter_start_ms = Time.get_ticks_msec()
+		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
-	var report := {"build":str(ProjectSettings.get_setting("application/config/version","G6-001")),"total_seconds":snappedf(total,0.1),"ending":progress.ending_id(),"node":progress.node_id,"chapters":chapter_times,"recorded_at":Time.get_datetime_string_from_system()}
-	var file := FileAccess.open("user://g4_run.json",FileAccess.WRITE)
+	var report := {
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-001")),
+		"total_seconds":snappedf(total,0.1),
+		"effective_seconds":snappedf(float(progress.seconds),0.1),
+		"ending":progress.ending_id(),
+		"node":progress.node_id,
+		"chapters":chapter_times,
+		"equipment":progress.equipment(),
+		"recorded_at":Time.get_datetime_string_from_system()
+	}
+	var path := preload("res://scripts/user_storage.gd").directory()+"run_report.json"
+	var file := FileAccess.open(path,FileAccess.WRITE)
 	if file != null:
 		file.store_string(JSON.stringify(report, "  "))
 		file.close()
-		notice = "本次用时 %.1f 秒，已写入用户数据/g4_run.json。" % total
+		notice = "本次用时 %.1f 秒，已写入 %s。" % [total,ProjectSettings.globalize_path(path)]
 	else:
 		notice = "本次用时 %.1f 秒（记录文件写入失败）。" % total
 
@@ -638,7 +667,10 @@ func show_credits() -> void:
 	write_run_report()
 	var restored := progress.ending_id() == "restore"
 	clear_menu("菌灯之下 · 尾声")
-	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "本次用时 " + elapsed_text() + "。\n选择返回标题，或读取结局前的自动备份继续探索。")
+	overlay.position = Vector2(270,50)
+	overlay.size = Vector2(740,610)
+	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "本次用时 " + elapsed_text() + "。\n" + chapter_report_text(),120)
+	paragraph("灯根回路已记录：%s。\n制作：AI 程序与素材整合 · 体验审核：玩家" % ("共生恢复" if restored else "封存撤离"),75)
 	button("返回标题", show_title)
 	if saves.load_slot("auto",true).ok:
 		button("读取结局前存档（自动备份）", func(): load_game("auto",true))
@@ -881,8 +913,10 @@ func _physics_process(delta: float) -> void:
 			start_encounters()
 		if combat.hp <= 0:
 			clear_menu("灯光暂熄")
-			paragraph("恢复最近已提交的安全进度，未保存的奖励、敌人和资源一起回退。")
+			paragraph("恢复最近已提交的安全进度，未保存的奖励、敌人和资源一起回退。\n也可以读取安全存档，或回到标题。")
 			button("从当前区域重试",retry_from_room)
+			button("读取存档",show_load_menu)
+			button("返回标题",show_title)
 	commands.clear()
 	queued_pointer = Vector2.INF
 	world.queue_redraw()

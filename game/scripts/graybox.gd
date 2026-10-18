@@ -50,7 +50,8 @@ func _ready() -> void:
 	if "--integration" in OS.get_cmdline_user_args():
 		preferences.path = "user://presentation-test.cfg"
 	else:
-		preferences.read_settings()
+		var settings_error := preferences.read_settings()
+		if settings_error != OK: preferences.apply_display()
 	combat_audio.set_volume(preferences.sfx_volume)
 	grip_review = "--grip-review" in OS.get_cmdline_user_args()
 	pose_view = "--poses" in OS.get_cmdline_user_args() or grip_review
@@ -96,9 +97,10 @@ func _ready() -> void:
 			paused = true
 			combat_audio.stop_all())
 	if "--replay" in OS.get_cmdline_user_args():
-		replay = preload("res://scripts/replay_driver.gd").new()
+		replay = load("res://scripts/replay_driver.gd").new()
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	print("G2_READY | G2-007 | 60Hz | prototype")
+	if review_mode or OS.is_debug_build():
+		print("G2_READY | G2-007 | 60Hz | prototype")
 	if "--hazard-demo" in OS.get_cmdline_user_args():
 		combat.spawn_zone(Vector2(90,130))
 		combat.spawn_projectile(Vector2(280,90),Vector2.LEFT*float(combat.config.hazards.projectile.speed))
@@ -133,7 +135,7 @@ func _ready() -> void:
 		call_deferred("start_integration")
 
 func start_integration() -> void:
-	var runner = preload("res://scripts/integration_test.gd").new()
+	var runner = load("res://scripts/integration_test.gd").new()
 	add_child(runner)
 	runner.run(self)
 
@@ -190,7 +192,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_SPACE:
 				commands.append("dodge")
 			KEY_G:
-				if not paused and not pose_view:
+				if not paused and not pose_view and not combat.doors.is_empty():
 					combat.set_door_open("test_gate",not combat.doors[0].open)
 			KEY_B:
 				if not paused and not pose_view:
@@ -251,7 +253,8 @@ func _physics_process(_delta: float) -> void:
 	floating_ui.queue_redraw()
 	hud.text = "菌灯之下   /   G2-007 动作素材原型  ·  F1 设置\n生命 %d / 100     专注 %d / 100     净光 %.1fs     闪避 %.1fs" % [combat.hp,combat.focus,float(combat.cooldowns.light)/60,float(combat.cooldowns.dodge)/60]
 	hud.text += "    护灯 %d / %.1fs    灯雨 %.1fs" % [combat.shield_hp,float(combat.cooldowns.shield)/60,float(combat.cooldowns.rain)/60]
-	status.text = "WASD 移动 · 左/右键 灯击/净光 · 1 护灯 · 2 灯雨 · 空格 闪避 · Esc 暂停 · F5 重置\n%s" % ("已暂停，按 Esc 继续" if paused else ("已倒地，按 F5 重试" if combat.hp <= 0 else "测试：G 门（%s）· B 发射弹体 · V 生成下方毒区（3秒）" % ("开启" if combat.doors[0].open else "关闭")))
+	var gate_state := "无" if combat.doors.is_empty() else ("开启" if combat.doors[0].open else "关闭")
+	status.text = "WASD 移动 · 左/右键 灯击/净光 · 1 护灯 · 2 灯雨 · 空格 闪避 · Esc 暂停 · F5 重置\n%s" % ("已暂停，按 Esc 继续" if paused else ("已倒地，按 F5 重试" if combat.hp <= 0 else "测试：G 门（%s）· B 发射弹体 · V 生成下方毒区（3秒）" % gate_state))
 	if pose_view:
 		hud.text = "菌灯之下 / G2-007 四向姿态原型  ·  %s  ·  tick %d\n从上至下：下 / 左 / 右 / 上；共享正式渲染组件，尚未完成人工审核" % ["播放" if pose_playing else "逐步",pose_tick]
 		status.text = "F2 返回试打 · 逗号 播放/停帧 · 句号 单步 · F3 菌洞/水道 · F4 脚底标记\n列：待机 / 行走 / 灯击 / 净光 / 闪避 / 受击 / 倒地（动作初稿）"

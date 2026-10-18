@@ -1,0 +1,9 @@
+{
+  "build": "G6-001",
+  "qa_dir": "deliverables\\G6-001-QA",
+  "returncode": 0,
+  "checks": 31,
+  "failures": 0,
+  "script_error_free": true,
+  "passed": true
+}

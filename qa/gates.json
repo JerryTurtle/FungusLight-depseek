@@ -1,5 +1,5 @@
 {
- "build_id": "G4-009",
+ "build_id": "G6-001",
  "G0": {
   "status": "passed",
   "evidence": [
@@ -401,12 +401,61 @@
   ],
   "remaining": [],
   "caveat": "G4 passed; G4-009 is post-pass polish for the five playtest items: light particle linger + shake, animated lamp flame, brighter guide beams, 37-room overlap cleanup, quarter-pixel/interpolated movement. Human feel check of the new effects remains recommended; G6 release work is separate.",
-  "passed_at": "2026-10-18"
+  "passed_at": "2026-10-18",
+  "human_approval": {
+   "date": "2026-10-18",
+   "source": "user_chat",
+   "build_id": "G4-008",
+   "evidence": "qa/G4-approval.md",
+   "conclusion": "用户确认20分钟时长目标已达到并同意G4通过；G4-009为通过后的表现/操作修复。"
+  }
  },
  "G5": {
-  "status": "not_started"
+  "status": "waived_by_user",
+  "note": "用户明确要求在G4-009修复后直接进入G6；G5单独阶段不等待。发布必需的全量回归/设置/发布包并入G6；音乐与完整按键重设未完成，见 known issues。"
  },
  "G6": {
-  "status": "not_started"
+  "status": "in_progress",
+  "build_id": "G6-001",
+  "evidence": [
+   "qa/evidence/G6/G6-gap-audit.md",
+   "qa/evidence/G6/G6-001-checks.json",
+   "qa/evidence/G6/G6-001-g6_release-tests.log",
+   "qa/evidence/G6/G6-001-integration.json",
+   "qa/evidence/G6/G6-001-integration.log",
+   "qa/evidence/G6/G6-001-review/checks.json",
+   "qa/evidence/G6/G6-001-route-matrix.json",
+   "qa/evidence/G6/G6-001-release-package.json",
+   "qa/evidence/G6/G6-001-release-layout.json",
+   "qa/evidence/G6/G6-001-clean-release.json",
+   "qa/evidence/G6/G6-001-clean-release.log",
+   "qa/evidence/G6/G6-001-progress.md",
+   "qa/G6-approval.md",
+   "qa/evidence/G6/G6-001-release-flow.json",
+   "qa/evidence/G6/G6-001-release-flow.log",
+   "qa/evidence/G6/G6-001-replay-30.json",
+   "qa/evidence/G6/G6-001-replay-60.json",
+   "qa/evidence/G6/G6-001-replay-144.json",
+   "qa/evidence/G6/G6-001-framerate-summary.json",
+   "qa/evidence/G6/G6-001-title.png",
+   "qa/evidence/G6/G6-001-settings.png",
+   "qa/evidence/G6/G6-001-load-empty.png",
+   "qa/evidence/G6/G6-001-pause.png",
+   "qa/evidence/G6/G6-001-death.png",
+   "qa/evidence/G6/G6-001-credits.png",
+   "qa/evidence/G6/G6-001-final-package.txt",
+   "qa/evidence/G6/G6-001-g6-release-export.log",
+   "qa/G4-approval.md",
+   "qa/evidence/G6/G6-001-zip-clean.log"
+  ],
+  "package": "deliverables/Release/",
+  "remaining": [
+   "用户按 docs/g6/release/验收说明.md 完成干净目录两结局/双槽/坏档/设置/全地图体验并填写 qa/G6-approval.md",
+   "原始 Fungus Cave 素材再分发许可确认或限定内部验收",
+   "可选：音乐与完整按键重设（G5 单独阶段按用户指示跳过）"
+  ],
+  "caveat": "AI 发布验证与干净目录启动已通过；G6 仍为 in_progress，只有用户书面确认后才可标 passed。20分钟为用户已确认目标，不声称60分钟。",
+  "package_zip": "deliverables/FungusLight-G6-001-Release.zip",
+  "package_zip_sha256": "1E6EE8F1CD97F40253334904AEB7E74F3DFAFA2D7B3CF4F5000D393E7DB1E979"
  }
 }

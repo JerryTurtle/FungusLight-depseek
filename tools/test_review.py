@@ -12,7 +12,9 @@ output.mkdir(exist_ok=True)
 env = os.environ.copy()
 env['APPDATA'] = str(root / 'qa/runtime-profile')
 env['FUNGUS_REVIEW_QA'] = str(output)
-result = subprocess.run([str(root/f'deliverables/{build}/FungusLight.exe'),'--','--review-test'],env=env,capture_output=True,timeout=120)
+qa_dir = root / f'deliverables/{build}-QA'
+binary = qa_dir / 'FungusLight.exe' if qa_dir.exists() else root / f'deliverables/{build}/FungusLight.exe'
+result = subprocess.run([str(binary),'--','--review-test'],env=env,capture_output=True,timeout=120)
 log = result.stdout.decode(errors='replace')+result.stderr.decode(errors='replace')
 (output/'runtime.log').write_text(log,encoding='utf-8')
 print(log)

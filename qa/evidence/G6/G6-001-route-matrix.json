@@ -1,0 +1,74 @@
+{
+  "build_id": "G6-001",
+  "variants": [
+    {
+      "tag": "A_restore",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 484.6,
+      "passed": true
+    },
+    {
+      "tag": "B_seal",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 486.4,
+      "passed": true
+    },
+    {
+      "tag": "A_alt_seal",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 507.2,
+      "passed": true
+    },
+    {
+      "tag": "B_alt_restore",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 506.1,
+      "passed": true
+    },
+    {
+      "tag": "C05",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 484.6,
+      "passed": true
+    },
+    {
+      "tag": "C06",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 506.1,
+      "passed": true
+    },
+    {
+      "tag": "sidequests",
+      "exit": 0,
+      "checks": 10,
+      "failures": 0,
+      "seconds": 494.9,
+      "passed": true
+    },
+    {
+      "tag": "skip",
+      "exit": 0,
+      "checks": 9,
+      "failures": 0,
+      "seconds": 434.2,
+      "passed": true
+    }
+  ],
+  "fastest_seconds": 434.2,
+  "requirement_seconds": 1200,
+  "requirement_met": false,
+  "passed": true,
+  "seconds": 107.48
+}

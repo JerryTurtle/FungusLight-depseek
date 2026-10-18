@@ -1,0 +1,12 @@
+{
+  "build": "G6-001",
+  "clean_directory": "C:\\Users\\shandian\\Documents\\AI\\FungusLight-depseek\\qa\\local\\release-clean-1792322439\\有 空格 的 目录",
+  "exit": 0,
+  "release_boot": true,
+  "debug_boot_absent": true,
+  "script_error_free": true,
+  "no_capture_side_effect": true,
+  "no_personal_files_in_game_dir": true,
+  "isolated_profile_created": true,
+  "passed": true
+}

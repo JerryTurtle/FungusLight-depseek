@@ -4,7 +4,7 @@ extends SceneTree
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G4-009"
+var BUILD_ID := str(ProjectSettings.get_setting("application/config/version","G6-001"))
 var scene
 var checks := 0
 var failures := 0
@@ -696,7 +696,7 @@ func write_report(total_seconds: float) -> void:
 		"input":"Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes","branch":"B" if branch_b else "A→B","ending":"seal" if seal_ending else "restore","tag":route_tag,
 		"dialogue_model":("整段 Tab 跳过（选择页仍需手动确认）" if skip_dialogue else "每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间"),
 		"failure":failed}
-	var dir := "qa/evidence/G4" if BUILD_ID.begins_with("G4") else "qa/evidence/G3"
+	var dir := "qa/evidence/"+BUILD_ID.substr(0,2)
 	var suffix := ("-skip" if skip_dialogue else "") + ("" if route_tag.is_empty() else "-"+route_tag)
 	var path := ProjectSettings.globalize_path("res://").path_join("../"+dir+"/"+BUILD_ID+"-route"+suffix+".json").simplify_path()
 	var file := FileAccess.open(path,FileAccess.WRITE)

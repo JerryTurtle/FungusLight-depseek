@@ -4,19 +4,20 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 ## 1. 当前状态（2026-10-18）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3 已于 2026-10-18 通过（G3-013）；G4 已通过（用户确认 20 分钟）。G4-009 完成试玩反馈修复：初燃余烬与轻震、动态灯焰、导光光束增强、37 节点重叠清理、四分之一像素+显示刷新率插值移动。** 按用户要求从 60 分钟改为 20 分钟，G4-001 人工约15分钟，新增6个过渡区/E31-E36/Boss400；G4-008 修小地图、传送门方向、营地与水管 NPC、文字重叠、支路B死亡重开、上下墙碰撞；G4-009 再修五项反馈。自动路线484.6秒、跳过434.2秒；G4-009 全量 12 组引擎测试失败 0。用户已指示修复后直接进入 G6。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。G4-009 完成试玩反馈修复；G6-001 发布候选包已构建并通过 AI 发布验证，等待用户最终验收。** G4-009：初燃余烬/轻震、动态灯焰、导光光束增强、37 节点重叠清理、四分之一像素+刷新率插值移动。G6-001：release 默认主线、剔除测试/采集/审核/MCP 资源、标题—继续—读取—双槽—死亡—两结局—返回闭环、发布四件套与 Windows 包。自动路线 484.6 秒、跳过 434.2 秒，8/8 路线矩阵通过；G6 最终用户验收未完成前不称整款交付。
 
-- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G4-008 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台；`FungusLight.exe -- --campaign` 可用于 debug 验证。G4 验收包：`deliverables/G4-008-Acceptance/G4-Acceptance.cmd`（同目录 `G4-Acceptance.md` / `G4-Checklist.md`）；G4-009 证据见 `qa/evidence/G4/G4-009-*`。G6 发布包在 `deliverables/Release/`（构建完成后更新）。
+- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-001 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
+- **G6-001 发布包：** [deliverables/Release](deliverables/Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-001-Release.zip`。exe `66B26A…B7B13`，pck `7D6C34…06DAA`，zip SHA256 `1E6EE8F1…DB1E979`；完整哈希见 `qa/evidence/G6/G6-001-final-package.txt`。
+- **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G4-009 证据见 `qa/evidence/G4/G4-009-*`。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
-- **下一项 G6（用户已明确跳过 G5 单独阶段）：正式 Windows 包、默认主线入口、调试/测试资源剔除、标题—继续—读取—双槽—死亡—两结局—返回闭环、发布 Docs/QA/Licenses/Source 与干净目录验收。** 用户最终验收通过前不得称整款游戏交付完成。
+- **下一项：用户在干净目录完成 G6-001 最终验收**（两结局、双槽/坏档、设置、37 节点、手感/字体/标签），填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
 
 状态依据：用户最新要求、[AGENTS.md](AGENTS.md)、[qa/gates.json](qa/gates.json)和[game/DEV_STATE.md](game/DEV_STATE.md)的最新条目。旧报告中的“待H2/禁止G3”是历史状态，已被批准记录取代。发现文件与实际Git状态不符时先核对，不自行推定完成。
 
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
 ### 接续快照：已实现功能与剩余工作（2026-10-18）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-008，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3、G4已通过，G5/G6未开始。当前分支main；运行入口仍是G2审核台，`-- --campaign`进入G4五章主线；G4 人工验收包 `deliverables/G4-008-Acceptance/`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-001，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-001为发布候选，等待用户最终验收。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/Release/`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
 
 #### 已实现清单（接续时直接复用）
 

@@ -9,6 +9,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -25,7 +26,8 @@ VARIANTS = [
     ('skip', {'FUNGUS_SKIP_DIALOGUE': '1'}),
 ]
 
-summary = {'build_id': 'G4-009', 'variants': [], 'fastest_seconds': None,
+build = sys.argv[1] if len(sys.argv) > 1 else 'G6-001'
+summary = {'build_id': build, 'variants': [], 'fastest_seconds': None,
            'requirement_seconds': 1200, 'requirement_met': False}
 pattern = re.compile(r'ROUTE(?:_SKIP)?_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)')
 started = time.time()
@@ -51,7 +53,8 @@ times = [v['seconds'] for v in summary['variants'] if v['seconds'] is not None]
 summary['fastest_seconds'] = min(times) if times else None
 summary['requirement_met'] = summary['fastest_seconds'] is not None and summary['fastest_seconds'] >= 1200.0
 summary['seconds'] = round(time.time() - started, 2)
-out = ROOT / 'qa' / 'evidence' / 'G4' / 'G4-009-route-matrix.json'
+out = ROOT / 'qa' / 'evidence' / build[:2] / f'{build}-route-matrix.json'
+out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
 print('ROUTE_MATRIX', json.dumps({k: summary[k] for k in ['passed', 'fastest_seconds', 'requirement_met']}, ensure_ascii=False))
 assert summary['passed'], summary

@@ -1,0 +1,6 @@
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+USER_STORAGE C:/Users/shandian/Documents/AI/FungusLight-depseek/qa/local/release-clean-1792322439/有 空格 的 目录/isolated-appdata/FungusLight/
+RELEASE_BOOT campaign
+ERROR: Failed to read the root certificate store.
+   at: (platform/windows/os_windows.cpp:1873)

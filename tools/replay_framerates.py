@@ -17,7 +17,9 @@ baseline = None
 for fps in (30,60,144):
     destination = evidence_path(f'{build}-replay-{fps}.json')
     env['FUNGUS_REPLAY_OUTPUT'] = str(destination)
-    run = subprocess.run([str(root/f'deliverables/{build}/FungusLight.exe'),'--max-fps',str(fps),'--','--replay'],env=env,capture_output=True,timeout=25)
+    qa_dir = root / f'deliverables/{build}-QA'
+    binary = qa_dir / 'FungusLight.exe' if qa_dir.exists() else root / f'deliverables/{build}/FungusLight.exe'
+    run = subprocess.run([str(binary),'--max-fps',str(fps),'--','--replay'],env=env,capture_output=True,timeout=25)
     output = run.stdout.decode(errors='replace')+run.stderr.decode(errors='replace')
     (evidence_path(f'{build}-replay-{fps}.log')).write_text(output,encoding='utf-8')
     assert run.returncode == 0 and 'REPLAY_SAVED 0 frames=360' in output and 'SCRIPT ERROR' not in output, output

@@ -1,0 +1,13 @@
+{
+  "build": "G6-001",
+  "release_dir": "deliverables\\G6-001",
+  "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+  "pck_sha256": "7D6C3402A7A780566066FEF499BC72DB6728AA8C9B25CF1F755DBA7B20506DAA",
+  "pck_bytes": 16385744,
+  "required_present": true,
+  "missing": [],
+  "forbidden_present": [],
+  "project_identity_ok": true,
+  "qa_build_exists": true,
+  "passed": true
+}

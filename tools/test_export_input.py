@@ -12,7 +12,9 @@ destination = evidence_path(f'{build}-integration.json')
 env = os.environ.copy()
 env['APPDATA'] = str(root / 'qa/runtime-profile')
 env['FUNGUS_INTEGRATION_OUTPUT'] = str(destination)
-result = subprocess.run([str(root / f'deliverables/{build}/FungusLight.exe'), '--', '--integration'], env=env, capture_output=True, timeout=30)
+qa_dir = root / f'deliverables/{build}-QA'
+binary = qa_dir / 'FungusLight.exe' if qa_dir.exists() else root / f'deliverables/{build}/FungusLight.exe'
+result = subprocess.run([str(binary), '--', '--integration'], env=env, capture_output=True, timeout=30)
 output = result.stdout.decode(errors='replace') + result.stderr.decode(errors='replace')
 (evidence_path(f'{build}-integration.log')).write_text(output, encoding='utf-8')
 print(output)

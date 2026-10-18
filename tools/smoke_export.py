@@ -18,7 +18,9 @@ env = os.environ.copy()
 env['APPDATA'] = str(profile)
 env['FUNGUS_CAPTURE'] = str(evidence_path(f'{build}-window.png'))
 extra = sys.argv[2:]
-result = subprocess.run([str(root/f'deliverables/{build}/FungusLight.exe'),'--quit-after','120','--','--capture',*extra],cwd=root/f'deliverables/{build}',env=env,capture_output=True,timeout=30)
+qa_dir = root / f'deliverables/{build}-QA'
+source_dir = qa_dir if qa_dir.exists() else root / f'deliverables/{build}'
+result = subprocess.run([str(source_dir/'FungusLight.exe'),'--quit-after','120','--','--capture',*extra],cwd=source_dir,env=env,capture_output=True,timeout=30)
 output = result.stdout.decode(errors='replace') + result.stderr.decode(errors='replace')
 (evidence_path(f'{build}-runtime.log')).write_text(f'exit={result.returncode}\nextra_args={extra}\n'+output,encoding='utf-8')
 print(output)
