@@ -59,9 +59,9 @@ func _ready() -> void:
 	ui_layer.draw.connect(draw_object_labels)
 	ui_layer.draw.connect(draw_minimap)
 	hud.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	hud.custom_minimum_size = Vector2(900,0)
-	hud.size = Vector2(900,70)
-	hud.max_lines_visible = 2
+	hud.custom_minimum_size = Vector2(1200,0)
+	hud.size = Vector2(1200,94)
+	hud.max_lines_visible = 3
 	hud.add_theme_font_size_override("font_size",20)
 	status.add_theme_font_size_override("font_size",20)
 	status.custom_minimum_size = Vector2(1040,0)
@@ -1036,7 +1036,13 @@ func _physics_process(delta: float) -> void:
 	floating_ui.queue_redraw()
 	objects_layer.queue_redraw()
 	ui_layer.queue_redraw()
-	hud.text = "%s   生命 %d/%d   专注 %d/%d   药剂 %d/3   时间 %s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,progress.max_focus(),combat.potions,elapsed_text(),current_goal()]
+	var poison_text := ""
+	if combat.poison_until > combat.tick:
+		poison_text = "   孢毒 %ds" % maxi(1,ceili(float(combat.poison_until-combat.tick)/60.0))
+	var cooldown_text := "护盾 %d/%d   净光 %.1fs   护灯 %.1fs   灯雨 %.1fs%s" % [
+		int(combat.shield_hp),progress.shield_capacity(),
+		float(combat.cooldowns.light)/60.0,float(combat.cooldowns.shield)/60.0,float(combat.cooldowns.rain)/60.0,poison_text]
+	hud.text = "%s   生命 %d/%d   专注 %d/%d   药剂 %d/3   时间 %s\n%s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,progress.max_focus(),combat.potions,elapsed_text(),cooldown_text,current_goal()]
 	var nearest := nearest_object()
 	var boss := boss_target()
 	if not boss.is_empty():
@@ -1048,6 +1054,21 @@ func _physics_process(delta: float) -> void:
 		status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动  E交互  Q观察  R治疗  空格闪避")+"    "+notice
 	if combat.action == "heal": status.text = "正在治疗 %d / 36 · 移动、闪避或受击会取消\n%s" % [combat.age,notice]
 	if wake_left > 0: status.text = "……\n睁开眼，从床铺上起身。"
+
+func handle_visual_events() -> void:
+	super.handle_visual_events()
+	for event in combat.events:
+		match str(event.get("kind","")):
+			"boss_phase":
+				start_screen_shake(6.0,12)
+				notice = "母体外壳重组，阶段 %d。" % (int(event.get("phase",0))+1)
+			"boss_core":
+				if bool(event.get("open",false)):
+					start_screen_shake(2.0,6)
+					notice = "核心暴露：现在可以造成伤害。"
+			"boss_death":
+				start_screen_shake(8.0,18)
+				notice = "母体被压制，核心仍在微弱搏动。"
 
 func boss_target() -> Dictionary:
 	for enemy in combat.enemies:
