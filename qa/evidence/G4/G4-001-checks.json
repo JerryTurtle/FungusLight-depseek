@@ -9,7 +9,7 @@
       "checks": 76,
       "failures": 0,
       "expected_min_checks": 76,
-      "seconds": 0.58,
+      "seconds": 0.55,
       "log": "qa/evidence/G3/G4-001-campaign-tests.log",
       "passed": true
     },
@@ -20,7 +20,7 @@
       "checks": 34,
       "failures": 0,
       "expected_min_checks": 34,
-      "seconds": 0.28,
+      "seconds": 0.29,
       "log": "qa/evidence/G3/G4-001-g4_state-tests.log",
       "passed": true
     },
@@ -31,7 +31,7 @@
       "checks": 65,
       "failures": 0,
       "expected_min_checks": 65,
-      "seconds": 0.28,
+      "seconds": 0.27,
       "log": "qa/evidence/G3/G4-001-save-tests.log",
       "passed": true
     },
@@ -53,7 +53,7 @@
       "checks": 175,
       "failures": 0,
       "expected_min_checks": 175,
-      "seconds": 0.37,
+      "seconds": 0.36,
       "log": "qa/evidence/G3/G4-001-dialogue-tests.log",
       "passed": true
     },
@@ -61,10 +61,10 @@
       "check": "props",
       "script": "scripts/test_props.gd",
       "exit": 0,
-      "checks": 2490,
+      "checks": 2502,
       "failures": 0,
       "expected_min_checks": 2490,
-      "seconds": 0.46,
+      "seconds": 0.47,
       "log": "qa/evidence/G3/G4-001-props-tests.log",
       "passed": true
     },
@@ -75,7 +75,7 @@
       "checks": 5,
       "failures": 0,
       "expected_min_checks": 5,
-      "seconds": 7.13,
+      "seconds": 7.04,
       "log": "qa/evidence/G3/G4-001-pressure-tests.log",
       "passed": true
     },
@@ -86,10 +86,10 @@
       "checks": 9,
       "failures": 0,
       "expected_min_checks": 9,
-      "seconds": 9.82,
+      "seconds": 9.57,
       "log": "qa/evidence/G3/G4-001-route-tests.log",
       "passed": true,
-      "simulated_seconds": 385.3
+      "simulated_seconds": 393.3
     },
     {
       "check": "skip_route",
@@ -98,13 +98,13 @@
       "checks": 9,
       "failures": 0,
       "expected_min_checks": 9,
-      "seconds": 9.64,
+      "seconds": 9.63,
       "log": "qa/evidence/G3/G4-001-skip_route-tests.log",
       "passed": true,
-      "simulated_seconds": 335.5
+      "simulated_seconds": 341.4
     }
   ],
   "failures": 0,
-  "seconds": 28.83,
+  "seconds": 28.46,
   "passed": true
 }

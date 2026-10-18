@@ -16,6 +16,13 @@ var held := {}
 var mouse_down := false
 var dialogue_wait := 0
 var skip_dialogue := OS.get_environment("FUNGUS_SKIP_DIALOGUE") == "1"
+var branch_b := OS.get_environment("FUNGUS_BRANCH") == "B"
+var seal_ending := OS.get_environment("FUNGUS_ENDING") == "seal"
+var choice_m1 := OS.get_environment("FUNGUS_M1")
+var choice_m2 := OS.get_environment("FUNGUS_M2")
+var choice_m3 := OS.get_environment("FUNGUS_M3")
+var choice_m4 := OS.get_environment("FUNGUS_M4")
+var route_tag := OS.get_environment("FUNGUS_ROUTE_TAG")
 var min_hp := 100.0
 var deaths := 0
 var wall_start := 0
@@ -79,7 +86,7 @@ func run() -> void:
 		failed = "route tick cap at step "+str(step().id)+" pending="+str(scene.pending_encounter)+" player="+str(scene.combat.player)+" enemies="+str(cap_dump)
 	if failed == "":
 		check(scene.progress.has("S01") and scene.progress.has("P01") and scene.progress.has("S02"),"prologue main path committed")
-		check(scene.progress.has("M1") and scene.progress.choice == "melee","M1 choice committed")
+		check(scene.progress.has("M1") and scene.progress.choice == ("light" if choice_m1 == "light" else "melee"),"M1 choice committed")
 		check(scene.progress.has("S03") and scene.progress.has("E03") and scene.progress.has("E04"),"story and mine encounters committed")
 		check(scene.progress.has("E05") and scene.progress.has("E06") and scene.progress.has("P02"),"light puzzle and pods committed")
 		check(deaths == 0 and scene.combat.hp > 0,"route completed without death")
@@ -87,7 +94,7 @@ func run() -> void:
 		var auto: Dictionary = scene.saves.load_slot("auto")
 		check(auto.ok and not str(auto.snapshot.get("node_id","")).is_empty(),"safe checkpoint loadable")
 		check(scene.progress.seconds > 30.0 and scene.progress.seconds <= float(tick)/60.0 + 0.5,"effective time excludes paused dialogue")
-		check(scene.progress.node_id == "N4-07" and scene.progress.ending_id() == "restore" and scene.progress.has("S12"),"G4 full route and restore ending")
+		check(scene.progress.node_id == "N4-07" and scene.progress.ending_id() == ("seal" if seal_ending else "restore") and scene.progress.has("S12"),"G4 full route and ending")
 	else:
 		check(false,"route finished: "+failed)
 	var total := float(tick)/60.0
@@ -164,8 +171,8 @@ func build_route() -> void:
 		{"id":"E19","type":"combat","flag":"E19"},
 		{"id":"N2-08","type":"interact","to":Vector2(292,144),"node":"N2-08"},
 		{"id":"E20","type":"combat","flag":"E20"},
-		{"id":"V07","type":"interact","to":Vector2(145,116),"flag":"V07"},
-		{"id":"V08","type":"interact","to":Vector2(190,116),"flag":"V08"},
+		{"id":"V07","type":"interact","to":Vector2(145,112),"flag":"V07"},
+		{"id":"V08","type":"interact","to":Vector2(190,112),"flag":"V08"},
 		{"id":"M3","type":"interact","to":Vector2(180,140),"flag":"M3"},
 		{"id":"N3-01","type":"interact","to":Vector2(292,144),"node":"N3-01"},
 		{"id":"rest3","type":"rest","to":Vector2(55,150)},
@@ -179,10 +186,12 @@ func build_route() -> void:
 		{"id":"rest4","type":"rest","to":Vector2(55,150)},
 		{"id":"N3-03","type":"interact","to":Vector2(292,144),"node":"N3-03"},
 		{"id":"E23","type":"combat","flag":"E23"},
+		{"id":"rest3b","type":"rest","to":Vector2(55,150)},
 		{"id":"N3-04","type":"interact","to":Vector2(292,144),"node":"N3-04"},
 		{"id":"E24","type":"combat","flag":"E24"},
 		{"id":"E25","type":"combat","flag":"E25"},
 		{"id":"N3-05","type":"interact","to":Vector2(292,144),"node":"N3-05"},
+		{"id":"rest3c","type":"rest","to":Vector2(55,150)},
 		{"id":"V12","type":"interact","to":Vector2(145,116),"flag":"V12"},
 		{"id":"V13","type":"interact","to":Vector2(190,116),"flag":"V13"},
 		{"id":"M4","type":"interact","to":Vector2(180,140),"flag":"M4"},
@@ -208,6 +217,21 @@ func build_route() -> void:
 		{"id":"credits","type":"interact","to":Vector2(160,105),"flag":"S12"},
 		{"id":"done","type":"finish"}
 	]
+	if branch_b:
+		var start_a := -1
+		var start_b := -1
+		var merge := -1
+		for i in route.size():
+			match str(route[i].id):
+				"N2-02": start_a = i
+				"N2-04": start_b = i
+				"N2-06": merge = i
+		if start_a >= 0 and start_b > start_a and merge > start_b:
+			var prefix: Array = route.slice(0,start_a)
+			var a: Array = route.slice(start_a,start_b)
+			var b: Array = route.slice(start_b,merge)
+			var tail: Array = route.slice(merge)
+			route = prefix + b + a + tail
 
 func step() -> Dictionary:
 	if step_index >= route.size(): return {"id":"none","type":"finish"}
@@ -549,6 +573,18 @@ func aim_press(button: int, aim: Vector2) -> void:
 
 func handle_dialogue() -> void:
 	if scene.choice_pending:
+		var second := false
+		if scene.choice_mode == "ending":
+			second = seal_ending
+		elif scene.choice_mode == "growth":
+			var pick := ""
+			if scene.progress.active_event == "M1": pick = choice_m1
+			elif scene.progress.active_event == "M2": pick = choice_m2
+			elif scene.progress.active_event == "M3": pick = choice_m3
+			elif scene.progress.active_event == "M4": pick = choice_m4
+			second = pick in ["light","guard","focus","step"]
+		if second:
+			press_key(KEY_S)
 		press_key(KEY_E)
 		return
 	if skip_dialogue:
@@ -617,11 +653,12 @@ func write_report(total_seconds: float) -> void:
 	var report := {"build_id":BUILD_ID,"route":"N0-01→N0-04→N1-01→N1-05→N2-01→N2-06→N3-06→N4-07","tick":tick,"seconds":snappedf(total_seconds,0.1),
 		"wall_ms":Time.get_ticks_msec()-wall_start,"checks":checks,"failures":failures,"deaths":deaths,
 		"min_hp":min_hp,"dodges":dodges,"heals":heals,"segments":segments,"path_queries":scene.combat.path_queries,
-		"input":"Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes",
+		"input":"Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes","branch":"B" if branch_b else "A→B","ending":"seal" if seal_ending else "restore","tag":route_tag,
 		"dialogue_model":("整段 Tab 跳过（选择页仍需手动确认）" if skip_dialogue else "每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间"),
 		"failure":failed}
 	var dir := "qa/evidence/G4" if BUILD_ID.begins_with("G4") else "qa/evidence/G3"
-	var path := ProjectSettings.globalize_path("res://").path_join("../"+dir+"/"+BUILD_ID+("-route-skip.json" if skip_dialogue else "-route.json")).simplify_path()
+	var suffix := ("-skip" if skip_dialogue else "") + ("" if route_tag.is_empty() else "-"+route_tag)
+	var path := ProjectSettings.globalize_path("res://").path_join("../"+dir+"/"+BUILD_ID+"-route"+suffix+".json").simplify_path()
 	var file := FileAccess.open(path,FileAccess.WRITE)
 	if file != null:
 		file.store_string(JSON.stringify(report,"  "))

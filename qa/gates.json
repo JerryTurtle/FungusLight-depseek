@@ -328,12 +328,17 @@
    "qa/evidence/G4/G4-001-boss.png",
    "qa/evidence/G4/G4-001-branch.png",
    "qa/evidence/G4/G4-001-ending.png",
-   "qa/evidence/G4/G4-001-package-camp.png"
+   "qa/evidence/G4/G4-001-package-camp.png",
+   "qa/evidence/G4/G4-001-route-A_restore.json",
+   "qa/evidence/G4/G4-001-route-B_seal.json",
+   "qa/evidence/G4/G4-001-route-A_alt_seal.json",
+   "qa/evidence/G4/G4-001-route-B_alt_restore.json",
+   "qa/evidence/G4/G4-001-route-C05.json",
+   "qa/evidence/G4/G4-001-route-C06.json"
   ],
   "remaining": [
-   "完整快速路线≥60分钟：当前385.3秒/335.5秒，未达标",
-   "C01～C06四种代表配置、两种第二章顺序×两种结局的完整路线未跑全",
-   "Boss当前150生命仅为路线验证，未达到5～7分钟三阶段体验与2200初始生命目标",
+   "完整快速路线≥60分钟：当前393.3秒/341.4秒，未达标",
+   "Boss 150生命是路线验证版，未达2200初始生命/5～7分钟三阶段目标",
    "Q1/Q2支线完整路线与奖励回读未验证",
    "真人G4完整时长与最终验收未完成"
   ],
