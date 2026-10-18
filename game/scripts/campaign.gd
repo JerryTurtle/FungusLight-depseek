@@ -16,6 +16,7 @@ var dialogue_mode := ""
 var dialogue_lines: Array = []
 var choice_pending := false
 var choice_mode := "growth"
+var run_started_ms := 0
 var pending_encounter := ""
 var checkpoint: Dictionary = {}
 var dirty := false
@@ -142,6 +143,7 @@ func show_title() -> void:
 	button("退出",func(): get_tree().quit())
 
 func new_game() -> void:
+	run_started_ms = Time.get_ticks_msec()
 	progress = Progress.new()
 	checkpoint = {}
 	running = true
@@ -334,6 +336,7 @@ func load_game(slot: String, backup: bool = false) -> void:
 		button("返回",show_load_menu)
 		return
 	progress.restore(result.snapshot)
+	run_started_ms = Time.get_ticks_msec()
 	checkpoint = result.snapshot.duplicate(true)
 	running = true
 	dirty = false
@@ -474,12 +477,16 @@ func choose_ending(option: String) -> void:
 	resume()
 	save_game("auto",true)
 
+func elapsed_text() -> String:
+	var seconds := int((Time.get_ticks_msec()-run_started_ms)/1000) if run_started_ms > 0 else int(progress.seconds)
+	return "%02d:%02d" % [int(seconds/60), seconds%60]
+
 func show_credits() -> void:
 	if not progress.has("S12"): progress.flags.S12 = true
 	dirty = true
 	var restored := progress.ending_id() == "restore"
 	clear_menu("菌灯之下 · 尾声")
-	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "按 Esc 返回标题，或继续探索。")
+	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "本次用时 " + elapsed_text() + "。\n按 Esc 返回标题，或继续探索。")
 	button("返回标题", show_title)
 	button("继续探索", resume)
 
@@ -685,7 +692,7 @@ func _physics_process(delta: float) -> void:
 	floating_ui.queue_redraw()
 	objects_layer.queue_redraw()
 	ui_layer.queue_redraw()
-	hud.text = "%s   生命 %d / %d   专注 %d / 100   药剂 %d/3   净光 %s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,combat.potions,"已解锁" if progress.has("S02") else "未解锁",current_goal()]
+	hud.text = "%s   生命 %d / %d   专注 %d / 100   药剂 %d/3   净光 %s   时间 %s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,combat.potions,"已解锁" if progress.has("S02") else "未解锁",elapsed_text(),current_goal()]
 	var nearest := nearest_object()
 	status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动 · 空格闪避 · E交互 · Q观察 · R治疗 · Esc暂停")+"\n"+notice
 	if combat.action == "heal": status.text = "正在治疗 %d / 36 · 移动、闪避或受击会取消\n%s" % [combat.age,notice]

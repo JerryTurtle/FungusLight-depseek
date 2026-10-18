@@ -18,8 +18,8 @@
 
 ## 证据与限制
 
-- [门槛](../qa/gates.json)、[G2报告](../qa/evidence/G2/G2-007-gate-report.md)、[G4-002报告](../qa/evidence/G4/G4-002-progress.md)。
-- G4 人工验收包：`deliverables/G4-002-Acceptance/G4-Acceptance.cmd`、`G4-Acceptance.md`、`G4-Checklist.md`；压缩包 `deliverables/G4-002-Acceptance.zip`。
+- [门槛](../qa/gates.json)、[G2报告](../qa/evidence/G2/G2-007-gate-report.md)、[G4-003报告](../qa/evidence/G4/G4-002-progress.md)。
+- G4 人工验收包：`deliverables/G4-003-Acceptance/G4-Acceptance.cmd`、`G4-Acceptance.md`、`G4-Checklist.md`；压缩包 `deliverables/G4-003-Acceptance.zip`。
 - G2的549模型/118战斗集成/50审核集成、帧率回放和900秒负载是历史基线，不等于G3完成。
 - 用户目录可能使用exe旁后备位置；原生集成非OS键鼠自动化；原素材授权待核实；主线/Boss/G6未完成。
 
@@ -68,7 +68,7 @@ T2/T3/T4/T5/EL1专项、孢毒/攻击名额与预警已实现；E03接入T5。35
 
 ## G4-002 五过渡区与20分钟目标（接续）
 
-按用户要求把时长目标改为20分钟。新增 N1-08 菌灯井、N1-07 根桥下层、N2-09 泵站回廊、N2-10 试验段外廊、N3-07 王庭侧廊与 E31-E35；节点36/遭遇36；Boss400。86场景/34状态/5Boss/65存档/35敌人/175对话/2584素材/5压力/9路线/9跳过、118原生、50/50审核台、回放通过；正常496.3秒、跳过446.4秒。自动8.3分钟不是20分钟人类时长；G4仍in_progress，需人工复测20分钟。验收包deliverables/G4-002-Acceptance/。下一项G4-003。
+按用户要求把时长目标改为20分钟。新增 N1-08 菌灯井、N1-07 根桥下层、N2-09 泵站回廊、N2-10 试验段外廊、N3-07 王庭侧廊与 E31-E35；节点36/遭遇36；Boss400。86场景/34状态/5Boss/65存档/35敌人/175对话/2584素材/5压力/9路线/9跳过、118原生、50/50审核台、回放通过；正常496.3秒、跳过446.4秒。自动8.3分钟不是20分钟人类时长；G4仍in_progress，需人工复测20分钟。验收包deliverables/G4-003-Acceptance/。下一项G4-003。
 
 ## G4-001 全主线结构首版（历史）
 

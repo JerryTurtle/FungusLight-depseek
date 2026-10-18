@@ -4,10 +4,10 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 ## 1. 当前状态（2026-10-18）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3 已于 2026-10-18 通过（G3-013）；G4-002 内容扩充完成，等待人工确认 20 分钟时长。** 按用户要求把 G4 时长目标从 60 分钟改为 **20 分钟**；G4-001 人工约 15 分钟，本轮新增 5 个过渡区、E31～E35、Boss 400，目标补到 20 分钟。自动路线 496.3 秒、跳过 446.4 秒（引擎输入，不是人类时长），G4 正式时长仍待复测。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3 已于 2026-10-18 通过（G3-013）；G4-003 内容与计时完成，等待人工确认 20 分钟时长。** 按用户要求把 G4 时长目标从 60 分钟改为 **20 分钟**；G4-001 人工约 15 分钟，本轮新增 5 个过渡区、E31～E35、Boss 400，目标补到 20 分钟。自动路线 496.3 秒、跳过 446.4 秒（引擎输入，不是人类时长），G4 正式时长仍待复测。
 
 - 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G4-002 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **默认运行仍是 G2 审核台，不是主线。** 入口为 `boot.tscn → boot.gd → review.gd`；`FungusLight.exe -- --campaign` 进入 G4 五章主线。G4 人工验收包：`deliverables/G4-002-Acceptance/G4-Acceptance.cmd`（同目录 `G4-Acceptance.md` / `G4-Checklist.md`），压缩包 `deliverables/G4-002-Acceptance.zip`；G4 仍未通过。
+- **默认运行仍是 G2 审核台，不是主线。** 入口为 `boot.tscn → boot.gd → review.gd`；`FungusLight.exe -- --campaign` 进入 G4 五章主线。G4 人工验收包：`deliverables/G4-003-Acceptance/G4-Acceptance.cmd`（同目录 `G4-Acceptance.md` / `G4-Checklist.md`），压缩包 `deliverables/G4-003-Acceptance.zip`；G4 仍未通过。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
 - **下一项 G4-003：根据人工 20 分钟复测结果收尾；如达标则验收 G4，未达标再补有效内容；Boss 400 与 2200 设计版差异需决定。** 文档维护不改变游戏构建编号。
 
@@ -16,7 +16,7 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
 ### 接续快照：已实现功能与剩余工作（2026-10-18）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-002，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3已通过，G4进行中，G5/G6未开始。当前分支main；运行入口仍是G2审核台，`-- --campaign`进入G4五章主线；G4 人工验收包 `deliverables/G4-002-Acceptance/`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-003，目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3已通过，G4进行中，G5/G6未开始。当前分支main；运行入口仍是G2审核台，`-- --campaign`进入G4五章主线；G4 人工验收包 `deliverables/G4-003-Acceptance/`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
 
 #### 已实现清单（接续时直接复用）
 
@@ -156,7 +156,7 @@ G4-001 搭出五章31节点（N0/N1/N2/N3/N4）、30个主线遭遇（tutorial+E
 
 #### G4-002 五过渡区与20分钟目标（待人工时长）
 
-按用户要求把时长目标改为 **20 分钟**。在 G4-001（人工约15分钟）之后新增 N1-08 菌灯井、N1-07 根桥下层、N2-09 泵站回廊、N2-10 试验段外廊、N3-07 王庭侧廊，对应 E31～E35；节点36、遭遇36（tutorial+E01～E35）；Boss 150→400。G4 场景86、状态34、Boss机制5、存档65、敌人35、对话175、素材2584、A15 5；C01-C06/支线/跳过8/8；正常自动496.3秒、跳过446.4秒、0死亡；原生118、审核台50/50、回放一致。**自动8.3分钟不是20分钟人类时长；人工复测未完成，G4仍in_progress。** 验收包deliverables/G4-002-Acceptance/。下一项G4-003。
+按用户要求把时长目标改为 **20 分钟**。在 G4-001（人工约15分钟）之后新增 N1-08 菌灯井、N1-07 根桥下层、N2-09 泵站回廊、N2-10 试验段外廊、N3-07 王庭侧廊，对应 E31～E35；节点36、遭遇36（tutorial+E01～E35）；Boss 150→400。G4 场景86、状态34、Boss机制5、存档65、敌人35、对话175、素材2584、A15 5；C01-C06/支线/跳过8/8；正常自动496.3秒、跳过446.4秒、0死亡；原生118、审核台50/50、回放一致。**自动8.3分钟不是20分钟人类时长；人工复测未完成，G4仍in_progress。** 验收包deliverables/G4-003-Acceptance/。下一项G4-003。
 
 <!-- HANDOFF_SNAPSHOT_END -->
 
@@ -237,11 +237,11 @@ $GodotExe = 'C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_con
 
 | 改动 | 命令 | 已有基线 |
 | --- | --- | --- |
-| G4 全套 | `python tools/test_g3_slice.py G4-002` | 76场景/34状态/65存档/35敌人/175对话/2508素材/5压力/9路线/9跳过，失败0 |
+| G4 全套 | `python tools/test_g3_slice.py G4-003` | 76场景/34状态/65存档/35敌人/175对话/2508素材/5压力/9路线/9跳过，失败0 |
 | G4 路线矩阵 | `python tools/test_g4_routes.py` | C01-C06/支线/跳过8/8；最快446.4秒引擎输入，20分钟人类时长待复测 |
 | 存档 | `python tools/test_save.py <BuildId>` | G3-001：65项实际Godot磁盘读写检查 |
 | 战斗逻辑 | `python tools/test_combat.py` | 549项模型检查 |
-| 原生输入/场景 | `python tools/test_export_input.py <BuildId>` | G4-002：118项 |
+| 原生输入/场景 | `python tools/test_export_input.py <BuildId>` | G4-003：118项 |
 | 审核台 | `python tools/test_review.py <BuildId>` | G3-011：49/50（本机剪贴板被占用） |
 | 时序/渲染接线 | `python tools/replay_framerates.py <BuildId>` | 30/60/144上限逐步状态一致 |
 | 性能 | `python tools/stress_review.py <BuildId>` | G2-007：900秒负载，见最终报告 |
@@ -258,7 +258,7 @@ python tools/test_g3_slice.py G3-010
 
 **不要直接运行 `tools/finalize_g2.py`**：它是历史收尾脚本，会重写报告/门槛。`test_review_package.py`固定用本机G2包，压力汇总也有固定G2路径；`snapshot_source.py`依赖对应报告存在。先读[工具索引](tools/README.md)与脚本再执行。
 
-最新证据：[G2最终报告](qa/evidence/G2/G2-007-gate-report.md)、[G4-002报告](qa/evidence/G4/G4-002-progress.md)、[G4-001报告](qa/evidence/G4/G4-001-progress.md)。存档测试中的`blocked/subdir`创建失败是有意错误注入，65项检查通过；其他错误不能一概忽略。
+最新证据：[G2最终报告](qa/evidence/G2/G2-007-gate-report.md)、[G4-003报告](qa/evidence/G4/G4-002-progress.md)、[G4-001报告](qa/evidence/G4/G4-001-progress.md)。存档测试中的`blocked/subdir`创建失败是有意错误注入，65项检查通过；其他错误不能一概忽略。
 
 ## 7. 已知限制与必须保留的决定
 

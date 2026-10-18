@@ -312,7 +312,7 @@
  },
  "G4": {
   "status": "in_progress",
-  "iteration": "G4-002",
+  "iteration": "G4-003",
   "evidence": [
    "qa/evidence/G4/G4-001-progress.md",
    "qa/evidence/G4/G4-001-checks.json",
@@ -332,7 +332,11 @@
    "qa/evidence/G4/G4-002-route-matrix.json",
    "qa/evidence/G4/G4-002-route-A_restore.json",
    "qa/evidence/G4/G4-002-route-B_seal.json",
-   "qa/evidence/G4/G4-002-hashes.txt"
+   "qa/evidence/G4/G4-002-hashes.txt",
+   "qa/evidence/G4/G4-003-progress.md",
+   "qa/evidence/G4/G4-003-checks.json",
+   "qa/evidence/G4/G4-003-route-matrix.json",
+   "qa/evidence/G4/G4-003-hashes.txt"
   ],
   "remaining": [
    "20分钟人工快速路线复测：自动496.3秒/446.4秒，不是人类时长",

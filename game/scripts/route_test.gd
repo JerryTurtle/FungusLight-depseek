@@ -4,7 +4,7 @@ extends SceneTree
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G4-002"
+const BUILD_ID := "G4-003"
 var scene
 var checks := 0
 var failures := 0
