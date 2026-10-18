@@ -167,7 +167,7 @@ G4-001 搭出五章31节点（N0/N1/N2/N3/N4）、30个主线遭遇（tutorial+E
 - P03～P09 已加顺序/证据门禁；P03 断根记录二选一、P04 流向对照、P05 根/门闩顺序、P06 测量点对照、P07 管线扫描、P08 三证据刻槽、P09 三步稳压均已有独立“对照/顺序”交互；操作仍以选择/开关为主，不是完整动作小游戏。
 - 回声扫描新增可交互/证据物高亮边框（FX04 补强）；`FUNGUS_SAVE_DIR` 与 `--campaign-capture` 已改为仅 debug 构建生效，release 不再接受这两个调试钩子；`deliverables/Release/Game` 的运行产物已清理（zip 仍为旧包）。
 - 设置新增独立“开启震屏”开关，与减少动态分开；G4-009 轻震/阶段反馈可单独关闭。
-- 已导出本地候选并组装五目录：`deliverables/G7-Release/{Game,Source,Docs,QA,Licenses}`，zip `deliverables/FungusLight-G7-001-Candidate.zip`（SHA256 `21A6495E…2E1B24`）；exe `66B26A…B7B13`，pck `9DD26FC8…A9DCAE`；PCK 只读检查无 test/capture/review/MCP/autoload/开发路径，含 BOSS.png。Game 目录已扫描无个人存档/日志。**未做 release GUI 干净目录全流程**；route_test 仍失败，不能验收。
+- 已导出本地候选并组装五目录：`deliverables/G7-Release/{Game,Source,Docs,QA,Licenses}`，zip `deliverables/FungusLight-G7-001-Candidate.zip`（SHA256 `4536DCF8…9BB224F`）；exe `66B26A…B7B13`，pck `A4FF9901…3408C`；PCK 只读检查无 test/capture/review/MCP/autoload/开发路径，含 BOSS.png 与语义道具。Game 目录已扫描无个人存档/日志，`capture_g4` 实机截图验证 N1-06/N3-05 已改用 document/puzzle_console/evidence_slot，未再用 papers 占位。**未做 release GUI 干净目录全流程**；route_test 仍失败，不能验收。
 - 纸张占位已按语义拆分：墙刻/铭文使用 `wall_inscription`，剧情证据使用 `document`，机关对照使用 `puzzle_console`，三证据刻槽使用 `evidence_slot`，通用 NPC 使用 `npc`；不再用同一张 `papers` 图形同时充当墙面、剧情、机关和 NPC。墙壁仍使用 `Complete.png` 的暗色石砖，未使用纸张图。
 - 下一步：12 类特效收尾、route_test 适配、G7 发布验收；G6/G7 仍 `in_progress`，不得称整款交付。
 

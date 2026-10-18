@@ -21,7 +21,7 @@
 - HUD 已增加护盾/技能冷却与孢毒剩余时间；Boss 阶段/核心/死亡事件接入轻震、状态提示与反馈环；孢毒新增角色周围脉冲环；装备配置改为休息点可用。
 - P03～P09 已加顺序/证据门禁；P03/P04/P05/P06/P07/P08/P09 均有独立对照/顺序交互（选择/开关为主）。
 - 回声扫描新增证据/交互物高亮；release 构建拒绝 FUNGUS_SAVE_DIR/--campaign-capture；Release 目录运行产物已清理（zip 仍旧包）；设置新增独立震屏开关。
-- 已组装本地候选 `deliverables/G7-Release/{Game,Source,Docs,QA,Licenses}` 与 zip `deliverables/FungusLight-G7-001-Candidate.zip`（SHA256 `21A6495E…2E1B24`）；exe `66B26AD9…B7B13`、pck `9DD26FC8…A9DCAE`；PCK 只读检查无 test/capture/review/MCP/autoload，含 BOSS.png；Game 目录无个人存档/日志。未做 release GUI 干净目录全流程。
+- 已组装本地候选 `deliverables/G7-Release/{Game,Source,Docs,QA,Licenses}` 与 zip `deliverables/FungusLight-G7-001-Candidate.zip`（SHA256 `4536DCF8…9BB224F`）；exe `66B26AD9…B7B13`、pck `A4FF9901…3408C`；PCK 只读检查无 test/capture/review/MCP/autoload，含 BOSS.png 与语义道具；Game 目录无个人存档/日志；capture_g4 实机截图验证语义道具。未做 release GUI 干净目录全流程。
 - 纸张占位按语义拆分：`wall_inscription`/`document`/`puzzle_console`/`evidence_slot`/`npc`；墙壁仍用暗色石砖，不再把纸张图用于墙面。`test_props` 2472/0。
 - 待续：其余 12 类特效、route_test 适配、G7 发布验收。G6/G7 仍 in_progress。
 
