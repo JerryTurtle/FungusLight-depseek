@@ -83,7 +83,7 @@ func skills() -> Dictionary:
 func snapshot(position: Vector2, health: float, focus: float) -> Dictionary:
 	var encounters := {}
 	for id in ENCOUNTERS: encounters[id] = has(id)
-	return {"schema_version":1,"build_id":"G3-012","chapter_id":"prologue","node_id":node_id,
+	return {"schema_version":1,"build_id":"G3-013","chapter_id":"prologue","node_id":node_id,
 		"safe_position":[position.x,position.y],"health":health,"focus":focus,"potions":potions,"effective_seconds":seconds,
 		"quests":{},"story":flags.duplicate(true),"puzzles":{"P01":has("P01"),"P02":has("P02")},"encounters":encounters,
 		"rewards":{"M1":has("M1")},"skills":skills(),"upgrades":{"M1":choice},"equipment":{"charm":"guardian_knot" if has("M1") else ""}}

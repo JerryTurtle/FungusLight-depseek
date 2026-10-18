@@ -4,7 +4,7 @@ extends SceneTree
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G3-012"
+const BUILD_ID := "G3-013"
 var scene
 var checks := 0
 var failures := 0
@@ -15,6 +15,7 @@ var segments: Array = []
 var held := {}
 var mouse_down := false
 var dialogue_wait := 0
+var skip_dialogue := OS.get_environment("FUNGUS_SKIP_DIALOGUE") == "1"
 var min_hp := 100.0
 var deaths := 0
 var wall_start := 0
@@ -90,7 +91,8 @@ func run() -> void:
 		check(false,"route finished: "+failed)
 	var total := float(tick)/60.0
 	write_report(total)
-	print("ROUTE_TEST checks=%d failures=%d seconds=%.1f steps=%d deaths=%d" % [checks,failures,total,segments.size(),deaths])
+	var report_prefix := "ROUTE_SKIP_TEST" if skip_dialogue else "ROUTE_TEST"
+	print("%s checks=%d failures=%d seconds=%.1f steps=%d deaths=%d" % [report_prefix,checks,failures,total,segments.size(),deaths])
 	release_all()
 	scene.combat_audio.stop_all()
 	scene.free()
@@ -445,6 +447,9 @@ func handle_dialogue() -> void:
 	if scene.choice_pending:
 		press_key(KEY_E)
 		return
+	if skip_dialogue:
+		press_key(KEY_TAB)
+		return
 	dialogue_wait += 1
 	if dialogue_wait >= 55:
 		dialogue_wait = 0
@@ -509,9 +514,9 @@ func write_report(total_seconds: float) -> void:
 		"wall_ms":Time.get_ticks_msec()-wall_start,"checks":checks,"failures":failures,"deaths":deaths,
 		"min_hp":min_hp,"dodges":dodges,"heals":heals,"segments":segments,"path_queries":scene.combat.path_queries,
 		"input":"Input.parse_input_event + flush, fixed 60Hz step; no teleport, no direct flag/reward writes",
-		"dialogue_model":"每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间",
+		"dialogue_model":("整段 Tab 跳过（选择页仍需手动确认）" if skip_dialogue else "每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间"),
 		"failure":failed}
-	var path := ProjectSettings.globalize_path("res://").path_join("../qa/evidence/G3/"+BUILD_ID+"-route.json").simplify_path()
+	var path := ProjectSettings.globalize_path("res://").path_join("../qa/evidence/G3/"+BUILD_ID+("-route-skip.json" if skip_dialogue else "-route.json")).simplify_path()
 	var file := FileAccess.open(path,FileAccess.WRITE)
 	if file != null:
 		file.store_string(JSON.stringify(report,"  "))

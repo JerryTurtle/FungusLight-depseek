@@ -303,9 +303,21 @@ func run() -> void:
 	scene.combat.enemies.erase(corpse)
 	var p02_auto: Dictionary = scene.saves.load_slot("auto").snapshot
 	check(p02_auto.puzzles.P02 and p02_auto.node_id == "N1-02","P02 auto checkpoint committed")
+	scene.combat.hp = 37.0
+	scene.combat.focus = 5.0
+	scene.combat.potions = 1
+	scene.progress.potions = 1
 	scene.save_game("manual_2")
+	scene.combat.hp = 99.0
+	scene.combat.focus = 90.0
+	scene.combat.potions = 3
+	scene.progress.flags.E03 = false
 	scene.load_game("manual_2")
 	check(scene.progress.has("P02") and scene.guides_correct() == 3 and scene.progress.node_id == "N1-02","P02 and guides restored")
+	check(scene.progress.has("E03") and scene.progress.choice == "melee","story/reward restored together")
+	check(scene.combat.hp == 37.0 and scene.combat.focus == 5.0 and scene.combat.potions == 1,"health/focus/potions rolled back together")
+	check(scene.saves.load_slot("manual_2").snapshot.quests.is_empty(),"quest map remains empty and explicit")
+	scene.combat.hp = 100.0
 	scene.combat.player = Vector2(292,144)
 	scene.interact()
 	check(scene.progress.node_id == "N1-03" and scene.pending_encounter == "E07","N1-03 transition")
@@ -343,6 +355,25 @@ func run() -> void:
 	key(KEY_B)
 	key(KEY_V)
 	check(scene.combat.projectiles.is_empty() and scene.combat.zones.is_empty(),"campaign debug controls disabled")
+	# A15 actual-room pressure: ten pursuers in N1-05 with real walls/blockers.
+	var started: int = Time.get_ticks_usec()
+	var queries_before: int = int(scene.combat.path_queries)
+	scene.combat.player = Vector2(60,110)
+	scene.combat.hp = 100000.0
+	for point in [Vector2(150,100),Vector2(180,80),Vector2(250,100),Vector2(280,140),Vector2(150,140),Vector2(260,145),Vector2(270,60),Vector2(140,80)]:
+		scene.combat.add_enemy(point)
+	for point in [Vector2(160,80),Vector2(240,120)]:
+		scene.combat.add_archetype("T3",point)
+	for i in 600:
+		scene.combat.step(Vector2.RIGHT,Vector2.RIGHT)
+	var inside: int = 0
+	for enemy in scene.combat.enemies:
+		if enemy.hp > 0 and scene.combat.blocked(enemy.pos,2): inside += 1
+	var elapsed: float = (Time.get_ticks_usec()-started)/1000.0
+	check(inside == 0,"A15 actual room: no pursuer inside walls/blockers")
+	check(scene.combat.path_queries > queries_before,"A15 actual room: path queries issued")
+	check(scene.combat.hp > 0 and elapsed < 10000.0,"A15 actual room: 600 steps under 10s (%.0f ms)" % elapsed)
+	check(scene.combat.enemies.size() >= 10,"A15 actual room: ten pursuers")
 	scene.combat_audio.stop_all()
 	scene.queue_free()
 	await process_frame

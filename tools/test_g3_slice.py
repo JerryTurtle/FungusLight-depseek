@@ -4,6 +4,7 @@ Each check runs the real Godot engine headlessly and writes its own evidence log
 This entry point does not replace human review and does not claim OS keyboard input.
 """
 import json
+import os
 import re
 import subprocess
 import sys
@@ -23,16 +24,19 @@ CHECKS = [
     ("props", "scripts/test_props.gd", r"PROP_TEST checks=(\d+) failures=(\d+)", 180),
     ("pressure", "scripts/test_pressure.gd", r"PRESSURE_TEST checks=(\d+) failures=(\d+)", 180),
     ("route", "scripts/route_test.gd", r"ROUTE_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)", 300),
+    ("skip_route", "scripts/route_test.gd", r"ROUTE_SKIP_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)", 300, {"FUNGUS_SKIP_DIALOGUE":"1"}),
 ]
 
 summary = {"build_id": build, "engine": engine, "checks": [], "failures": 0}
 started = time.time()
-for name, script, pattern, timeout in CHECKS:
+for entry in CHECKS:
+    name, script, pattern, timeout = entry[:4]
+    extra_env = entry[4] if len(entry) > 4 else {}
     at = time.time()
     try:
         result = subprocess.run(
             [engine, '--headless', '--path', str(root / 'game'), '--script', 'res://' + script],
-            capture_output=True, timeout=timeout)
+            capture_output=True, timeout=timeout, env={**os.environ, **extra_env})
         output = result.stdout.decode(errors='replace') + result.stderr.decode(errors='replace')
         code = result.returncode
     except subprocess.TimeoutExpired as error:
@@ -48,7 +52,7 @@ for name, script, pattern, timeout in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 173, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2178, 'pressure': 5, 'route': 8}[name]
+    expected = {'campaign': 180, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2178, 'pressure': 5, 'route': 8, 'skip_route': 8}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1
@@ -63,7 +67,7 @@ for name, script, pattern, timeout in CHECKS:
         "log": f'qa/evidence/G3/{build}-{name}-tests.log',
         "passed": passed and enough,
     }
-    if name == 'route' and match:
+    if name in ('route','skip_route') and match:
         row['simulated_seconds'] = float(match.group(3))
     summary['checks'].append(row)
     print(('PASS ' if row['passed'] else 'FAIL ') + name, row['checks'], 'checks, failures', row['failures'])
