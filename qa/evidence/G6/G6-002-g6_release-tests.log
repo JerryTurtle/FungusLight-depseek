@@ -1,0 +1,10 @@
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+G2_READY | G2-007 | 60Hz | prototype
+G2_READY | G2-007 | 60Hz | prototype
+G6_RELEASE_TEST checks=38 failures=0
+
+Result: PASS. Includes the new regression checks: an older manual save loads
+after later unlocks, and a fresh Campaign instance loads a mid-game save with
+flags/skills/quests restored.

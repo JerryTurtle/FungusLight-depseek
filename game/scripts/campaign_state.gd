@@ -191,9 +191,12 @@ func max_focus() -> float:
 	return max_focus_for(flags, choices)
 
 func skills() -> Dictionary:
+	return skills_for(flags)
+
+func skills_for(flags_value: Dictionary) -> Dictionary:
 	# Shield is unlocked in the first chapter before the gatekeeper, as in the
 	# plan's first-chapter rest point (P02 is the last safe stop before E07/E08).
-	return {"light":has("S02"), "shield":has("P02"), "rain":has("M3")}
+	return {"light":bool(flags_value.get("S02",false)), "shield":bool(flags_value.get("P02",false)), "rain":bool(flags_value.get("M3",false))}
 
 func melee_damage() -> float:
 	var damage := 18.0
@@ -313,8 +316,11 @@ func puzzles() -> Dictionary:
 	return out
 
 func quests() -> Dictionary:
+	return quests_for(flags)
+
+func quests_for(flags_value: Dictionary) -> Dictionary:
 	var out := {}
-	for id in quest_ids: out[id] = has(id)
+	for id in quest_ids: out[id] = bool(flags_value.get(id,false))
 	return out
 
 func upgrades() -> Dictionary:
@@ -360,8 +366,11 @@ func validate(value: Dictionary) -> String:
 	if not str(eq.get("charm","")) in ["", "guardian_knot","artisan_clasp","ember_talisman"]: return "护符槽无效。"
 	if not str(eq.lens).is_empty() and not bool(eq.owned.get(str(eq.lens),false)): return "未拥有的灯镜被装备。"
 	if not str(eq.charm).is_empty() and not bool(eq.owned.get(str(eq.charm),false)): return "未拥有的护符被装备。"
-	if value.skills != skills(): return "技能不一致。"
-	if value.quests != quests(): return "任务状态不一致。"
+	# Validate derived fields against the snapshot's own story flags. Comparing
+	# them with the live progress rejects valid saves after a restart (fresh
+	# progress) or when loading an older save after later unlocks.
+	if value.skills != skills_for(f): return "技能不一致。"
+	if value.quests != quests_for(f): return "任务状态不一致。"
 	# Dependency graph: every true encounter/story flag must satisfy its data requirement.
 	var requires_map := {}
 	for id in content.get("events", {}).keys():
@@ -383,7 +392,6 @@ func validate(value: Dictionary) -> String:
 			var ids := []
 			for option in event_def(id).get("options", []): ids.append(str(option.id))
 			if not selected in ids: return "强化选择无效。"
-	if value.skills != skills(): return "技能不一致。"
 	if value.health > max_hp_for(f, value.upgrades, value.equipment) or value.focus > max_focus_for(f, value.upgrades): return "资源超过当前上限。"
 	# Every visited node must be reachable through unlocked exits from the start.
 	if not node_reachable(str(value.node_id), f): return "节点尚未解锁。"

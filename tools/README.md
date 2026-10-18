@@ -7,6 +7,7 @@
 | 构建 | build.ps1 | 必须给新BuildId；需Godot4.3与Windows导出模板 |
 | G3切片 | test_g3_slice.py | 顺序跑序章/存档/敌人/对话/素材/正常输入路线，写 G3-006-*-tests.log 与 checks.json；不是真人验收 |
 | 专项 | test_combat.py、test_save.py | 直接调用Godot；日志编号目前固定，勿覆盖历史证据 |
+| 读档重启 | game/scripts/test_restart_load.gd | 连续运行两次：首次写中局档，第二次用全新进程读取；不依赖单进程状态。G6-002 证据见 qa/evidence/G6/G6-002-restart-load.log |
 | 原生 | test_export_input.py、test_review.py、replay_framerates.py | 先构建相同BuildId；不是系统键鼠操作 |
 | 性能 | stress_review.py、summarize_stress.py | 约15分钟；汇总含固定G2路径，先核对 |
 | 打包 | smoke_export.py、test_review_package.py | 阅读参数，后者只针对已有G2审核包 |

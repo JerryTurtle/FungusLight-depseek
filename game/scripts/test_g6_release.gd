@@ -102,6 +102,33 @@ func run() -> void:
 	scene.load_game("manual_1",true)
 	check(is_equal_approx(scene.progress.seconds,12.0),"backup recovery restores valid slot")
 
+	# Regression: derived fields must be validated against the save's own story
+	# flags, not the live progress. This covers a restart (fresh Campaign) and an
+	# older save read after later unlocks.
+	scene.new_game()
+	scene.wake_left = 0
+	scene.hide_player = false
+	scene.save_game("manual_3",true)
+	for flag in ["P01","S02","P02","Q1"]: scene.progress.flags[flag] = true
+	scene.save_game("manual_2",true)
+	scene.load_game("manual_3")
+	check(scene.running and not scene.progress.has("S02") and not scene.progress.has("Q1"),"older save loads after later unlocks")
+	var fresh = Campaign.new()
+	root.add_child(fresh)
+	await process_frame
+	fresh.set_physics_process(false)
+	fresh.saves.directory = scene.saves.directory
+	fresh.show_title()
+	fresh.load_game("manual_2")
+	check(fresh.running,"fresh instance loads mid-game save")
+	check(fresh.progress.has("S02") and fresh.progress.has("P02") and fresh.progress.has("Q1"),"fresh load restores flags")
+	var fresh_skills: Dictionary = fresh.progress.skills()
+	var fresh_quests: Dictionary = fresh.progress.quests()
+	check(bool(fresh_skills.get("light",false)) and bool(fresh_skills.get("shield",false)) and not bool(fresh_skills.get("rain",false)) and bool(fresh_quests.get("Q1",false)),"fresh load restores skills/quests")
+	fresh.combat_audio.stop_all()
+	fresh.queue_free()
+	await process_frame
+
 	# Every authored room must load, have a walkable spawn, and resolve its props.
 	var map_ok := true
 	for node_def in scene.progress.content.nodes:

@@ -25,7 +25,16 @@
 - 纸张占位按语义拆分：`wall_inscription`/`document`/`puzzle_console`/`evidence_slot`/`npc`；墙壁仍用暗色石砖，不再把纸张图用于墙面。`test_props` 2472/0。
 - 待续：其余 12 类特效、route_test 适配、G7 发布验收。G6/G7 仍 in_progress。
 
-## 下一项：用户 G6-001 最终验收
+## P0-1 读档校验修复（G6-002，本地修复迭代）
+
+- 根因：`campaign_state.validate` 用当前进度 `skills()/quests()` 比较快照，重启后或读更早存档时会误报“技能/任务不一致”，有效存档无法读取。
+- 修复：新增 `skills_for(flags)/quests_for(flags)`，校验改为按快照自身 story 推导；删除重复的技能检查。
+- 验证：跨进程重启读档 write 2/0 + load 8/0（修复前 load 8/5，失败日志保留 `qa/evidence/G6/G6-002-prefix-restart-load.log`）；`test_g6_release` 38/0（新增旧档/新实例回读）、`g4_campaign` 88/0、`save` 65/0、`g4` 48/0、`g4_death` 5/0。通过证据 `qa/evidence/G6/G6-002-*`。
+- 限制：只修读档，不改变 gates/包/版本；G6/G7 仍 in_progress，route_test 仍失败，全量路线与发布验收未完成。下一项 P0-2（当前源码重跑路线）与 P0-3（包/门槛/版本统一）。
+
+## 下一项：P0-2/P0-3（其后才是用户验收）
+
+P0-1 已完成读档修复；在 P0-2 用当前源码重跑路线、P0-3 统一包/门槛/版本之前，不启动 G6/G7 用户验收。以下清单保留作为最终验收条目：
 
 1. 干净目录首次启动、新游戏、设置持久化、双槽隔离、坏档恢复、死亡三选项。
 2. 两个结局各走一次，确认尾声章节统计/返回标题/结局前备份。

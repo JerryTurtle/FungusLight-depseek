@@ -1,0 +1,21 @@
+===== cross-process restart/load regression (G6-002) =====
+phase 1 (write): godot --headless --path game --script res://scripts/test_restart_load.gd
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+RESTART_PHASE write dir=C:/Users/shandian/Documents/AI/FungusLight-depseek/qa/runtime-profile/restart-load
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+G2_READY | G2-007 | 60Hz | prototype
+RESTART_WRITE checks=2 failures=0
+exit=0
+
+phase 2 (load, brand-new process): same command
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+RESTART_PHASE load dir=C:/Users/shandian/Documents/AI/FungusLight-depseek/qa/runtime-profile/restart-load
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+G2_READY | G2-007 | 60Hz | prototype
+RESTART_LOAD checks=8 failures=0
+exit=0
+
+Result: PASS. A mid-game save (P01/S02/P02/Q1) written by one process loads
+in a fresh process through campaign.load_game; flags, skills and quests restored.

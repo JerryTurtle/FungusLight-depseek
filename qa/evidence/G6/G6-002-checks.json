@@ -1,0 +1,23 @@
+{
+  "build": "G6-002",
+  "purpose": "P0-1 save/load validation fix",
+  "changes": [
+    "campaign_state.validate now derives skills/quests from the snapshot story flags",
+    "removed duplicate live-progress skills check",
+    "added test_restart_load.gd (two real Godot processes)",
+    "test_g6_release.gd adds older-save and fresh-instance load regression checks"
+  ],
+  "results": [
+    {"check": "restart_load_write", "process": "write", "checks": 2, "failures": 0, "passed": true},
+    {"check": "restart_load_read", "process": "fresh load", "checks": 8, "failures": 0, "passed": true},
+    {"check": "restart_load_prefix", "process": "pre-fix code, fresh load", "checks": 8, "failures": 5, "passed": false, "evidence": "qa/evidence/G6/G6-002-prefix-restart-load.log"},
+    {"check": "g6_release", "checks": 38, "failures": 0, "passed": true},
+    {"check": "g4_campaign", "checks": 88, "failures": 0, "passed": true},
+    {"check": "save", "checks": 65, "failures": 0, "passed": true},
+    {"check": "g4_state", "checks": 48, "failures": 0, "passed": true},
+    {"check": "g4_death", "checks": 5, "failures": 0, "passed": true}
+  ],
+  "passed": true,
+  "gates_updated": false,
+  "note": "Local fix iteration only. Package/version/gates and the known failing route_test are unchanged; G6/G7 remain in_progress."
+}

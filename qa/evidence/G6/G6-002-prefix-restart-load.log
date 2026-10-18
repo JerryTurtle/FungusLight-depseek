@@ -1,0 +1,31 @@
+===== pre-fix evidence for the restart/load regression (G6-002-prefix) =====
+Code state: campaign_state.gd at HEAD before P0-1 fix (validate compared
+value.skills/quests with the live progress).
+
+phase 1 (write): same mid-game save; exits 0
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+RESTART_PHASE write dir=C:/Users/shandian/Documents/AI/FungusLight-depseek/qa/runtime-profile/restart-load
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+G2_READY | G2-007 | 60Hz | prototype
+RESTART_WRITE checks=2 failures=0
+exit=0
+
+phase 2 (load, brand-new process): FAILS
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+RESTART_PHASE load dir=C:/Users/shandian/Documents/AI/FungusLight-depseek/qa/runtime-profile/restart-load
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+G2_READY | G2-007 | 60Hz | prototype
+RESTART_LOAD checks=8 failures=5
+exit=1
+stderr:
+FAIL load enters playable state
+FAIL no load-error overlay
+FAIL flags restored
+FAIL skills restored
+FAIL quests restored
+
+Conclusion: valid save rejected with "技能不一致/任务状态不一致" because the
+live (fresh) progress had no S02/P02/Q1 while the snapshot did. Fixed by
+validating skills_for(f)/quests_for(f) from the snapshot's own story flags.
