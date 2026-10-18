@@ -234,6 +234,7 @@ $GodotExe = 'C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_con
 | 改动 | 命令 | 已有基线 |
 | --- | --- | --- |
 | G4 全套 | `python tools/test_g3_slice.py G4-001` | 76场景/34状态/65存档/35敌人/175对话/2508素材/5压力/9路线/9跳过，失败0 |
+| G4 路线矩阵 | `python tools/test_g4_routes.py` | C01-C06/支线/跳过8/8；最快352.7秒，60分钟门槛未过 |
 | 存档 | `python tools/test_save.py <BuildId>` | G3-001：65项实际Godot磁盘读写检查 |
 | 战斗逻辑 | `python tools/test_combat.py` | 549项模型检查 |
 | 原生输入/场景 | `python tools/test_export_input.py <BuildId>` | G4-001：118项 |

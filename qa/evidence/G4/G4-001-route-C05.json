@@ -4,7 +4,7 @@
   "checks": 9,
   "deaths": 0,
   "dialogue_model": "每句约0.9秒模型化停留，再发送补全/推进输入；不属于真人阅读时间",
-  "dodges": 140,
+  "dodges": 141,
   "ending": "restore",
   "failure": "",
   "failures": 0,
@@ -13,7 +13,7 @@
   "min_hp": 42,
   "path_queries": 0,
   "route": "N0-01→N0-04→N1-01→N1-05→N2-01→N2-06→N3-06→N4-07",
-  "seconds": 393.3,
+  "seconds": 404.3,
   "segments": [
     {
       "hp": 100,
@@ -499,35 +499,49 @@
       "type": "combat"
     },
     {
-      "hp": 109,
+      "hp": 160,
+      "id": "rest3d",
+      "seconds": 4,
+      "ticks": 242,
+      "type": "rest"
+    },
+    {
+      "hp": 132,
       "id": "N3-02",
-      "seconds": 10.4,
-      "ticks": 625,
+      "seconds": 13.7,
+      "ticks": 823,
       "type": "interact"
     },
     {
-      "hp": 109,
+      "hp": 132,
       "id": "E22",
       "seconds": 0,
       "ticks": 1,
       "type": "combat"
     },
     {
-      "hp": 109,
+      "hp": 160,
+      "id": "rest3a",
+      "seconds": 4,
+      "ticks": 242,
+      "type": "rest"
+    },
+    {
+      "hp": 160,
       "id": "V09",
-      "seconds": 2,
-      "ticks": 122,
+      "seconds": 1.2,
+      "ticks": 74,
       "type": "interact"
     },
     {
-      "hp": 109,
+      "hp": 160,
       "id": "V10",
-      "seconds": 0.4,
-      "ticks": 26,
+      "seconds": 0.8,
+      "ticks": 50,
       "type": "interact"
     },
     {
-      "hp": 109,
+      "hp": 160,
       "id": "V11",
       "seconds": 0.8,
       "ticks": 50,
@@ -537,7 +551,7 @@
       "hp": 160,
       "id": "rest4",
       "seconds": 2.4,
-      "ticks": 146,
+      "ticks": 143,
       "type": "rest"
     },
     {
@@ -766,6 +780,6 @@
     }
   ],
   "tag": "C05",
-  "tick": 23600,
-  "wall_ms": 9009
+  "tick": 24255,
+  "wall_ms": 9560
 }

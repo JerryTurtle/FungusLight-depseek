@@ -13,7 +13,7 @@
   "min_hp": 66,
   "path_queries": 0,
   "route": "N0-01→N0-04→N1-01→N1-05→N2-01→N2-06→N3-06→N4-07",
-  "seconds": 401.9,
+  "seconds": 409.6,
   "segments": [
     {
       "hp": 100,
@@ -534,14 +534,21 @@
       "type": "combat"
     },
     {
-      "hp": 87,
+      "hp": 160,
+      "id": "rest3d",
+      "seconds": 4,
+      "ticks": 242,
+      "type": "rest"
+    },
+    {
+      "hp": 132,
       "id": "N3-02",
-      "seconds": 10.5,
-      "ticks": 630,
+      "seconds": 13.7,
+      "ticks": 823,
       "type": "interact"
     },
     {
-      "hp": 87,
+      "hp": 132,
       "id": "E22",
       "seconds": 0,
       "ticks": 1,
@@ -550,8 +557,8 @@
     {
       "hp": 160,
       "id": "rest3a",
-      "seconds": 3.6,
-      "ticks": 218,
+      "seconds": 4,
+      "ticks": 242,
       "type": "rest"
     },
     {
@@ -579,7 +586,7 @@
       "hp": 160,
       "id": "rest4",
       "seconds": 2.4,
-      "ticks": 141,
+      "ticks": 143,
       "type": "rest"
     },
     {
@@ -815,6 +822,6 @@
     }
   ],
   "tag": "sidequests",
-  "tick": 24115,
-  "wall_ms": 9250
+  "tick": 24576,
+  "wall_ms": 9513
 }

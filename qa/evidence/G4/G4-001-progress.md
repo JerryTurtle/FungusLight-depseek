@@ -35,6 +35,7 @@
 | C05 A→B、恢复、melee/echo/rain/ward | 9 项，404.3 秒，0 死亡 | `G4-001-route-C05.json` |
 | C06 B→A、封存、light/guard/focus/step | 9 项，399.1 秒，0 死亡 | `G4-001-route-C06.json` |
 | Q1/Q2 支线全收集（B→A、封存） | 10 项，401.9 秒，0 死亡 | `G4-001-route-sidequests.json` |
+| 自动路线矩阵 C01-C06/支线/跳过 | 8/8 通过；最快 352.7 秒；**requirement_met=false** | `G4-001-route-matrix.json` |
 | 原生导出 | 118 项 | `qa/evidence/G4/G4-001-integration.json` |
 | 审核台 | 50/50 | `qa/evidence/G4/G4-001-review/checks.json` |
 | 30/60/144 回放 | 360 步一致 | `G4-001-framerate-summary.json` |
