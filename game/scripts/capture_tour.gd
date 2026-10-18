@@ -63,6 +63,20 @@ func tour() -> void:
 	progress.flags.P02 = true
 	await shot(base,"guides-solved")
 	await shot(base,"end-open")
+	progress.flags.E07 = false
+	progress.flags.E08 = false
+	progress.node_id = "N1-03"
+	load_room()
+	combat.player = Vector2(135,110)
+	await wait_frames(20)
+	await shot(base,"hall-t3")
+	for enemy in combat.enemies: enemy.hp = 0
+	await wait_frames(6)
+	await shot(base,"hall-elite")
+	for enemy in combat.enemies: enemy.hp = 0
+	await wait_frames(6)
+	combat.player = Vector2(292,144)
+	await shot(base,"hall-end")
 	begin_lore("L01")
 	dialogue.reveal_all()
 	await shot(base,"dialog-lore")

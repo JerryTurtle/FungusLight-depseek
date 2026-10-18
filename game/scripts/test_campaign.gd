@@ -280,9 +280,9 @@ func run() -> void:
 	check(scene.pending_encounter == "E06" and scene.combat.enemies.any(func(e): return e.get("archetype","") == "T5"),"E06 spore pods spawn")
 	kill_all(scene)
 	check(scene.progress.has("E06") and scene.pending_encounter == "","E06 commit")
-	scene.combat.player = Vector2(270,130)
+	scene.combat.player = Vector2(292,144)
 	scene.interact()
-	check(not scene.overlay.visible and scene.notice.find("灯线尚未接通") >= 0,"sealed slice end refuses interaction")
+	check(not scene.overlay.visible and scene.notice.find("还没有打开") >= 0,"sealed hall portal refuses before P02")
 	for guide in scene.progress.guides():
 		scene.combat.player = approach(scene,Vector2(guide.pos[0],guide.pos[1]))
 		for i in 4:
@@ -303,13 +303,25 @@ func run() -> void:
 	scene.combat.enemies.erase(corpse)
 	var p02_auto: Dictionary = scene.saves.load_slot("auto").snapshot
 	check(p02_auto.puzzles.P02 and p02_auto.node_id == "N1-02","P02 auto checkpoint committed")
-	scene.combat.player = Vector2(270,130)
-	scene.interact()
-	check(scene.progress.active_event.is_empty() and scene.overlay.visible and scene.menu.get_child(0).text == "菌根深处","slice end gate requires P02")
-	scene.resume()
 	scene.save_game("manual_2")
 	scene.load_game("manual_2")
 	check(scene.progress.has("P02") and scene.guides_correct() == 3 and scene.progress.node_id == "N1-02","P02 and guides restored")
+	scene.combat.player = Vector2(292,144)
+	scene.interact()
+	check(scene.progress.node_id == "N1-03" and scene.pending_encounter == "E07","N1-03 transition")
+	check(scene.combat.enemies.any(func(e): return e.get("archetype","") == "T3"),"T3 charger enters mainline")
+	kill_all(scene)
+	check(scene.progress.has("E07") and scene.pending_encounter == "E08","E07 commit and E08 spawn")
+	var guard: Dictionary = scene.combat.enemies.filter(func(e): return e.get("archetype","") == "EL1")[0]
+	check(guard.get("archetype","") == "EL1" and guard.max_hp < 450.0,"EL1 slice guard uses reduced HP")
+	var hall_end: Dictionary = scene.progress.node("N1-03").objects.filter(func(o): return o.kind == "end")[0]
+	check(not scene.object_state(hall_end,"").available,"hall end gated by E08")
+	kill_all(scene)
+	check(scene.progress.has("E08") and scene.pending_encounter == "","E08 commit")
+	scene.combat.player = Vector2(292,144)
+	scene.interact()
+	check(scene.progress.active_event.is_empty() and scene.overlay.visible and scene.menu.get_child(0).text == "菌根深处","N1-03 end opens after E08")
+	scene.resume()
 	var old_tick: int = scene.combat.tick
 	scene.show_pause()
 	scene._physics_process(1.0/60)

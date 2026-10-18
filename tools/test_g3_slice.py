@@ -1,4 +1,4 @@
-"""Run the G3-006 slice checks (campaign, save, enemies, dialogue, props, normal-input route).
+"""Run the G3-006 slice checks (campaign, save, enemies, dialogue, props, pressure, normal-input route).
 
 Each check runs the real Godot engine headlessly and writes its own evidence log.
 This entry point does not replace human review and does not claim OS keyboard input.
@@ -21,6 +21,7 @@ CHECKS = [
     ("enemies", "scripts/test_enemies.gd", r"ENEMY_TEST checks=(\d+) failures=(\d+)", 120),
     ("dialogue", "scripts/test_dialogue.gd", r"DIALOGUE_TEST checks=(\d+) failures=(\d+)", 120),
     ("props", "scripts/test_props.gd", r"PROP_TEST checks=(\d+) failures=(\d+)", 180),
+    ("pressure", "scripts/test_pressure.gd", r"PRESSURE_TEST checks=(\d+) failures=(\d+)", 180),
     ("route", "scripts/route_test.gd", r"ROUTE_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)", 300),
 ]
 
@@ -47,7 +48,7 @@ for name, script, pattern, timeout in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 142, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2156, 'route': 8}[name]
+    expected = {'campaign': 154, 'save': 65, 'enemies': 35, 'dialogue': 175, 'props': 2156, 'pressure': 5, 'route': 8}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1

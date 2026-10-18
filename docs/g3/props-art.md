@@ -4,7 +4,7 @@
 
 - 数据：`game/assets/props/props_data.json`（schema_version=1，build=`59458e26ea62a10b`，由 `tools/gen_props.py` 确定性生成）
 - 运行时：`game/scripts/prop_art.gd`（`extends RefCounted`，按需构建 `ImageTexture`，不新增 PNG 导入依赖）
-- 自测：`game/scripts/test_props.gd`（headless，输出 `PROP_TEST checks=2156 failures=0`）
+- 自测：`game/scripts/test_props.gd`（headless，输出 `PROP_TEST checks=2162 failures=0`）
 - 预览证据：`qa/evidence/G3/props/`（素材总表、逐件放大、家具表、世界合成图、调色板、测试日志）
 
 ## 1. 风格硬规则与调色板
@@ -205,10 +205,10 @@ python tools/gen_props.py
 # 引擎内自测（headless，勿用 GUI）
 godot --headless --path game --script scripts/test_props.gd
 # 期望最后一行：
-# PROP_TEST checks=2156 failures=0
+# PROP_TEST checks=2162 failures=0
 ```
 
-测试覆盖（2156 项，0 失败；G3-009 增加自绘传送门后仍通过）：
+测试覆盖（2162 项，0 失败；G3-009 增加自绘传送门后仍通过）：
 
 - JSON schema/build/palette；所有 kind/别名/家具/粒子条目存在；
 - 每个变体 3~6 帧、hold/rest/flash 合法、行数/行宽/字符 ∈ 调色板、单件并集 ≤16 色；

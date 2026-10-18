@@ -287,7 +287,10 @@ func spawn_encounter(id: String, spec: Dictionary) -> void:
 		elif archetype == "T1": combat.add_enemy(at)
 		else: combat.add_archetype(archetype,at)
 	for member in spec.get("members",[]):
-		combat.add_archetype(str(member[0]),adjust_spawn(Vector2(member[1],member[2])))
+		var spawned: Dictionary = combat.add_archetype(str(member[0]),adjust_spawn(Vector2(member[1],member[2])))
+		if spec.has("hp_mult"):
+			spawned.max_hp = float(spawned.get("max_hp",spawned.hp))*float(spec.hp_mult)
+			spawned.hp = spawned.max_hp
 
 func safety() -> Dictionary:
 	var alerted := false
@@ -464,7 +467,10 @@ func interact() -> void:
 		notice = "靠近有标记的物件（24像素内），按 E。"
 		return
 	if str(object.kind) in ["exit","end"] and not bool(object_state(object,"").get("available",true)):
-		notice = "门内灯线尚未接通：先把三座导光装置对准刻痕。" if str(object.kind) == "end" else "这条通路还没有打开。"
+		if str(object.kind) == "end":
+			notice = "门内灯影未定：先击破前厅的守门者。" if str(object.get("requires","")) == "E08" else "门内灯线尚未接通：先把三座导光装置对准刻痕。"
+		else:
+			notice = "这条通路还没有打开。"
 		return
 	if object.has("requires") and not progress.has(object.requires):
 		notice = "通路未开：先完成当前目标。"
@@ -623,7 +629,11 @@ func current_goal() -> String:
 			if not progress.has("E05"): return "清理盘踞在导光间的菌人。"
 			if not progress.has("E06"): return "击破两枚膨胀的孢囊，别等它们炸开。"
 			if not progress.has("P02"): return "转动三座导光装置（E 转向），已对准 %d / 3。" % guides_correct()
-			return "灯路已连通。进入菌根深处（当前切片边界）。"
+			return "灯路已连通。进入菌根前厅。"
+		"N1-03":
+			if not progress.has("E07"): return "清理前厅的菌人与冲锋菌人。"
+			if not progress.has("E08"): return "守门者已现身；击破它的护壳后再开门。"
+			return "前厅已清空。进入菌根深处（当前切片边界）。"
 	return progress.node().goal
 
 func guide_color(object: Dictionary) -> Color:
@@ -651,8 +661,8 @@ func object_state(object: Dictionary, nearest_id: String) -> Dictionary:
 			state.available = not object.has("requires") or progress.has(object.requires)
 			state.open = state.available
 		"end":
-			state.available = progress.has("P02")
-			state.open = progress.has("P02")
+			state.available = not object.has("requires") or progress.has(object.requires)
+			state.open = state.available
 		"guide":
 			state.dir = int(guide_dirs.get(object.id,int(object.dir)))
 			state.correct = guide_aligned(object)
@@ -775,7 +785,7 @@ func draw_object_labels() -> void:
 		if str(object.kind) == "guide":
 			label += "（"+DIR_NAMES[int(guide_dirs.get(object.id,int(object.dir)))]+"）"
 		elif str(object.kind) == "end":
-			label += "（可通过）" if progress.has("P02") else "（未开启）"
+			label += "（可通过）" if bool(object_state(object,"").get("available",true)) else "（未开启）"
 		elif str(object.kind) == "exit" and not bool(object_state(object,"").get("available",true)):
 			label += "（不可通行）"
 		var anchor: Vector2 = props.label_anchor(draw_kind)

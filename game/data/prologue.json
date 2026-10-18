@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_id": "G3-006",
+  "build_id": "G3-011",
   "nodes": [
     {
       "id": "N0-01",
@@ -677,12 +677,13 @@
         },
         {
           "id": "east",
-          "name": "通往 菌根深处",
+          "name": "通往 菌根前厅",
           "pos": [
             292,
             130
           ],
-          "kind": "end",
+          "kind": "exit",
+          "target": "N1-03",
           "requires": "P02"
         }
       ],
@@ -729,6 +730,120 @@
           "pos": [
             95,
             55
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N1-03",
+      "name": "菌根前厅",
+      "style": "mine",
+      "spawn": [
+        35,
+        110
+      ],
+      "walls": [
+        [
+          100,
+          50,
+          20,
+          45
+        ],
+        [
+          100,
+          120,
+          20,
+          35
+        ],
+        [
+          205,
+          40,
+          20,
+          35
+        ],
+        [
+          205,
+          120,
+          20,
+          35
+        ]
+      ],
+      "goal": "清理前厅的冲锋菌人与守卫，门后就是菌根深处。",
+      "objects": [
+        {
+          "id": "west",
+          "name": "返回 导光间",
+          "pos": [
+            25,
+            95
+          ],
+          "kind": "exit",
+          "target": "N1-02"
+        },
+        {
+          "id": "rest",
+          "name": "前厅灯座 / 休息存档",
+          "pos": [
+            55,
+            135
+          ],
+          "kind": "rest",
+          "visual": "lamp"
+        },
+        {
+          "id": "east",
+          "name": "通往 菌根深处",
+          "pos": [
+            292,
+            130
+          ],
+          "kind": "end",
+          "requires": "E08"
+        }
+      ],
+      "decor": [
+        {
+          "kind": "torch",
+          "pos": [
+            150,
+            46
+          ]
+        },
+        {
+          "kind": "torch",
+          "pos": [
+            250,
+            132
+          ]
+        },
+        {
+          "kind": "rubble",
+          "pos": [
+            88,
+            90
+          ]
+        },
+        {
+          "kind": "glow_mushroom",
+          "pos": [
+            245,
+            60
+          ]
+        }
+      ],
+      "ambient": [
+        {
+          "kind": "spores",
+          "pos": [
+            160,
+            80
+          ]
+        },
+        {
+          "kind": "dust",
+          "pos": [
+            260,
+            120
           ]
         }
       ]
@@ -919,6 +1034,33 @@
       "archetype": "T5",
       "requires": "E05",
       "clear_notice": "孢囊清理完毕。导光装置可以安全转动了。"
+    },
+    "E07": {
+      "node": "N1-03",
+      "positions": [],
+      "members": [
+        [
+          "T3",
+          235,
+          90
+        ]
+      ],
+      "requires": "P02",
+      "clear_notice": "冲锋菌人倒下。前厅深处传来沉重的甲片声。",
+      "hp_mult": 0.8
+    },
+    "E08": {
+      "node": "N1-03",
+      "members": [
+        [
+          "EL1",
+          235,
+          90
+        ]
+      ],
+      "requires": "E07",
+      "hp_mult": 0.25,
+      "clear_notice": "守门者倒下。菌根深处的门灯亮起。"
     }
   }
 }
