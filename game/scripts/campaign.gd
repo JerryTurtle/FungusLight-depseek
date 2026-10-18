@@ -160,7 +160,7 @@ func start_wake() -> void:
 	hide_player = true
 	notice = "……"
 	wake_from = Vector2(bed.pos[0],bed.pos[1])+Vector2(-10,-20)
-	wake_to = Vector2(bed.pos[0],bed.pos[1])+Vector2(18,-4)
+	wake_to = Vector2(bed.pos[0],bed.pos[1])+Vector2(24,8)
 	combat.player = wake_to
 	combat.facing = Vector2.DOWN
 
@@ -211,6 +211,11 @@ func solid_rect(kind: String, pos: Vector2) -> Rect2:
 		"cabinet": return Rect2(pos+Vector2(-7,-8),Vector2(14,10))
 		"barrel": return Rect2(pos+Vector2(-5,-5),Vector2(10,8))
 		"shelf": return Rect2(pos+Vector2(-7,-8),Vector2(14,10))
+		"torch": return Rect2(pos+Vector2(-3,-5),Vector2(6,6))
+		"bed": return Rect2(pos+Vector2(-15,-44),Vector2(31,44))
+		"lamp": return Rect2(pos+Vector2(-5,-5),Vector2(10,10))
+		"door": return Rect2(pos+Vector2(-9,-28),Vector2(18,28))
+		"portal": return Rect2(pos+Vector2(-13,-34),Vector2(26,34))
 	return Rect2()
 
 func setup_collision() -> void:
@@ -221,7 +226,11 @@ func setup_collision() -> void:
 		if rect.size.x > 0: combat.blockers.append(rect)
 	for object in progress.node().objects:
 		var pos := Vector2(object.pos[0],object.pos[1])
-		var rect: Rect2 = solid_rect(str(object.kind),pos)
+		var visual := str(object.get("visual",object.kind))
+		if visual == "rest": visual = "bed" if str(object.get("visual","")) == "bed" else "lamp"
+		if str(object.kind) == "end": visual = "portal"
+		if str(object.kind) == "exit": visual = "door"
+		var rect: Rect2 = solid_rect(visual,pos)
 		if rect.size.x > 0: combat.blockers.append(rect)
 		if str(object.kind) == "rong" or bool(object.get("npc",false)):
 			combat.npcs.append({"id":str(object.id),"pos":pos+Vector2(0,-12),"radius":7.0})
@@ -718,12 +727,9 @@ func draw_portal(pos: Vector2, state: Dictionary, tick: int) -> void:
 	# warm light and slowly release motes. No fast flicker.
 	var breath: float = 0.5+0.5*sin(TAU*float(tick)/180.0)
 	if bool(state.get("open",false)):
-		objects_layer.draw_rect(Rect2(pos+Vector2(-8,-27),Vector2(16,26)),Color(1.0,0.84,0.48,0.10+0.08*breath))
-		for i in 3:
-			var rise := fmod(float(tick)/180.0+float(i)/3.0,1.0)
-			var p: Vector2 = pos+Vector2(-6+i*6,-3-rise*22)
-			objects_layer.draw_rect(Rect2(p.round(),Vector2.ONE),Color(1.0,0.93,0.7,(1.0-rise)*0.65))
-		objects_layer.draw_rect(Rect2(pos+Vector2(-7,-1),Vector2(14,2)),Color(1.0,0.9,0.55,0.4+0.25*breath))
+		# The portal art itself carries the slow glow; only a soft threshold line
+		# is added so the passable edge reads at a glance.
+		objects_layer.draw_rect(Rect2(pos+Vector2(-7,-1),Vector2(14,2)),Color(1.0,0.9,0.55,0.25+0.15*breath))
 	else:
 		# Sealed: faint cold seam + small lock, so "not yet passable" is obvious.
 		objects_layer.draw_rect(Rect2(pos+Vector2(-7,-1),Vector2(14,1)),Color(0.55,0.5,0.42,0.4))

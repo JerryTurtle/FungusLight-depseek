@@ -1,10 +1,10 @@
 extends SceneTree
-## G3-008 normal-input slice route. Every action is fed through Godot input events
+## G3-009 normal-input slice route. Every action is fed through Godot input events
 ## (keyboard/mouse), then the campaign is advanced at its real fixed 60Hz step.
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G3-008"
+const BUILD_ID := "G3-009"
 var scene
 var checks := 0
 var failures := 0
@@ -95,28 +95,28 @@ func run() -> void:
 
 func build_route() -> void:
 	route = [
-		{"id":"S01","type":"interact","to":Vector2(88,80),"flag":"S01"},
-		{"id":"N0-02","type":"interact","to":Vector2(285,90),"node":"N0-02"},
+		{"id":"S01","type":"interact","to":Vector2(88,92),"flag":"S01"},
+		{"id":"N0-02","type":"interact","to":Vector2(285,104),"node":"N0-02"},
 		{"id":"core","type":"interact","to":Vector2(76,74),"flag":"core"},
 		{"id":"P01","type":"interact","to":Vector2(178,68),"flag":"P01"},
 		{"id":"tutorial","type":"light_target"},
 		{"id":"E01","type":"combat","flag":"E01"},
 		{"id":"M1","type":"interact","to":Vector2(245,120),"flag":"M1","choice":"melee"},
-		{"id":"N0-03","type":"interact","to":Vector2(292,96),"node":"N0-03"},
+		{"id":"N0-03","type":"interact","to":Vector2(292,110),"node":"N0-03"},
 		{"id":"scan","type":"press","to":Vector2(145,92),"key":KEY_Q,"wait":8},
 		{"id":"pipe","type":"interact","to":Vector2(145,92),"flag":"pipe"},
 		{"id":"S03","type":"interact","to":Vector2(218,89),"flag":"S03"},
-		{"id":"N0-04","type":"interact","to":Vector2(292,96),"node":"N0-04"},
+		{"id":"N0-04","type":"interact","to":Vector2(292,110),"node":"N0-04"},
 		{"id":"E02","type":"combat","flag":"E02"},
 		{"id":"E03","type":"combat","flag":"E03"},
-		{"id":"N1-01","type":"interact","to":Vector2(290,85),"node":"N1-01"},
+		{"id":"N1-01","type":"interact","to":Vector2(290,99),"node":"N1-01"},
 		{"id":"E04","type":"combat","flag":"E04"},
 		{"id":"L01","type":"lore","to":Vector2(278,146)},
-		{"id":"N1-02","type":"interact","to":Vector2(292,120),"node":"N1-02"},
+		{"id":"N1-02","type":"interact","to":Vector2(300,130),"node":"N1-02"},
 		{"id":"E05","type":"combat","flag":"E05"},
 		{"id":"E06","type":"combat","flag":"E06"},
 		{"id":"P02","type":"guides"},
-		{"id":"end","type":"interact","to":Vector2(292,130),"overlay":true},
+		{"id":"end","type":"interact","to":Vector2(292,144),"overlay":true},
 		{"id":"done","type":"finish"}
 	]
 

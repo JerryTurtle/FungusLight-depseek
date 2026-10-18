@@ -145,6 +145,8 @@ func variant_for(kind: String, state: Dictionary) -> String:
 				v = "sealed_scan" if scanned else "sealed"
 			else:
 				v = "lit"
+		"portal":
+			v = "open" if is_open else "sealed"
 	if not variants.has(v):
 		v = str(def.get("default_variant", variants.keys()[0] if not variants.is_empty() else "idle"))
 	if not variants.has(v) and not variants.is_empty():

@@ -28,6 +28,12 @@ func kill_all(scene) -> void:
 	for enemy in scene.combat.enemies: enemy.hp = 0
 	scene._physics_process(1.0/60)
 
+func approach(scene, target: Vector2) -> Vector2:
+	if not scene.combat.blocked(target,5): return target
+	for offset in [Vector2(-12,0),Vector2(12,0),Vector2(0,-12),Vector2(0,12),Vector2(-14,-10),Vector2(14,-10)]:
+		if not scene.combat.blocked(target+offset,5): return target+offset
+	return target
+
 func run() -> void:
 	var healing = Combat.new()
 	healing.reset()
@@ -164,8 +170,11 @@ func run() -> void:
 	scene.new_game()
 	check(scene.running and not scene.paused and scene.combat.enemies.is_empty(),"new game safe camp")
 	check(scene.combat.blocked(Vector2(232,126),0),"crate decor blocks movement")
+	check(scene.combat.blocked(Vector2(48,110),0),"bed blocks movement")
+	check(scene.combat.blocked(Vector2(88,80),0),"lamp blocks movement")
+	check(scene.combat.blocked(Vector2(285,85),0),"door blocks movement")
 	scene.start_wake()
-	check(scene.wake_left > 0 and scene.hide_player and scene.combat.player == Vector2(66,124),"wake starts hidden beside bed")
+	check(scene.wake_left > 0 and scene.hide_player and scene.combat.player == Vector2(72,136),"wake starts hidden beside bed")
 	scene.wake_left = 0
 	scene.hide_player = false
 	check(scene.saves.load_slot("auto").ok,"new checkpoint written")
@@ -192,6 +201,7 @@ func run() -> void:
 	scene.interact()
 	check(scene.progress.node_id == "N0-02" and scene.combat.enemies.is_empty(),"door transition does not spawn combat before teaching")
 	check(scene.combat.blocked(Vector2(76,58),0),"chest blocks movement")
+	check(scene.combat.blocked(Vector2(104,52),0),"torch blocks movement")
 	scene.combat.player = Vector2(76,80)
 	scene.interact()
 	scene.combat.player = Vector2(178,88)
@@ -247,7 +257,7 @@ func run() -> void:
 	check(scene.pending_encounter == "E03" and scene.combat.enemies.any(func(e): return e.get("archetype","") == "T5"),"E03 spawns after E02")
 	kill_all(scene)
 	check(scene.progress.has("E03") and scene.pending_encounter == "","E03 commit")
-	scene.combat.player = Vector2(290,85)
+	scene.combat.player = Vector2(268,85)
 	scene.interact()
 	check(scene.progress.node_id == "N1-01" and scene.pending_encounter == "E04","mine entrance transition")
 	check(scene.combat.enemies.any(func(e): return e.get("archetype","") == "T2"),"T2 appears in main route")
@@ -258,9 +268,10 @@ func run() -> void:
 	check(scene.dialogue_mode == "lore" and scene.progress.active_event.is_empty(),"lore dialogue is not a story event")
 	scene.finish_dialogue()
 	check(scene.dialogue_mode == "" and not scene.progress.has("L01"),"lore close resumes without flags")
-	scene.combat.player = Vector2(292,120)
+	scene.combat.player = Vector2(300,130)
 	scene.interact()
 	check(scene.progress.node_id == "N1-02" and scene.pending_encounter == "E05","light room transition")
+	check(scene.combat.blocked(Vector2(292,120),0),"portal blocks movement")
 	scene.combat.player = Vector2(95,55)
 	scene.interact()
 	check(not scene.progress.has("P02") and scene.notice.begins_with("先避开威胁"),"puzzle blocked while hostile alive")
@@ -269,11 +280,11 @@ func run() -> void:
 	check(scene.pending_encounter == "E06" and scene.combat.enemies.any(func(e): return e.get("archetype","") == "T5"),"E06 spore pods spawn")
 	kill_all(scene)
 	check(scene.progress.has("E06") and scene.pending_encounter == "","E06 commit")
-	scene.combat.player = Vector2(292,130)
+	scene.combat.player = Vector2(270,130)
 	scene.interact()
 	check(not scene.overlay.visible and scene.notice.find("灯线尚未接通") >= 0,"sealed slice end refuses interaction")
 	for guide in scene.progress.guides():
-		scene.combat.player = Vector2(guide.pos[0],guide.pos[1])
+		scene.combat.player = approach(scene,Vector2(guide.pos[0],guide.pos[1]))
 		for i in 4:
 			if scene.guide_aligned(guide): break
 			scene.interact()
@@ -292,7 +303,7 @@ func run() -> void:
 	scene.combat.enemies.erase(corpse)
 	var p02_auto: Dictionary = scene.saves.load_slot("auto").snapshot
 	check(p02_auto.puzzles.P02 and p02_auto.node_id == "N1-02","P02 auto checkpoint committed")
-	scene.combat.player = Vector2(292,130)
+	scene.combat.player = Vector2(270,130)
 	scene.interact()
 	check(scene.progress.active_event.is_empty() and scene.overlay.visible and scene.menu.get_child(0).text == "菌根深处","slice end gate requires P02")
 	scene.resume()

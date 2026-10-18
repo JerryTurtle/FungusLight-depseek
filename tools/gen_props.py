@@ -1210,6 +1210,129 @@ def mine_door_open(frame: int) -> Grid:
     return g
 
 
+def portal_opening(x: int, y: int) -> bool:
+    dx = (x - 13.5) / 8.0
+    dy = (y - 20.0) / 14.0
+    return dx * dx + dy * dy <= 1.0
+
+
+def portal_base() -> Grid:
+    # Stone gate: chunky arch matching the cave brick walls, not a wooden door.
+    g = Grid(28, 38)
+    for y in range(1, 37):
+        left = 4 if y < 4 else (3 if y < 6 else (2 if y < 8 else 1))
+        right = 23 if y < 4 else (24 if y < 6 else (25 if y < 8 else 26))
+        for x in range(left, right + 1):
+            g.put(x, y, "B")
+    for y in range(1, 37):
+        for x in range(1, 27):
+            if g.get(x, y) != "B":
+                continue
+            if y % 4 == 0:
+                g.put(x, y, "D")
+            elif x % 4 == 0 and (y // 4) % 2 == 0:
+                g.put(x, y, "b")
+            elif (x // 4 + y // 3) % 5 == 0:
+                g.put(x, y, "P")
+    # keystone and lintel highlights
+    g.rect(5, 1, 18, 1, "P")
+    g.rect(11, 1, 6, 4, "P")
+    g.rect(12, 2, 4, 2, "Q")
+    g.put(13, 3, "Y")
+    g.put(14, 3, "y")
+    # carved opening
+    for y in range(2, 36):
+        for x in range(2, 26):
+            if portal_opening(x, y):
+                g.put(x, y, ".")
+    # outline the opening against the stone
+    for y in range(2, 36):
+        for x in range(2, 26):
+            if not portal_opening(x, y):
+                continue
+            for ox, oy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                if not portal_opening(x + ox, y + oy):
+                    g.put(x + ox, y + oy, "K")
+    # runes on both jambs
+    for y in (13, 20, 27):
+        g.put(3, y, "y")
+        g.put(24, y, "y")
+        g.put(4, y, "Y")
+        g.put(23, y, "Y")
+    # threshold + moss
+    g.rect(1, 35, 26, 2, "K")
+    g.rect(2, 35, 24, 1, "P")
+    g.put(3, 35, "Q")
+    g.put(24, 35, "Q")
+    for x, y in ((2, 33), (3, 34), (25, 33), (24, 34), (4, 34), (23, 34)):
+        g.put(x, y, "G" if (x + y) % 2 else "g")
+    return g
+
+
+def portal_sealed(frame: int) -> Grid:
+    g = portal_base()
+    for y in range(2, 35):
+        for x in range(2, 26):
+            if not portal_opening(x, y):
+                continue
+            g.put(x, y, "h" if y < 28 else "H")
+    # faint cold glints behind the sealed surface
+    for i in range(3):
+        x = 8 + (i * 5 + frame * 2) % 10
+        y = 9 + (i * 7 + frame * 3) % 18
+        if portal_opening(x, y):
+            g.put(x, y, "z" if i % 2 else "Z")
+    g.put(13, 21, "z")
+    return g
+
+
+def portal_open(frame: int) -> Grid:
+    g = portal_base()
+    for y in range(2, 35):
+        for x in range(2, 26):
+            if not portal_opening(x, y):
+                continue
+            dx = (x - 13.5) / 8.0
+            dy = (y - 20.0) / 14.0
+            d = dx * dx + dy * dy
+            if d < 0.06:
+                ch = "F"
+            elif d < 0.18:
+                ch = "Y"
+            elif d < 0.36:
+                ch = "y"
+            elif d < 0.55:
+                ch = "G"
+            elif d < 0.78:
+                ch = "H"
+            else:
+                ch = "h"
+            if (x + y * 2 + frame) % 11 == 0:
+                ch = "F" if ch in ("Y", "y") else ch
+            g.put(x, y, ch)
+    # slow drifting highlights in the light curtain
+    for i in range(3):
+        x = 8 + (i * 5 + frame * 2) % 10
+        y = 10 + (i * 6 + frame * 3) % 18
+        if portal_opening(x, y):
+            g.put(x, y, "W")
+    g.put(3, 13, "Y")
+    g.put(3, 20, "W")
+    g.put(3, 27, "Y")
+    g.put(24, 13, "Y")
+    g.put(24, 20, "W")
+    g.put(24, 27, "Y")
+    # light spill on the threshold
+    for x in range(4, 24):
+        if (x + frame) % 2 == 0:
+            g.put(x, 34, "y")
+        if (x + frame) % 3 == 0:
+            g.put(x, 34, "Y")
+    g.put(13, 34, "F")
+    g.put(14, 34, "F")
+    return g
+
+
 def rail_base() -> Grid:
     g = Grid(34, 10)
     sleepers = (2, 10, 18, 26)
@@ -1413,6 +1536,13 @@ def build_props() -> dict:
                 "open": ([mine_door_open(f) for f in range(5)], 8, []),
             },
         },
+        "portal": {
+            "size": (28, 38), "anchor": (-14, -36), "label": (0, -42), "ground": 36,
+            "variants": {
+                "sealed": ([portal_sealed(f) for f in range(3)], 16, []),
+                "open": ([portal_open(f) for f in range(5)], 14, []),
+            },
+        },
         "rail": {
             "size": (34, 10), "anchor": (-17, -4), "label": (0, -9), "ground": 4,
             "variants": {"idle": ([rail_idle(f) for f in range(4)], 12, [])},
@@ -1446,6 +1576,7 @@ PROP_PALETTES = {
     "guide": set("KkmMlqzZyYFWP GH".replace(" ", "")),
     "guide_target": set("KkmPQwzZyYFWG"),
     "mine_door": set("KkMmlPQDBRzZyYFW"),
+    "portal": set("KBDbPQGgHhzZyYFW"),
     "rail": set("KkMmlDBbPGH"),
     "rubble": set("KkmMlPQGHZz"),
     "barrel": set("KkMmlDBbcq"),
@@ -1460,6 +1591,7 @@ PROP_STATE_NOTES = {
     "guide": "dir:0下/1左/2右/3上（world_art.row 约定）；correct:true=暖金束，false=冷灰束；available:false 不画光束",
     "guide_target": "correct:true=暖金目标亮起；false=冷色待机",
     "mine_door": "open:true=打开；available:false=锁链封闭；scanned:true=扫描标记（仅 sealed 时）",
+    "portal": "open:true=灯路接通（暖光帘）；false=封印（冷暗内芯 + 符文）；门框为石拱，不使用木门",
     "rail": "静态矿道装饰，仅 1px 锈光/尘埃",
     "rubble": "静态矿道装饰，菌光呼吸",
     "barrel": "静态矿道装饰（自绘，图集给定位置无独立木桶）",
@@ -1579,7 +1711,7 @@ def build_furniture() -> dict:
             "label_anchor": [0, -24], "near_rect": [-9, -23, 18, 24],
             "layers": [{"rect": [65, 425, 17, 22], "offset": [-8, -21]}],
             "fx": {
-                "flame": [{"origin": [0, -23], "hold": 5, "colors": ["F", "W", "Y", "y"]}],
+                "flame": [{"origin": [-1, -22], "hold": 5, "colors": ["F", "W", "Y", "y"]}],
                 "motes": [{"origin": [0, -20], "count": 3, "colors": ["F", "Y", "y"],
                            "spread": [6, 6], "rise": 9, "hold": 7}],
                 "glow": [{"center": [0, -16], "radii": [9, 4], "colors": ["y", "a"],
@@ -1624,23 +1756,23 @@ def build_ambient() -> dict:
     return {
         "budget": 24,
         "kinds": {
-            "spores": {"base_count": 12, "pixel": 1, "colors": ["z", "Z", "w"],
-                       "alpha": 0.85, "span": [34, 26], "hold": 2,
+            "spores": {"base_count": 7, "pixel": 1, "colors": ["z", "Z", "w"],
+                       "alpha": 0.42, "span": [34, 26], "hold": 2,
                        "state_notes": "洞穴/菌丛上浮孢子：1px，慢速上浮 + 1px 横摆"},
-            "dust": {"base_count": 8, "pixel": 1, "colors": ["P", "Q", "l"],
-                     "alpha": 0.55, "span": [40, 8], "hold": 3,
+            "dust": {"base_count": 5, "pixel": 1, "colors": ["P", "Q", "l"],
+                     "alpha": 0.32, "span": [40, 8], "hold": 3,
                      "state_notes": "地面/家具旁尘埃：横向漂移，贴地 1px"},
             "drip": {"base_count": 2, "pixel": 1, "colors": ["Z", "z", "q"],
-                     "alpha": 0.90, "span": [4, 20], "hold": 2,
+                     "alpha": 0.65, "span": [4, 20], "hold": 2,
                      "state_notes": "水管滴水：下落 + 2px 溅落，循环 56 tick"},
-            "ember": {"base_count": 5, "pixel": 1, "colors": ["F", "Y", "y"],
+            "ember": {"base_count": 3, "pixel": 1, "colors": ["F", "Y", "y"],
                       "alpha": 0.85, "span": [8, 22], "hold": 2,
                       "state_notes": "灯座/火把余烬：上浮暖色火星"},
             "light_pool": {"base_count": 1, "pixel": 1, "colors": ["a", "y"],
-                           "alpha": 0.18, "radii": [18, 5], "hold": 6,
+                           "alpha": 0.12, "radii": [18, 5], "hold": 18,
                            "state_notes": "灯光呼吸地面光斑：2~3 层抖动硬像素，无渐变"},
             "sway": {"base_count": 1, "pixel": 1, "colors": ["y", "a"],
-                     "alpha": 0.10, "length": 26, "hold": 8,
+                     "alpha": 0.07, "length": 26, "hold": 8,
                      "state_notes": "吊灯摆动光锥：1px 抖动，左右 ±2px"},
         },
     }
@@ -1693,7 +1825,7 @@ def payload() -> dict:
             "anchor": [ax, ay],
             "label_anchor": [lx, ly],
             "ground": spec["ground"],
-            "default_variant": "unlit" if kind == "lamp" else ("closed" if kind == "chest" else ("sealed" if kind in ("door", "mine_door") else ("off" if kind == "guide_target" else ("idle" if "idle" in variants else ("on" if "on" in variants else "d11"))))),
+            "default_variant": "unlit" if kind == "lamp" else ("closed" if kind == "chest" else ("sealed" if kind in ("door", "mine_door", "portal") else ("off" if kind == "guide_target" else ("idle" if "idle" in variants else ("on" if "on" in variants else "d11"))))),
             "state_notes": PROP_STATE_NOTES[kind],
             "variants": variants,
         }
@@ -1735,7 +1867,7 @@ def payload() -> dict:
         },
         "aliases": {
             "rest": "bed", "socket": "lamp", "reward": "ring", "exit": "door",
-            "end": "mine_door", "storage": "door", "storage_door": "door",
+            "end": "portal", "storage": "door", "storage_door": "door",
             "crate": "crates", "crates_small": "crate_single", "barrel_old": "barrel",
             "lore": "papers", "note": "papers",
             "mushroom": "mushroom_red", "wall_panel_green": "wall_panel",

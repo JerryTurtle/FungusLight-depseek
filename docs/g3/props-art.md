@@ -4,7 +4,7 @@
 
 - 数据：`game/assets/props/props_data.json`（schema_version=1，build=`59458e26ea62a10b`，由 `tools/gen_props.py` 确定性生成）
 - 运行时：`game/scripts/prop_art.gd`（`extends RefCounted`，按需构建 `ImageTexture`，不新增 PNG 导入依赖）
-- 自测：`game/scripts/test_props.gd`（headless，输出 `PROP_TEST checks=2059 failures=0`）
+- 自测：`game/scripts/test_props.gd`（headless，输出 `PROP_TEST checks=2156 failures=0`）
 - 预览证据：`qa/evidence/G3/props/`（素材总表、逐件放大、家具表、世界合成图、调色板、测试日志）
 
 ## 1. 风格硬规则与调色板
@@ -83,12 +83,13 @@ var screen_point: Vector2 = world_point * 4.0
 | `ring` | 18×18 | (-9,-13) | (0,-18) | idle 6 / complete 5 | 12 | 初燃灯环：石环+火焰脉动；`complete:true` 更大火焰+浮游余烬 |
 | `guide` | 16×26 | (-8,-23) | (0,-28) | 8 状态 × 5 | 14 | 导光装置：`dir` 0上/1右/2下/3左（与 `campaign.gd` 的 `DIR_VECTORS=[UP,RIGHT,DOWN,LEFT]` 完全一致），`correct:true` 暖金束、false 冷灰束；装置本体始终绘制 |
 | `guide_target` | 18×18 | (-9,-12) | (0,-17) | on 4 / off 4 | 11 | 导光目标标记：`correct:true` 暖金亮起、false 冷色待机 |
-| `mine_door` | 22×34 | (-11,-31) | (0,-36) | sealed 5 / sealed_scan 5 / lit 5 / open 5 | 16 | 切片边界旧矿门：`available:false` 锁链封闭、`scanned:true` 加扫描标记；`available:true` 开锁点灯、`open:true` 门缝透光 |
+| `mine_door` | 22×34 | (-11,-31) | (0,-36) | sealed 5 / sealed_scan 5 / lit 5 / open 5 | 16 | 旧木矿门，保留给其他矿道；G3-009 起切片边界不再使用 |
+| `portal` | 28×38 | (-14,-36) | (0,-42) | sealed 3 / open 5 | 16 | G3-009 切片边界：棕石拱、砖缝、苔藓、符文；封印暗内芯+冷光点，开启绿边暖芯灯帘；慢动画 hold 16/14 |
 | `rail` | 34×10 | (-17,-4) | (0,-9) | 4 | 10 | 矿道铁轨装饰，锈光/尘埃微动 |
 | `rubble` | 16×10 | (-8,-7) | (0,-12) | 4 | 10 | 碎石堆，菌光呼吸+尘埃 |
 | `barrel` | 14×18 | (-7,-16) | (0,-21) | 4 | 10 | 木桶（图集无干净木桶，见 §5.3），桶箍反光/尘埃 |
 
-别名（`props_data.json.aliases`，可直接把 `prologue.json` 的 `kind` 传进来）：`rest→bed`、`socket→lamp`、`reward→ring`、`exit→door`、`end→mine_door`、`crate→crates`、`crate_single`/`crates_small`、`mushroom→mushroom_red`、`lore`/`note→papers`、`storage`/`storage_door→door`、`panel`/`wall_panel_green→wall_panel`。
+别名（`props_data.json.aliases`，可直接把 `prologue.json` 的 `kind` 传进来）：`rest→bed`、`socket→lamp`、`reward→ring`、`exit→door`、`end→portal`、`crate→crates`、`crate_single`/`crates_small`、`mushroom→mushroom_red`、`lore`/`note→papers`、`storage`/`storage_door→door`、`panel`/`wall_panel_green→wall_panel`。
 
 `guide` 的光束由 `draw_prop` 自动绘制（长度 26px，`low_effects` 16px；`reduced_motion` 静止；`reduced_flash` 去白芯）：光束原点为 `pos+(0,-17)`，四方向 `GUIDE_DIRS={0:上,1:右,2:下,3:左}`，与 `campaign.gd` 的 `DIR_VECTORS` 一致。若 Lead 保留现有 `draw_guide_beams()`（它按目标点画连线/流光），请传 `state.beam=false` 避免双光束；若改用本模块的 26px 光束则不传。`prologue.json` 里 N1-02 的三个导光装置已经带 `dir/solution/target/color`；Lead 只需按解谜规则算 `correct = (当前 dir == solution)` 传入即可，`color` 字段本模块暂未使用（可选后续做颜色键控）。
 
@@ -134,7 +135,7 @@ var screen_point: Vector2 = world_point * 4.0
 - `particle_budget(prefs)`：默认 24；`low_effects=true` → 12（减半）；`reduced_motion`/`reduced_flash` 不减少数量（`reduced_motion` 只冻结运动）。
 - `ambient_count(kind, prefs)`：`base_count` 在 `low_effects` 时 `ceil(base/2)`，再受 `particle_budget` 上限约束；光场恒为 1。
 - `ambient_positions(kind, pos, tick, prefs)` 是纯函数，供测试/回放使用：返回本帧所有 1px 粒子位置（光场返回空数组）；`reduced_motion` 等价于把 tick 固定为 0，所以静止但仍保留可读的散布。
-- 推荐配对（Lead 按对象调用即可）：灯座 → `light_pool`+`ember`；床铺/宝箱 → `dust`（床可再加 `light_pool`）；门/矿门 → `sway`+`light_pool`；水管 → `drip`；菌丛/洞穴 → `spores`；矿道 → `dust`+`spores`。
+- 推荐配对（Lead 按对象调用即可）：灯座 → `light_pool`+`ember`；床铺/宝箱 → `dust`（床可再加 `light_pool`）；门/传送门 → `sway`+`light_pool`；水管 → `drip`；菌丛/洞穴 → `spores`；矿道 → `dust`+`spores`。
 
 ## 6. 集成方法（示意，不修改 campaign.gd）
 
@@ -204,17 +205,17 @@ python tools/gen_props.py
 # 引擎内自测（headless，勿用 GUI）
 godot --headless --path game --script scripts/test_props.gd
 # 期望最后一行：
-# PROP_TEST checks=2059 failures=0
+# PROP_TEST checks=2156 failures=0
 ```
 
-测试覆盖（2059 项，0 失败；G3-007 降低粒子数量/速度/亮度后仍通过）：
+测试覆盖（2156 项，0 失败；G3-009 增加自绘传送门后仍通过）：
 
 - JSON schema/build/palette；所有 kind/别名/家具/粒子条目存在；
 - 每个变体 3~6 帧、hold/rest/flash 合法、行数/行宽/字符 ∈ 调色板、单件并集 ≤16 色；
 - 每帧构造 `ImageTexture` 并逐像素比对：尺寸、alpha 仅 0/255、颜色与调色板完全一致；
 - 每帧 1px 深色轮廓（发光像素豁免）；
 - 动画相位 `tick/hold % 帧数` 不越界；`reduced_motion` 冻结在 rest；`reduced_flash` 避开 flash 帧；
-- `state → variant` 映射（灯/宝箱/门/水管/环/导光 8 态/目标/矿门 4 态）；
+- `state → variant` 映射（灯/宝箱/门/水管/环/导光 8 态/目标/旧矿门 4 态/传送门 2 态）；
 - 家具裁切对真实 `Complete.png` 的合法性、透明边、offset/near/label/fx 坐标；
 - 全部环境粒子的预算、低特效减半、整数坐标、边界、确定性、reduced_motion 静止、正常档有位移；
 - 别名与 `prologue.json` 的所有对象 kind（跳过 NPC `rong`）均可解析；

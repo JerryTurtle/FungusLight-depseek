@@ -44,7 +44,7 @@ func tour() -> void:
 	progress.node_id = "N1-01"
 	load_room()
 	await clear_enemies()
-	combat.player = Vector2(262,132)
+	combat.player = Vector2(272,146)
 	await shot(base,"lore-exit")
 	progress.flags.E04 = true
 	progress.node_id = "N1-02"

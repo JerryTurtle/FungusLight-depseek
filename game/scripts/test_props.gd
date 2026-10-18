@@ -15,7 +15,7 @@ const PropArt = preload("res://scripts/prop_art.gd")
 const TILESET_PATH := "res://assets/original/Tilesets/Complete.png"
 const PROLOGUE_PATH := "res://data/prologue.json"
 const PROP_REQUIRED := ["lamp", "chest", "door", "pipe", "ring", "guide", "guide_target",
-	"mine_door", "rail", "rubble", "barrel"]
+	"mine_door", "portal", "rail", "rubble", "barrel"]
 const FURNITURE_REQUIRED := ["bed", "chest_closed", "chest_open", "crates", "papers", "shelf",
 	"barrel", "mushroom_red", "glow_mushroom", "torch", "wall_panel"]
 const AMBIENT_REQUIRED := ["spores", "dust", "drip", "ember", "light_pool", "sway"]
@@ -116,6 +116,7 @@ class DrawProbe extends Node2D:
 		art.draw_prop(self, "guide", Vector2(210, 140), {"dir": 2, "correct": true, "beam": false}, 31, null)
 		art.draw_prop(self, "guide_target", Vector2(210, 60), {"correct": true}, 31, null)
 		art.draw_prop(self, "mine_door", Vector2(230, 60), {"available": false, "scanned": true}, 31, null)
+		art.draw_prop(self, "portal", Vector2(250, 60), {"open": true}, 31, null)
 		art.draw_prop(self, "rail", Vector2(260, 60), {}, 31, null)
 		art.draw_prop(self, "rubble", Vector2(280, 60), {}, 31, null)
 		art.draw_prop(self, "barrel", Vector2(300, 60), {}, 31, null)
@@ -348,6 +349,9 @@ func _test_variant_mapping() -> void:
 	check(art.variant_for("rest", {}) == "", "furniture alias has no prop variant")
 	check(art.variant_names("guide").size() == 8, "guide 8 directions/states")
 	check(art.variant_names("mine_door").size() == 4, "mine_door 4 states")
+	check(art.variant_names("portal").size() == 2, "portal 2 states")
+	check(art.variant_for("portal", {"open": true}) == "open", "portal open")
+	check(art.variant_for("portal", {"available": false}) == "sealed", "portal sealed")
 
 
 func _test_furniture() -> void:
@@ -513,7 +517,7 @@ func _test_aliases_and_prologue() -> void:
 	check(art.resolve_kind("socket") == "lamp", "socket -> lamp")
 	check(art.resolve_kind("reward") == "ring", "reward -> ring")
 	check(art.resolve_kind("exit") == "door", "exit -> door")
-	check(art.resolve_kind("end") == "mine_door", "end -> mine_door")
+	check(art.resolve_kind("end") == "portal", "end -> portal")
 	check(art.resolve_kind("crate") == "crates", "crate -> crates")
 	check(art.resolve_kind("mushroom") == "mushroom_red", "mushroom -> mushroom_red")
 	check(art.resolve_kind("unknown_kind") == "unknown_kind", "unknown kind passes through")
