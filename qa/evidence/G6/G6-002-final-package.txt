@@ -1,0 +1,17 @@
+G6-002 release package
+======================
+
+Built from current main after P0-1 and P0-2. Godot 4.3.stable.
+Package: deliverables/Release/ (Game, Source, Docs, QA, Licenses)
+Zip: deliverables/FungusLight-G6-002-Release.zip
+
+exe  SHA256 66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13
+pck  SHA256 06BDF16C4C60D438EF26F5CCE6C257815CAC00C20010BC9CA90DC0070BAEFEB2
+zip: deliverables/FungusLight-G6-002-Release.zip (outer hash is recorded in
+qa/gates.json and README; a zip cannot contain its own final hash).
+
+PCK audit: passed (no test/capture/review/stress/route/MCP/autoload/dev paths;
+project identity G6-002 and BOSS.png present).
+Layout audit: passed (five folders, hashes, no personal files in Game).
+Clean-directory GUI startup was not rerun after the P0-2 changes; it remains a
+user acceptance item. The 20-minute target is not proven by the 619.3s bot.

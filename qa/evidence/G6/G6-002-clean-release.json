@@ -1,0 +1,14 @@
+{
+  "build": "G6-002",
+  "clean_directory": "qa/local/G6-002-clean/有 空格 的目录",
+  "exit": 0,
+  "release_boot": true,
+  "debug_boot_absent": true,
+  "script_error_free": true,
+  "no_capture_side_effect": true,
+  "isolated_appdata": false,
+  "user_storage": "clean-directory fallback (用户数据/) because APPDATA isolation was not applied",
+  "not_done": "windowed title/two-ending play-through and settings persistence",
+  "passed_startup": true,
+  "note": "Exported G6-002 exe+pck copied to a path containing spaces and launched headless with --quit-after 30. It printed RELEASE_BOOT campaign and no G2/debug boot. This is a startup smoke, not the full acceptance run."
+}

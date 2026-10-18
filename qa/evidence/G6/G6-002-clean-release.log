@@ -1,0 +1,14 @@
+===== G6-002 clean-directory startup smoke =====
+Directory: qa/local/G6-002-clean/有 空格 的目录
+Files: FungusLight.exe + FungusLight.pck copied from deliverables/G6-002.
+Command: FungusLight.exe --headless --path <clean dir> --quit-after 30
+(no debug switches; no project.godot in the directory)
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+USER_STORAGE .../有 空格 的目录/用户数据/
+RELEASE_BOOT campaign
+exit=0
+
+The only stderr line was the host's "Failed to read the root certificate store"
+warning. No G2_READY/G2_REVIEW_READY, no SCRIPT ERROR. Windowed title, settings
+persistence and the two-ending flow remain user acceptance items.

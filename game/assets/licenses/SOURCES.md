@@ -18,4 +18,4 @@ G2-006新增 `assets/audio/{shell_break,shield_hit,rain_impact}.wav`：本项目
 
 G3-006新增 `assets/props/props_data.json`：本项目 `tools/gen_props.py` 确定性生成的像素素材数据（137 帧自绘道具、15 个来自 `Complete.png` 的家具裁切、6 类环境粒子），无外部图片采样；调色板取自原图集与角色并登记在 JSON。灯座/宝箱/门/水管/灯环/导光/矿门为自绘；床铺/箱柜/木箱/书架/纸张/菌丛/火把/墙面装置复用用户提供的 `Complete.png`，继承原素材授权待核实状态。运行时由 `prop_art.gd` 构建 ImageTexture，不新增 PNG 文件依赖。
 
-G7-001 新增 `prop_art.gd` 自绘语义道具：`wall_inscription`（墙刻/铭文/拓文）、`document`（记录/剧情证据）、`puzzle_console`（机关对照台）、`evidence_slot`（三证据刻槽）、`npc`（通用披风 NPC）。这些形状与调色板由本项目代码绘制，不引用外部图片；用于替换原先把 `papers` 同时当作墙面/剧情/机关/NPC 的多义占位，避免同一纸张图形出现在墙壁与所有交互物上。
+G6-002（原 G7-001 本地候选）新增 `prop_art.gd` 自绘语义道具：`wall_inscription`（墙刻/铭文/拓文）、`document`（记录/剧情证据）、`puzzle_console`（机关对照台）、`evidence_slot`（三证据刻槽）、`npc`（通用披风 NPC）。这些形状与调色板由本项目代码绘制，不引用外部图片；用于替换原先把 `papers` 同时当作墙面/剧情/机关/NPC 的多义占位，避免同一纸张图形出现在墙壁与所有交互物上。

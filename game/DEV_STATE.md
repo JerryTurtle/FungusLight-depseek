@@ -2,14 +2,14 @@
 
 更新：2026-10-18。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
 
-## 当前状态（G6-002 本地修复，G6/G7 仍 in_progress）
+## 当前状态（G6-002 发布候选，等待用户验收）
 
 - G0/G1/G2技术通过；H2用户明确批准，无问题：[原文](../qa/H2-approval.md)。G3、G4已通过；G4-009完成五项试玩修复。
-- G6-001 发布包与历史证据保留；当前源码已加 P0-1 读档修复与 P0-2 路线/竞技场修复，但包、版本、`qa/gates.json` 尚未同步到 G6-002。
+- P0-1 读档修复、P0-2 路线/竞技场修复、P0-3 包/版本/门槛统一均已完成；G6-002 发布候选已构建。
 - 当前源码验证：全量13组引擎套件失败0（campaign90/g6_release38/g4_state48/g4_boss67/g4_death5/g4_visual12/save65/enemies73/dialogue175/props2472/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 674.8秒/0死亡，8条路线矩阵全过（619.3～706.0秒）。
-- G6-001包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-001-Release.zip`；exe `66B26A…B7B13`，pck `7D6C34…06DAA`，zip `1E6EE8F1…DB1E979`。该包不含本轮修复，不能当作 G6-002。
+- G6-002包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-002-Release.zip`；exe `66B26A…B7B13`，pck `06BDF1…EFEB2`，zip `4B0E9B…B930B`。PCK 审计和五目录布局通过；G6-001 历史包保留在 `deliverables/G6-001-Release/`。
 - 接续分支 main；release 构建默认 campaign，debug 构建仍进 G2 审核台。
-- G6/G7仍为in_progress：先完成 P0-3 包/版本/门槛统一，再由用户按 `docs/g6/release/验收说明.md` 在干净目录完成最终验收并填写 `qa/G6-approval.md`；20分钟真人时长尚未由本轮机器人证明。
+- G6仍为in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成最终验收并填写 `qa/G6-approval.md`；未重跑干净目录 GUI 全流程，20分钟真人时长尚未由本轮机器人证明。
 
 ## 2026-10-18 第二轮：剧情收敛与成长/证据接线（进行中）
 
@@ -38,11 +38,18 @@
 - 修复 route_test：近距补足到 22px、EL2 冲锋/水道回避、N3-04 空导航空洞环形接近、Boss 孢荚/横扫回避、低血药剂、支线装备字段；修掉历史 `relic/token` 访问导致的脚本异常。游戏侧：`PLAYABLE_AREA` 击退夹取、指针场外自施护灯放行、移除 N4-06 结局标记实体碰撞（此前挡住 Boss 视线）。
 - 最终：默认 route 674.8 秒/0 死亡；8 条矩阵 A_restore/B_seal/A_alt_seal/B_alt_restore/C05/C06/sidequests/skip 全过（9/9/9/9/9/9/10/9，619.3～706.0 秒）。证据 `qa/evidence/G6/G6-002-route-default.json/.log`、`G6-002-route-matrix.json/.log`、`G6-002-route-progress.md`。
 - 全套件：campaign90、g6_release38、g4_state48、g4_boss67、g4_death5、g4_visual12、save65、enemies73、dialogue175、props2472、pressure5、route9、skip9，全 0 失败；另 test_combat549、restart write2/load8。
-- 限制：机器人最快 619.3 秒不是 20 分钟真人时长；历史 `test_campaign.gd` 不在当前套件且旧断言已失效，未作为门禁。未改包/版本/gates；下一步 P0-3（G6-002/G7 包与门槛统一），G6/G7 仍 in_progress。
+- 限制：机器人最快 619.3 秒不是 20 分钟真人时长；历史 `test_campaign.gd` 不在当前套件且旧断言已失效，未作为门禁。P0-2 结束时未改包/版本/gates；P0-3 已统一到 G6-002。
 
-## 下一项：P0-2 剩余（N4-06 Boss）/P0-3（其后才是用户验收）
+## P0-3 G6-002 包/版本/门槛统一
 
-P0-1 已完成读档修复；在 P0-2 用当前源码重跑路线、P0-3 统一包/门槛/版本之前，不启动 G6/G7 用户验收。以下清单保留作为最终验收条目：
+- 决定以 G6-002 作为正式 G6 候选；本地 G7-001 候选不再作为交付编号。
+- 已统一 `project.godot`/`prologue.json` 版本、导出预设、标题默认值、发布文档、`qa/gates.json` 和验收模板到 G6-002。
+- 重建 `deliverables/Release/` 五目录与 zip `deliverables/FungusLight-G6-002-Release.zip`；exe `66B26A…B7B13`，pck `06BDF1…EFEB2`，zip `4B0E9B…B930B`。PCK 审计、五目录布局通过；Game 无个人存档/日志。
+- 限制：未重跑干净目录 GUI 全流程；20 分钟真人时长未验证；G6 仍 in_progress，用户书面确认前不得标 passed。证据 `qa/evidence/G6/G6-002-release-package.json`、`G6-002-release-layout.json`、`G6-002-final-package.txt`。
+
+## 下一项：G6-002 用户验收（P0-1/P0-2/P0-3 已完成）
+
+P0-1/P0-2/P0-3 已完成，当前包为 G6-002；用户验收前不再改包内容。以下清单保留作为最终验收条目：
 
 1. 干净目录首次启动、新游戏、设置持久化、双槽隔离、坏档恢复、死亡三选项。
 2. 两个结局各走一次，确认尾声章节统计/返回标题/结局前备份。

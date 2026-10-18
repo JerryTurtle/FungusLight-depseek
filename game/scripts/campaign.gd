@@ -181,7 +181,7 @@ func show_title() -> void:
 	if hud != null: hud.visible = false
 	if status != null: status.visible = false
 	clear_menu("菌灯之下")
-	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-001"))
+	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-002"))
 	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n构建 "+build_label,100)
 	button("新游戏",func():
 		if FileAccess.file_exists(saves.directory+"/auto.json"):
@@ -749,7 +749,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-001")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-002")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),

@@ -4,20 +4,20 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 ## 1. 当前状态（2026-10-18）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。G4-009 完成试玩反馈修复；G6-001 发布候选包已构建并通过 AI 发布验证，等待用户最终验收。2026-10-18 第二轮已按用户授权把剧情收敛为最小逻辑闭环，并接入成长/证据/精英/Boss 机制；G6-001 包对应旧源码，需重新构建后再验收。** 2026-10-18 P0-1 已修复读档校验（G6-002），P0-2 已在当前源码跑通默认路线（674.8 秒/0 死亡）和 8/8 路线矩阵，全量套件 0 失败；包/版本/门槛尚未同步，G6/G7 仍为 in_progress。G4-009：初燃余烬/轻震、动态灯焰、导光光束增强、37 节点重叠清理、四分之一像素+刷新率插值移动。G6-001：release 默认主线、剔除测试/采集/审核/MCP 资源、标题—继续—读取—双槽—死亡—两结局—返回闭环、发布四件套与 Windows 包。自动路线 484.6 秒、跳过 434.2 秒，8/8 路线矩阵通过（第二轮前证据；当前源码 route_test 仍失败，待 P0-2 重跑）；G6 最终用户验收未完成前不称整款交付。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。G4-009 完成试玩反馈修复；G6-002 发布候选包已重建，PCK 审计与五目录布局通过，等待用户最终验收。2026-10-18 第二轮已按用户授权把剧情收敛为最小逻辑闭环，并接入成长/证据/精英/Boss 机制。** 2026-10-18 P0-1 已修复读档校验（G6-002），P0-2 已在当前源码跑通默认路线（674.8 秒/0 死亡）和 8/8 路线矩阵，全量套件 0 失败；P0-3 已统一版本/门槛与 G6-002 包。G6 仍为 in_progress，用户验收前不得称整款交付完成。G4-009：初燃余烬/轻震、动态灯焰、导光光束增强、37 节点重叠清理、四分之一像素+刷新率插值移动。G6-002：release 默认主线、剔除测试/采集/审核/MCP 资源、标题—继续—读取—双槽—死亡—两结局—返回闭环、五目录与 Windows 包；当前自动路线 674.8 秒、跳过 619.3 秒，8/8 矩阵通过，20 分钟真人时长未验收。
 
-- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-001 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **G6-001 发布包：** [deliverables/Release](deliverables/Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-001-Release.zip`。exe `66B26A…B7B13`，pck `7D6C34…06DAA`，zip SHA256 `1E6EE8F1…DB1E979`；完整哈希见 `qa/evidence/G6/G6-001-final-package.txt`。
+- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-002 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
+- **G6-002 发布包：** [deliverables/Release](deliverables/Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-002-Release.zip`。exe `66B26A…B7B13`，pck `06BDF1…EFEB2`，zip SHA256 `4B0E9B…B930B`；完整哈希见 `qa/evidence/G6/G6-002-final-package.txt`。G6-001 历史包保留在 `deliverables/G6-001-Release/` 与旧 zip，不再作为当前候选。
 - **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G4-009 证据见 `qa/evidence/G4/G4-009-*`。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
-- **下一项：P0-3 统一 G6-002/G7 包、版本与门槛；完成后再请用户验收。** 验收条目仍为两结局、双槽/坏档、设置、37 节点、手感/字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
+- **下一项：用户在 G6-002 发布包上完成最终验收；AI 不再改动包内容。** 验收条目仍为两结局、双槽/坏档、设置、37 节点、手感/字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
 
 状态依据：用户最新要求、[AGENTS.md](AGENTS.md)、[qa/gates.json](qa/gates.json)和[game/DEV_STATE.md](game/DEV_STATE.md)的最新条目。旧报告中的“待H2/禁止G3”是历史状态，已被批准记录取代。发现文件与实际Git状态不符时先核对，不自行推定完成。
 
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
 ### 接续快照：已实现功能与剩余工作（2026-10-18）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-001，当前源码另含P0-1/P0-2修复；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-001为发布候选，等待用户最终验收。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/Release/`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-002，当前源码含P0-1/P0-2修复；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-002为发布候选，等待用户最终验收。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/Release/`（G6-002），zip `deliverables/FungusLight-G6-002-Release.zip`。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
 
 #### 已实现清单（接续时直接复用）
 
@@ -167,7 +167,7 @@ G4-001 搭出五章31节点（N0/N1/N2/N3/N4）、30个主线遭遇（tutorial+E
 - P03～P09 已加顺序/证据门禁；P03 断根记录二选一、P04 流向对照、P05 根/门闩顺序、P06 测量点对照、P07 管线扫描、P08 三证据刻槽、P09 三步稳压均已有独立“对照/顺序”交互；操作仍以选择/开关为主，不是完整动作小游戏。
 - 回声扫描新增可交互/证据物高亮边框（FX04 补强）；`FUNGUS_SAVE_DIR` 与 `--campaign-capture` 已改为仅 debug 构建生效，release 不再接受这两个调试钩子；`deliverables/Release/Game` 的运行产物已清理（zip 仍为旧包）。
 - 设置新增独立“开启震屏”开关，与减少动态分开；G4-009 轻震/阶段反馈可单独关闭。
-- 已导出本地候选并组装五目录：`deliverables/G7-Release/{Game,Source,Docs,QA,Licenses}`，zip `deliverables/FungusLight-G7-001-Candidate.zip`（SHA256 `4536DCF8…9BB224F`）；exe `66B26A…B7B13`，pck `A4FF9901…3408C`；PCK 只读检查无 test/capture/review/MCP/autoload/开发路径，含 BOSS.png 与语义道具。Game 目录已扫描无个人存档/日志，`capture_g4` 实机截图验证 N1-06/N3-05 已改用 document/puzzle_console/evidence_slot，未再用 papers 占位。**未做 release GUI 干净目录全流程**；route_test 仍失败，不能验收。
+- 已导出本地候选并组装五目录：`deliverables/G7-Release/{Game,Source,Docs,QA,Licenses}`，zip `deliverables/FungusLight-G7-001-Candidate.zip`（SHA256 `4536DCF8…9BB224F`）；exe `66B26A…B7B13`，pck `A4FF9901…3408C`；PCK 只读检查无 test/capture/review/MCP/autoload/开发路径，含 BOSS.png 与语义道具。Game 目录已扫描无个人存档/日志，`capture_g4` 实机截图验证 N1-06/N3-05 已改用 document/puzzle_console/evidence_slot，未再用 papers 占位。**该本地候选已被 G6-002 正式候选取代；当时 route_test 仍失败，不能验收。**
 - 纸张占位已按语义拆分：墙刻/铭文使用 `wall_inscription`，剧情证据使用 `document`，机关对照使用 `puzzle_console`，三证据刻槽使用 `evidence_slot`，通用 NPC 使用 `npc`；不再用同一张 `papers` 图形同时充当墙面、剧情、机关和 NPC。墙壁仍使用 `Complete.png` 的暗色石砖，未使用纸张图。
 - 下一步：12 类特效收尾、route_test 适配、G7 发布验收；G6/G7 仍 `in_progress`，不得称整款交付。
 
@@ -181,7 +181,11 @@ G4-001 搭出五章31节点（N0/N1/N2/N3/N4）、30个主线遭遇（tutorial+E
 
 #### P0-2 当前源码路线修复与矩阵（G6-002，本地修复迭代）
 
-当前 HEAD 首跑复现 N1-03：100.4 秒，机器人在距 EL1 约 27px 处停住；README 的 N3-07/N2-07 与证据不符。修复 route_test 的近距补足、EL2 冲锋/水道、N3-04 空导航空洞环形接近、Boss 孢荚/横扫回避、低血药剂与支线装备字段；游戏侧夹取 `PLAYABLE_AREA` 击退、放行指针场外自施护灯、移除 N4-06 结局标记的实体碰撞（此前挡住 Boss 视线）。最终默认路线 674.8 秒/0 死亡；8 条矩阵 A_restore/B_seal/A_alt_seal/B_alt_restore/C05/C06/sidequests/skip 全过（9/9/9/9/9/9/10/9，619.3～706.0 秒）。全量套件 campaign90、g6_release38、g4_state48、g4_boss67、g4_death5、g4_visual12、save65、enemies73、dialogue175、props2472、pressure5、route9、skip9 全 0 失败；另 test_combat549、restart write2/load8。证据 `qa/evidence/G6/G6-002-route-default.*`、`G6-002-route-matrix.*`、`G6-002-route-progress.md`。限制：机器人最短 619.3 秒，不是 20 分钟真人时长；未改包/版本/gates，G6/G7 仍 `in_progress`，不得称交付完成。
+当前 HEAD 首跑复现 N1-03：100.4 秒，机器人在距 EL1 约 27px 处停住；README 的 N3-07/N2-07 与证据不符。修复 route_test 的近距补足、EL2 冲锋/水道、N3-04 空导航空洞环形接近、Boss 孢荚/横扫回避、低血药剂与支线装备字段；游戏侧夹取 `PLAYABLE_AREA` 击退、放行指针场外自施护灯、移除 N4-06 结局标记的实体碰撞（此前挡住 Boss 视线）。最终默认路线 674.8 秒/0 死亡；8 条矩阵 A_restore/B_seal/A_alt_seal/B_alt_restore/C05/C06/sidequests/skip 全过（9/9/9/9/9/9/10/9，619.3～706.0 秒）。全量套件 campaign90、g6_release38、g4_state48、g4_boss67、g4_death5、g4_visual12、save65、enemies73、dialogue175、props2472、pressure5、route9、skip9 全 0 失败；另 test_combat549、restart write2/load8。证据 `qa/evidence/G6/G6-002-route-default.*`、`G6-002-route-matrix.*`、`G6-002-route-progress.md`。限制：机器人最短 619.3 秒，不是 20 分钟真人时长；P0-2 结束时未改包/版本/gates，P0-3 已统一到 G6-002。G6 仍 `in_progress`，不得称交付完成。
+
+#### P0-3 G6-002 包/版本/门槛统一（本地发布候选）
+
+决定以 **G6-002** 作为正式 G6 候选；本地 `G7-001` 候选不再作为交付编号。已统一 `project.godot`/`prologue.json` 版本、导出预设、标题默认值、发布文档、`qa/gates.json` 和验收模板到 G6-002；重建 Release 五目录与 zip `deliverables/FungusLight-G6-002-Release.zip`（exe `66B26A…B7B13`，pck `06BDF1…EFEB2`，zip `4B0E9B…B930B`）。PCK 审计和五目录布局通过；Game 目录无个人存档/日志。G6 仍 `in_progress`：remaining 为用户干净目录验收、素材再分发确认、可选音乐/按键；未重跑干净目录 GUI 全流程，20 分钟真人时长未验证。证据 `G6-002-release-package.json`、`G6-002-release-layout.json`、`G6-002-final-package.txt`。
 
 <!-- HANDOFF_SNAPSHOT_END -->
 

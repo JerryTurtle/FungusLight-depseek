@@ -2,7 +2,7 @@ config_version=5
 
 [application]
 config/name="菌灯之下"
-config/version="G6-001"
+config/version="G6-002"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="FungusLight"
 config/description="守灯人岚的五章俯视角动作RPG。"

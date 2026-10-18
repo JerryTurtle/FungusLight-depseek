@@ -1,5 +1,5 @@
 {
- "build_id": "G6-001",
+ "build_id": "G6-002",
  "G0": {
   "status": "passed",
   "evidence": [
@@ -416,7 +416,7 @@
  },
  "G6": {
   "status": "in_progress",
-  "build_id": "G6-001",
+  "build_id": "G6-002",
   "evidence": [
    "qa/evidence/G6/G6-gap-audit.md",
    "qa/evidence/G6/G6-001-checks.json",
@@ -446,16 +446,34 @@
    "qa/evidence/G6/G6-001-final-package.txt",
    "qa/evidence/G6/G6-001-g6-release-export.log",
    "qa/G4-approval.md",
-   "qa/evidence/G6/G6-001-zip-clean.log"
+   "qa/evidence/G6/G6-001-zip-clean.log",
+   "qa/evidence/G6/G6-002-p2-checks.json",
+   "qa/evidence/G6/G6-002-p2-final-suite.log",
+   "qa/evidence/G6/G6-002-route-current.json",
+   "qa/evidence/G6/G6-002-route-default.json",
+   "qa/evidence/G6/G6-002-route-matrix.json",
+   "qa/evidence/G6/G6-002-route-matrix.log",
+   "qa/evidence/G6/G6-002-route-progress.md",
+   "qa/evidence/G6/G6-002-route-alt-failure.log",
+   "qa/evidence/G6/G6-002-sidequest-prefix-crash.log",
+   "qa/evidence/G6/G6-002-restart-load.log",
+   "qa/evidence/G6/G6-002-prefix-restart-load.log",
+   "qa/evidence/G6/G6-002-release-package.json",
+   "qa/evidence/G6/G6-002-release-layout.json",
+   "qa/evidence/G6/G6-002-final-package.txt",
+   "qa/evidence/G6/G6-002-p3-checks.json",
+   "qa/evidence/G6/G6-002-route.json",
+   "qa/evidence/G6/G6-002-clean-release.json",
+   "qa/evidence/G6/G6-002-clean-release.log"
   ],
   "package": "deliverables/Release/",
   "remaining": [
-   "用户按 docs/g6/release/验收说明.md 完成干净目录两结局/双槽/坏档/设置/全地图体验并填写 qa/G6-approval.md",
+   "用户按 docs/g6/release/验收说明.md 在干净目录完成 G6-002 两结局/双槽/坏档/设置/全地图体验并填写 qa/G6-approval.md",
    "原始 Fungus Cave 素材再分发许可确认或限定内部验收",
    "可选：音乐与完整按键重设（G5 单独阶段按用户指示跳过）"
   ],
-  "caveat": "AI 发布验证与干净目录启动已通过；G6 仍为 in_progress，只有用户书面确认后才可标 passed。20分钟为用户已确认目标，不声称60分钟。",
-  "package_zip": "deliverables/FungusLight-G6-001-Release.zip",
-  "package_zip_sha256": "1E6EE8F1CD97F40253334904AEB7E74F3DFAFA2D7B3CF4F5000D393E7DB1E979"
+  "caveat": "AI 发布验证、五目录布局与 PCK 审计通过；默认路线 674.8 秒/0 死亡，8/8 路线矩阵与全量套件 0 失败。未重跑干净目录 GUI 全流程；20 分钟为真人目标，机器人 619.3 秒不构成真人时长；仅用户书面确认后可标 passed。",
+  "package_zip": "deliverables/FungusLight-G6-002-Release.zip",
+  "package_zip_sha256": "4B0E9BF0ED86591C02037DA60A4ABAE9DCC96E0114BCD149ACF579045C7B930B"
  }
 }

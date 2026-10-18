@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-001"
+BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-002"
 RELEASE = ROOT / "deliverables" / BUILD
 QA = ROOT / "deliverables" / (BUILD + "-QA")
 OUT = ROOT / "qa" / "evidence" / "G6" / f"{BUILD}-release-package.json"
@@ -49,7 +49,7 @@ def main() -> int:
     raw = pck.read_bytes()
     missing = [item for item in REQUIRED if item.encode() not in raw]
     forbidden = [item for item in FORBIDDEN if item.encode() in raw]
-    project_ok = b"G6-001" in raw and "菌灯之下".encode() in raw and "开发验证".encode() not in raw
+    project_ok = BUILD.encode() in raw and "菌灯之下".encode() in raw and "开发验证".encode() not in raw
     report = {
         "build": BUILD,
         "release_dir": str(RELEASE.relative_to(ROOT)),

@@ -1,0 +1,43 @@
+{
+  "build": "G6-002",
+  "purpose": "P0-3 unify version, package and gates on G6-002",
+  "decision": "Use G6-002 as the formal G6 candidate; the local G7-001 candidate is retired as a delivery label.",
+  "version": {
+    "project.godot": "G6-002",
+    "prologue.json": "G6-002",
+    "export_presets": "G6-002",
+    "title_default_and_save_fallback": "G6-002",
+    "release_docs": "G6-002"
+  },
+  "package": {
+    "release": "deliverables/Release/",
+    "zip": "deliverables/FungusLight-G6-002-Release.zip",
+    "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+    "pck_sha256": "06BDF16C4C60D438EF26F5CCE6C257815CAC00C20010BC9CA90DC0070BAEFEB2",
+    "zip_sha256_note": "recorded after the final assembly in qa/gates.json and README; not embedded in the zip",
+    "pck_audit": "passed",
+    "five_folder_layout": "passed",
+    "clean_startup": "passed (headless, path with spaces, RELEASE_BOOT campaign; see G6-002-clean-release.log)",
+    "personal_files_in_game": []
+  },
+  "gates": {
+    "top_build_id": "G6-002",
+    "G6_build_id": "G6-002",
+    "G6_status": "in_progress",
+    "G6_package_zip": "deliverables/FungusLight-G6-002-Release.zip",
+    "approval_template": "qa/G6-approval.md (G6-002)"
+  },
+  "not_done": [
+    "windowed title/settings persistence and two-ending play-through after the P0-2 changes",
+    "20-minute human duration",
+    "user written acceptance in qa/G6-approval.md",
+    "asset redistribution permission confirmation"
+  ],
+  "passed_ai_verification": true,
+  "gates_updated": true,
+  "notes": [
+    "The package is an AI-verified candidate, not G6 passed.",
+    "The route bot's 619.3s is not human duration.",
+    "G6-001 package directory was preserved as deliverables/G6-001-Release/; the old zip remains."
+  ]
+}

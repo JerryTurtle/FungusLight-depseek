@@ -10,7 +10,7 @@ func shot(name: String, frames: int = 6) -> void:
 	for i in frames: await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	var base := ProjectSettings.globalize_path("res://").path_join("../qa/evidence/G6/").simplify_path()
-	var path := base.path_join("G6-001-"+name+".png")
+	var path := base.path_join("G6-002-"+name+".png")
 	var image := get_viewport().get_texture().get_image()
 	print("G6_SHOT ",path," err=",image.save_png(path))
 
