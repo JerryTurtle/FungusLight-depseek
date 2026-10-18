@@ -1,0 +1,41 @@
+{
+  "build_id": "G6-004",
+  "date": "2026-10-19",
+  "engine": "Godot 4.3 stable headless",
+  "method": "Each script was run through the godot-bridge headless runner (--headless --path game --script res://...); no OS gameplay automation.",
+  "groups": {
+    "campaign": {"checks": 95, "failures": 0},
+    "g6_release": {"checks": 38, "failures": 0},
+    "g4_state": {"checks": 48, "failures": 0},
+    "g4_boss": {"checks": 71, "failures": 0},
+    "g4_death": {"checks": 5, "failures": 0},
+    "g4_visual": {"checks": 15, "failures": 0},
+    "g4_presentation": {"checks": 30, "failures": 0},
+    "save": {"checks": 65, "failures": 0},
+    "enemies": {"checks": 73, "failures": 0},
+    "dialogue": {"checks": 175, "failures": 0},
+    "props": {"checks": 2464, "failures": 0},
+    "pressure": {"checks": 5, "failures": 0},
+    "route": {"checks": 9, "failures": 0, "simulated_seconds": 725.9, "deaths": 0},
+    "skip_route": {"checks": 9, "failures": 0, "simulated_seconds": 635.9, "deaths": 0},
+    "combat_model": {"checks": 549, "failures": 0},
+    "restart_write": {"checks": 2, "failures": 0},
+    "restart_load": {"checks": 8, "failures": 0},
+    "clean_release_boot": {"exit_code": 0, "boot": "RELEASE_BOOT campaign", "mode": "headless"}
+  },
+  "g6_004_checks": [
+    "rest lamps are >=60px from every exit and keep a clear 34px approach",
+    "rest is the lowest-priority E interaction; exits/switches/story objects win",
+    "S10 exists and auto-opens after E30 without gating the ending choice",
+    "S03/S07/S08/L12 carry the corrected human-first drought and covenant chain",
+    "HUD exposes five skill slots with keys, cooldown, cost and lock state",
+    "heal events produce a positive green number and ring feedback",
+    "opening has five textured/narrated panels and can be skipped",
+    "title exposes the opening replay; journal uses S06 for the confluence"
+  ],
+  "limits": [
+    "The 8/8 alternate-route matrix was not rerun for G6-004; it remains a G6-003 historical baseline.",
+    "Route/skip times are engine-input replays, not human duration.",
+    "HUD, opening, rewritten story and both endings still need windowed human acceptance."
+  ]
+}

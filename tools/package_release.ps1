@@ -1,8 +1,8 @@
-﻿param([string]$BuildId = "G6-003")
+﻿param([string]$BuildId = "G6-004", [string]$ReleaseName = "Release")
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $source = Join-Path $root "deliverables/$BuildId"
-$release = Join-Path $root "deliverables/Release"
+$release = Join-Path $root "deliverables/$ReleaseName"
 $game = Join-Path $release "Game"
 $src = Join-Path $release "Source"
 $docs = Join-Path $release "Docs"
@@ -42,6 +42,7 @@ $excludeFiles = @("*.tmp", "*.log")
 if ($LASTEXITCODE -ge 8) { throw "robocopy source failed: $LASTEXITCODE" }
 Copy-Item (Join-Path $root "tools/gen_props.py") (Join-Path $src "gen_props.py")
 Copy-Item (Join-Path $root "tools/generate_sfx.py") (Join-Path $src "generate_sfx.py")
+Copy-Item (Join-Path $root "tools/gen_hud_assets.py") (Join-Path $src "gen_hud_assets.py")
 @(
   "# 《菌灯之下》$BuildId 源工程",
   "",

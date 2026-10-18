@@ -1,0 +1,11 @@
+{
+  "build": "G6-004",
+  "package": "deliverables/G6-004-Release/Game",
+  "command": "FungusLight.exe --headless --path <package>/Game --quit-after 3",
+  "exit_code": 0,
+  "stdout": "Godot Engine v4.3.stable.official.77dcf97d8\\n\\nUSER_STORAGE .../deliverables/G6-004-Release/Game/用户数据/\\nRELEASE_BOOT campaign",
+  "stderr": "ERROR: Failed to read the root certificate store. (host certificate-store warning, not a game failure)",
+  "release_boot": true,
+  "user_data_removed_after_smoke": true,
+  "scope": "headless release startup smoke only; does not replace the windowed clean-directory acceptance."
+}

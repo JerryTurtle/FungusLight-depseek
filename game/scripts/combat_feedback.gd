@@ -18,6 +18,11 @@ func consume(model) -> void:
 		if kind in ["boss_phase","boss_core","boss_death"]:
 			effects.append({"kind":kind,"pos":model.player-Vector2(0,12),"tick":model.tick,"armor":0,"broken":false})
 			continue
+		if kind == "heal":
+			var healed := float(event.get("amount",0))
+			effects.append({"kind":"heal","pos":model.player-Vector2(0,12),"tick":model.tick,"armor":0,"broken":false})
+			numbers.append({"target":-1,"pos":model.player-Vector2(0,28),"amount":healed,"tick":model.tick,"heal":true})
+			continue
 		if kind not in ["hit","hurt","dot","shield_absorb","shield_end","armor_break"]: continue
 		var position: Vector2 = model.player-Vector2(0,12)
 		if kind in ["hit","armor_break"]:
@@ -55,6 +60,12 @@ func draw(canvas: CanvasItem, tick: int, preferences) -> void:
 			canvas.draw_arc(effect.pos,8+age*1.4,0,TAU,24,Color(0.65,1.0,0.78,alpha),1.2)
 		elif effect.kind == "boss_death":
 			canvas.draw_arc(effect.pos,12+age*3.0,0,TAU,32,Color(0.90,0.52,0.42,alpha),2.0)
+		elif effect.kind == "heal":
+			canvas.draw_arc(effect.pos,8+age*0.8,0,TAU,20,Color(0.52,0.96,0.62,alpha),1)
+			if not preferences.low_effects:
+				for i in 4:
+					var axis := Vector2.from_angle(float(i)*TAU/4.0+0.4)
+					canvas.draw_line(effect.pos+axis*5.0,effect.pos+axis*(8.0+age*0.4),Color(0.74,1.0,0.62,alpha*0.8),1)
 		elif effect.kind in ["shield_absorb","shield_end"]:
 			canvas.draw_arc(effect.pos,17,0,TAU,24,tint,1)
 		elif preferences.low_effects or preferences.reduced_motion:
@@ -81,6 +92,9 @@ func draw_numbers(canvas: CanvasItem, tick: int, preferences) -> void:
 		var age: int = tick-number.tick
 		var lift := 0.0 if preferences.reduced_motion else minf(age*0.15,4)
 		var position: Vector2 = (number.pos-Vector2(0,lift))*4
-		var text := str(snappedf(number.amount,0.1))
-		canvas.draw_string_outline(ThemeDB.fallback_font,position,text,HORIZONTAL_ALIGNMENT_LEFT,-1,24,3,Color(0.06,0.07,0.05,1.0-float(age)/36))
-		canvas.draw_string(ThemeDB.fallback_font,position,text,HORIZONTAL_ALIGNMENT_LEFT,-1,24,Color(1,0.92,0.7,1.0-float(age)/36))
+		var is_heal := bool(number.get("heal",false))
+		var text := ("+" if is_heal else "")+str(snappedf(number.amount,0.1))
+		var color := Color(0.62,1.0,0.60,1.0-float(age)/36) if is_heal else Color(1,0.92,0.7,1.0-float(age)/36)
+		var outline := Color(0.04,0.10,0.06,1.0-float(age)/36) if is_heal else Color(0.06,0.07,0.05,1.0-float(age)/36)
+		canvas.draw_string_outline(ThemeDB.fallback_font,position,text,HORIZONTAL_ALIGNMENT_LEFT,-1,24,3,outline)
+		canvas.draw_string(ThemeDB.fallback_font,position,text,HORIZONTAL_ALIGNMENT_LEFT,-1,24,color)

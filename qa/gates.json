@@ -1,5 +1,5 @@
 {
- "build_id": "G6-003",
+ "build_id": "G6-004",
  "G0": {
   "status": "passed",
   "evidence": [
@@ -416,7 +416,7 @@
  },
  "G6": {
   "status": "in_progress",
-  "build_id": "G6-003",
+  "build_id": "G6-004",
   "evidence": [
    "qa/evidence/G6/G6-gap-audit.md",
    "qa/evidence/G6/G6-001-checks.json",
@@ -475,16 +475,32 @@
    "qa/evidence/G6/G6-003-p3-checks.json",
    "qa/evidence/G6/G6-003-release-package.json",
    "qa/evidence/G6/G6-003-release-layout.json",
-   "qa/evidence/G6/G6-003-final-package.txt"
+   "qa/evidence/G6/G6-003-final-package.txt",
+   "qa/evidence/G6/G6-004-checks.json",
+   "qa/evidence/G6/G6-004-route.json",
+   "qa/evidence/G6/G6-004-route-skip.json",
+   "qa/evidence/G6/G6-004-release-package.json",
+   "qa/evidence/G6/G6-004-release-layout.json",
+   "qa/evidence/G6/G6-004-final-package.txt",
+   "qa/evidence/G6/G6-004-hud.png",
+   "qa/evidence/G6/G6-004-intro-01.png",
+   "qa/evidence/G6/G6-004-intro-04.png",
+   "qa/evidence/G6/G6-004-intro-05.png",
+   "qa/evidence/G6/G6-004-title.png",
+   "qa/evidence/G6/G6-004-journal.png",
+   "qa/evidence/G6/G6-004-credits.png",
+   "qa/evidence/G6/G6-004-progress.md",
+   "qa/evidence/G6/G6-004-clean-release.json",
+   "qa/evidence/G6/G6-004-clean-release.log"
   ],
-  "package": "deliverables/Release/",
+  "package": "deliverables/G6-004-Release/",
   "remaining": [
-   "用户按 docs/g6/release/验收说明.md 在干净目录完成 G6-002 两结局/双槽/坏档/设置/全地图体验并填写 qa/G6-approval.md",
+   "用户按 docs/g6/release/验收说明.md 在干净目录完成 G6-004 五幕开场/HUD/技能栏/重写剧情/两结局/双槽/坏档/设置/37节点验收并填写 qa/G6-approval.md",
    "原始 Fungus Cave 素材再分发许可确认或限定内部验收",
    "可选：音乐与完整按键重设（G5 单独阶段按用户指示跳过）"
   ],
-  "caveat": "AI 发布验证、五目录布局、PCK 审计与干净目录启动烟测通过；默认路线 674.4 秒/0 死亡，8/8 路线矩阵与全量套件 0 失败。G6-003 已修用户反馈的箱子开启、休息灯座、Boss 全程受伤/整图判定、持续伤害反馈，并删除指定冗余机关/证据台。未做窗口化两结局全流程；20 分钟为真人目标，机器人 612.3 秒不构成真人时长；仅用户书面确认后可标 passed。",
-  "package_zip": "deliverables/FungusLight-G6-003-Release.zip",
-  "package_zip_sha256": "21E1CD3E643E43F78D9B52F5B9B3AE63501280E1E1EE53986EE32EA1C73BBC0A"
+  "caveat": "AI 发布验证、五目录布局与 PCK 审计通过；发布 exe headless 启动输出 RELEASE_BOOT campaign（exit 0）。G6-004 默认路线 725.9 秒/0 死亡、整段跳过 635.9 秒/0 死亡，14 组套件与 test_combat/restart 0 失败。G6-004 修休息灯座抢 E、重写 S01～S10/L01～L20 与两结局、新增像素 HUD/药剂/治疗反馈/技能冷却栏/五幕开场。G6-004 只重跑默认与跳过路线，8/8 矩阵是 G6-003 历史基线；HUD/开场/剧情未做真人视觉验收，20 分钟真人时长未验证；用户书面确认前 G6 仍 in_progress。",
+  "package_zip": "deliverables/FungusLight-G6-004-Release.zip",
+  "package_zip_sha256": "F61166E1FC919916214AF967053352D17DE4EECFD83D7EBCAB2FE6E580506847"
  }
 }

@@ -77,6 +77,16 @@ func run() -> void:
 	scene.combat_audio.consume(scene.combat.events)
 	check(scene.feedback.numbers.size() > number_count,"dot damage shows a damage number")
 	check(scene.combat_audio.playback_count > audio_count,"dot damage plays hit feedback")
+	# Potions restore health; the HUD and floating feedback must show a positive
+	# number instead of looking like another hit.
+	scene.combat.events.clear()
+	scene.combat.events.append({"kind":"heal","amount":35,"potions":2})
+	var heal_numbers: int = scene.feedback.numbers.size()
+	scene.feedback.consume(scene.combat)
+	var has_heal := false
+	for number in scene.feedback.numbers:
+		if bool(number.get("heal",false)) and is_equal_approx(float(number.amount),35.0): has_heal = true
+	check(scene.feedback.numbers.size() > heal_numbers and has_heal,"heal shows a positive green number")
 
 	scene.combat_audio.stop_all()
 	scene.queue_free()

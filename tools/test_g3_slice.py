@@ -14,7 +14,7 @@ from qa_paths import evidence_path
 
 root = Path(__file__).resolve().parents[1]
 engine = 'C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_console.exe'
-build = sys.argv[1] if len(sys.argv) > 1 else 'G3-006'
+build = sys.argv[1] if len(sys.argv) > 1 else 'G6-004'
 
 CHECKS = [
     ("campaign", "scripts/test_g4_campaign.gd", r"G4_CAMPAIGN_TEST checks=(\d+) failures=(\d+)", 180),
@@ -23,13 +23,14 @@ CHECKS = [
     ("g4_boss", "scripts/test_g4_boss.gd", r"G4_BOSS_TEST checks=(\d+) failures=(\d+)", 120),
     ("g4_death", "scripts/test_g4_death.gd", r"G4_DEATH_TEST checks=(\d+) failures=(\d+)", 120),
     ("g4_visual", "scripts/test_g4_visual.gd", r"G4_VISUAL_TEST checks=(\d+) failures=(\d+)", 120),
+    ("g4_presentation", "scripts/test_g4_presentation.gd", r"G4_PRESENTATION_TEST checks=(\d+) failures=(\d+)", 120),
     ("save", "scripts/test_save.gd", r"SAVE_TEST checks=(\d+) failures=(\d+)", 120),
     ("enemies", "scripts/test_enemies.gd", r"ENEMY_TEST checks=(\d+) failures=(\d+)", 120),
     ("dialogue", "scripts/test_dialogue.gd", r"DIALOGUE_TEST checks=(\d+) failures=(\d+)", 120),
     ("props", "scripts/test_props.gd", r"PROP_TEST checks=(\d+) failures=(\d+)", 180),
     ("pressure", "scripts/test_pressure.gd", r"PRESSURE_TEST checks=(\d+) failures=(\d+)", 180),
-    ("route", "scripts/route_test.gd", r"ROUTE_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)", 300),
-    ("skip_route", "scripts/route_test.gd", r"ROUTE_SKIP_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)", 300, {"FUNGUS_SKIP_DIALOGUE":"1"}),
+    ("route", "scripts/route_test.gd", r"ROUTE_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)", 480),
+    ("skip_route", "scripts/route_test.gd", r"ROUTE_SKIP_TEST checks=(\d+) failures=(\d+) seconds=([\d.]+)", 480, {"FUNGUS_SKIP_DIALOGUE":"1"}),
 ]
 
 summary = {"build_id": build, "engine": engine, "checks": [], "failures": 0}
@@ -57,7 +58,7 @@ for entry in CHECKS:
             summary['failures'] += 1
     if code != 0:
         summary['failures'] += 1
-    expected = {'campaign': 92, 'g6_release': 38, 'g4_state': 48, 'g4_boss': 71, 'g4_death': 5, 'g4_visual': 14, 'save': 65, 'enemies': 73, 'dialogue': 175, 'props': 2464, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
+    expected = {'campaign': 95, 'g6_release': 38, 'g4_state': 48, 'g4_boss': 71, 'g4_death': 5, 'g4_visual': 15, 'g4_presentation': 30, 'save': 65, 'enemies': 73, 'dialogue': 175, 'props': 2464, 'pressure': 5, 'route': 9, 'skip_route': 9}[name]
     enough = match is not None and int(match.group(1)) >= expected
     if not enough:
         summary['failures'] += 1

@@ -2,14 +2,15 @@
 
 更新：2026-10-18。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
 
-## 当前状态（G6-003 发布候选，等待用户验收）
+## 当前状态（G6-004 发布候选，等待用户验收）
 
 - G0/G1/G2技术通过；H2用户明确批准，无问题：[原文](../qa/H2-approval.md)。G3、G4已通过；G4-009完成五项试玩修复。
 - P0-1 读档修复、P0-2 路线/竞技场修复、P0-3 包/版本/门槛统一均已完成；第三轮按用户 8 项反馈修复箱子开启、休息灯座、冗余机关与 Boss 判定/持续伤害反馈。
-- 当前源码验证：全量13组引擎套件失败0（campaign92/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual14/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 674.4秒/0死亡，8条路线矩阵全过（612.3～728.3秒）。
-- G6-003包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-003-Release.zip`；exe `66B26A…B7B13`，pck `0495EA…77491B`，zip `21E1CD…BBC0A`。PCK 审计、五目录布局与干净目录启动烟测通过；G6-001/G6-002 历史包保留。
+- G6-004 第四轮按用户 5 项反馈：休息灯座离出口 ≥60px 且休息为最低交互优先级；S01～S10/L01～L20 剧情重写并统一世界观；像素 HUD/技能冷却栏；治疗 +生命反馈；五幕开场动画。
+- 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation30/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 725.9 秒/0 死亡，跳过 635.9 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
+- G6-004 包：`deliverables/G6-004-Release/`，zip `deliverables/FungusLight-G6-004-Release.zip`；exe `66B26A…B7B13`，pck `3288C6…AFB50`，zip `F61166…506847`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-004 改放同级目录，PCK 审计、五目录布局通过。
 - 接续分支 main；release 构建默认 campaign，debug 构建仍进 G2 审核台。
-- G6仍为in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；20分钟真人时长尚未由本轮机器人证明。
+- G6 仍为 in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；HUD/开场/剧情与 20 分钟真人时长尚未人工验收。
 
 ## 2026-10-18 第二轮：剧情收敛与成长/证据接线（进行中）
 
@@ -47,6 +48,16 @@
 - 重建 `deliverables/Release/` 五目录与 zip `deliverables/FungusLight-G6-002-Release.zip`；exe `66B26A…B7B13`，pck `06BDF1…EFEB2`，zip `4B0E9B…B930B`。PCK 审计、五目录布局通过；Game 无个人存档/日志。
 - 限制：未重跑干净目录 GUI 全流程；20 分钟真人时长未验证；G6 仍 in_progress，用户书面确认前不得标 passed。证据 `qa/evidence/G6/G6-002-release-package.json`、`G6-002-release-layout.json`、`G6-002-final-package.txt`。
 
+## G6-004 第四轮用户反馈（剧情/HUD/技能/开场）
+
+- 第 1 项：32 个休息灯座全部移到房间安全角，离最近出口 ≥60px；`nearest_object` 将休息设为最低交互优先级，出口/宝箱/阀门/剧情物不再被抢 E。路线在 V09、V12 的误触休息已修复。
+- 第 2 项：以 `qa/local/story-review.md` 审稿，统一“灯网/水脉、旧约三句、禾抬压并签砍根、菌王是旧王留声、母体是根心新意志”；S01～S09、L01～L20 全部重写，新增 S10 Boss 战后，两结局尾声扩为 7～8 句；S08 残片、L12 全文；任务日志合流改看 S06。
+- 第 3 项：`campaign_hud.gd` 像素 HUD：头像、生命/精力、护灯/护盾、三瓶药剂满/空、药剂饮用进度；治疗事件绿色 `+生命` 数字与环状反馈。
+- 第 4 项：右下技能栏五枚 24px 图标（灯击/净光/护灯/灯雨/闪避），按键、名称、精力消耗、冷却遮罩/秒数、未解锁锁标、护灯激活描边。
+- 第 5 项：`intro_cinematic.gd` 五幕 1280×720 像素插画，渐入/推镜/字幕/进度点，Enter/空格/左键推进，Esc 跳过；标题“开场故事”回看。
+- 验证：campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation30/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9 全 0；test_combat549、restart2/8。默认 725.9 秒、跳过 635.9 秒、0 死亡；8/8 矩阵未重跑，沿用 G6-003 历史基线。
+- 包：G6-004；PCK/布局/干净启动见 `qa/evidence/G6/G6-004-*`。限制：HUD/开场/剧情未人工验收；窗口化两结局与 20 分钟真人时长未完成；G6 仍 in_progress。
+
 ## G6-003 用户反馈修复与发布候选
 
 - 第 1 项：EL2 冲锋/水道伤害经真实 N2-07 场景探针确认存在（20/10×2）；原缺的是 dot 反馈，已补伤害数字与受击音。
@@ -58,15 +69,17 @@
 - 包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-003-Release.zip`；exe `66B26A…B7B13`，pck `0495EA…77491B`，zip `21E1CD…BBC0A`。PCK/布局/干净启动烟测通过。
 - 限制：窗口化两结局与 20 分钟真人时长未验收；G6 仍 in_progress。证据 `qa/evidence/G6/G6-003-feedback-checks.json`、`G6-003-route-matrix.json`、`G6-003-feedback-suite.log`。
 
-## 下一项：G6-003 用户验收（P0-1/P0-2/P0-3 与反馈轮已完成）
+## 下一项：G6-004 用户验收（P0-1/P0-2/P0-3、第三/四轮反馈均已完成）
 
-P0-1/P0-2/P0-3 与 G6-003 反馈修复已完成，当前包为 G6-003；用户验收前不再改包内容。以下清单保留作为最终验收条目：
+P0-1/P0-2/P0-3 与 G6-004 反馈修复已完成，当前包为 G6-004；用户验收前不再改包内容。以下清单保留作为最终验收条目：
 
-1. 干净目录首次启动、新游戏、设置持久化、双槽隔离、坏档恢复、死亡三选项。
-2. 两个结局各走一次，确认尾声章节统计/返回标题/结局前备份。
-3. 37节点全地图与初燃/灯焰/导光/移动手感、字体/标签检查。
-4. 确认原始 Fungus Cave 素材再分发范围；G5单独阶段按用户指示跳过，音乐与完整按键重设列为已知边界。
-5. 用户书面确认后，才把 G6 标 passed 并写 human_approval。
+1. 干净目录首次启动、新游戏（含五幕开场/跳过）、设置持久化、双槽隔离、坏档恢复、死亡三选项。
+2. 开场动画与重写剧情通读：S01～S10、L01～L20、Boss 战后、两结局尾声是否易懂完整。
+3. HUD/技能栏实际战斗检查：生命/精力/药剂/护灯、药剂饮用进度、治疗 +生命、五技能冷却/锁标/精力消耗、右下角不遮挡。
+4. 两个结局各走一次，确认尾声章节统计/返回标题/结局前备份。
+5. 37节点全地图与初燃/灯焰/导光/移动手感、字体/标签、休息灯座不再抢出口 E 提示。
+6. 确认原始 Fungus Cave 素材再分发范围；G5单独阶段按用户指示跳过，音乐与完整按键重设列为已知边界。
+7. 用户书面确认后，才把 G6 标 passed 并写 human_approval。
 
 ## 证据与限制
 

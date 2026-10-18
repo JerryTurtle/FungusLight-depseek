@@ -13,6 +13,8 @@ Godot Engine 4.3 stable，MIT License。完整 MIT 文本见同目录 `Godot-MIT
 
 - 音效：项目内 Python 生成，生成流程见源工程 `tools/generate_sfx.py`。
 - 交互物像素、粒子、灯光、UI 与代码：本项目内生成/编写。
+- 开场五幕插画：由图像生成模型生成，经项目内裁切、调色与 96 色量化后使用；不含第三方素材，具体生成记录随源工程保留。
+- HUD 技能/药剂图标：`tools/gen_hud_assets.py` 以像素网格程序生成，不使用第三方图标库。
 
 ## 原始 Fungus Cave 素材（重要）
 

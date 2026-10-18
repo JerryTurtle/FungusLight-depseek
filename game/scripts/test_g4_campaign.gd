@@ -47,6 +47,21 @@ func _initialize() -> void:
 		for object in node.objects:
 			if str(object.kind) in ["exit","end"]:
 				check(target_ids.has(str(object.get("target",""))), "exit target "+str(node.id)+":"+str(object.id))
+	# A rest lamp must not sit on top of an exit: the E prompt would otherwise
+	# choose "rest" and make the portal feel broken.
+	var rest_min := 9999.0
+	var rest_conflict := false
+	for node in progress.content.nodes:
+		var exits: Array = node.objects.filter(func(o): return str(o.kind) in ["exit","end"])
+		for rest in node.objects.filter(func(o): return str(o.kind) == "rest" and str(o.get("visual","")) == "lamp"):
+			for exit_obj in exits:
+				rest_min = minf(rest_min, Vector2(rest.pos[0],rest.pos[1]).distance_to(Vector2(exit_obj.pos[0],exit_obj.pos[1])))
+			for other in node.objects:
+				if other.kind == "rest": continue
+				if Vector2(rest.pos[0],rest.pos[1]).distance_to(Vector2(other.pos[0],other.pos[1])) < 30.0:
+					rest_conflict = true
+	check(rest_min >= 60.0, "rest lamps stay >=60px from exits (min %.1f)" % rest_min)
+	check(not rest_conflict, "rest lamps do not steal a nearby interactable")
 	# Switch puzzle P03 at N1-06.
 	progress.flags.P03 = false
 	progress.flags.V01 = false
@@ -100,6 +115,10 @@ func _initialize() -> void:
 	boss.hp = 0
 	scene._physics_process(1.0/60.0)
 	check(progress.has("E30") and scene.pending_encounter == "", "Boss commit")
+	# The post-boss S10 line opens automatically; close it before the choice.
+	if scene.dialogue_mode == "event" and progress.active_event == "S10":
+		scene.finish_dialogue()
+	check(progress.has("S10") and progress.active_event.is_empty(), "Boss aftermath dialogue commits")
 	scene.show_ending_choice()
 	check(scene.choice_pending, "ending choice opens")
 	scene.choose_ending("restore")

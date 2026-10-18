@@ -1,0 +1,12 @@
+G6-004 release headless startup smoke
+Date: 2026-10-19
+Command:
+  deliverables/G6-004-Release/Game/FungusLight.exe --headless --path <package>/Game --quit-after 3
+Observed:
+  Godot Engine v4.3.stable.official.77dcf97d8
+  USER_STORAGE .../deliverables/G6-004-Release/Game/用户数据/
+  RELEASE_BOOT campaign
+Exit: 0
+Stderr: ERROR: Failed to read the root certificate store. (host certificate store warning, not a game failure)
+Action: removed the generated 用户数据/ directory after the smoke test.
+Limit: headless boot only; windowed clean-directory acceptance remains for the user.

@@ -7,8 +7,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-003"
-RELEASE = ROOT / "deliverables" / "Release"
+BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-004"
+LAYOUT = sys.argv[2] if len(sys.argv) > 2 else "Release"
+RELEASE = ROOT / "deliverables" / LAYOUT
 OUT = ROOT / "qa" / "evidence" / "G6" / f"{BUILD}-release-layout.json"
 REQUIRED = {
     "Game/FungusLight.exe": True,

@@ -2,6 +2,8 @@ extends "res://scripts/graybox.gd"
 ## G3 gameplay adapter reuses the accepted combat/rendering components.
 const Progress = preload("res://scripts/campaign_state.gd")
 const SaveStore = preload("res://scripts/save_store.gd")
+const HUD = preload("res://scripts/campaign_hud.gd")
+const Intro = preload("res://scripts/intro_cinematic.gd")
 const DIR_NAMES := ["上","右","下","左"]
 const DIR_VECTORS := [Vector2.UP,Vector2.RIGHT,Vector2.DOWN,Vector2.LEFT]
 var progress = Progress.new()
@@ -37,6 +39,9 @@ var ui_layer: Node2D
 var dialogue
 var props = preload("res://scripts/prop_art.gd").new()
 var settings_return := "title"
+var hud_panel
+var intro
+var intro_callback: Callable = Callable()
 var render_prev_player := Vector2.ZERO
 var render_curr_player := Vector2.ZERO
 var render_prev_enemies: Dictionary = {}
@@ -61,14 +66,20 @@ func _ready() -> void:
 	add_child(ui_layer)
 	ui_layer.draw.connect(draw_object_labels)
 	ui_layer.draw.connect(draw_minimap)
+	hud_panel = HUD.new()
+	hud_panel.bind(self)
+	hud_panel.visible = false
+	add_child(hud_panel)
 	hud.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	hud.custom_minimum_size = Vector2(1200,0)
-	hud.size = Vector2(1200,94)
+	hud.position = Vector2(436,18)
+	hud.custom_minimum_size = Vector2(660,0)
+	hud.size = Vector2(660,76)
 	hud.max_lines_visible = 3
 	hud.add_theme_font_size_override("font_size",20)
 	status.add_theme_font_size_override("font_size",20)
-	status.custom_minimum_size = Vector2(1040,0)
-	status.size = Vector2(1040,50)
+	status.position = Vector2(28,650)
+	status.custom_minimum_size = Vector2(820,0)
+	status.size = Vector2(820,54)
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status.max_lines_visible = 2
 	overlay = PanelContainer.new()
@@ -88,6 +99,9 @@ func _ready() -> void:
 	dialogue.advance_requested.connect(advance_dialogue)
 	dialogue.skip_requested.connect(finish_dialogue)
 	dialogue.choice_selected.connect(choose_choice)
+	intro = Intro.new()
+	add_child(intro)
+	intro.finished.connect(on_intro_finished)
 	settings_panel.dismissed.connect(on_settings_closed)
 	show_title()
 	if OS.is_debug_build() and "--campaign-capture" in OS.get_cmdline_user_args(): call_deferred("capture_preview")
@@ -131,6 +145,7 @@ func clear_menu(title: String) -> void:
 	paused = true
 	if hud != null: hud.visible = false
 	if status != null: status.visible = false
+	if hud_panel != null: hud_panel.visible = false
 	commands.clear()
 	combat.clear_input_buffer()
 	combat_audio.stop_all()
@@ -167,6 +182,7 @@ func resume() -> void:
 	floating_ui.visible = true
 	if hud != null: hud.visible = true
 	if status != null: status.visible = true
+	if hud_panel != null: hud_panel.visible = true
 	paused = false
 	commands.clear()
 	queued_pointer = Vector2.INF
@@ -180,9 +196,12 @@ func show_title() -> void:
 	floating_ui.visible = false
 	if hud != null: hud.visible = false
 	if status != null: status.visible = false
+	if hud_panel != null: hud_panel.visible = false
 	clear_menu("菌灯之下")
-	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-003"))
-	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n构建 "+build_label,100)
+	overlay.position = Vector2(270,100)
+	overlay.size = Vector2(740,520)
+	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-004"))
+	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\n灯亮着，人还能回家；可回家的水，只够一边。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n构建 "+build_label,128)
 	button("新游戏",func():
 		if FileAccess.file_exists(saves.directory+"/auto.json"):
 			clear_menu("开始新旅程？")
@@ -197,6 +216,7 @@ func show_title() -> void:
 	continue_button.add_theme_font_size_override("font_size",24)
 	continue_button.pressed.connect(func(): load_game("auto"))
 	menu.add_child(continue_button)
+	button("开场故事",func(): play_intro(show_title))
 	button("读取存档",show_load_menu)
 	button("设置",func(): open_settings("title"))
 	button("退出",func(): get_tree().quit())
@@ -210,6 +230,36 @@ func new_game() -> void:
 	checkpoint = {}
 	running = true
 	load_room(Vector2.INF,100,100)
+	if intro_enabled():
+		play_intro(start_game_after_intro)
+	else:
+		start_game_after_intro()
+
+func intro_enabled() -> bool:
+	if DisplayServer.get_name() == "headless": return false
+	if OS.get_environment("FUNGUS_SKIP_INTRO") == "1": return false
+	if "--skip-intro" in OS.get_cmdline_user_args(): return false
+	if "--campaign-capture" in OS.get_cmdline_user_args(): return false
+	return true
+
+func play_intro(callback: Callable) -> void:
+	intro_callback = callback
+	overlay.hide()
+	if dialogue != null and dialogue.is_open(): dialogue.close()
+	if hud != null: hud.visible = false
+	if status != null: status.visible = false
+	if hud_panel != null: hud_panel.visible = false
+	paused = true
+	commands.clear()
+	combat_audio.stop_all()
+	intro.play()
+
+func on_intro_finished() -> void:
+	var callback := intro_callback
+	intro_callback = Callable()
+	if callback.is_valid(): callback.call()
+
+func start_game_after_intro() -> void:
 	resume()
 	save_game("auto",true)
 	if DisplayServer.get_name() != "headless":
@@ -490,6 +540,7 @@ func open_settings(return_to: String) -> void:
 	settings_was_paused = paused
 	if overlay != null: overlay.hide()
 	paused = true
+	if hud_panel != null: hud_panel.visible = false
 	settings_panel.show()
 
 func on_settings_closed() -> void:
@@ -545,20 +596,22 @@ func show_pause() -> void:
 
 func show_journal() -> void:
 	clear_menu("任务与证据")
-	paragraph("当前目标：\n"+current_goal(),80)
+	overlay.position = Vector2(270,28)
+	overlay.size = Vector2(740,664)
+	paragraph("当前目标：\n"+current_goal(),88)
 	var ev: Dictionary = progress.evidence()
 	var evidence_lines := PackedStringArray()
 	evidence_lines.append("证据 %d / 3" % progress.evidence_count())
-	if bool(ev.root_cut): evidence_lines.append("· 断根切口：第一章根桥（S04）")
-	if bool(ev.pump_record): evidence_lines.append("· 抽水记录：第二章控制室（S07）")
-	if bool(ev.covenant): evidence_lines.append("· 旧约拓文：第三章王庭外环（S08）")
-	if evidence_lines.size() == 1: evidence_lines.append("尚未取得主证据。")
-	paragraph("\n".join(evidence_lines),100)
+	if bool(ev.root_cut): evidence_lines.append("· 断根切口：根桥斧痕，带避难所钢印。\n  人先断水。")
+	if bool(ev.pump_record): evidence_lines.append("· 抽水记录：控制室，压力超过旧约红线。\n  末尾有禾的签名。")
+	if bool(ev.covenant): evidence_lines.append("· 旧约残片：王庭外环（S08）。\n  全文在旧约墙。")
+	if evidence_lines.size() == 1: evidence_lines.append("尚未取得主证据。先看水，再看根。")
+	paragraph("\n".join(evidence_lines),170)
 	var branch := PackedStringArray()
-	branch.append("第二章支路：排水 %s / 救援 %s / 合流 %s" % ["已完成" if progress.has("P04") else "未完成","已完成" if progress.has("P05") else "未完成","已开启" if progress.has("P06") else "未开启"])
-	branch.append("终章前置：泵站校准 %s / 撤离通路 %s" % ["已完成" if progress.has("P09") else "未完成","已完成" if progress.has("P08") else "未完成"])
-	branch.append("支线：旧灯修复 %s / 补给调查 %s" % ["已完成" if progress.has("Q1") else "进行中/未完成","已完成" if progress.has("Q2") else "进行中/未完成"])
-	paragraph("\n".join(branch),90)
+	branch.append("支路：排水 %s / 救援 %s / 合流 %s" % ["已完成" if progress.has("P04") else "未完成","已完成" if progress.has("P05") else "未完成","已开启" if progress.has("S06") else "未开启"])
+	branch.append("终章前置：泵站 %s / 撤离 %s" % ["已完成" if progress.has("P09") else "未完成","已完成" if progress.has("P08") else "未完成"])
+	branch.append("支线：旧灯 %s / 补给 %s" % ["已完成" if progress.has("Q1") else "进行中","已完成" if progress.has("Q2") else "进行中"])
+	paragraph("\n".join(branch),100)
 	button("返回",show_pause)
 
 func show_equipment() -> void:
@@ -599,6 +652,7 @@ func show_dialogue() -> void:
 	paused = true
 	overlay.hide()
 	if status != null: status.visible = false
+	if hud_panel != null: hud_panel.visible = false
 	dialogue.show_line(str(dialogue_lines[dialogue_index][0]),str(dialogue_lines[dialogue_index][1]))
 
 func advance_dialogue() -> void:
@@ -636,6 +690,7 @@ func show_growth_choice(event_id: String = "M1") -> void:
 	paused = true
 	overlay.hide()
 	if status != null: status.visible = false
+	if hud_panel != null: hud_panel.visible = false
 	var def := progress.event_def(event_id)
 	dialogue.show_choices(str(def.get("title", "选择一项强化")), def.get("options", []))
 
@@ -658,6 +713,7 @@ func show_puzzle_choice(object: Dictionary) -> void:
 	paused = true
 	overlay.hide()
 	if status != null: status.visible = false
+	if hud_panel != null: hud_panel.visible = false
 	dialogue.show_choices(str(object.get("name","证据对照")), object.get("options", []))
 
 func choose_puzzle_choice(option: String) -> void:
@@ -701,17 +757,18 @@ func show_ending_choice() -> void:
 	var req: Dictionary = progress.ending_requirements()
 	var options: Array = []
 	if bool(req.restore):
-		options.append({"id":"restore","label":"恢复共生循环","desc":"限流共生，需要共同维护"})
+		options.append({"id":"restore","label":"恢复共生循环","desc":"放入三证据，校准泵站；限流，灯不再整夜亮。"})
 	if bool(req.seal):
-		options.append({"id":"seal","label":"封存并撤离","desc":"带储水撤离，放弃地下旧居"})
+		options.append({"id":"seal","label":"封存并撤离","desc":"启用备用储水，打开撤离路；放弃地下旧居。"})
 	if options.is_empty():
-		notice = "证据或前置机关不足：恢复需三证据+P09，封存需P06+P08。"
+		notice = "还差一件证据或一处机关。回去看过，再回来。"
 		return
 	choice_mode = "ending"
 	choice_pending = true
 	paused = true
 	overlay.hide()
 	if status != null: status.visible = false
+	if hud_panel != null: hud_panel.visible = false
 	dialogue.show_choices("灯根核心 · 最后的选择", options)
 
 func choose_ending(option: String) -> void:
@@ -752,7 +809,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-003")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-004")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),
@@ -775,11 +832,17 @@ func show_credits() -> void:
 	dirty = true
 	write_run_report()
 	var restored := progress.ending_id() == "restore"
-	clear_menu("菌灯之下 · 尾声")
-	overlay.position = Vector2(270,50)
-	overlay.size = Vector2(740,610)
-	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "本次用时 " + elapsed_text() + "。\n" + chapter_report_text(),120)
-	paragraph("灯根回路已记录：%s。\n制作：AI 程序与素材整合 · 体验审核：玩家" % ("共生恢复" if restored else "封存撤离"),75)
+	clear_menu("菌灯之下 · 尾声（共生）" if restored else "菌灯之下 · 尾声（封存）")
+	overlay.position = Vector2(270,8)
+	overlay.size = Vector2(740,704)
+	var epilogue := ""
+	if restored:
+		epilogue = "岚把断根、抽水记录、旧约依次放进刻槽。\n泵站重新校准，水只够灯根和避难所各活一半。\n从今天起灯不再整夜亮，每三天我来调一次水。\n绒留在最后一盏灯旁，教新来的人认水位。\n砾在旁室清点人数，确认没有人被落下。\n菌根重新发光，光很暗但不再攻击。\n避难所保住了，代价是所有人都要学会少用水。\n岚：这不是胜利，这是新约。"
+	else:
+		epilogue = "岚把三证据收进袋子，启动备用储水，打开撤离路。\n根门在身后合拢，母体只看着最后一点光离开。\n灯根封在下面，水我们带走，够走到地面。\n砾带着旁室的人先走，名单末尾画了一个钩。\n灯一盏盏熄灭，绒留在最后一盏灯旁直到灯灭。\n地下旧居留在黑暗里，菌根会活着但不再为人类点灯。\n岚：我们活下来了，有些东西被留在了下面。"
+	paragraph(epilogue,322)
+	paragraph("本次用时 " + elapsed_text() + "。\n" + chapter_report_text() + "\n灯根回路已记录：%s。" % ("共生恢复" if restored else "封存撤离"),100)
+	paragraph("制作：AI 程序与素材整合 · 体验审核：玩家",40)
 	button("返回标题", show_title)
 	if saves.load_ending_backup().ok:
 		button("读取结局前存档（独立备份）", load_ending_backup_game)
@@ -811,16 +874,21 @@ func load_ending_backup_game() -> void:
 	notice = "已读取结局前独立存档。"
 
 func nearest_object() -> Dictionary:
-	var nearest: Dictionary = {}
-	var distance := 30.01
+	var candidates: Array = []
 	for object in progress.node().objects:
 		if object.kind == "guide_target": continue
 		var pos := Vector2(object.pos[0],object.pos[1])
 		var d: float = combat.player.distance_to(pos)
-		if d <= 30 and d < distance and combat.clear_wall_line(combat.player,pos):
-			distance = d
-			nearest = object
-	return nearest
+		if d > 30.0 or not combat.clear_wall_line(combat.player,pos): continue
+		# A rest lamp must never steal E from an exit, chest, valve or story
+		# object. It is the fallback interaction, not the closest-distance one.
+		var priority := 1 if str(object.kind) == "rest" else 0
+		candidates.append({"priority":priority,"distance":d,"object":object})
+	if candidates.is_empty(): return {}
+	candidates.sort_custom(func(a,b):
+		if int(a.priority) != int(b.priority): return int(a.priority) < int(b.priority)
+		return float(a.distance) < float(b.distance))
+	return candidates[0].object
 
 func rotate_guide(object: Dictionary) -> void:
 	if progress.has("P02"):
@@ -896,7 +964,7 @@ func interact() -> void:
 			if progress.has("P08"):
 				notice = "刻槽已经记录过这段因果。"
 			elif progress.evidence_count() < 3:
-				notice = "三证据不足：还需要断根、抽水记录与旧约拓文。"
+				notice = "三证据不足：还需要断根、抽水记录与旧约残片。"
 			else:
 				progress.flags.P08 = true
 				notice = "三证据嵌入刻槽，旧约机关完成。"
@@ -942,6 +1010,9 @@ func interact() -> void:
 			button("保存当前进度",func(): save_game("auto",true))
 
 func _unhandled_input(event: InputEvent) -> void:
+	if intro != null and intro.visible:
+		if intro.handle_input(event): get_viewport().set_input_as_handled()
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.physical_keycode == KEY_F1:
 			if settings_panel.visible:
@@ -1081,6 +1152,10 @@ func _physics_process(delta: float) -> void:
 			# Clearing an encounter (including the elite/Boss) is a safe checkpoint;
 			# if the room starts another encounter, safety() blocks the save.
 			if SaveStore.is_safe(safety()): save_game("auto",true)
+			# The mother gets one last line before the ending choice; this is
+			# narrative only and does not gate damage or the choice itself.
+			if cleared == "E30" and not progress.has("S10"):
+				begin_dialogue("S10")
 		if combat.hp <= 0:
 			clear_menu("灯光暂熄")
 			paragraph("恢复最近已提交的安全进度，未保存的奖励、敌人和资源一起回退。\n也可以读取安全存档，或回到标题。")
@@ -1093,13 +1168,8 @@ func _physics_process(delta: float) -> void:
 	floating_ui.queue_redraw()
 	objects_layer.queue_redraw()
 	ui_layer.queue_redraw()
-	var poison_text := ""
-	if combat.poison_until > combat.tick:
-		poison_text = "   孢毒 %ds" % maxi(1,ceili(float(combat.poison_until-combat.tick)/60.0))
-	var cooldown_text := "护盾 %d/%d   净光 %.1fs   护灯 %.1fs   灯雨 %.1fs%s" % [
-		int(combat.shield_hp),progress.shield_capacity(),
-		float(combat.cooldowns.light)/60.0,float(combat.cooldowns.shield)/60.0,float(combat.cooldowns.rain)/60.0,poison_text]
-	hud.text = "%s   生命 %d/%d   专注 %d/%d   药剂 %d/3   时间 %s\n%s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,progress.max_focus(),combat.potions,elapsed_text(),cooldown_text,current_goal()]
+	if hud_panel != null: hud_panel.queue_redraw()
+	hud.text = "%s  /  %s\n%s" % [chapter_name(progress.node_id),progress.node().name,current_goal()]
 	var nearest := nearest_object()
 	var boss := boss_target()
 	if not boss.is_empty():
@@ -1139,33 +1209,34 @@ func boss_label(enemy: Dictionary) -> String:
 
 func current_goal() -> String:
 	match progress.node_id:
-		"N0-01": return "沿灯线前往右侧储藏间。" if progress.has("S01") else "先查看床铺旁的伤员。"
-		"N0-03": return "按 Q 观察水管，靠近刻痕按 E 调查，再与绒交谈。" if not progress.has("S03") else "绒留在灯旁。沿右门进入旧矿通道。"
+		"N0-01":
+			if not progress.has("S01"): return "先看床铺旁的伤员。灯还有余温，备用芯在储藏间。"
+			return "沿地上的灯线，前往右侧储藏间取备用芯。"
 		"N0-02":
-			if not progress.has("core"): return "靠近左上备用灯芯箱，按 E 取出灯芯。"
-			if not progress.has("S02"): return "靠近出口灯座，按 E 装入灯芯。"
-			if not progress.has("tutorial"): return "右键净光，净化右上教学靶；它不会攻击。"
-			if not progress.has("E01"): return "击退靠近灯座的菌人；R治疗，移动可取消。"
-			if not progress.has("M1"): return "靠近下方初燃灯环，按 E 选择强化。"
-			return "已取得初燃与守灯结，右侧门通往绒的隔间。"
+			if not progress.has("core"): return "打开左上备用灯芯箱，按 E 取出灯芯。"
+			if not progress.has("S02"): return "把备用芯装进出口灯座；灯座是凉的，水管也很久没进水。"
+			if not progress.has("tutorial"): return "右键净光，净化右上教学孢囊；它不会攻击。"
+			if not progress.has("E01"): return "击退靠近灯座的菌人；R 喝药，移动会取消治疗。"
+			if not progress.has("M1"): return "靠近下方初燃灯环，按 E 选择第一项强化。"
+			return "带着初燃与守灯结，前往绒的水管隔间。"
 		"N0-03":
-			if not progress.has("pipe"): return progress.node().goal
-			if not progress.has("S03"): return "已记录水位刻痕，靠近绒按 E 交谈。"
-			return "绒留在灯旁。沿右门独自进入旧矿通道。"
+			if not progress.has("pipe"): return "按 Q 看水位刻痕，按 E 调查旧水管。"
+			if not progress.has("S03"): return "问绒：水为什么在菌群之前就退了。"
+			return "绒留下守灯。沿右门进入旧矿通道。"
 		"N0-04":
 			if progress.has("E02") and not progress.has("E03"): return "旧矿门前的双灯试炼：清理最后的菌人与孢囊。"
-			if not progress.has("E03"): return progress.node().goal
+			if not progress.has("E03"): return "沿两道灯线前行，清除旧矿门前的威胁。"
 			return "旧矿门已开，向东进入菌洞入口。"
 		"N1-01":
-			if not progress.has("E04"): return progress.node().goal
-			return "菌洞入口已清空，沿右门进入导光间。"
+			if not progress.has("E04"): return "借岩柱遮挡，清理投孢的紫菌人与通道。"
+			return "菌洞入口已清空。沿右门进入导光间。"
 		"N1-02":
 			if not progress.has("E05"): return "清理盘踞在导光间的菌人。"
 			if not progress.has("E06"): return "击破两枚膨胀的孢囊，别等它们炸开。"
-			if not progress.has("P02"): return "转动三座导光装置（E 转向），已对准 %d / 3。" % guides_correct()
+			if not progress.has("P02"): return "转动三座导光装置（E 转向），已对准 %d / 3；断线不是菌群咬的。" % guides_correct()
 			return "灯路已连通。进入菌根前厅。"
 		"N1-03":
-			if not progress.has("E07"): return "清理前厅的菌人与冲锋菌人。"
+			if not progress.has("E07"): return "前厅的守卫在护着更深处的门；先清冲锋菌人。"
 			if not progress.has("E08"): return "守门者已现身；击破它的护壳后再开门。"
 			return "前厅已清空。进入菌根裂口。"
 		"N1-04":
@@ -1176,10 +1247,93 @@ func current_goal() -> String:
 			if not progress.has("E11"): return "清理祭坛的守坛者，别让灯根再次熄灭。"
 			if not progress.has("M2"): return "灯根已清。在祭坛旁选择一次强化。"
 			return "灯根已清。前往根桥。"
+		"N1-06":
+			if not progress.has("S04"): return "根桥上有斧痕。先按 E 记下断根切口，再接通根桥。"
+			if not progress.has("P03"): return "按灯线顺序转动两个桥压阀；根桥原本不需要人去拧。"
+			return "根桥已接通。下到根桥下层，前往分流室。"
+		"N1-07":
+			if not progress.has("E31"): return "穿过旧支撑，清掉盘踞的菌群；分流室的门才会露出来。"
+			return "旧支撑已清。沿北侧分流门进入分流室。"
+		"N1-08":
+			if not progress.has("E35"): return "绕过空井架，清掉最后的裂口菌群。"
+			return "菌灯井已安静。沿北侧灯道进入灯根祭坛。"
+		"N2-01":
+			if not progress.has("S05"): return "读分流图；两条支路都通向泵站。"
+			return "先走排水入口或被困门外，另一条不会消失；两条都完成后才能合流。"
+		"N2-02":
+			if not progress.has("P04"): return "关闭两道排水阀，排干前段积水。"
+			return "排水完成。前往排水出口检查旧灯。"
+		"N2-03":
+			if not progress.has("E15"): return "确认排水完成，清理旧灯旁的菌群。"
+			if not progress.has("Q1b"): return "检查旧灯；修好三处旧灯可换澄明镜。"
+			return "排水出口已检查。回分流室走另一条支路。"
+		"N2-04":
+			if not progress.has("P05"): return "从安全侧切断污染根，再拉开门闩。"
+			return "门已打开。进入安全旁室找砾。"
+		"N2-05":
+			if not progress.has("E17"): return "旁室里还有菌群；先清场，再读砾的留条。"
+			return "砾已自行挪到旁室里侧。读完留条，回分流室合流。"
+		"N2-06":
+			if not progress.has("S06"): return "两条水路在这里合流。按 E 记下合流标记。"
+			return "泵站控制室就在前面；先清场，别让守卫毁了记录。"
+		"N2-07":
+			if not progress.has("E19"): return "击破泵站守卫；它的甲片是从旧闸门上拆下来的。"
+			return "守卫倒下。沿回廊前往控制室。"
+		"N2-08":
+			if not progress.has("S07"): return "读抽水记录：压力超过旧约红线，末尾有禾的签名。"
+			if not progress.has("P06"): return "启动储水前，先按压力顺序校准两个稳压阀。"
+			if not progress.has("M3") or not progress.has("E20"): return "校准灯雨并清场，然后选择第三项强化。"
+			return "控制室已稳定。沿试验段外廊进入王庭。"
+		"N2-09":
+			if not progress.has("E32"): return "沿回廊检查泵站管线，清掉守卫。"
+			return "回廊已通。下行进入控制室。"
+		"N2-10":
+			if not progress.has("E34"): return "沿试验段外廊清掉最后的泵站菌群。"
+			return "外廊已清。沿北侧根门进入王庭外环。"
+		"N3-01":
+			if not progress.has("S08"): return "王庭外环有旧约残片与菌王留声；先听，再走。"
+			return "旧约只留下半句。沿东门去供给回廊，找完整拓文。"
+		"N3-02":
+			if not progress.has("P07"): return "按顺序打开三段供给阀，回廊才会通。"
+			return "供给回廊已开。前往旧约墙。"
+		"N3-03":
+			if not progress.has("E23"): return "旧约墙旁的菌群还没清。"
+			return "读旧约墙全文；沿墙后通道进入王庭侧廊。"
+		"N3-04":
+			if not progress.has("E24") or not progress.has("E25"): return "前厅有两段守卫；清场后才能进入安全王庭。"
+			return "前厅已清。进入王庭安全区。"
+		"N3-05":
+			if not progress.has("P08"): return "先听菌王留声，再用两个旧约阀完成校准。"
+			if not progress.has("M4"): return "旧约校准完成。选择最后一项强化。"
+			return "王庭已稳定。前往回流桥。"
+		"N3-06":
+			if not progress.has("E26"): return "用最后的强化清开回流桥。"
+			return "回流桥已通。沿北门前往调压前厅。"
+		"N3-07":
+			if not progress.has("E33"): return "从侧廊绕行，清掉根刺旁的守卫。"
+			return "侧廊已通。沿北侧门进入王庭前厅。"
+		"N3-08":
+			if not progress.has("E36"): return "穿过王庭最后的根门，清掉调压前厅的守卫。"
+			return "调压前厅已通。进入调压入口。"
+		"N4-01":
+			if not progress.has("E27"): return "读取主流向，清掉第一段调压守卫。"
+			return "打开第一道调压阀，进入中段。"
+		"N4-02":
+			if not progress.has("E28"): return "清掉中段的菌群，稳定支路压力。"
+			return "中段已稳。前往稳压台。"
+		"N4-03":
+			if not progress.has("P09"): return "按顺序稳定三道压力；最后一道打开核心外廊。"
+			return "稳压完成。穿过核心外廊，前往最后灯座。"
+		"N4-04":
+			if not progress.has("E29"): return "穿过最后两段战前压力。"
+			return "核心外廊已清。进入最后灯座。"
+		"N4-05":
+			if not progress.has("S09"): return "最后灯座。检查装备、存档，再进核心室。"
+			return "三证据都在身上。进入核心室，面对母体。"
 		"N4-06":
 			if not progress.has("E30"): return "压制母体。"
-			if progress.ending_id().is_empty(): return "母体已被压制。靠近灯根核心做出选择。"
-			return "灯根的选择已经写下。前往尾声。"
+			if progress.ending_id().is_empty(): return "母体已被压制。先听它最后一句，再靠近灯根核心做选择。"
+			return "选择已经写下。沿东门前往尾声。"
 		"N4-07":
 			return "回看这段路，或返回标题。"
 	return progress.node().goal
