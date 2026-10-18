@@ -32,7 +32,15 @@
 - 验证：跨进程重启读档 write 2/0 + load 8/0（修复前 load 8/5，失败日志保留 `qa/evidence/G6/G6-002-prefix-restart-load.log`）；`test_g6_release` 38/0（新增旧档/新实例回读）、`g4_campaign` 88/0、`save` 65/0、`g4` 48/0、`g4_death` 5/0。通过证据 `qa/evidence/G6/G6-002-*`。
 - 限制：只修读档，不改变 gates/包/版本；G6/G7 仍 in_progress，route_test 仍失败，全量路线与发布验收未完成。下一项 P0-2（当前源码重跑路线）与 P0-3（包/门槛/版本统一）。
 
-## 下一项：P0-2/P0-3（其后才是用户验收）
+## P0-2 当前源码路线复现（进行中）
+
+- 当前 HEAD 复跑与历史失败一致：100.4 秒卡在 N1-03，机器人在距 EL1 约 27px 处停住，未进入 22px 近战；README 写的 N3-07/N2-07 与证据不符。
+- 已修 route_test 适配：近距直走补足到 22px、EL2 冲锋/水道回避、N3-04 空导航空洞的环形接近、精英/Boss 恢复窗口治疗、按住移动取消治疗。游戏侧另修：击退把玩家/敌人推出竞技场（新增 `PLAYABLE_AREA` 夹取）；指针在场地外时自施护灯被 `valid` 过滤器丢弃（护灯改为与闪避/治疗一样放行）。
+- 当前进展：route 已到 N4-06 Boss，但阶段一死亡（Boss 1554.25/2200）；默认路线未通过，8 条路线矩阵未跑。证据 `qa/evidence/G6/G6-002-route-current.json/.log` 与 `G6-002-route-progress.md`。
+- 受影响套件：test_combat 549/0、enemies 73/0、g4_campaign 88/0、g6_release 38/0、g4 48/0、g4_boss 67/0、g4_death 5/0、save 65/0。route 仍失败，不得标通过。
+- 下一步：Boss 机器人策略/平衡；之后才跑 8 路线矩阵、G7 包与门槛（P0-3）。G6/G7 仍 in_progress。
+
+## 下一项：P0-2 剩余（N4-06 Boss）/P0-3（其后才是用户验收）
 
 P0-1 已完成读档修复；在 P0-2 用当前源码重跑路线、P0-3 统一包/门槛/版本之前，不启动 G6/G7 用户验收。以下清单保留作为最终验收条目：
 

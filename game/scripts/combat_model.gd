@@ -17,6 +17,10 @@ var focus_awarded := false
 var protection := 0
 var cooldowns: Dictionary = {"dodge":0, "light":0, "shield":0, "rain":0}
 const DEFAULT_WALLS: Array[Rect2] = [Rect2(0,0,320,27),Rect2(0,159,320,21),Rect2(0,0,8,180),Rect2(312,0,8,180),Rect2(150,32,12,40),Rect2(150,110,12,38)]
+## Knockback must not leave the arena: the 5–8px strips above the top wall and
+## below the bottom wall are outside the navigation grid, so an enemy or player
+## pushed there cannot be reached/path back reliably.
+const PLAYABLE_AREA := Rect2(12,32,296,122)
 var walls: Array[Rect2] = DEFAULT_WALLS.duplicate()
 var blockers: Array[Rect2] = []
 var npcs: Array[Dictionary] = []
@@ -389,6 +393,11 @@ func ordered_enemies() -> Array[Dictionary]:
 	ordered.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return a.id < b.id)
 	return ordered
 
+func clamp_to_playable(point: Vector2, radius: float) -> Vector2:
+	return Vector2(
+		clampf(point.x,PLAYABLE_AREA.position.x+radius,PLAYABLE_AREA.end.x-radius),
+		clampf(point.y,PLAYABLE_AREA.position.y+radius,PLAYABLE_AREA.end.y-radius))
+
 func resolve_damage_batch() -> void:
 	resolving_batch = true
 	knockbacks.clear()
@@ -456,13 +465,13 @@ func resolve_damage_batch() -> void:
 	for id in pushed_ids:
 		if id == 0 and hp > 0:
 			var before := player
-			player = move_body(player,knockbacks[id],true,0)
+			player = clamp_to_playable(move_body(player,knockbacks[id],true,0),float(config.player.body_radius))
 			emit("knockback", {"target":0,"distance":before.distance_to(player)})
 		elif id != 0:
 			var enemy := enemy_by_id(id)
 			if enemy.hp > 0:
 				var before: Vector2 = enemy.pos
-				enemy.pos = move_body(enemy.pos,knockbacks[id],true,id)
+				enemy.pos = clamp_to_playable(move_body(enemy.pos,knockbacks[id],true,id),float(config.enemy_t1.body_radius))
 				emit("knockback", {"target":id,"distance":before.distance_to(enemy.pos)})
 	knockbacks.clear()
 	damage_requests.clear()

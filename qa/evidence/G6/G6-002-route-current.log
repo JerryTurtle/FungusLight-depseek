@@ -1,0 +1,15 @@
+===== current-source route run (G6-002, after P0-2 adaptations) =====
+Command: godot --headless --path game --script res://scripts/tmp_route_current.gd
+(the temporary wrapper only redirected the report to G6-002; route_test logic is the repo script)
+
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+G2_READY | G2-007 | 60Hz | prototype
+ROUTE_TEST checks=1 failures=1 seconds=583.6 steps=122 deaths=1
+stderr:
+FAIL route finished: player died at step N4-06 pending=E30 hp=0 enemies=[["BOSS", (175, 105), 1554.25]]
+
+Result: FAIL. The route now reaches the final boss but dies in phase 1
+(Boss 1554.25 / 2200). Not a pass; the 8-route matrix was not run because the
+default route still fails.

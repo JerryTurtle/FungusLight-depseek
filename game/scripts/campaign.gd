@@ -1037,7 +1037,7 @@ func _physics_process(delta: float) -> void:
 		var movement := Vector2(float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),float(Input.is_physical_key_pressed(KEY_S))-float(Input.is_physical_key_pressed(KEY_W)))
 		var pointer := world.to_local(queued_pointer if queued_pointer.is_finite() else get_global_mouse_position())
 		var inside := Rect2(0,25,320,135).has_point(pointer)
-		var valid: Array = commands.filter(func(c): return inside or c in ["dodge","heal"])
+		var valid: Array = commands.filter(func(c): return inside or c in ["dodge","heal","shield"])
 		if wake_left > 0:
 			wake_left -= 1
 			movement = Vector2.ZERO

@@ -4,6 +4,7 @@ extends SceneTree
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
+const NAV_ARENA := Rect2(14,34,292,118)
 var BUILD_ID := str(ProjectSettings.get_setting("application/config/version","G6-001"))
 var scene
 var checks := 0
@@ -323,7 +324,11 @@ func at(position: Vector2, distance: float = 18.0) -> bool:
 func nav_clear(start: Vector2, finish: Vector2) -> bool:
 	var count := maxi(1,ceili(start.distance_to(finish)))
 	for i in range(count+1):
-		if scene.combat.blocked(start.lerp(finish,float(i)/count),6.0): return false
+		var point := start.lerp(finish,float(i)/count)
+		# Keep the 6px navigation grid inside the playable arena; the 5px strip
+		# above the top wall can anchor a cell that the body cannot follow.
+		if not NAV_ARENA.has_point(point): return false
+		if scene.combat.blocked(point,6.0): return false
 	return true
 
 func walk_to(position: Vector2) -> void:
@@ -341,6 +346,21 @@ func walk_to(position: Vector2) -> void:
 	if direction.is_zero_approx():
 		release_all()
 		return
+	if nav_path.is_empty() and position.distance_to(combat.player) > 20 and not combat.clear_body_path(combat.player,combat.player+direction*10):
+		# Interaction targets near a wall/bottom edge can be outside the 6px nav
+		# grid. Route to a reachable approach point inside the target's interaction
+		# radius instead of pressing into the wall.
+		for back in [8.0, 16.0, 24.0]:
+			var candidate: Vector2 = position - (position - combat.player).normalized()*back
+			var alt: Array = combat.navigator.route(combat.player,candidate,nav_clear)
+			if not alt.is_empty():
+				nav_path = alt
+				break
+		if not nav_path.is_empty():
+			while nav_path.size() >= 2 and combat.player.distance_to(nav_path[0]) < 1.2:
+				nav_path.pop_front()
+			target = nav_path[0]
+			direction = (target - combat.player).normalized()
 	if nav_path.is_empty() and not combat.clear_body_path(combat.player,combat.player+direction*10):
 		direction = avoid_direction(direction)
 	set_direction(direction)
@@ -488,6 +508,13 @@ func do_guides() -> void:
 
 func combat(enemies: Array) -> void:
 	var combat_model = scene.combat
+	if not NAV_ARENA.has_point(combat_model.player):
+		# A sweep can knock the player into the 5px strip above the top wall,
+		# where the 6px navigation grid cannot anchor. Walk back into the arena
+		# before resuming target logic.
+		walk_reason = "combat-bounds-escape"
+		walk_direct((Vector2(160,90)-combat_model.player).normalized())
+		return
 	var target: Dictionary = enemies[0]
 	for enemy in enemies:
 		if combat_model.player.distance_to(enemy.pos) < combat_model.player.distance_to(target.pos): target = enemy
@@ -497,14 +524,74 @@ func combat(enemies: Array) -> void:
 	if combat_model.action == "heal":
 		release_all()
 		return
+	if archetype == "EL2":
+		# EL2 alternates a locked charge with a fixed water lane. The original
+		# route bot predates these mechanics, so model the readable answer:
+		# sidestep the charge and stand in the safe band between the two lanes.
+		var elite_attack := str(target.get("elite_attack",""))
+		if target.state == "attack":
+			if elite_attack == "water":
+				if absf(combat_model.player.y-90.0) > 8.0:
+					walk_reason = "el2-water-safe"
+					walk_to(Vector2(combat_model.player.x,90.0))
+					return
+			elif elite_attack == "charge" and int(target.age) >= 24 and int(target.age) < 78 and distance < 120:
+				var elite_side: Vector2 = offset.normalized().rotated(PI/2*dodge_sign)
+				if not combat_model.clear_body_path(combat_model.player,combat_model.player+elite_side*34):
+					dodge_sign = -dodge_sign
+					elite_side = -elite_side
+				walk_direct(elite_side)
+				if int(combat_model.cooldowns.get("dodge",0)) <= 0 and distance < 100 and combat_model.action == "idle":
+					press_key(KEY_SPACE)
+					dodges += 1
+				return
+	if archetype == "BOSS":
+		# The mother only takes damage during core-open windows; stay out of the
+		# telegraphed spore circles and the two water bands while it is closed.
+		for hazard in combat_model.field_hazards:
+			if str(hazard.get("kind","")) != "spore": continue
+			var hazard_pos: Vector2 = hazard.get("pos",combat_model.player)
+			var hazard_radius := float(hazard.get("radius",24.0))+8.0
+			if combat_model.player.distance_to(hazard_pos) < hazard_radius:
+				walk_reason = "boss-spore-escape"
+				walk_direct((combat_model.player-hazard_pos).normalized())
+				return
+		if str(target.get("boss_attack","")) == "water" and target.state == "attack" and absf(combat_model.player.y-90.0) > 6.0:
+			walk_reason = "boss-water-safe"
+			walk_to(Vector2(combat_model.player.x,90.0))
+			return
+	if bool(scene.progress.skills().get("shield",false)) and combat_model.hp < 62 and combat_model.focus >= 25 and int(combat_model.cooldowns.get("shield",0)) <= 0 and combat_model.action == "idle" and distance > 34 and distance < 120:
+		press_key(KEY_1)
+		return
+	if int(target.get("armor_layers",0)) > 0 and (archetype != "BOSS" or bool(target.get("core_open",false))) and distance <= 96 and combat_model.focus >= 20 and int(combat_model.cooldowns.get("light",0)) <= 0 and combat_model.action == "idle" and combat_model.clear_line(combat_model.player,target.pos):
+		# Net light strips one shell before damage; use it instead of grinding
+		# through a two-layer elite shell with melee.
+		aim_press(MOUSE_BUTTON_RIGHT,target.pos)
+		return
+	if combat_model.hp < 55 and combat_model.potions > 0 and combat_model.action == "idle" and archetype in ["EL1","BOSS"]:
+		var safe_heal := false
+		if archetype == "EL1":
+			safe_heal = target.state == "attack" and int(target.age) >= 59
+		else:
+			safe_heal = bool(target.get("core_open",false))
+		if safe_heal:
+			release_all()
+			press_key(KEY_R)
+			return
 	if combat_model.hp < 62 and combat_model.potions > 0 and combat_model.action == "idle" and distance > 66:
+		release_all()
 		press_key(KEY_R)
 		return
-	if combat_model.hp < 48 and combat_model.potions > 0 and combat_model.action == "idle" and archetype not in ["T1","EL1"]:
+	if combat_model.hp < 48 and combat_model.potions > 0 and combat_model.action == "idle" and archetype not in ["T1"]:
 		if distance < 62:
+			if archetype == "BOSS" and (target.state == "idle" or target.state == "transition"):
+				release_all()
+				press_key(KEY_R)
+				return
 			walk_reason = "combat-retreat"
 			walk_to(combat_model.player - offset.normalized()*42)
 			return
+		release_all()
 		press_key(KEY_R)
 		return
 	if archetype == "BOSS" and target.state == "attack" and int(target.age) >= 26 and int(target.age) < 50 and distance < 60 and combat_model.action == "idle" and int(combat_model.cooldowns.get("dodge",0)) <= 0:
@@ -524,6 +611,18 @@ func combat(enemies: Array) -> void:
 		walk_direct(elite_side)
 		press_key(KEY_SPACE)
 		dodges += 1
+		return
+	if archetype == "BOSS" and not bool(target.get("core_open",false)):
+		# Keep a readable middle distance and save attacks for the exposed core.
+		if distance < 38:
+			walk_reason = "boss-backoff"
+			walk_direct(-offset.normalized())
+			return
+		if distance > 74:
+			walk_reason = "boss-approach"
+			walk_to(target.pos - offset.normalized()*56.0)
+			return
+		release_all()
 		return
 	if archetype in ["T1"] and target.state == "attack" and int(target.age) < 24 and distance < 40 and combat_model.action == "idle" and int(combat_model.cooldowns.get("dodge",0)) <= 0:
 		var side: Vector2 = offset.normalized().rotated(PI/2*dodge_sign)
@@ -566,12 +665,34 @@ func combat(enemies: Array) -> void:
 		walk_reason = "t5-backoff"
 		walk_to(combat_model.player - offset.normalized()*16)
 		return
+	if distance > 22 and distance <= 34 and combat_model.clear_line(combat_model.player,target.pos):
+		# Path goals at the enemy centre stop about one body radius short, which
+		# can leave the bot at 22.1–27px and never inside the 22px melee range.
+		# Close the last few pixels directly before resuming the normal pattern.
+		walk_reason = "combat-close"
+		walk_direct(offset.normalized())
+		return
 	if distance > 22:
 		if archetype == "BOSS" and distance < 100 and combat_model.focus >= 20 and combat_model.action == "idle" and combat_model.clear_line(combat_model.player,target.pos):
 			aim_press(MOUSE_BUTTON_RIGHT,target.pos)
 			return
 		walk_reason = "combat-approach"
-		walk_to(target.pos)
+		var goal: Vector2 = target.pos
+		if combat_model.navigator.route(combat_model.player,goal,nav_clear).is_empty():
+			# A knockback can leave a target in a narrow strip the 6px navigation
+			# grid cannot anchor. Search a ring of reachable points around it so
+			# the bot can stand inside the 22px melee range.
+			var found := false
+			for ring in [12.0, 16.0, 20.0, 24.0]:
+				if found: break
+				for step in 8:
+					var candidate: Vector2 = target.pos + Vector2.from_angle(TAU*float(step)/8.0)*ring
+					if not NAV_ARENA.has_point(candidate): continue
+					if not combat_model.navigator.route(combat_model.player,candidate,nav_clear).is_empty():
+						goal = candidate
+						found = true
+						break
+		walk_to(goal)
 		if archetype == "T2" and combat_model.focus >= 20 and combat_model.action == "idle" and step_ticks % 24 == 1:
 			aim_press(MOUSE_BUTTON_RIGHT,target.pos)
 		return
