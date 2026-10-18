@@ -516,7 +516,7 @@ func _test_aliases_and_prologue() -> void:
 	check(art.resolve_kind("rest") == "bed", "rest -> bed")
 	check(art.resolve_kind("socket") == "lamp", "socket -> lamp")
 	check(art.resolve_kind("reward") == "ring", "reward -> ring")
-	check(art.resolve_kind("exit") == "door", "exit -> door")
+	check(art.resolve_kind("exit") == "portal", "exit -> portal")
 	check(art.resolve_kind("end") == "portal", "end -> portal")
 	check(art.resolve_kind("crate") == "crates", "crate -> crates")
 	check(art.resolve_kind("mushroom") == "mushroom_red", "mushroom -> mushroom_red")

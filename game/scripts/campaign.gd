@@ -229,7 +229,7 @@ func setup_collision() -> void:
 		var visual := str(object.get("visual",object.kind))
 		if visual == "rest": visual = "bed" if str(object.get("visual","")) == "bed" else "lamp"
 		if str(object.kind) == "end": visual = "portal"
-		if str(object.kind) == "exit": visual = "door"
+		if str(object.kind) == "exit": visual = "portal"
 		var rect: Rect2 = solid_rect(visual,pos)
 		if rect.size.x > 0: combat.blockers.append(rect)
 		if str(object.kind) == "rong" or bool(object.get("npc",false)):

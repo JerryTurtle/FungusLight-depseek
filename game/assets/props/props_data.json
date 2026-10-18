@@ -69,7 +69,7 @@
   "rest": "bed",
   "socket": "lamp",
   "reward": "ring",
-  "exit": "door",
+  "exit": "portal",
   "end": "portal",
   "storage": "door",
   "storage_door": "door",
@@ -5528,5 +5528,5 @@
    ]
   }
  },
- "build": "2e4fa24d8f4259a5"
+ "build": "761eb99a5489ba61"
 }

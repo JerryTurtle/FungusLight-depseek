@@ -1,10 +1,10 @@
 extends SceneTree
-## G3-009 normal-input slice route. Every action is fed through Godot input events
+## G3-010 normal-input slice route. Every action is fed through Godot input events
 ## (keyboard/mouse), then the campaign is advanced at its real fixed 60Hz step.
 ## No teleports and no direct flag/reward writes. Dialogue dwell is modelled
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
-const BUILD_ID := "G3-009"
+const BUILD_ID := "G3-010"
 var scene
 var checks := 0
 var failures := 0

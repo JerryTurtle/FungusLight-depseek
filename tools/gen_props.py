@@ -1866,7 +1866,7 @@ def payload() -> dict:
             "colors": {ch: "#" + PALETTE[ch][0] for ch in sorted(palette_used)},
         },
         "aliases": {
-            "rest": "bed", "socket": "lamp", "reward": "ring", "exit": "door",
+            "rest": "bed", "socket": "lamp", "reward": "ring", "exit": "portal",
             "end": "portal", "storage": "door", "storage_door": "door",
             "crate": "crates", "crates_small": "crate_single", "barrel_old": "barrel",
             "lore": "papers", "note": "papers",

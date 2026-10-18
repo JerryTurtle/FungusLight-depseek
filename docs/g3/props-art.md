@@ -78,7 +78,7 @@ var screen_point: Vector2 = world_point * 4.0
 | --- | --- | --- | --- | --- | --- | --- |
 | `lamp` | 16×30 | (-8,-26) | (0,-31) | lit 6 / unlit 4 | 12 | `lit`：熄灭=冷玻璃+灰烬反光；点亮=火焰+暖玻璃+金属反光 |
 | `chest` | 20×16 | (-10,-14) | (0,-19) | closed 6 / open 3 / dim 3 | 14 | 交互宝箱（灯芯箱）：`open` 开盖暖光、`available:false` 冷暗不发光；缝隙呼吸光 |
-| `door` | 20×32 | (-10,-29) | (0,-34) | sealed 4 / lit 5 / open 4 | 16 | 出口门：`available:true` 带灯门（灯摆动+地面光斑）、`available:false` 封板冷门、`open:true` 门洞漏光 |
+| `door` | 20×32 | (-10,-29) | (0,-34) | sealed 4 / lit 5 / open 4 | 16 | 旧灯门；G3-010 起出口改用 portal，仅保留素材 |
 | `pipe` | 34×18 | (-17,-11) | (0,-16) | idle 6 / scanned 5 | 15 | 旧水管：水滴/溅落循环（56 tick）、水位刻痕；`scanned:true` 刻痕被金/青高亮 |
 | `ring` | 18×18 | (-9,-13) | (0,-18) | idle 6 / complete 5 | 12 | 初燃灯环：石环+火焰脉动；`complete:true` 更大火焰+浮游余烬 |
 | `guide` | 16×26 | (-8,-23) | (0,-28) | 8 状态 × 5 | 14 | 导光装置：`dir` 0上/1右/2下/3左（与 `campaign.gd` 的 `DIR_VECTORS=[UP,RIGHT,DOWN,LEFT]` 完全一致），`correct:true` 暖金束、false 冷灰束；装置本体始终绘制 |
@@ -89,7 +89,7 @@ var screen_point: Vector2 = world_point * 4.0
 | `rubble` | 16×10 | (-8,-7) | (0,-12) | 4 | 10 | 碎石堆，菌光呼吸+尘埃 |
 | `barrel` | 14×18 | (-7,-16) | (0,-21) | 4 | 10 | 木桶（图集无干净木桶，见 §5.3），桶箍反光/尘埃 |
 
-别名（`props_data.json.aliases`，可直接把 `prologue.json` 的 `kind` 传进来）：`rest→bed`、`socket→lamp`、`reward→ring`、`exit→door`、`end→portal`、`crate→crates`、`crate_single`/`crates_small`、`mushroom→mushroom_red`、`lore`/`note→papers`、`storage`/`storage_door→door`、`panel`/`wall_panel_green→wall_panel`。
+别名（`props_data.json.aliases`，可直接把 `prologue.json` 的 `kind` 传进来）：`rest→bed`、`socket→lamp`、`reward→ring`、`exit→portal`、`end→portal`、`crate→crates`、`crate_single`/`crates_small`、`mushroom→mushroom_red`、`lore`/`note→papers`、`storage`/`storage_door→door`、`panel`/`wall_panel_green→wall_panel`。
 
 `guide` 的光束由 `draw_prop` 自动绘制（长度 26px，`low_effects` 16px；`reduced_motion` 静止；`reduced_flash` 去白芯）：光束原点为 `pos+(0,-17)`，四方向 `GUIDE_DIRS={0:上,1:右,2:下,3:左}`，与 `campaign.gd` 的 `DIR_VECTORS` 一致。若 Lead 保留现有 `draw_guide_beams()`（它按目标点画连线/流光），请传 `state.beam=false` 避免双光束；若改用本模块的 26px 光束则不传。`prologue.json` 里 N1-02 的三个导光装置已经带 `dir/solution/target/color`；Lead 只需按解谜规则算 `correct = (当前 dir == solution)` 传入即可，`color` 字段本模块暂未使用（可选后续做颜色键控）。
 
