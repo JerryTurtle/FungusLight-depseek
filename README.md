@@ -167,7 +167,8 @@ G4-001 搭出五章31节点（N0/N1/N2/N3/N4）、30个主线遭遇（tutorial+E
 - P03～P09 已加顺序/证据门禁；P03 断根记录二选一、P04 流向对照、P05 根/门闩顺序、P06 测量点对照、P07 管线扫描、P08 三证据刻槽、P09 三步稳压均已有独立“对照/顺序”交互；操作仍以选择/开关为主，不是完整动作小游戏。
 - 回声扫描新增可交互/证据物高亮边框（FX04 补强）；`FUNGUS_SAVE_DIR` 与 `--campaign-capture` 已改为仅 debug 构建生效，release 不再接受这两个调试钩子；`deliverables/Release/Game` 的运行产物已清理（zip 仍为旧包）。
 - 设置新增独立“开启震屏”开关，与减少动态分开；G4-009 轻震/阶段反馈可单独关闭。
-- 下一步：12 类特效收尾、重建 G6 候选包与最终验收；route_test 需适配新机关/战斗数值。G6 仍 `in_progress`，不得称整款交付。
+- 已导出本地候选 `deliverables/G7-001/`：exe `66B26A…B7B13`，pck `9DD26FC8…A9DCAE`；PCK 只读检查无 test/capture/review/MCP/autoload/开发路径，含 BOSS.png 与当前数据。**尚未打包 Release/zip、未做 release GUI 干净目录全流程**；route_test 仍失败，不能验收。
+- 下一步：12 类特效收尾、G7 候选包发布验证与最终验收；route_test 需适配新机关/战斗数值。G6 仍 `in_progress`，不得称整款交付。
 
 #### G4-008 六过渡区、试玩修复（G4通过）
 
