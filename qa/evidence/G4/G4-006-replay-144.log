@@ -4,7 +4,6 @@ OpenGL API 3.3.0 Core Profile Context 24.12.1.241127 - Compatibility - Using Dev
 USER_STORAGE C:/Users/shandian/Documents/AI/FungusLight-depseek/qa/runtime-profile/FungusLight/
 G2_READY | G2-007 | 60Hz | prototype
 REPLAY_SAVED 0 frames=360
-can't open file for write !
 ERROR: Couldn't initialize DirectInput. Error: -2147467259
    at: JoypadWindows (platform/windows/joypad_windows.cpp:71)
 ERROR: Failed to read the root certificate store.
