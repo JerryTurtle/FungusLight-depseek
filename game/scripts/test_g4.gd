@@ -33,25 +33,30 @@ func _initialize() -> void:
 	p.node_id = "N1-05"
 	for flag in ["S03","E02","E03","E04","E05","E06","P02","E07","E08","E09","E10","E11"]: p.flags[flag] = true
 	var m2 := p.start_event("M2")
-	check(m2 and p.finish_event("echo"), "M2 choice")
+	check(m2 and p.finish_event("energy"), "M2 choice")
 	check(p.skills().shield, "M2 shield")
-	check(p.max_hp() == 140.0, "M2 HP")
+	check(p.max_hp() == 130.0, "M2 HP")
+	check(p.max_focus() == 110.0, "M2 focus")
+	check(p.hit_focus_gain() == 6, "M2 energy")
 	p.node_id = "N2-08"
 	for flag in ["E12","E13","E14","E15","E16","E17","E18","E19","E20","P03","P04","P05","S04","S05","S06","S07"]: p.flags[flag] = true
 	var m3 := p.start_event("M3")
-	check(m3 and p.finish_event("rain"), "M3 choice")
+	check(m3 and p.finish_event("cost"), "M3 choice")
 	check(p.skills().rain, "M3 rain")
+	check(p.light_cost() == 15, "M3 light cost")
+	check(p.max_hp() == 140.0, "M3 HP")
 	p.node_id = "N3-05"
 	for flag in ["E21","E22","E23","E24","E25","P06","P07","P08"]: p.flags[flag] = true
 	var m4 := p.start_event("M4")
-	check(m4 and p.finish_event("ward"), "M4 choice")
-	check(p.max_hp() == 180.0, "M4 HP")
+	check(m4 and p.finish_event("life"), "M4 choice")
+	check(p.max_hp() == 170.0, "M4 HP")
+	check(p.max_focus() == 120.0, "M4 focus")
 	p.node_id = "N4-06"
 	for flag in ["E26","E27","E28","E29","E30","E31","E32","E33","E34","E35","E36","M4","P08","P09","S08","S09"]: p.flags[flag] = true
 	p.set_ending("restore")
 	check(p.ending_id() == "restore", "restore ending")
 	p.flags.S12 = true
-	var late: Dictionary = p.snapshot(Vector2(80,110),180,100)
+	var late: Dictionary = p.snapshot(Vector2(80,110),170,120)
 	var late_error := p.validate(late)
 	for eid in p.encounter_ids:
 		var req := str(p.content.encounters[eid].get("requires",""))

@@ -2,6 +2,7 @@ extends RefCounted
 ## Campaign saves are separate from presentation settings and H2 review records.
 const SCHEMA := 1
 const SLOTS := ["manual_1", "manual_2", "manual_3", "auto"]
+const ENDING_BACKUP := "ending_pre.json"
 const MAP_FIELDS := ["quests", "story", "puzzles", "encounters", "rewards", "skills", "upgrades", "equipment"]
 const SAFETY_FIELDS := ["no_alert_enemies", "no_hazards", "player_idle", "no_blocking_event", "walkable_position", "no_elite_battle"]
 var directory: String
@@ -55,6 +56,18 @@ func save_slot(slot: String, snapshot: Dictionary, safety: Dictionary, overwrite
 		if DirAccess.rename_absolute(path+".bak.tmp", path+".bak") != OK: return _failure("io", "备份替换失败，原存档保留")
 	if DirAccess.rename_absolute(path+".tmp", path) != OK: return _failure("io", "存档替换失败，原存档保留")
 	return {"ok":true, "message":"保存成功", "slot":slot}
+
+func save_ending_backup(snapshot: Dictionary) -> Dictionary:
+	if not validate_snapshot(snapshot).is_empty(): return _failure("invalid_snapshot", validate_snapshot(snapshot))
+	var path := directory+"/"+ENDING_BACKUP
+	var clean := {}
+	for key in ["schema_version", "build_id", "chapter_id", "node_id", "safe_position", "health", "focus", "potions", "effective_seconds"]+MAP_FIELDS:
+		clean[key] = snapshot[key]
+	if not _write_checked(path, clean): return _failure("io", "结局前存档写入失败")
+	return {"ok":true, "message":"结局前存档已保留", "path":path}
+
+func load_ending_backup() -> Dictionary:
+	return _read(directory+"/"+ENDING_BACKUP)
 
 func load_slot(slot: String, use_backup: bool = false) -> Dictionary:
 	if slot not in SLOTS: return _failure("invalid_slot", "存档槽无效")

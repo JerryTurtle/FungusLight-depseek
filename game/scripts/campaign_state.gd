@@ -166,25 +166,63 @@ func growth_count() -> int:
 	return count
 
 func max_hp() -> float:
-	return 100.0 + 20.0 * growth_count()
+	return max_hp_for(flags, choices)
 
 func max_focus() -> float:
-	return 100.0
+	return max_focus_for(flags, choices)
 
 func skills() -> Dictionary:
-	return {"light":has("S02"), "shield":has("M2") or has("M3"), "rain":has("M3")}
+	# Shield is unlocked in the first chapter before the gatekeeper, as in the
+	# plan's first-chapter rest point (P02 is the last safe stop before E07/E08).
+	return {"light":has("S02"), "shield":has("P02"), "rain":has("M3")}
 
 func melee_damage() -> float:
 	var damage := 18.0
 	if choices.get("M1", "") == "melee": damage += 3.0
-	if choices.get("M4", "") == "step": damage += 1.0
 	return damage
 
 func light_damage() -> float:
 	var damage := 24.0
 	if choices.get("M1", "") == "light": damage += 4.0
-	if choices.get("M3", "") == "rain": damage += 4.0
 	return damage
+
+func rain_damage() -> float:
+	var damage := 45.0
+	if choices.get("M3", "") == "rain": damage *= 1.25
+	return damage
+
+func light_cost() -> int:
+	var cost := 20
+	if choices.get("M3", "") == "cost": cost -= 5
+	return maxi(5,cost)
+
+func hit_focus_gain() -> int:
+	return 6 if choices.get("M2", "") == "energy" else 4
+
+func shield_capacity() -> int:
+	return 35 if choices.get("M2", "") == "shield" else 25
+
+func evidence() -> Dictionary:
+	# The three mainline evidence items are carried by the event flags, so old
+	# saves do not need new fields. A player who skipped the story object cannot
+	# unlock the final choice.
+	return {
+		"root_cut": has("S04"),
+		"pump_record": has("S07"),
+		"covenant": has("S08"),
+	}
+
+func evidence_count() -> int:
+	var count := 0
+	for value in evidence().values():
+		if bool(value): count += 1
+	return count
+
+func ending_requirements() -> Dictionary:
+	return {
+		"restore": has("S04") and has("S07") and has("S08") and has("P09"),
+		"seal": has("P06") and has("P08"),
+	}
 
 func equipment() -> Dictionary:
 	return {
@@ -270,7 +308,7 @@ func validate(value: Dictionary) -> String:
 			for option in event_def(id).get("options", []): ids.append(str(option.id))
 			if not selected in ids: return "强化选择无效。"
 	if value.skills != skills(): return "技能不一致。"
-	if value.health > max_hp_for(f) or value.focus > max_focus(): return "资源超过当前上限。"
+	if value.health > max_hp_for(f, value.upgrades) or value.focus > max_focus_for(f, value.upgrades): return "资源超过当前上限。"
 	# Every visited node must be reachable through unlocked exits from the start.
 	if not node_reachable(str(value.node_id), f): return "节点尚未解锁。"
 	var position := Vector2(value.safe_position[0],value.safe_position[1])
@@ -280,11 +318,22 @@ func validate(value: Dictionary) -> String:
 	if not validate_puzzles(): return "机关数据无效。"
 	return ""
 
-func max_hp_for(f: Dictionary) -> float:
+func max_hp_for(f: Dictionary, upgrades: Dictionary = {}) -> float:
 	var count := 0
 	for id in choice_ids:
 		if f.get(id,false): count += 1
-	return 100.0 + 20.0 * count
+	var hp := 100.0 + 10.0 * count
+	# 守灯结 is always awarded with M1, as the prologue mainline equipment.
+	if count >= 1: hp += 10.0
+	if f.get("M4", false) and str(upgrades.get("M4", "")) == "life": hp += 20.0
+	return hp
+
+func max_focus_for(f: Dictionary, upgrades: Dictionary = {}) -> float:
+	var focus := 100.0
+	if f.get("M2", false): focus += 10.0
+	if f.get("M4", false): focus += 10.0
+	if f.get("M4", false) and str(upgrades.get("M4", "")) == "focus": focus += 20.0
+	return focus
 
 func requirement_met(req: String, f: Dictionary) -> bool:
 	if req.is_empty(): return true

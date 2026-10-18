@@ -290,7 +290,7 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	var spawn: Array = progress.node().spawn
 	combat.player = Vector2(spawn[0],spawn[1]) if not position.is_finite() else position
 	combat.hp = clampf(prior_hp if health < 0 else health,1,progress.max_hp())
-	combat.focus = clampf(prior_focus if focus_value < 0 else focus_value,0,100)
+	combat.focus = clampf(prior_focus if focus_value < 0 else focus_value,0,progress.max_focus())
 	sewer = progress.node().get("style","cave") == "mine"
 	apply_growth()
 	feedback.reset()
@@ -369,10 +369,16 @@ func guides_correct() -> int:
 
 func apply_growth() -> void:
 	combat.config.player.hp = progress.max_hp()
+	combat.config.player.focus = progress.max_focus()
+	combat.config.player.hit_focus = progress.hit_focus_gain()
 	combat.config.actions.melee.damage = progress.melee_damage()
 	combat.config.actions.light.damage = progress.light_damage()
+	combat.config.actions.light.cost = progress.light_cost()
+	combat.config.actions.rain.damage = progress.rain_damage()
+	combat.config.actions.shield.capacity = progress.shield_capacity()
 	combat.hp = minf(combat.hp,progress.max_hp())
 	combat.focus = minf(combat.focus,progress.max_focus())
+	combat.shield_hp = minf(combat.shield_hp,float(progress.shield_capacity()))
 
 func start_encounters() -> void:
 	if not pending_encounter.is_empty(): return
@@ -411,10 +417,13 @@ func spawn_encounter(id: String, spec: Dictionary) -> void:
 
 func safety() -> Dictionary:
 	var alerted := false
+	var elite := false
 	for enemy in combat.enemies:
-		if enemy.hp > 0 and not enemy.dummy: alerted = true
-	return {"no_alert_enemies":not alerted,"no_hazards":combat.projectiles.is_empty() and combat.zones.is_empty() and combat.rains.is_empty() and combat.poison_until <= combat.tick,"player_idle":combat.action == "idle" and combat.hp > 0,
-		"no_blocking_event":progress.active_event.is_empty(),"walkable_position":not combat.blocked(combat.player),"no_elite_battle":true}
+		if enemy.hp > 0 and not enemy.dummy:
+			alerted = true
+			if str(enemy.get("archetype","T1")) in ["EL1","EL2","BOSS"]: elite = true
+	return {"no_alert_enemies":not alerted,"no_hazards":combat.projectiles.is_empty() and combat.zones.is_empty() and combat.rains.is_empty() and combat.field_hazards.is_empty() and combat.poison_until <= combat.tick,"player_idle":combat.action == "idle" and combat.hp > 0,
+		"no_blocking_event":progress.active_event.is_empty(),"walkable_position":not combat.blocked(combat.player),"no_elite_battle":not elite}
 
 func save_game(slot: String, confirmed: bool = false) -> void:
 	var snapshot: Dictionary = progress.snapshot(combat.player,combat.hp,combat.focus)
@@ -507,6 +516,7 @@ func show_pause() -> void:
 		button("保存到 手动 "+slot.right(1),func():
 			save_game(slot)
 			if menu.get_child(0).text != "覆盖存档？": show_pause())
+	button("任务与证据",show_journal)
 	button("读取存档",show_load_menu)
 	button("设置",func(): open_settings("pause"))
 	button("返回标题",func():
@@ -514,6 +524,24 @@ func show_pause() -> void:
 		paragraph("未保存进度将回退到最近存档。")
 		button("确认返回标题",show_title)
 		button("取消",show_pause))
+
+func show_journal() -> void:
+	clear_menu("任务与证据")
+	paragraph("当前目标：\n"+current_goal(),80)
+	var ev: Dictionary = progress.evidence()
+	var evidence_lines := PackedStringArray()
+	evidence_lines.append("证据 %d / 3" % progress.evidence_count())
+	if bool(ev.root_cut): evidence_lines.append("· 断根切口：第一章根桥（S04）")
+	if bool(ev.pump_record): evidence_lines.append("· 抽水记录：第二章控制室（S07）")
+	if bool(ev.covenant): evidence_lines.append("· 旧约拓文：第三章王庭外环（S08）")
+	if evidence_lines.size() == 1: evidence_lines.append("尚未取得主证据。")
+	paragraph("\n".join(evidence_lines),100)
+	var branch := PackedStringArray()
+	branch.append("第二章支路：排水 %s / 救援 %s / 合流 %s" % ["已完成" if progress.has("P04") else "未完成","已完成" if progress.has("P05") else "未完成","已开启" if progress.has("P06") else "未开启"])
+	branch.append("终章前置：泵站校准 %s / 撤离通路 %s" % ["已完成" if progress.has("P09") else "未完成","已完成" if progress.has("P08") else "未完成"])
+	branch.append("支线：旧灯修复 %s / 补给调查 %s" % ["已完成" if progress.has("Q1") else "进行中/未完成","已完成" if progress.has("Q2") else "进行中/未完成"])
+	paragraph("\n".join(branch),90)
+	button("返回",show_pause)
 
 func begin_dialogue(id: String) -> void:
 	if not progress.start_event(id): return
@@ -590,8 +618,7 @@ func choose_growth(option: String) -> void:
 	choice_mode = "growth"
 	dialogue.close()
 	apply_growth()
-	combat.hp = progress.max_hp()
-	combat.focus = progress.max_focus()
+	# Fixed growth only raises the capacity; it must not act as a free full heal.
 	dirty = true
 	resume()
 	save_game("auto",true)
@@ -603,17 +630,31 @@ func show_ending_choice() -> void:
 	if not progress.ending_id().is_empty():
 		notice = "灯根的选择已经写下了。"
 		return
+	var req: Dictionary = progress.ending_requirements()
+	var options: Array = []
+	if bool(req.restore):
+		options.append({"id":"restore","label":"恢复共生循环","desc":"限流共生，需要共同维护"})
+	if bool(req.seal):
+		options.append({"id":"seal","label":"封存并撤离","desc":"带储水撤离，放弃地下旧居"})
+	if options.is_empty():
+		notice = "证据或前置机关不足：恢复需三证据+P09，封存需P06+P08。"
+		return
 	choice_mode = "ending"
 	choice_pending = true
 	paused = true
 	overlay.hide()
 	if status != null: status.visible = false
-	dialogue.show_choices("灯根核心 · 最后的选择", [
-		{"id": "restore", "label": "恢复共生循环", "desc": "让灯与水重新流动"},
-		{"id": "seal", "label": "封存并撤离", "desc": "把灯根留在黑暗里"}])
+	dialogue.show_choices("灯根核心 · 最后的选择", options)
 
 func choose_ending(option: String) -> void:
 	if choice_mode != "ending" or option not in ["restore","seal"]: return
+	if not bool(progress.ending_requirements().get(option,false)):
+		notice = "这个结局的前置条件尚未满足。"
+		return
+	# Preserve a separate pre-ending snapshot before END_* flags are written.
+	var pre: Dictionary = progress.snapshot(combat.player,combat.hp,combat.focus)
+	var backup: Dictionary = saves.save_ending_backup(pre)
+	if not backup.ok: notice = backup.message
 	progress.set_ending(option)
 	choice_pending = false
 	choice_mode = "growth"
@@ -672,9 +713,34 @@ func show_credits() -> void:
 	paragraph(("灯与水重新流动，菌根在暖光里安静下来。\n" if restored else "你把灯根封存，带着最后一点光撤离。\n") + "本次用时 " + elapsed_text() + "。\n" + chapter_report_text(),120)
 	paragraph("灯根回路已记录：%s。\n制作：AI 程序与素材整合 · 体验审核：玩家" % ("共生恢复" if restored else "封存撤离"),75)
 	button("返回标题", show_title)
-	if saves.load_slot("auto",true).ok:
-		button("读取结局前存档（自动备份）", func(): load_game("auto",true))
+	if saves.load_ending_backup().ok:
+		button("读取结局前存档（独立备份）", load_ending_backup_game)
 	button("继续探索", resume)
+
+func load_ending_backup_game() -> void:
+	var result: Dictionary = saves.load_ending_backup()
+	if not result.ok:
+		clear_menu("无法读取结局前存档")
+		paragraph(result.message)
+		button("返回", show_credits)
+		return
+	var reason: String = progress.validate(result.snapshot)
+	if not reason.is_empty():
+		clear_menu("结局前存档无法恢复")
+		paragraph(reason)
+		button("返回", show_credits)
+		return
+	progress.restore(result.snapshot)
+	run_started_ms = Time.get_ticks_msec()
+	chapter_start_ms = run_started_ms
+	chapter_times = {}
+	last_chapter = ""
+	checkpoint = result.snapshot.duplicate(true)
+	running = true
+	dirty = false
+	load_room(Vector2(result.snapshot.safe_position[0],result.snapshot.safe_position[1]),result.snapshot.health,result.snapshot.focus)
+	resume()
+	notice = "已读取结局前独立存档。"
 
 func nearest_object() -> Dictionary:
 	var nearest: Dictionary = {}
@@ -849,8 +915,15 @@ func free_overlapping_player() -> void:
 			combat.player = candidate
 
 func retry_from_room() -> void:
-	if not room_checkpoint.is_empty() and progress.restore(room_checkpoint):
-		load_room(Vector2(room_checkpoint.safe_position[0],room_checkpoint.safe_position[1]),room_checkpoint.health,room_checkpoint.focus)
+	# Prefer the most recent submitted checkpoint when it is in the same room;
+	# fall back to the room-entry snapshot so branch rooms never restart at the hub.
+	var source: Dictionary = room_checkpoint
+	if not checkpoint.is_empty():
+		var same_room: bool = str(checkpoint.get("node_id","")) == progress.node_id
+		var newer: bool = source.is_empty() or float(checkpoint.get("effective_seconds",0.0)) >= float(source.get("effective_seconds",0.0))
+		if same_room and newer: source = checkpoint
+	if not source.is_empty() and progress.restore(source):
+		load_room(Vector2(source.safe_position[0],source.safe_position[1]),source.health,source.focus)
 		resume()
 		return
 	if checkpoint.is_empty(): new_game()
@@ -911,6 +984,9 @@ func _physics_process(delta: float) -> void:
 			notice = str(progress.content.encounters[cleared].get("clear_notice","威胁解除。靠近灯环或继续探索。"))
 			pending_encounter = ""
 			start_encounters()
+			# Clearing an encounter (including the elite/Boss) is a safe checkpoint;
+			# if the room starts another encounter, safety() blocks the save.
+			if SaveStore.is_safe(safety()): save_game("auto",true)
 		if combat.hp <= 0:
 			clear_menu("灯光暂熄")
 			paragraph("恢复最近已提交的安全进度，未保存的奖励、敌人和资源一起回退。\n也可以读取安全存档，或回到标题。")
@@ -923,11 +999,14 @@ func _physics_process(delta: float) -> void:
 	floating_ui.queue_redraw()
 	objects_layer.queue_redraw()
 	ui_layer.queue_redraw()
-	hud.text = "%s   生命 %d/%d   专注 %d/100   药剂 %d/3   时间 %s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,combat.potions,elapsed_text(),current_goal()]
+	hud.text = "%s   生命 %d/%d   专注 %d/%d   药剂 %d/3   时间 %s\n%s" % [progress.node().name,combat.hp,progress.max_hp(),combat.focus,progress.max_focus(),combat.potions,elapsed_text(),current_goal()]
 	var nearest := nearest_object()
 	var boss := boss_target()
 	if not boss.is_empty():
-		status.text = "目标：%s  生命 %d/%d  护甲 %d\n%s" % [boss_label(boss),int(boss.hp),int(boss.max_hp),int(boss.armor_layers),notice]
+		var core_text := ""
+		if str(boss.get("archetype","")) == "BOSS":
+			core_text = "  核心 " + ("暴露" if bool(boss.get("core_open",false)) else "收起")
+		status.text = "目标：%s  生命 %d/%d  护甲 %d%s\n%s" % [boss_label(boss),int(boss.hp),int(boss.max_hp),int(boss.armor_layers),core_text,notice]
 	else:
 		status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动  E交互  Q观察  R治疗  空格闪避")+"    "+notice
 	if combat.action == "heal": status.text = "正在治疗 %d / 36 · 移动、闪避或受击会取消\n%s" % [combat.age,notice]

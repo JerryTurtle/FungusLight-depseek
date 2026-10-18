@@ -26,9 +26,9 @@ func run() -> void:
 	scene.progress.flags.E16 = false
 	scene.progress.flags.E17 = false
 	scene.progress.choices.M1 = "melee"
-	scene.progress.choices.M2 = "guard"
-	scene.progress.choices.M3 = "focus"
-	scene.progress.choices.M4 = "step"
+	scene.progress.choices.M2 = "shield"
+	scene.progress.choices.M3 = "cost"
+	scene.progress.choices.M4 = "life"
 	scene.progress.choice = "melee"
 	scene.progress.flags.BRANCH_B = true
 	scene.progress.node_id = "N2-04"

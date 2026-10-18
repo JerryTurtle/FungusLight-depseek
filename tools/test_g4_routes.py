@@ -18,10 +18,10 @@ ENGINE = 'C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_consol
 VARIANTS = [
     ('A_restore', {}),
     ('B_seal', {'FUNGUS_BRANCH': 'B', 'FUNGUS_ENDING': 'seal'}),
-    ('A_alt_seal', {'FUNGUS_ENDING': 'seal', 'FUNGUS_M1': 'light', 'FUNGUS_M2': 'guard', 'FUNGUS_M3': 'focus', 'FUNGUS_M4': 'step'}),
-    ('B_alt_restore', {'FUNGUS_BRANCH': 'B', 'FUNGUS_M1': 'light', 'FUNGUS_M2': 'guard', 'FUNGUS_M3': 'focus', 'FUNGUS_M4': 'step'}),
+    ('A_alt_seal', {'FUNGUS_ENDING': 'seal', 'FUNGUS_M1': 'light', 'FUNGUS_M2': 'shield', 'FUNGUS_M3': 'rain', 'FUNGUS_M4': 'focus'}),
+    ('B_alt_restore', {'FUNGUS_BRANCH': 'B', 'FUNGUS_M1': 'light', 'FUNGUS_M2': 'shield', 'FUNGUS_M3': 'rain', 'FUNGUS_M4': 'focus'}),
     ('C05', {}),
-    ('C06', {'FUNGUS_BRANCH': 'B', 'FUNGUS_ENDING': 'seal', 'FUNGUS_M1': 'light', 'FUNGUS_M2': 'guard', 'FUNGUS_M3': 'focus', 'FUNGUS_M4': 'step'}),
+    ('C06', {'FUNGUS_BRANCH': 'B', 'FUNGUS_ENDING': 'seal', 'FUNGUS_M1': 'light', 'FUNGUS_M2': 'shield', 'FUNGUS_M3': 'rain', 'FUNGUS_M4': 'focus'}),
     ('sidequests', {'FUNGUS_BRANCH': 'B', 'FUNGUS_ENDING': 'seal', 'FUNGUS_SIDEQUEST': '1'}),
     ('skip', {'FUNGUS_SKIP_DIALOGUE': '1'}),
 ]

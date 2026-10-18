@@ -133,12 +133,20 @@ func run() -> void:
 	scene.wake_left = 0
 	scene.hide_player = false
 	scene.progress.flags["E30"] = true
-	scene.progress.flags["S11"] = true
+	scene.show_ending_choice()
+	check(not scene.choice_pending,"ending choice gated without evidence")
+	for flag in ["E30","S04","S07","S08","P06","P08","P09"]: scene.progress.flags[flag] = true
 	scene.progress.node_id = "N4-06"
 	scene.load_room()
 	scene.choice_mode = "ending"
 	scene.choose_ending("restore")
 	check(scene.progress.ending_id() == "restore","restore ending commits")
+	var pre_backup: Dictionary = scene.saves.load_ending_backup()
+	check(pre_backup.ok and not bool(pre_backup.snapshot.story.get("END_RESTORE",false)),"independent pre-ending backup")
+	# A later autosave (the exit into the credits room) must not overwrite it.
+	scene.save_game("auto",true)
+	var after_exit: Dictionary = scene.saves.load_ending_backup()
+	check(after_exit.ok and not bool(after_exit.snapshot.story.get("END_RESTORE",false)),"pre-ending backup survives exit autosave")
 	scene.show_credits()
 	check(has_text("返回标题") and has_text("读取结局前存档"),"credits expose title and pre-ending backup")
 	check(scene.chapter_report_text().begins_with("章节记录："),"credits include chapter statistics")
@@ -146,8 +154,7 @@ func run() -> void:
 	scene.new_game()
 	scene.wake_left = 0
 	scene.hide_player = false
-	scene.progress.flags["E30"] = true
-	scene.progress.flags["S11"] = true
+	for flag in ["E30","S04","S07","S08","P06","P08","P09"]: scene.progress.flags[flag] = true
 	scene.progress.node_id = "N4-06"
 	scene.load_room()
 	scene.choice_mode = "ending"

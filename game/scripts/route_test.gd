@@ -182,6 +182,7 @@ func build_route() -> void:
 		{"id":"N2-09","type":"interact","to":Vector2(292,144),"node":"N2-09"},
 		{"id":"E32","type":"combat","flag":"E32"},
 		{"id":"N2-08","type":"interact","to":Vector2(130,145),"node":"N2-08"},
+		{"id":"S07","type":"interact","to":Vector2(80,60),"flag":"S07"},
 		{"id":"E20","type":"combat","flag":"E20"},
 		{"id":"V07","type":"interact","to":Vector2(145,100),"flag":"V07"},
 		{"id":"V08","type":"interact","to":Vector2(190,100),"flag":"V08"},
@@ -622,7 +623,7 @@ func handle_dialogue() -> void:
 			elif scene.progress.active_event == "M2": pick = choice_m2
 			elif scene.progress.active_event == "M3": pick = choice_m3
 			elif scene.progress.active_event == "M4": pick = choice_m4
-			second = pick in ["light","guard","focus","step"]
+			second = pick in ["light","shield","rain","focus"]
 		if second:
 			press_key(KEY_S)
 		press_key(KEY_E)

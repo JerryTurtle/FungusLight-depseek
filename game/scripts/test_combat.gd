@@ -528,7 +528,7 @@ func check_input_boundaries() -> void:
 
 func check_gate_edges() -> void:
 	for direction in [Vector2.RIGHT,Vector2.LEFT,Vector2.UP,Vector2.DOWN]:
-		for sample in [[25.9,0.0,true],[26.1,0.0,false],[18.0,44.9,true],[18.0,45.1,false],[18.0,180.0,false]]:
+		for sample in [[21.9,0.0,true],[22.1,0.0,false],[18.0,44.9,true],[18.0,45.1,false],[18.0,180.0,false]]:
 			var m = hazard_world()
 			var target: Dictionary = m.add_enemy(m.player+direction.rotated(deg_to_rad(sample[1]))*sample[0],true)
 			m.step(Vector2.ZERO,direction,"melee")

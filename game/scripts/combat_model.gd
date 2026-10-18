@@ -413,6 +413,11 @@ func resolve_damage_batch() -> void:
 		else:
 			var enemy := enemy_by_id(int(request.target))
 			if enemy.is_empty(): continue
+			# Campaign bosses expose a core only during readable windows. The
+			# base model stays permissive; campaign_combat overrides the hook.
+			if not enemy_damage_allowed(enemy):
+				emit("hit_rejected", {"attack_id":request.attack_id,"source":request.source,"target":enemy.id,"action":request.action,"reason":"core_closed"})
+				continue
 			var layers := clampi(int(enemy.get("armor_layers",0)),0,int(config.enemy_t1.armor_max_layers))
 			if request.action == "light" and layers > 0:
 				layers -= 1
@@ -439,6 +444,7 @@ func resolve_damage_batch() -> void:
 			enemy.death_committed = true
 			enemy.state = "dead"
 			emit("death", {"target":enemy.id})
+			enemy_on_death(enemy)
 	if hp <= 0:
 		clear_hazards()
 		action = "dead"
@@ -574,7 +580,7 @@ func step(movement: Vector2, aim: Vector2, command: String = "", held_melee: boo
 		protection -= 1
 	for key in cooldowns:
 		cooldowns[key] = maxi(0,int(cooldowns[key])-1)
-	focus = minf(100,focus + float(config.player.focus_regen)/60.0)
+	focus = minf(float(config.player.focus),focus + float(config.player.focus_regen)/60.0)
 	if not commands.is_empty(): command = choose_command(commands)
 	if not buffered.is_empty() and tick > buffer_until: clear_input_buffer()
 	buffer_ttl = maxi(0,buffer_until-tick)
@@ -706,3 +712,9 @@ func enemy_can_begin(_enemy: Dictionary) -> bool:
 
 func enemy_can_react(_enemy: Dictionary, _request: Dictionary) -> bool:
 	return true
+
+func enemy_damage_allowed(_enemy: Dictionary) -> bool:
+	return true
+
+func enemy_on_death(_enemy: Dictionary) -> void:
+	pass

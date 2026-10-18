@@ -2,7 +2,15 @@ extends RefCounted
 ## Shared renderer for live combat and the G2 pose workbench. No damage logic.
 var cleric: Texture2D = preload("res://assets/original/Characters/Cleric.png")
 var fungus: Texture2D = preload("res://assets/original/Characters/Fungus - red.png")
+var boss: Texture2D = preload("res://assets/original/Characters/BOSS.png")
 var tiles: Texture2D = preload("res://assets/original/Tilesets/Complete.png")
+## The mother is the original 155x135 battler. Drawn at half world scale it is
+## 77.5x67.5 world units (310x270 screen pixels at the 4x world scale), i.e. two
+## screen pixels per source pixel: readable on the 320x180 canvas while the lower
+## half of the arena stays walkable. Anchoring the feet at the actor position
+## keeps the existing painter/foot ordering and the core ring at ground level.
+const BOSS_DRAW_SCALE := 0.5
+const BOSS_TEXTURE_SIZE := Vector2(155,135)
 ## Campaign actors render on a quarter-pixel grid (one physical screen pixel at
 ## the 4x world scale). The G2 review bench keeps the accepted integer snapping.
 var subpixel_actors := false
@@ -83,7 +91,8 @@ func enemy_texture(kind: String) -> Texture2D:
 	match kind:
 		"T2": return preload("res://assets/original/Characters/Fungus - violet.png")
 		"T3": return preload("res://assets/original/Characters/Sewers monster.png")
-		"T4","T6","EL1","EL2","BOSS": return preload("res://assets/original/Characters/Fungus - King.png")
+		"BOSS": return boss
+		"T4","T6","EL1","EL2": return preload("res://assets/original/Characters/Fungus - King.png")
 	return fungus
 
 func spore_pod(canvas: CanvasItem, foot: Vector2, alive: bool, alpha: float = 1.0) -> void:
@@ -113,6 +122,9 @@ func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String
 	foot = snap_actor(foot)
 	var texture: Texture2D = cleric if player else fungus
 	if override_texture != null: texture = override_texture
+	if texture == boss:
+		battler_actor(canvas,foot,action,age,tick,alpha,body_tint,preferences)
+		return
 	var frame: int = [1,0,1,2][int(tick/8)%4] if moving else 1
 	var angle := -PI/2 + (0.28 if row(direction) in [0,3] else (-0.8 if row(direction) == 1 else 0.8))
 	var extension := 0.0
@@ -156,6 +168,30 @@ func actor(canvas: CanvasItem, foot: Vector2, direction: Vector2, action: String
 		staff(canvas,grip,angle,extension,tick,preferences)
 		# Re-layer only the original hand pixels over the shaft, in their original location.
 		canvas.draw_texture_rect_region(texture,Rect2(hand_origin,hand.size),Rect2(source+hand.position,hand.size),tint)
+
+func battler_actor(canvas: CanvasItem, foot: Vector2, action: String, age: int, tick: int, alpha: float = 1.0, body_tint: Color = Color.WHITE, preferences = null) -> void:
+	# Boss battler: one 155x135 frame, no sheet slicing. The original battler
+	# reads as the mother body; its only frame is animated with a small breath
+	# and an attack shudder so warning readability lives in enemy_warnings.
+	var rest: bool = preferences != null and preferences.reduced_motion
+	var bob := Vector2.ZERO
+	if not rest:
+		bob.y = roundf(sin(float(tick)/22.0))
+	var shake := Vector2.ZERO
+	if action == "melee" and not rest:
+		shake.x = roundf(sin(float(age)*1.7))
+	var size := BOSS_TEXTURE_SIZE*BOSS_DRAW_SCALE
+	var origin := foot+Vector2(-size.x*0.5,-size.y)+bob+shake
+	var tint := body_tint
+	if action == "melee" and age < 6: tint = Color(1.0,0.86,0.80)
+	tint.a = alpha
+	# Soft contact shadow, flattened to the ground plane.
+	canvas.draw_set_transform(foot,0,Vector2(1,0.34))
+	canvas.draw_circle(Vector2.ZERO,31,Color(0.02,0.04,0.04,0.38*alpha))
+	canvas.draw_set_transform(Vector2.ZERO)
+	canvas.draw_texture_rect(boss,Rect2(origin,size),false,tint)
+	# A dim amber core glow at the reachable ground edge hints at the weak point.
+	canvas.draw_circle(foot+Vector2(0,-8),9.0,Color(0.95,0.72,0.28,0.10*alpha))
 
 func wounded_npc(canvas: CanvasItem, foot: Vector2, tick: int) -> void:
 	# Based on the accepted Cleric sheet: muted umber cloak, no staff, bandage.

@@ -14,7 +14,7 @@ func shot(name: String, frames: int = 8) -> void:
 
 func load_state(node: String, boss: bool = false) -> void:
 	for id in progress.flag_ids: progress.flags[id] = true
-	for id in ["M1","M2","M3","M4"]: progress.choices[id] = {"M1":"melee","M2":"echo","M3":"rain","M4":"ward"}[id]
+	for id in ["M1","M2","M3","M4"]: progress.choices[id] = {"M1":"melee","M2":"energy","M3":"cost","M4":"life"}[id]
 	progress.choice = "melee"
 	progress.flags.E30 = not boss
 	progress.flags.S10 = false

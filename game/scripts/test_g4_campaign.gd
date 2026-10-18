@@ -24,7 +24,7 @@ func _initialize() -> void:
 	# Every node loads with full progression and has reachable geometry.
 	var progress = scene.progress
 	for id in progress.flag_ids: progress.flags[id] = true
-	for id in ["M1","M2","M3","M4"]: progress.choices[id] = {"M1":"melee","M2":"echo","M3":"rain","M4":"ward"}[id]
+	for id in ["M1","M2","M3","M4"]: progress.choices[id] = {"M1":"melee","M2":"energy","M3":"cost","M4":"life"}[id]
 	progress.choice = "melee"
 	progress.node_id = "N4-06"
 	scene.load_room()
@@ -63,13 +63,13 @@ func _initialize() -> void:
 	progress.node_id = "N1-05"
 	scene.load_room()
 	var m2: bool = progress.start_event("M2")
-	check(m2 and progress.finish_event("echo"), "M2 choice commits")
-	check(progress.max_hp() == 140.0 and progress.skills().shield, "M2 HP and shield")
+	check(m2 and progress.finish_event("energy"), "M2 choice commits")
+	check(progress.max_hp() == 130.0 and progress.max_focus() == 110.0 and progress.skills().shield, "M2 HP/focus and shield")
 	# Boss phases at N4-06; restore late growth for a valid end-state save.
 	progress.flags.M3 = true
 	progress.flags.M4 = true
-	progress.choices.M3 = "rain"
-	progress.choices.M4 = "ward"
+	progress.choices.M3 = "cost"
+	progress.choices.M4 = "life"
 	progress.flags.E30 = false
 	progress.flags.S09 = true
 	progress.node_id = "N4-06"
