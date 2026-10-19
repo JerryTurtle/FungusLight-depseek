@@ -16,10 +16,10 @@ DIALOGUE_TEST         checks=175  failures=0
 PROP_TEST             checks=2464 failures=0
 PRESSURE_TEST         checks=5    failures=0  path_queries=528 crossed=1 ms=7359
 G1_INITIAL_TESTS      checks=550  failures=0
-COMPAT_TEST           checks=34   failures=0
+COMPAT_TEST           checks=35   failures=0
 
 # 32-bit QA build (deliverables/G6-013-QA32):
-COMPAT_TEST (x86_32)  checks=34   failures=0
+COMPAT_TEST (x86_32)  checks=35   failures=0
 G6_RELEASE_TEST (x86_32) checks=39 failures=0
 
 # Not rerun: route_test / skip_route. The 707.7 s / 607.4 s G6-012 baselines
