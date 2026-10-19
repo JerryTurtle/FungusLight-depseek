@@ -15,7 +15,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-011"
+BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-012"
 SOURCE = ROOT / "deliverables" / (BUILD + "-Release") / "Game"
 if not (SOURCE / "FungusLight.exe").exists():
     SOURCE = ROOT / "deliverables" / "Release" / "Game"

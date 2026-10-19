@@ -1,5 +1,5 @@
 {
- "build_id": "G6-011",
+ "build_id": "G6-012",
  "G0": {
   "status": "passed",
   "evidence": [
@@ -416,7 +416,7 @@
  },
  "G6": {
   "status": "in_progress",
-  "build_id": "G6-011",
+  "build_id": "G6-012",
   "evidence": [
    "qa/evidence/G6/G6-gap-audit.md",
    "qa/evidence/G6/G6-001-checks.json",
@@ -696,16 +696,42 @@
    "qa/evidence/G6/G6-011-save-tests.log",
    "qa/evidence/G6/G6-011-settings.png",
    "qa/evidence/G6/G6-011-skip_route-tests.log",
-   "qa/evidence/G6/G6-011-cleanup.md"
+   "qa/evidence/G6/G6-011-cleanup.md",
+   "qa/evidence/G6/G6-012-bgm.json",
+   "qa/evidence/G6/G6-012-campaign-tests.log",
+   "qa/evidence/G6/G6-012-checks.json",
+   "qa/evidence/G6/G6-012-clean-release.json",
+   "qa/evidence/G6/G6-012-clean-release.log",
+   "qa/evidence/G6/G6-012-combat-tests.log",
+   "qa/evidence/G6/G6-012-dialogue-tests.log",
+   "qa/evidence/G6/G6-012-enemies-tests.log",
+   "qa/evidence/G6/G6-012-final-package.txt",
+   "qa/evidence/G6/G6-012-g4_boss-tests.log",
+   "qa/evidence/G6/G6-012-g4_death-tests.log",
+   "qa/evidence/G6/G6-012-g4_presentation-tests.log",
+   "qa/evidence/G6/G6-012-g4_state-tests.log",
+   "qa/evidence/G6/G6-012-g4_visual-tests.log",
+   "qa/evidence/G6/G6-012-g6_release-tests.log",
+   "qa/evidence/G6/G6-012-portal.png",
+   "qa/evidence/G6/G6-012-pressure-tests.log",
+   "qa/evidence/G6/G6-012-progress.md",
+   "qa/evidence/G6/G6-012-props-tests.log",
+   "qa/evidence/G6/G6-012-release-layout.json",
+   "qa/evidence/G6/G6-012-release-package.json",
+   "qa/evidence/G6/G6-012-restart-load.log",
+   "qa/evidence/G6/G6-012-route-skip.json",
+   "qa/evidence/G6/G6-012-route-tests.log",
+   "qa/evidence/G6/G6-012-save-tests.log",
+   "qa/evidence/G6/G6-012-skip_route-tests.log"
   ],
-  "package": "deliverables/G6-011-Release/",
+  "package": "deliverables/G6-012-Release/",
   "remaining": [
-   "用户在 docs/g6/release/验收说明.md 的干净目录流程中验收 G6-011 技能特效、传送门浮动、近战上下内侧命中、开场章节、精简设置、Boss BGM，并填写 qa/G6-approval.md",
+   "用户在 docs/g6/release/验收说明.md 的干净目录流程中验收 G6-012 传送门暖色椭圆/内部微光/无外侧粒子/外圈无碰撞，并填写 qa/G6-approval.md",
    "原始 Fungus Cave 素材、开场/标题生成图与 Boss BGM 的再分发许可确认或限定内部测试",
    "可选音乐扩展与完整按键重设（G5 单独阶段按用户指示跳过）"
   ],
-  "caveat": "AI 验证：G6-011 默认 route 707.8 秒/0 死亡、整段跳过 607.1 秒/0 死亡；14 组套件（campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）与 test_combat550、restart2/8 均 0 失败；PCK 审计、五目录布局、干净目录 headless RELEASE_BOOT campaign 通过。G6-011 只重跑默认/跳过路线，8/8 矩阵为 G6-003 历史基线。技能特效/传送门/近战/章节/设置/BGM 仍需人工验收；用户书面确认前 G6 仍 in_progress。",
-  "package_zip": "deliverables/FungusLight-G6-011-Release.zip",
-  "package_zip_sha256": "499497126AEE1CB9C2EB868BF68DE473CEBC1CFC91DF049F80BEC56CC3C770DF"
+  "caveat": "AI 验证：G6-012 默认 route 707.7 秒/0 死亡、整段跳过 607.4 秒/0 死亡；14 组套件（campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）与 test_combat550、restart2/8 均 0 失败；PCK 审计、五目录布局、干净目录 headless RELEASE_BOOT campaign 通过。G6-012 只重跑默认/跳过路线，8/8 矩阵为 G6-003 历史基线。传送门观感与碰撞仍待人工验收；用户书面确认前 G6 仍 in_progress。",
+  "package_zip": "deliverables/FungusLight-G6-012-Release.zip",
+  "package_zip_sha256": "E56C23DD5AEB0256AEAEEE015D2070BDE2F4BF9D33D58839972DE1F61CDD2464"
  }
 }

@@ -1,0 +1,11 @@
+# 菌灯之下 G6-012 发布包
+
+- exe: `deliverables/G6-012-Release/Game/FungusLight.exe`  66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13  84214784 bytes
+- pck: `deliverables/G6-012-Release/Game/FungusLight.pck`  BA6BA27FD34BA49FC6A440E1C6370037874905C84B4704043D336FB720D76B10  23270208 bytes
+- zip: `deliverables/FungusLight-G6-012-Release.zip`  E56C23DD5AEB0256AEAEEE015D2070BDE2F4BF9D33D58839972DE1F61CDD2464  81610131 bytes
+
+- 布局：`deliverables/G6-012-Release/{Game,Source,Docs,QA,Licenses}`
+- PCK 审计：`qa/evidence/G6/G6-012-release-package.json`（passed）
+- 五目录布局：`qa/evidence/G6/G6-012-release-layout.json`（passed）
+- 干净目录 headless 启动：`qa/evidence/G6/G6-012-clean-release.json`（RELEASE_BOOT campaign，exit 0）
+- 过程包清理：保留 G6-012、门禁审核 G2_Review/G4 Acceptance、锁定的 `deliverables/Release`；G6-010 残留 debug.log 仍被占用。

@@ -5,7 +5,7 @@ extends SceneTree
 ## (~0.9s per line + reveal input) and reported separately from movement/combat.
 const Campaign = preload("res://scripts/campaign.gd")
 const NAV_ARENA := Rect2(14,34,292,118)
-var BUILD_ID := str(ProjectSettings.get_setting("application/config/version","G6-011"))
+var BUILD_ID := str(ProjectSettings.get_setting("application/config/version","G6-012"))
 var scene
 var checks := 0
 var failures := 0

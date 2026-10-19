@@ -1229,7 +1229,7 @@ def portal_base() -> Grid:
                 continue
             for ox, oy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 if not portal_opening(x + ox, y + oy):
-                    g.put(x + ox, y + oy, "K")
+                    g.put(x + ox, y + oy, "P")
     return g
 
 def portal_sealed(frame: int) -> Grid:

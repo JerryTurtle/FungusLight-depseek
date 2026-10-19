@@ -14,7 +14,7 @@ from qa_paths import evidence_path
 
 root = Path(__file__).resolve().parents[1]
 engine = 'C:/Software/Godot_v4.3-stable_win64.exe/Godot_v4.3-stable_win64_console.exe'
-build = sys.argv[1] if len(sys.argv) > 1 else 'G6-011'
+build = sys.argv[1] if len(sys.argv) > 1 else 'G6-012'
 
 CHECKS = [
     ("campaign", "scripts/test_g4_campaign.gd", r"G4_CAMPAIGN_TEST checks=(\d+) failures=(\d+)", 180),

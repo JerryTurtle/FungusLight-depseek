@@ -1,0 +1,9 @@
+{
+  "build": "G6-012",
+  "clean_directory": "qa/local/G6-012-clean/有 空格 的 目录",
+  "exit": 0,
+  "release_boot": true,
+  "debug_boot_absent": true,
+  "script_error_free": true,
+  "passed": true
+}

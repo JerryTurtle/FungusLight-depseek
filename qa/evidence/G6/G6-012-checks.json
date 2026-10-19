@@ -1,0 +1,131 @@
+{
+  "build_id": "G6-012",
+  "engine": "Godot 4.3.stable",
+  "checks": [
+    {
+      "check": "campaign",
+      "checks": 95,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-campaign-tests.log"
+    },
+    {
+      "check": "g6_release",
+      "checks": 39,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-g6_release-tests.log"
+    },
+    {
+      "check": "g4_state",
+      "checks": 48,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-g4_state-tests.log"
+    },
+    {
+      "check": "g4_boss",
+      "checks": 71,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-g4_boss-tests.log"
+    },
+    {
+      "check": "g4_death",
+      "checks": 5,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-g4_death-tests.log"
+    },
+    {
+      "check": "g4_visual",
+      "checks": 15,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-g4_visual-tests.log"
+    },
+    {
+      "check": "g4_presentation",
+      "checks": 48,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-g4_presentation-tests.log"
+    },
+    {
+      "check": "save",
+      "checks": 65,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-save-tests.log"
+    },
+    {
+      "check": "enemies",
+      "checks": 73,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-enemies-tests.log"
+    },
+    {
+      "check": "dialogue",
+      "checks": 175,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-dialogue-tests.log"
+    },
+    {
+      "check": "props",
+      "checks": 2464,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-props-tests.log"
+    },
+    {
+      "check": "pressure",
+      "checks": 5,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-pressure-tests.log"
+    },
+    {
+      "check": "route",
+      "checks": 9,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-route-tests.log"
+    },
+    {
+      "check": "skip_route",
+      "checks": 9,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-skip_route-tests.log"
+    },
+    {
+      "check": "combat",
+      "checks": 550,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-combat-tests.log"
+    },
+    {
+      "check": "restart_write",
+      "checks": 2,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-restart-load.log"
+    },
+    {
+      "check": "restart_load",
+      "checks": 8,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-012-restart-load.log"
+    }
+  ],
+  "failures": 0,
+  "route_seconds": 707.7,
+  "skip_route_seconds": 607.4,
+  "route_deaths": 0,
+  "skip_route_deaths": 0,
+  "note": "Rows were run through the unconfined godot_run_headless service against G6-012. Portal aura/motes are draw-only; the portal collision was narrowed to the inner 16x30 oval."
+}

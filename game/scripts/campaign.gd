@@ -465,7 +465,8 @@ func solid_rect(kind: String, pos: Vector2) -> Rect2:
 		"bed": return Rect2(pos+Vector2(-15,-44),Vector2(31,44))
 		"lamp": return Rect2(pos+Vector2(-5,-5),Vector2(10,10))
 		"door": return Rect2(pos+Vector2(-9,-28),Vector2(18,28))
-		"portal": return Rect2(pos+Vector2(-13,-34),Vector2(26,34))
+		# Inner oval only: the draw-only aura/motes never contribute to collision.
+		"portal": return Rect2(pos+Vector2(-8,-30),Vector2(16,30))
 	return Rect2()
 
 func setup_collision() -> void:
@@ -912,7 +913,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-011")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-012")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),
@@ -1581,37 +1582,30 @@ func draw_scan_highlights(tick: int) -> void:
 		objects_layer.draw_line(pos-Vector2(10,16),pos-Vector2(4,16),Color(0.85,1.0,0.86,0.8*fade),1.5)
 
 func draw_portal(pos: Vector2, state: Dictionary, tick: int) -> void:
-	# Ethereal threshold: a breathing oval aura, slow orbit motes and a soft
-	# ground reflection. The portal sprite itself carries the vignette/light.
+	# The portal is deliberately draw-only: the aura and motes never add a
+	# collision shape. The collision rect stays a narrow inner oval.
 	var breath: float = 0.5+0.5*sin(TAU*float(tick)/150.0)
-	var rest: bool = preferences.reduced_motion
 	var open: bool = bool(state.get("open",false))
 	var core := Color(1.0,0.84,0.45,1.0) if open else Color(0.48,0.66,0.62,1.0)
-	var center := pos+Vector2(0,-21)
-	# Elliptical halo: flatten the circle on Y so it hugs the 28x38 art.
-	objects_layer.draw_set_transform(center,0.0,Vector2(1.0,1.32))
-	objects_layer.draw_circle(Vector2.ZERO,16.0+breath*2.0,Color(core.r,core.g,core.b,0.045 if open else 0.025))
-	objects_layer.draw_arc(Vector2.ZERO,15.0+breath*2.0,0,TAU,28,Color(core.r,core.g,core.b,0.18 if open else 0.10),1.0)
-	if open:
-		objects_layer.draw_arc(Vector2.ZERO,12.5+breath*1.2,0,TAU,24,Color(0.62,1.0,0.86,0.26),1.0)
+	var center := pos+Vector2(0,-20)
+	# A soft inner glow that hugs the oval instead of a separate outer ring.
+	objects_layer.draw_set_transform(center,0.0,Vector2(1.0,1.28))
+	objects_layer.draw_circle(Vector2.ZERO,7.0+breath*1.5,Color(core.r,core.g,core.b,0.075 if open else 0.035))
+	objects_layer.draw_circle(Vector2.ZERO,10.0+breath,Color(core.r,core.g,core.b,0.035 if open else 0.018))
 	objects_layer.draw_set_transform(Vector2.ZERO)
-	# Ground reflection / lift shadow.
-	objects_layer.draw_set_transform(pos+Vector2(0,17),0.0,Vector2(1.0,0.30))
-	objects_layer.draw_circle(Vector2.ZERO,10.0+breath*2.0,Color(core.r,core.g,core.b,0.10))
+	# Ground reflection is clipped to the inner oval footprint.
+	objects_layer.draw_set_transform(pos+Vector2(0,17),0.0,Vector2(0.72,0.18))
+	objects_layer.draw_circle(Vector2.ZERO,8.0+breath,Color(core.r,core.g,core.b,0.075))
 	objects_layer.draw_set_transform(Vector2.ZERO)
 	if open:
-		# Slow orbiting pixel motes sell the float without moving collision.
-		if not rest:
-			for i in 6:
-				var phase := float(tick)/54.0+float(i)*TAU/6.0
-				var p := center+Vector2(cos(phase)*15.0,sin(phase)*20.0)
-				var a := 0.35+0.35*breath
-				objects_layer.draw_rect(Rect2(p.round(),Vector2.ONE*2),Color(1.0,0.90,0.55,a))
-				objects_layer.draw_rect(Rect2((p+Vector2(1,-3)).round(),Vector2.ONE),Color(0.72,1.0,0.86,a*0.7))
-		# A gentle vertical seam at the threshold.
-		objects_layer.draw_line(pos+Vector2(0,-3),pos+Vector2(0,-12),Color(1.0,0.92,0.62,0.30+0.15*breath),1.0)
+		# Three slow motes inside the portal, not around its outside.
+		if not preferences.reduced_motion:
+			for i in 3:
+				var phase := float(tick)/62.0+float(i)*TAU/3.0
+				var p := center+Vector2(cos(phase)*4.5,sin(phase)*7.5)
+				objects_layer.draw_rect(Rect2(p.round(),Vector2.ONE),Color(1.0,0.90,0.55,0.35+0.3*breath))
+		objects_layer.draw_line(pos+Vector2(0,-3),pos+Vector2(0,-12),Color(1.0,0.92,0.62,0.20+0.10*breath),1.0)
 	else:
-		# Sealed: cold seam + small lock, still clearly not passable.
 		objects_layer.draw_rect(Rect2(pos+Vector2(-7,-1),Vector2(14,1)),Color(0.55,0.5,0.42,0.4))
 		var lock: Vector2 = pos+Vector2(0,-30)
 		objects_layer.draw_rect(Rect2(lock+Vector2(-2,-3),Vector2(5,7)),Color(0.12,0.11,0.09,0.95))
