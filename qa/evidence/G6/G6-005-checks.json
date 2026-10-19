@@ -1,0 +1,131 @@
+{
+  "build_id": "G6-005",
+  "engine": "Godot 4.3.stable",
+  "checks": [
+    {
+      "check": "campaign",
+      "checks": 95,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-campaign-tests.log"
+    },
+    {
+      "check": "g6_release",
+      "checks": 38,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-g6_release-tests.log"
+    },
+    {
+      "check": "g4_state",
+      "checks": 48,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-g4_state-tests.log"
+    },
+    {
+      "check": "g4_boss",
+      "checks": 71,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-g4_boss-tests.log"
+    },
+    {
+      "check": "g4_death",
+      "checks": 5,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-g4_death-tests.log"
+    },
+    {
+      "check": "g4_visual",
+      "checks": 15,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-g4_visual-tests.log"
+    },
+    {
+      "check": "g4_presentation",
+      "checks": 45,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-g4_presentation-tests.log"
+    },
+    {
+      "check": "save",
+      "checks": 65,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-save-tests.log"
+    },
+    {
+      "check": "enemies",
+      "checks": 73,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-enemies-tests.log"
+    },
+    {
+      "check": "dialogue",
+      "checks": 175,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-dialogue-tests.log"
+    },
+    {
+      "check": "props",
+      "checks": 2472,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-props-tests.log"
+    },
+    {
+      "check": "pressure",
+      "checks": 5,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-pressure-tests.log"
+    },
+    {
+      "check": "route",
+      "checks": 9,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-route-tests.log"
+    },
+    {
+      "check": "skip_route",
+      "checks": 9,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-skip_route-tests.log"
+    },
+    {
+      "check": "combat",
+      "checks": 549,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-combat-tests.log"
+    },
+    {
+      "check": "restart_write",
+      "checks": 2,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-restart-load.log"
+    },
+    {
+      "check": "restart_load",
+      "checks": 8,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-005-restart-load.log"
+    }
+  ],
+  "failures": 0,
+  "route_seconds": 735.1,
+  "skip_route_seconds": 635.9,
+  "route_deaths": 0,
+  "skip_route_deaths": 0,
+  "note": "Each row was run through the unconfined godot_run_headless service against the G6-005 source. Logs capture the engine stdout/stderr result lines. Route input is engine input injection, not human play time. The 8-route matrix was not rerun for G6-005."
+}

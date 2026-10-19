@@ -114,7 +114,7 @@ func _notification(what: int) -> void:
 		get_tree().quit()
 		return
 	clear_menu("退出游戏？")
-	paragraph("未保存的移动、战斗与对话进度会回退到最近安全存档。当前演出不会提交半完成奖励。")
+	paragraph("未保存的移动、战斗和对话会退回到最近一次安全存档；进行中的演出和奖励不会保存。")
 	button("确认退出",func(): get_tree().quit())
 	button("返回当前进度",func():
 		if choice_pending: show_growth_choice()
@@ -200,23 +200,23 @@ func show_title() -> void:
 	clear_menu("菌灯之下")
 	overlay.position = Vector2(270,100)
 	overlay.size = Vector2(740,520)
-	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-004"))
-	paragraph("守住最后一盏灯，沿水管寻找熄灭的原因。\n灯亮着，人还能回家；可回家的水，只够一边。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n构建 "+build_label,128)
+	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-005"))
+	paragraph("地下三百尺，营地只剩最后一盏灯。\n灯根要水，人也要水；剩下的水只够两边分。\n你提灯下井，要查清是谁先断了水。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n版本 "+build_label,150)
 	button("新游戏",func():
 		if FileAccess.file_exists(saves.directory+"/auto.json"):
 			clear_menu("开始新旅程？")
-			paragraph("新游戏会在安全点覆盖自动槽，三个手动槽不变。")
+			paragraph("新游戏会从序章开始，并覆盖自动存档；三个手动存档不会变。")
 			button("确认新游戏",new_game)
 			button("返回",show_title)
 		else: new_game())
 	var auto_available := FileAccess.file_exists(saves.directory+"/auto.json")
 	var continue_button := Button.new()
-	continue_button.text = "继续（自动存档）" if auto_available else "继续（暂无自动存档）"
+	continue_button.text = "继续游戏（自动存档）" if auto_available else "继续游戏（无自动存档）"
 	continue_button.disabled = not auto_available
 	continue_button.add_theme_font_size_override("font_size",24)
 	continue_button.pressed.connect(func(): load_game("auto"))
 	menu.add_child(continue_button)
-	button("开场故事",func(): play_intro(show_title))
+	button("重看开场故事",func(): play_intro(show_title,"返回标题"))
 	button("读取存档",show_load_menu)
 	button("设置",func(): open_settings("title"))
 	button("退出",func(): get_tree().quit())
@@ -242,8 +242,9 @@ func intro_enabled() -> bool:
 	if "--campaign-capture" in OS.get_cmdline_user_args(): return false
 	return true
 
-func play_intro(callback: Callable) -> void:
+func play_intro(callback: Callable, final_hint: String = "进入营地") -> void:
 	intro_callback = callback
+	intro.final_hint = final_hint
 	overlay.hide()
 	if dialogue != null and dialogue.is_open(): dialogue.close()
 	if hud != null: hud.visible = false
@@ -280,11 +281,11 @@ func start_wake() -> void:
 	combat.facing = Vector2.DOWN
 
 func chapter_name(id: String) -> String:
-	if id.begins_with("N0-"): return "序章"
-	if id.begins_with("N1-"): return "第一章"
-	if id.begins_with("N2-"): return "第二章"
-	if id.begins_with("N3-"): return "第三章"
-	return "终章"
+	if id.begins_with("N0-"): return "序章 · 灯与根"
+	if id.begins_with("N1-"): return "第一章 · 断根"
+	if id.begins_with("N2-"): return "第二章 · 排水"
+	if id.begins_with("N3-"): return "第三章 · 王庭"
+	return "终章 · 灯根"
 
 func mark_chapter() -> void:
 	var current := chapter_name(progress.node_id)
@@ -500,11 +501,12 @@ func save_game(slot: String, confirmed: bool = false) -> void:
 	var result: Dictionary = saves.save_slot(slot,snapshot,safety(),confirmed)
 	notice = result.message
 	if result.ok:
+		notice = "已自动保存。" if slot == "auto" else "已保存到 "+slot_name(slot)+"。"
 		checkpoint = snapshot.duplicate(true)
 		dirty = false
 	elif result.code == "confirmation_required":
 		clear_menu("覆盖存档？")
-		paragraph("将当前安全进度写入 "+slot+"。原有效存档会保留为备份。")
+		paragraph("把当前进度写入 "+slot_name(slot)+"。原有存档会保留为备份。")
 		button("确认覆盖",func(): save_game(slot,true); show_pause())
 		button("取消",show_pause)
 
@@ -513,12 +515,12 @@ func load_game(slot: String, backup: bool = false) -> void:
 	if not result.ok:
 		clear_menu("无法读取存档")
 		paragraph(result.message)
-		if result.get("backup_available",false): button("恢复上一次有效备份",func(): load_game(slot,true))
+		if result.get("backup_available",false): button("恢复上一次备份",func(): load_game(slot,true))
 		button("返回",show_load_menu)
 		return
 	var reason: String = progress.validate(result.snapshot)
 	if not reason.is_empty():
-		clear_menu("存档内容无法恢复")
+		clear_menu("存档无法恢复")
 		paragraph(reason)
 		if not backup and saves.load_slot(slot,true).ok: button("恢复备份",func(): load_game(slot,true))
 		button("返回",show_load_menu)
@@ -533,7 +535,7 @@ func load_game(slot: String, backup: bool = false) -> void:
 	dirty = false
 	load_room(Vector2(result.snapshot.safe_position[0],result.snapshot.safe_position[1]),result.snapshot.health,result.snapshot.focus)
 	resume()
-	notice = "已读取"+("备份，部分进度可能回退。" if backup else "存档。")
+	notice = "已读取"+slot_name(slot)+("（备份，进度可能回退到更早的安全点）。" if backup else "。")
 
 func open_settings(return_to: String) -> void:
 	settings_return = return_to
@@ -548,11 +550,16 @@ func on_settings_closed() -> void:
 	if running: show_pause()
 	else: show_title()
 
+func slot_name(slot: String) -> String:
+	return {"auto":"自动存档","manual_1":"手动存档 1","manual_2":"手动存档 2","manual_3":"手动存档 3"}.get(slot,slot)
+
 func slot_label(slot: String) -> String:
-	var names := {"auto":"自动存档","manual_1":"手动存档 1","manual_2":"手动存档 2","manual_3":"手动存档 3"}
-	var title: String = names.get(slot,slot)
+	var title: String = slot_name(slot)
 	var result: Dictionary = saves.load_slot(slot)
-	if not result.ok: return title+"（空）"
+	if not result.ok:
+		if bool(result.get("backup_available",false)): return title+"（仅备份可恢复）"
+		if FileAccess.file_exists(saves.directory+"/"+slot+".json"): return title+"（存档损坏）"
+		return title+"（无存档）"
 	var snap: Dictionary = result.snapshot
 	var node_def: Dictionary = progress.node(str(snap.get("node_id","")))
 	var place: String = str(node_def.get("name","未知区域"))
@@ -560,10 +567,10 @@ func slot_label(slot: String) -> String:
 	return "%s · %s · %02d:%02d" % [title,place,int(seconds/60),seconds%60]
 
 func show_load_menu() -> void:
-	clear_menu("读取安全进度")
-	paragraph("自动存档在安全检查点写入；手动存档覆盖前会再次确认。")
+	clear_menu("读取存档")
+	paragraph("自动存档只会在安全时写入；覆盖手动存档前会再确认一次。")
 	for slot in SaveStore.SLOTS:
-		var has_slot := FileAccess.file_exists(saves.directory+"/"+slot+".json")
+		var has_slot := FileAccess.file_exists(saves.directory+"/"+slot+".json") or FileAccess.file_exists(saves.directory+"/"+slot+".json.bak")
 		var load_button := Button.new()
 		load_button.text = slot_label(slot)
 		load_button.disabled = not has_slot
@@ -577,10 +584,12 @@ func show_load_menu() -> void:
 func show_pause() -> void:
 	if wake_left > 0: return
 	clear_menu("暂停 · "+progress.node().name)
-	paragraph(("有未保存进度。\n" if dirty else "")+notice+"\nWASD移动 · 左键灯击 · 右键净光 · 空格闪避 · Q观察 · E交互")
+	overlay.position = Vector2(270,40)
+	overlay.size = Vector2(740,640)
+	paragraph(("有未保存的进度。\n" if dirty else "")+notice+"\nWASD移动 · E交互 · Q观察 · R药剂 · 空格闪避 · Esc暂停")
 	button("继续",resume)
 	for slot in ["manual_1","manual_2","manual_3"]:
-		button("保存到 手动 "+slot.right(1),func():
+		button("保存到 "+slot_name(slot),func():
 			save_game(slot)
 			if menu.get_child(0).text != "覆盖存档？": show_pause())
 	button("任务与证据",show_journal)
@@ -589,10 +598,17 @@ func show_pause() -> void:
 	button("读取存档",show_load_menu)
 	button("设置",func(): open_settings("pause"))
 	button("返回标题",func():
-		clear_menu("离开当前进度？")
-		paragraph("未保存进度将回退到最近存档。")
+		clear_menu("返回标题？")
+		paragraph("未保存的进度会丢失，回到最近一次存档。")
 		button("确认返回标题",show_title)
 		button("取消",show_pause))
+
+func quest_status(id: String) -> String:
+	if progress.has(id): return "已完成"
+	var count := 0
+	for part in ["a","b","c"]:
+		if progress.has(id+part): count += 1
+	return "未开始" if count == 0 else "进行中 %d/3" % count
 
 func show_journal() -> void:
 	clear_menu("任务与证据")
@@ -602,23 +618,26 @@ func show_journal() -> void:
 	var ev: Dictionary = progress.evidence()
 	var evidence_lines := PackedStringArray()
 	evidence_lines.append("证据 %d / 3" % progress.evidence_count())
-	if bool(ev.root_cut): evidence_lines.append("· 断根切口：根桥斧痕，带避难所钢印。\n  人先断水。")
-	if bool(ev.pump_record): evidence_lines.append("· 抽水记录：控制室，压力超过旧约红线。\n  末尾有禾的签名。")
-	if bool(ev.covenant): evidence_lines.append("· 旧约残片：王庭外环（S08）。\n  全文在旧约墙。")
-	if evidence_lines.size() == 1: evidence_lines.append("尚未取得主证据。先看水，再看根。")
+	if bool(ev.root_cut): evidence_lines.append("· 断根切口：根桥的斧痕，斧柄带避难所钢印。\n  是人先砍根断水。")
+	if bool(ev.pump_record): evidence_lines.append("· 抽水记录：控制室，泵压超过泵站安全红线。\n  禾在末尾签名，承认抬压和砍根。")
+	if bool(ev.covenant): evidence_lines.append("· 旧约残片：王庭外环的留声，证明灯与根同源。\n  全文在旧约墙，可补全缺句。")
+	if evidence_lines.size() == 1: evidence_lines.append("尚未取得关键证据。先看水，再查根。")
 	paragraph("\n".join(evidence_lines),170)
 	var branch := PackedStringArray()
-	branch.append("支路：排水 %s / 救援 %s / 合流 %s" % ["已完成" if progress.has("P04") else "未完成","已完成" if progress.has("P05") else "未完成","已开启" if progress.has("S06") else "未开启"])
-	branch.append("终章前置：泵站 %s / 撤离 %s" % ["已完成" if progress.has("P09") else "未完成","已完成" if progress.has("P08") else "未完成"])
-	branch.append("支线：旧灯 %s / 补给 %s" % ["已完成" if progress.has("Q1") else "进行中","已完成" if progress.has("Q2") else "进行中"])
+	branch.append("支路：排水 %s · 救援 %s · 合流 %s" % ["已完成" if progress.has("P04") else "未完成","已完成" if progress.has("P05") else "未完成","已开启" if progress.has("S06") else "未开启"])
+	branch.append("共生结局：三份证据 %d/3 · 泵站稳压 %s" % [progress.evidence_count(),"已完成" if progress.has("P09") else "未完成"])
+	branch.append("封存结局：备用储水 %s · 旧约校准 %s" % ["已完成" if progress.has("P06") else "未完成","已完成" if progress.has("P08") else "未完成"])
+	branch.append("支线：旧灯 %s · 补给 %s" % [quest_status("Q1"),quest_status("Q2")])
 	paragraph("\n".join(branch),100)
 	button("返回",show_pause)
 
 func show_equipment() -> void:
 	clear_menu("装备配置 · 灯镜 / 护符")
-	var lens_names := {"focus_lens":"聚束镜（净光伤害+20%，消耗+5）","throttle_lens":"节流镜（法术消耗-3）","clear_mirror":"澄明镜（护灯清除孢毒，消耗+5）"}
-	var charm_names := {"guardian_knot":"守灯结（生命上限+10）","artisan_clasp":"工匠扣（护灯容量+10，冷却+1s）","ember_talisman":"余温符（治疗量+10，动作+0.1s）"}
-	paragraph("当前灯镜："+(lens_names.get(progress.lens_id,"未装备"))+"\n当前护符："+(charm_names.get(progress.charm_id,"未装备")),90)
+	overlay.position = Vector2(270,70)
+	overlay.size = Vector2(740,580)
+	var lens_names := {"focus_lens":"聚束镜（净光伤害 +20%，精力消耗 +5）","throttle_lens":"节流镜（所有技能精力消耗 -3）","clear_mirror":"澄明镜（护灯可清除孢毒，精力消耗 +5）"}
+	var charm_names := {"guardian_knot":"守灯结（生命上限 +10）","artisan_clasp":"工匠扣（护灯护盾 +10，冷却延长 1 秒）","ember_talisman":"余温符（药剂恢复 +10，饮用时间 +0.1 秒）"}
+	paragraph("当前灯镜："+(lens_names.get(progress.lens_id,"未装备"))+"\n当前护符："+(charm_names.get(progress.charm_id,"未装备"))+"\n● 已装备　　○ 可装备",130)
 	for item in ["focus_lens","throttle_lens","clear_mirror"]:
 		if not progress.owns(item): continue
 		var captured: String = str(item)
@@ -683,7 +702,7 @@ func finish_dialogue() -> void:
 func show_growth_choice(event_id: String = "M1") -> void:
 	if not progress.active_event.is_empty() and progress.active_event != event_id: return
 	if progress.active_event.is_empty() and not progress.start_event(event_id):
-		notice = "这里还不能进行强化。"
+		notice = "这里还不能强化。"
 		return
 	choice_mode = "growth"
 	choice_pending = true
@@ -692,7 +711,7 @@ func show_growth_choice(event_id: String = "M1") -> void:
 	if status != null: status.visible = false
 	if hud_panel != null: hud_panel.visible = false
 	var def := progress.event_def(event_id)
-	dialogue.show_choices(str(def.get("title", "选择一项强化")), def.get("options", []))
+	dialogue.show_choices(str(def.get("title", "选择一项强化"))+"（选择后不可更改）", def.get("options", []))
 
 func choose_choice(option: String) -> void:
 	if choice_mode == "ending":
@@ -705,7 +724,7 @@ func choose_choice(option: String) -> void:
 func show_puzzle_choice(object: Dictionary) -> void:
 	var puzzle := str(object.get("puzzle",""))
 	if puzzle.is_empty() or progress.has(puzzle):
-		notice = "这个机关已经完成了。"
+		notice = "这个机关已经完成。"
 		return
 	puzzle_choice_object = object
 	choice_mode = "puzzle"
@@ -724,9 +743,9 @@ func choose_puzzle_choice(option: String) -> void:
 	var puzzle := str(puzzle_choice_object.get("puzzle",""))
 	if correct:
 		if not puzzle.is_empty(): progress.flags[puzzle] = true
-		notice = "结论记录：" + str(puzzle_choice_object.get("success","机关接通。"))
+		notice = "结论：" + str(puzzle_choice_object.get("success","机关接通。"))
 	else:
-		notice = "证据与现场不符。再看一次线索和操作顺序。"
+		notice = "判断和现场对不上。再看一遍线索和顺序。"
 	choice_pending = false
 	choice_mode = "growth"
 	puzzle_choice_object = {}
@@ -749,7 +768,7 @@ func choose_growth(option: String) -> void:
 
 func show_ending_choice() -> void:
 	if not progress.has("E30"):
-		notice = "母体还没有被压制。"
+		notice = "母体还没被压制。"
 		return
 	if not progress.ending_id().is_empty():
 		notice = "灯根的选择已经写下了。"
@@ -757,11 +776,11 @@ func show_ending_choice() -> void:
 	var req: Dictionary = progress.ending_requirements()
 	var options: Array = []
 	if bool(req.restore):
-		options.append({"id":"restore","label":"恢复共生循环","desc":"放入三证据，校准泵站；限流，灯不再整夜亮。"})
+		options.append({"id":"restore","label":"恢复共生循环","desc":"三份证据已齐，泵站已校准。确认限流：灯根和营地各用一半水。"})
 	if bool(req.seal):
-		options.append({"id":"seal","label":"封存并撤离","desc":"启用备用储水，打开撤离路；放弃地下旧居。"})
+		options.append({"id":"seal","label":"封存并撤离","desc":"备用储水与撤离路已备好。确认封门：带水撤离，放弃旧居。"})
 	if options.is_empty():
-		notice = "还差一件证据或一处机关。回去看过，再回来。"
+		notice = "还缺证据或关键机关。补齐后再来。"
 		return
 	choice_mode = "ending"
 	choice_pending = true
@@ -769,12 +788,12 @@ func show_ending_choice() -> void:
 	overlay.hide()
 	if status != null: status.visible = false
 	if hud_panel != null: hud_panel.visible = false
-	dialogue.show_choices("灯根核心 · 最后的选择", options)
+	dialogue.show_choices("灯根核心 · 最后的选择（确认后不可更改）", options)
 
 func choose_ending(option: String) -> void:
 	if choice_mode != "ending" or option not in ["restore","seal"]: return
 	if not bool(progress.ending_requirements().get(option,false)):
-		notice = "这个结局的前置条件尚未满足。"
+		notice = "这个结局的条件还没满足。"
 		return
 	# Preserve a separate pre-ending snapshot before END_* flags are written.
 	var pre: Dictionary = progress.snapshot(combat.player,combat.hp,combat.focus)
@@ -784,7 +803,7 @@ func choose_ending(option: String) -> void:
 	choice_pending = false
 	choice_mode = "growth"
 	dialogue.close()
-	notice = "灯根选择了" + ("共生。" if option == "restore" else "封存。")
+	notice = "你选择了" + ("恢复共生循环。" if option == "restore" else "封存并撤离。")
 	dirty = true
 	apply_growth()
 	resume()
@@ -795,7 +814,7 @@ func elapsed_text() -> String:
 	return "%02d:%02d" % [int(seconds/60), seconds%60]
 
 func chapter_report_text() -> String:
-	if chapter_times.is_empty(): return "章节记录：本次未切换章节。"
+	if chapter_times.is_empty(): return "章节记录：本次未记录章节用时。"
 	var parts := PackedStringArray()
 	for key in chapter_times.keys():
 		var value := int(round(float(chapter_times[key])))
@@ -809,7 +828,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-004")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-005")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),
@@ -823,30 +842,29 @@ func write_run_report() -> void:
 	if file != null:
 		file.store_string(JSON.stringify(report, "  "))
 		file.close()
-		notice = "本次用时 %.1f 秒，已写入 %s。" % [total,ProjectSettings.globalize_path(path)]
+		notice = "本局记录已保存。"
 	else:
-		notice = "本次用时 %.1f 秒（记录文件写入失败）。" % total
+		notice = "本局记录保存失败。"
 
 func show_credits() -> void:
 	if not progress.has("S12"): progress.flags.S12 = true
 	dirty = true
 	write_run_report()
 	var restored := progress.ending_id() == "restore"
-	clear_menu("菌灯之下 · 尾声（共生）" if restored else "菌灯之下 · 尾声（封存）")
+	clear_menu("菌灯之下 · 尾声（恢复共生）" if restored else "菌灯之下 · 尾声（封存撤离）")
 	overlay.position = Vector2(270,8)
 	overlay.size = Vector2(740,704)
 	var epilogue := ""
 	if restored:
-		epilogue = "岚把断根、抽水记录、旧约依次放进刻槽。\n泵站重新校准，水只够灯根和避难所各活一半。\n从今天起灯不再整夜亮，每三天我来调一次水。\n绒留在最后一盏灯旁，教新来的人认水位。\n砾在旁室清点人数，确认没有人被落下。\n菌根重新发光，光很暗但不再攻击。\n避难所保住了，代价是所有人都要学会少用水。\n岚：这不是胜利，这是新约。"
+		epilogue = "三份证据嵌在旧约刻槽里。岚把手按在灯根核心上。\n泵站按新约限流，水只够灯根和营地各用一半。\n从今天起，灯不再整夜亮；每三天，岚来调一次水。\n绒留在营地最后一盏灯旁，教新来的人认水位。\n砾在旁室清点人数，确认没有人被落下。\n岚把禾的残页压在刻槽下。禾没有回来，但灯根记得他的名字。\n菌根重新发光。光很暗，但不再攻击。\n避难所保住了。代价是所有人都要学会少用水。\n岚：这不是胜利，这是新约。"
 	else:
-		epilogue = "岚把三证据收进袋子，启动备用储水，打开撤离路。\n根门在身后合拢，母体只看着最后一点光离开。\n灯根封在下面，水我们带走，够走到地面。\n砾带着旁室的人先走，名单末尾画了一个钩。\n灯一盏盏熄灭，绒留在最后一盏灯旁直到灯灭。\n地下旧居留在黑暗里，菌根会活着但不再为人类点灯。\n岚：我们活下来了，有些东西被留在了下面。"
+		epilogue = "三份证据收进袋子。备用储水已经启动，撤离路已经打开。\n岚最后看了一眼灯根，根门在身后合拢。母体留在里面。\n灯根被封在湿土里，会睡下去；水我们带走，够走到地面。\n砾拄着腿，带旁室的两个伤员先走，名单末尾画了一个钩。\n灯一盏盏熄灭。绒没有跟来，留在营地最后一盏灯旁。\n灯灭后，它回到水脉里沉睡。\n地下旧居留在黑暗里。菌根会沉睡，不再为人点灯。\n岚把禾的残页带走。地下只剩他的名字，和半页纸。\n岚：我们活下来了。有些东西，被留在了下面。"
 	paragraph(epilogue,322)
-	paragraph("本次用时 " + elapsed_text() + "。\n" + chapter_report_text() + "\n灯根回路已记录：%s。" % ("共生恢复" if restored else "封存撤离"),100)
-	paragraph("制作：AI 程序与素材整合 · 体验审核：玩家",40)
+	paragraph("本次游玩用时 " + elapsed_text() + "。\n" + chapter_report_text() + "\n结局：%s。" % ("恢复共生循环" if restored else "封存并撤离"),100)
+	paragraph("制作：AI 辅助开发 · 体验审核：玩家",40)
 	button("返回标题", show_title)
 	if saves.load_ending_backup().ok:
 		button("读取结局前存档（独立备份）", load_ending_backup_game)
-	button("继续探索", resume)
 
 func load_ending_backup_game() -> void:
 	var result: Dictionary = saves.load_ending_backup()
@@ -871,7 +889,7 @@ func load_ending_backup_game() -> void:
 	dirty = false
 	load_room(Vector2(result.snapshot.safe_position[0],result.snapshot.safe_position[1]),result.snapshot.health,result.snapshot.focus)
 	resume()
-	notice = "已读取结局前独立存档。"
+	notice = "已读取结局前的独立存档。"
 
 func nearest_object() -> Dictionary:
 	var candidates: Array = []
@@ -892,14 +910,14 @@ func nearest_object() -> Dictionary:
 
 func rotate_guide(object: Dictionary) -> void:
 	if progress.has("P02"):
-		notice = "导光装置已对齐，灯路保持连通。"
+		notice = "导光装置已经对齐，灯路保持连通。"
 		return
 	var current := int(guide_dirs.get(object.id,int(object.dir)))
 	guide_dirs[object.id] = (current+1)%4
 	dirty = true
 	if guides_aligned():
 		progress.flags.P02 = true
-		notice = "三束光同时落在刻痕上，门内灯线复亮。"
+		notice = "三束光落在刻痕上，门内的灯线亮了。"
 		if SaveStore.is_safe(safety()): save_game("auto",true)
 	else:
 		notice = "导光装置转向%s。已对准 %d / 3。" % [DIR_NAMES[(current+1)%4],guides_correct()]
@@ -907,27 +925,27 @@ func rotate_guide(object: Dictionary) -> void:
 func interact() -> void:
 	if wake_left > 0: return
 	if not SaveStore.is_safe(safety()):
-		notice = "先避开威胁并结束动作，再交互或存档。"
+		notice = "战斗中不能交互或存档。先清掉敌人、停下动作。"
 		return
 	var object := nearest_object()
 	if object.is_empty():
-		notice = "靠近有标记的物件（30像素内），按 E。"
+		notice = "靠近发光的物件，按 E 交互。"
 		return
 	if str(object.kind) in ["exit","end"] and not bool(object_state(object,"").get("available",true)):
 		if str(object.kind) == "end":
-			notice = "门内灯影未定：先击破前厅的守门者。" if str(object.get("requires","")) == "E08" else "门内灯线尚未接通：先把三座导光装置对准刻痕。"
+			notice = "门还没开：先击破前厅的守门者。" if str(object.get("requires","")) == "E08" else "门还没开：先把三座导光装置对准刻痕。"
 		else:
-			notice = "这条通路还没有打开。"
+			notice = "这条路还没打开。"
 		return
 	if object.has("requires") and not progress.requirement_met(str(object.requires),progress.flags):
-		notice = "通路未开：先完成当前目标。"
+		notice = "路还没开：先完成当前目标。"
 		return
 	match object.kind:
 		"lamp":
 			if progress.node_id == "N0-01" and not progress.has("S01"):
-				notice = "灯座还有余温。先看看床铺旁的伤员。"
+				notice = "灯座还有余温。先和床铺旁的伤员说话。"
 			else:
-				notice = "灯座已经完成它的使命。"
+				notice = "这盏灯已经点亮，不用再管。"
 		"npc": begin_dialogue(str(object.get("dialogue","")))
 		"chest","socket","pipe":
 			notice = progress.apply_interaction(object.kind,scanned)
@@ -935,7 +953,7 @@ func interact() -> void:
 			if object.kind == "socket" and progress.has("P01") and not progress.has("S02"): begin_dialogue("S02")
 		"rong":
 			if progress.has("pipe"): begin_dialogue("S03")
-			else: notice = "绒望着水管：先看看那些刻痕。按 Q 观察，再靠近调查。"
+			else: notice = "绒指着水管：先按 Q 观察刻痕，再按 E 调查。"
 		"reward": begin_dialogue("M1")
 		"lore": begin_lore(str(object.get("dialogue","")))
 		"guide": rotate_guide(object)
@@ -946,35 +964,35 @@ func interact() -> void:
 		"story":
 			var event := str(object.get("event",""))
 			if progress.has(event):
-				notice = "这里已经记录过了。"
+				notice = "这段已经记下了。"
 			elif progress.start_event(event):
 				progress.finish_event()
 				dirty = true
 				if not str(object.get("dialogue","")).is_empty(): begin_lore(str(object.get("dialogue","")))
-				else: notice = "记录完成。"
+				else: notice = "记下了。"
 				start_encounters()
 				if SaveStore.is_safe(safety()): save_game("auto",true)
 			else:
-				notice = "现在还不能记录。"
+				notice = "现在还记不了。先完成前面的调查。"
 		"growth":
 			show_growth_choice(str(object.get("event","M1")))
 		"puzzle_choice":
 			show_puzzle_choice(object)
 		"evidence_slots":
 			if progress.has("P08"):
-				notice = "刻槽已经记录过这段因果。"
+				notice = "刻槽里已经嵌过这三份证据。"
 			elif progress.evidence_count() < 3:
-				notice = "三证据不足：还需要断根、抽水记录与旧约残片。"
+				notice = "还缺证据：断根切口、抽水记录、旧约残片。"
 			else:
 				progress.flags.P08 = true
-				notice = "三证据嵌入刻槽，旧约机关完成。"
+				notice = "三份证据嵌入刻槽，旧约校准完成。"
 				dirty = true
 		"equipment":
 			var eq_flag := str(object.get("flag",""))
 			if progress.has(eq_flag):
-				notice = "这里已经空了。"
+				notice = "这里已经拿空了。"
 			elif eq_flag.is_empty():
-				notice = "这个箱子里没有可用的装备。"
+				notice = "箱子里没有装备。"
 			else:
 				progress.flags[eq_flag] = true
 				progress.auto_equip()
@@ -996,7 +1014,7 @@ func interact() -> void:
 			rest_ready = true
 			var rest_bed: bool = str(object.get("visual","")) == "bed"
 			save_game("auto",true)
-			notice = "已休息并保存。"
+			notice = "已休息：生命、精力和药剂补满，进度已保存。"
 			if rest_bed and DisplayServer.get_name() != "headless": start_wake()
 		"exit":
 			progress.node_id = object.target
@@ -1004,8 +1022,8 @@ func interact() -> void:
 			dirty = true
 			if SaveStore.is_safe(safety()): save_game("auto",true)
 		"end":
-			clear_menu("菌根深处")
-			paragraph("你已抵达当前开发切片边界：营地—旧矿通道—菌洞入口—导光间。\n更深的菌根、完整章节和十至十五分钟路线仍在制作，本页不是游戏结局。")
+			clear_menu("路线终点")
+			paragraph("你已到达当前可玩路线的终点。\n可以返回探索，或保存当前进度。")
 			button("返回探索",resume)
 			button("保存当前进度",func(): save_game("auto",true))
 
@@ -1045,26 +1063,26 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_Q:
 				scanned = true
 				scan_tick = combat.tick
-				notice = "回声：水管上的刻痕从高处逐格下降。" if progress.node_id == "N0-03" else "灯光沿着地面延伸；寻找带名字的物件。"
+				notice = "Q 观察：水位刻痕从高处一格格下降。" if progress.node_id == "N0-03" else "Q 观察：灯线沿地面延伸。靠近发光的调查点按 E。"
 			KEY_SPACE: commands.append("dodge")
 			KEY_1:
 				if progress.skills().shield: commands.append("shield")
-				else: notice = "护灯尚未解锁。"
+				else: notice = "护灯尚未解锁：先接通导光间的灯路。"
 			KEY_2:
 				if progress.skills().rain:
 					queued_pointer = get_global_mouse_position()
 					commands.append("rain")
-				else: notice = "灯雨尚未解锁。"
+				else: notice = "灯雨尚未解锁：先在控制台完成第三项强化。"
 			KEY_R:
 				if combat.potions == 0: notice = "药剂已用完，回安全灯座休息补满。"
-				elif combat.hp >= progress.max_hp(): notice = "生命已满。"
+				elif combat.hp >= progress.max_hp(): notice = "生命已满，不需要饮用药剂。"
 				else: commands.append("heal")
 	if event is InputEventMouseButton and event.pressed:
 		queued_pointer = event.position
 		if event.button_index == MOUSE_BUTTON_LEFT and pending_encounter != "tutorial": commands.append("melee")
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if progress.has("S02"): commands.append("light")
-			else: notice = "净光尚未解锁。先找备用灯芯。"
+			else: notice = "净光尚未解锁。先去储藏间找备用灯芯。"
 
 func free_overlapping_player() -> void:
 	var radius := float(combat.config.player.body_radius)+float(combat.config.enemy_t1.body_radius)
@@ -1138,7 +1156,7 @@ func _physics_process(delta: float) -> void:
 		update_screen_shake()
 		progress.potions = combat.potions
 		for event in combat.events:
-			if event.kind == "heal": notice = "治疗完成，恢复%d生命。" % event.amount
+			if event.kind == "heal": notice = "药剂生效，恢复 %d 点生命。" % event.amount
 		player_moving = combat.player.distance_squared_to(before)>0.001
 		progress.seconds += delta
 		if player_moving or not combat.events.is_empty(): dirty = true
@@ -1146,7 +1164,7 @@ func _physics_process(delta: float) -> void:
 			var cleared := pending_encounter
 			progress.flags[cleared] = true
 			combat.clear_hazards()
-			notice = str(progress.content.encounters[cleared].get("clear_notice","威胁解除。靠近灯环或继续探索。"))
+			notice = str(progress.content.encounters[cleared].get("clear_notice","威胁已解除。继续前进，或回灯座休息存档。"))
 			pending_encounter = ""
 			start_encounters()
 			# Clearing an encounter (including the elite/Boss) is a safe checkpoint;
@@ -1158,8 +1176,8 @@ func _physics_process(delta: float) -> void:
 				begin_dialogue("S10")
 		if combat.hp <= 0:
 			clear_menu("灯光暂熄")
-			paragraph("恢复最近已提交的安全进度，未保存的奖励、敌人和资源一起回退。\n也可以读取安全存档，或回到标题。")
-			button("从当前区域重试",retry_from_room)
+			paragraph("回到最近一次安全存档。未保存的移动、战斗和奖励都会回退。\n也可以读取其他存档，或回到标题。")
+			button("回到最近安全点",retry_from_room)
 			button("读取存档",show_load_menu)
 			button("返回标题",show_title)
 	commands.clear()
@@ -1176,10 +1194,10 @@ func _physics_process(delta: float) -> void:
 		var core_text := ""
 		if str(boss.get("archetype","")) == "BOSS":
 			core_text = "  核心 " + ("暴露" if bool(boss.get("core_open",false)) else "收起")
-		status.text = "目标：%s  生命 %d/%d  护甲 %d%s\n%s" % [boss_label(boss),int(boss.hp),int(boss.max_hp),int(boss.armor_layers),core_text,notice]
+		status.text = "目标：%s  生命 %d/%d  护壳 %d%s\n%s" % [boss_label(boss),int(boss.hp),int(boss.max_hp),int(boss.armor_layers),core_text,notice]
 	else:
-		status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动  E交互  Q观察  R治疗  空格闪避")+"    "+notice
-	if combat.action == "heal": status.text = "正在治疗 %d / 36 · 移动、闪避或受击会取消\n%s" % [combat.age,notice]
+		status.text = ("E："+nearest.name if not nearest.is_empty() else "WASD移动  E交互  Q观察  R药剂  空格闪避")+"    "+notice
+	if combat.action == "heal": status.text = "正在饮用药剂 %d / 36 · 移动、闪避或受击会取消\n%s" % [combat.age,notice]
 	if wake_left > 0: status.text = "……\n睁开眼，从床铺上起身。"
 
 func handle_visual_events() -> void:
@@ -1188,11 +1206,11 @@ func handle_visual_events() -> void:
 		match str(event.get("kind","")):
 			"boss_phase":
 				start_screen_shake(6.0,12)
-				notice = "母体外壳重组，阶段 %d。" % (int(event.get("phase",0))+1)
+				notice = "母体外壳重组：第 %d 阶段。" % (int(event.get("phase",0))+1)
 			"boss_core":
 				if bool(event.get("open",false)):
 					start_screen_shake(2.0,6)
-					notice = "核心暴露：现在可以造成伤害。"
+					notice = "核心暴露：趁现在攻击。"
 			"boss_death":
 				start_screen_shake(8.0,18)
 				notice = "母体被压制，核心仍在微弱搏动。"
@@ -1204,138 +1222,137 @@ func boss_target() -> Dictionary:
 	return {}
 
 func boss_label(enemy: Dictionary) -> String:
-	var names := {"EL1":"守门者","EL2":"重甲守卫","T6":"甲片守卫","BOSS":"母体"}
+	var names := {"EL1":"守门者","EL2":"泵站守卫","T6":"甲片守卫","BOSS":"母体"}
 	return names.get(str(enemy.get("archetype","")),"精英")
 
 func current_goal() -> String:
 	match progress.node_id:
 		"N0-01":
-			if not progress.has("S01"): return "先看床铺旁的伤员。灯还有余温，备用芯在储藏间。"
-			return "沿地上的灯线，前往右侧储藏间取备用芯。"
+			if not progress.has("S01"): return "先和床铺旁的伤员说话。"
+			return "沿灯线去右侧储藏间，取备用灯芯。"
 		"N0-02":
-			if not progress.has("core"): return "打开左上备用灯芯箱，按 E 取出灯芯。"
-			if not progress.has("S02"): return "把备用芯装进出口灯座；灯座是凉的，水管也很久没进水。"
-			if not progress.has("tutorial"): return "右键净光，净化右上教学孢囊；它不会攻击。"
-			if not progress.has("E01"): return "击退靠近灯座的菌人；R 喝药，移动会取消治疗。"
-			if not progress.has("M1"): return "靠近下方初燃灯环，按 E 选择第一项强化。"
-			return "带着初燃与守灯结，前往绒的水管隔间。"
+			if not progress.has("core"): return "打开左上方的备用灯芯箱，按 E 取出灯芯。"
+			if not progress.has("S02"): return "把备用灯芯装进出口灯座。"
+			if not progress.has("tutorial"): return "右键施放净光，净化右上的教学孢囊。"
+			if not progress.has("E01"): return "击退靠近灯座的菌人。按 R 饮用药剂，移动会取消。"
+			if not progress.has("M1"): return "靠近下方的初燃灯环，按 E 选择第一项强化。"
+			return "前往绒所在的水管隔间。"
 		"N0-03":
-			if not progress.has("pipe"): return "按 Q 看水位刻痕，按 E 调查旧水管。"
-			if not progress.has("S03"): return "问绒：水为什么在菌群之前就退了。"
-			return "绒留下守灯。沿右门进入旧矿通道。"
+			if not progress.has("pipe"): return "按 Q 观察水位刻痕，再按 E 调查水管。"
+			if not progress.has("S03"): return "和绒说话，问清水为什么先退。"
+			return "沿右门进入旧矿通道。"
 		"N0-04":
-			if progress.has("E02") and not progress.has("E03"): return "旧矿门前的双灯试炼：清理最后的菌人与孢囊。"
-			if not progress.has("E03"): return "沿两道灯线前行，清除旧矿门前的威胁。"
-			return "旧矿门已开，向东进入菌洞入口。"
+			if progress.has("E02") and not progress.has("E03"): return "清掉旧矿门前的菌人和孢囊。"
+			if not progress.has("E03"): return "沿两道灯线前进，清掉旧矿门前的威胁。"
+			return "矿门已开，沿东门进入菌洞入口。"
 		"N1-01":
-			if not progress.has("E04"): return "借岩柱遮挡，清理投孢的紫菌人与通道。"
-			return "菌洞入口已清空。沿右门进入导光间。"
+			if not progress.has("E04"): return "借岩柱挡住投孢，清掉紫菌人和孢囊。"
+			return "入口已清空，沿右门进入导光间。"
 		"N1-02":
-			if not progress.has("E05"): return "清理盘踞在导光间的菌人。"
-			if not progress.has("E06"): return "击破两枚膨胀的孢囊，别等它们炸开。"
-			if not progress.has("P02"): return "转动三座导光装置（E 转向），已对准 %d / 3；断线不是菌群咬的。" % guides_correct()
-			return "灯路已连通。进入菌根前厅。"
+			if not progress.has("E05"): return "清掉导光间的菌人。"
+			if not progress.has("E06"): return "击破两枚膨胀的孢囊，别让它们炸开。"
+			if not progress.has("P02"): return "按 E 转动三座导光装置，对准刻痕（%d / 3）。" % guides_correct()
+			return "灯路已接通，沿右门进入菌根前厅。"
 		"N1-03":
-			if not progress.has("E07"): return "前厅的守卫在护着更深处的门；先清冲锋菌人。"
-			if not progress.has("E08"): return "守门者已现身；击破它的护壳后再开门。"
-			return "前厅已清空。进入菌根裂口。"
+			if not progress.has("E07"): return "先清掉冲锋菌人，守门者在门后。"
+			if not progress.has("E08"): return "击破守门者的护壳，打开深处的门。"
+			return "前厅已清空，沿东门进入菌根裂口。"
 		"N1-04":
-			if not progress.has("E09"): return "清理裂口的菌人与投孢者。"
+			if not progress.has("E09"): return "清掉裂口的菌人和投孢者。"
 			if not progress.has("E10"): return "击破裂口深处的孢囊，别让它封住灯线。"
-			return "裂口已安静。沿东侧灯线进入灯根祭坛。"
+			return "裂口已安静，沿东侧灯线进入菌灯井。"
 		"N1-05":
-			if not progress.has("E11"): return "清理祭坛的守坛者，别让灯根再次熄灭。"
-			if not progress.has("M2"): return "灯根已清。在祭坛旁选择一次强化。"
-			return "灯根已清。前往根桥。"
+			if not progress.has("E11"): return "清掉祭坛的守坛者。"
+			if not progress.has("M2"): return "在祭坛旁按 E 完成第二次强化。"
+			return "沿东门前往根桥。"
 		"N1-06":
-			if not progress.has("S04"): return "根桥上有斧痕。先按 E 记下断根切口，再接通根桥。"
-			if not progress.has("P03"): return "按灯线顺序转动两个桥压阀；根桥原本不需要人去拧。"
-			return "根桥已接通。下到根桥下层，前往分流室。"
+			if not progress.has("S04"): return "先按 E 检查根桥上的斧痕，记下断根切口。"
+			if not progress.has("P03"): return "按灯线顺序打开两个桥压阀。"
+			return "根桥已接通，沿东门下到根桥下层。"
 		"N1-07":
-			if not progress.has("E31"): return "穿过旧支撑，清掉盘踞的菌群；分流室的门才会露出来。"
-			return "旧支撑已清。沿北侧分流门进入分流室。"
+			if not progress.has("E31"): return "穿过旧支撑，清掉菌群。"
+			return "旧支撑已清，沿北侧门进入分流室。"
 		"N1-08":
-			if not progress.has("E35"): return "绕过空井架，清掉最后的裂口菌群。"
-			return "菌灯井已安静。沿北侧灯道进入灯根祭坛。"
+			if not progress.has("E35"): return "绕过空井架，清掉裂口残余的菌群。"
+			return "菌灯井已安静，沿北侧灯道去灯根祭坛。"
 		"N2-01":
-			if not progress.has("S05"): return "读分流图；两条支路都通向泵站。"
-			return "先走排水入口或被困门外，另一条不会消失；两条都完成后才能合流。"
+			if not progress.has("S05"): return "读分流图。两条支路都通向泵站。"
+			return "先走排水支路或救援支路，另一条不会消失；两条都完成后才能合流。"
 		"N2-02":
-			if not progress.has("P04"): return "关闭两道排水阀，排干前段积水。"
-			return "排水完成。前往排水出口检查旧灯。"
+			if not progress.has("P04"): return "按顺序关闭两道排水阀。"
+			return "排水完成，沿东门去排水出口。"
 		"N2-03":
-			if not progress.has("E15"): return "确认排水完成，清理旧灯旁的菌群。"
-			if not progress.has("Q1b"): return "检查旧灯；修好三处旧灯可换澄明镜。"
-			return "排水出口已检查。回分流室走另一条支路。"
+			if not progress.has("E15"): return "清掉旧灯旁的菌群。"
+			if not progress.has("Q1b"): return "检查旧灯。修好三处旧灯可换澄明镜。"
+			return "检查完毕，回分流室走另一条支路。"
 		"N2-04":
-			if not progress.has("P05"): return "从安全侧切断污染根，再拉开门闩。"
-			return "门已打开。进入安全旁室找砾。"
+			if not progress.has("P05"): return "从安全侧关闭两道污染根阀。"
+			return "门已打开，沿东门进入安全旁室。"
 		"N2-05":
-			if not progress.has("E17"): return "旁室里还有菌群；先清场，再读砾的留条。"
-			return "砾已自行挪到旁室里侧。读完留条，回分流室合流。"
+			if not progress.has("E17"): return "先清掉旁室的菌群。"
+			return "读砾的留条，再从东门回合流通道。"
 		"N2-06":
-			if not progress.has("S06"): return "两条水路在这里合流。按 E 记下合流标记。"
-			return "泵站控制室就在前面；先清场，别让守卫毁了记录。"
+			if not progress.has("S06"): return "按 E 记下合流标记。"
+			return "沿东门前往泵站守卫。先清场，别让守卫毁了记录。"
 		"N2-07":
-			if not progress.has("E19"): return "击破泵站守卫；它的甲片是从旧闸门上拆下来的。"
-			return "守卫倒下。沿回廊前往控制室。"
+			if not progress.has("E19"): return "击破泵站守卫。"
+			return "守卫已倒下，沿东门去泵站回廊。"
 		"N2-08":
-			if not progress.has("S07"): return "读抽水记录：压力超过旧约红线，末尾有禾的签名。"
-			if not progress.has("P06"): return "启动储水前，先按压力顺序校准两个稳压阀。"
-			if not progress.has("M3") or not progress.has("E20"): return "校准灯雨并清场，然后选择第三项强化。"
-			return "控制室已稳定。沿试验段外廊进入王庭。"
+			if not progress.has("S07"): return "读抽水记录，再看压力记录。"
+			if not progress.has("P06"): return "按压力顺序校准两个稳压阀。"
+			if not progress.has("M3") or not progress.has("E20"): return "清掉控制室菌群，在控制台完成第三项强化（解锁灯雨）。"
+			return "控制室已稳定，沿东门去试验段外廊。"
 		"N2-09":
-			if not progress.has("E32"): return "沿回廊检查泵站管线，清掉守卫。"
-			return "回廊已通。下行进入控制室。"
+			if not progress.has("E32"): return "沿回廊清掉守卫。"
+			return "回廊已通，沿东门下到控制室。"
 		"N2-10":
-			if not progress.has("E34"): return "沿试验段外廊清掉最后的泵站菌群。"
-			return "外廊已清。沿北侧根门进入王庭外环。"
+			if not progress.has("E34"): return "清掉试验段外廊的菌群。"
+			return "外廊已清，沿北侧根门进入王庭外环。"
 		"N3-01":
-			if not progress.has("S08"): return "王庭外环有旧约残片与菌王留声；先听，再走。"
-			return "旧约只留下半句。沿东门去供给回廊，找完整拓文。"
+			if not progress.has("S08"): return "听菌王留声，取得旧约残片。"
+			return "残片已够作证。沿东门去供给回廊；旧约墙上有全文。"
 		"N3-02":
-			if not progress.has("P07"): return "按顺序打开三段供给阀，回廊才会通。"
-			return "供给回廊已开。前往旧约墙。"
+			if not progress.has("P07"): return "按顺序打开三段供给阀。"
+			return "供给回廊已开，沿东门去旧约墙。"
 		"N3-03":
-			if not progress.has("E23"): return "旧约墙旁的菌群还没清。"
-			return "读旧约墙全文；沿墙后通道进入王庭侧廊。"
+			if not progress.has("E23"): return "清掉旧约墙旁的菌群。"
+			return "旧约墙上有全文。读完可从墙后去王庭侧廊。"
 		"N3-04":
-			if not progress.has("E24") or not progress.has("E25"): return "前厅有两段守卫；清场后才能进入安全王庭。"
-			return "前厅已清。进入王庭安全区。"
+			if not progress.has("E24") or not progress.has("E25"): return "清掉前厅的两段守卫。"
+			return "前厅已清，沿东门进入王庭安全区。"
 		"N3-05":
 			if not progress.has("P08"): return "先听菌王留声，再用两个旧约阀完成校准。"
-			if not progress.has("M4"): return "旧约校准完成。选择最后一项强化。"
-			return "王庭已稳定。前往回流桥。"
+			if not progress.has("M4"): return "在安全区完成最后一次强化。"
+			return "王庭已稳定，沿东门前往回流桥。"
 		"N3-06":
-			if not progress.has("E26"): return "用最后的强化清开回流桥。"
-			return "回流桥已通。沿北门前往调压前厅。"
+			if not progress.has("E26"): return "清开回流桥上的菌群。"
+			return "回流桥已通，沿北门前往调压前厅。"
 		"N3-07":
 			if not progress.has("E33"): return "从侧廊绕行，清掉根刺旁的守卫。"
-			return "侧廊已通。沿北侧门进入王庭前厅。"
+			return "侧廊已通，沿北侧门进入王庭前厅。"
 		"N3-08":
 			if not progress.has("E36"): return "穿过王庭最后的根门，清掉调压前厅的守卫。"
-			return "调压前厅已通。进入调压入口。"
+			return "调压前厅已通，沿东门进入调压入口。"
 		"N4-01":
-			if not progress.has("E27"): return "读取主流向，清掉第一段调压守卫。"
-			return "打开第一道调压阀，进入中段。"
+			if not progress.has("E27"): return "清掉入口守卫。"
+			return "打开第一道调压阀，进入调压中段。"
 		"N4-02":
-			if not progress.has("E28"): return "清掉中段的菌群，稳定支路压力。"
-			return "中段已稳。前往稳压台。"
+			if not progress.has("E28"): return "清掉中段菌群。"
+			return "打开第二道调压阀，前往稳压台。"
 		"N4-03":
-			if not progress.has("P09"): return "按顺序稳定三道压力；最后一道打开核心外廊。"
-			return "稳压完成。穿过核心外廊，前往最后灯座。"
+			if not progress.has("P09"): return "打开第三道调压阀，接通核心外廊。"
+			return "稳压完成，穿过核心外廊去最后灯座。"
 		"N4-04":
-			if not progress.has("E29"): return "穿过最后两段战前压力。"
-			return "核心外廊已清。进入最后灯座。"
+			return "外廊空着，守卫都被母体召回了核心。前往最后灯座。"
 		"N4-05":
-			if not progress.has("S09"): return "最后灯座。检查装备、存档，再进核心室。"
-			return "三证据都在身上。进入核心室，面对母体。"
+			if not progress.has("S09"): return "检查装备、存档，再进核心室。"
+			return "三份证据都在身上。进入核心室，面对母体。"
 		"N4-06":
 			if not progress.has("E30"): return "压制母体。"
-			if progress.ending_id().is_empty(): return "母体已被压制。先听它最后一句，再靠近灯根核心做选择。"
-			return "选择已经写下。沿东门前往尾声。"
+			if progress.ending_id().is_empty(): return "母体已被压制。听完它最后的话，再靠近灯根核心做选择。"
+			return "选择已写下，沿东门前往尾声。"
 		"N4-07":
-			return "回看这段路，或返回标题。"
+			return "按 E 查看结局统计与制作名单，或返回标题。"
 	return progress.node().goal
 
 func guide_color(object: Dictionary) -> Color:

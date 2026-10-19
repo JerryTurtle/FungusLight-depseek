@@ -96,12 +96,67 @@ func run() -> void:
 	var s03 := ""
 	for row in content.dialogues.S03: s03 += str(row[1])
 	check(s03.find("禾") >= 0 and s03.find("水先退") >= 0, "S03 states the human-first drought cause")
+	check(s03.find("我是菌人") >= 0 and s03.find("水脉") >= 0, "S03 explains why Rong stays at the lamp")
 	var l12 := ""
 	for row in content.dialogues.L12: l12 += str(row[1])
-	check(l12.find("违约者") >= 0, "L12 carries the complete covenant")
+	check(l12.find("违约者") >= 0 and l12.find("留路") >= 0, "L12 carries the complete covenant and its explanation")
 	var s08 := ""
 	for row in content.dialogues.S08: s08 += str(row[1])
-	check(s08.find("残片") >= 0 and s08.find("旧约墙") >= 0, "S08 points to the full covenant wall")
+	check(s08.find("残片") >= 0 and s08.find("旧约墙") >= 0 and s08.find("违约者") < 0, "S08 is an incomplete fragment that points to the wall")
+	var s07 := ""
+	for row in content.dialogues.S07: s07 += str(row[1])
+	check(s07.find("泵压") >= 0 and s07.find("砍根令") >= 0 and s07.find("别推给菌群") >= 0, "S07 ties overpumping to the root-cutting order")
+	var s10 := ""
+	for row in content.dialogues.S10: s10 += str(row[1])
+	check(s10.find("先断水的是人") >= 0 and s10.find("以渴偿还") >= 0, "S10 closes the evidence and covenant debt")
+	var dialogue_ok := true
+	for id in content.dialogues:
+		for row in content.dialogues[id]:
+			if str(row[0]).is_empty() or str(row[1]).is_empty(): dialogue_ok = false
+			for token in ["S0","S1","M1","M2","M3","M4","P0","P1","manual_"]:
+				if str(row[1]).find(token) >= 0: dialogue_ok = false
+	check(dialogue_ok, "all dialogue entries are complete and free of internal IDs")
+	var goals_ok := true
+	for node_def in content.nodes:
+		if str(node_def.goal).is_empty() or str(node_def.goal).length() > 32: goals_ok = false
+	check(goals_ok, "all room goals are readable one-line objectives")
+	check(JSON.stringify(content).find("专注") < 0, "player-facing resource is consistently called 精力")
+	var data_ids_ok := true
+	for node_def in content.nodes:
+		if str(node_def.name).find("M1") >= 0 or str(node_def.goal).find("M1") >= 0: data_ids_ok = false
+		for obj in node_def.objects:
+			var obj_name := str(obj.get("name",""))
+			if obj_name.find("M1") >= 0 or obj_name.find("P0") >= 0 or obj_name.find("S0") >= 0: data_ids_ok = false
+	check(data_ids_ok, "room and object labels do not expose internal IDs")
+	var mounted_lore := {}
+	for node_def in content.nodes:
+		for obj in node_def.objects:
+			if obj.has("dialogue"): mounted_lore[str(obj.dialogue)] = true
+	var lore_reachable := true
+	for id in content.dialogues:
+		if str(id).begins_with("L") and not mounted_lore.has(str(id)): lore_reachable = false
+	check(lore_reachable, "all 20 lore entries are reachable from a room object")
+	var intro_spoils := false
+	for panel in Intro.SCENES:
+		var panel_text := str(panel.get("text",""))
+		if panel_text.find("三份证据") >= 0 or panel_text.find("恢复共生") >= 0 or panel_text.find("封存撤离") >= 0: intro_spoils = true
+	check(not intro_spoils, "opening raises the question without spoiling evidence or endings")
+	var n4_04: Dictionary = content.nodes.filter(func(n): return str(n.id) == "N4-04")[0]
+	check(str(n4_04.goal).find("空") >= 0 and str(n4_04.goal).find("两段") < 0, "core corridor objective matches the empty room")
+	var n1_04: Dictionary = content.nodes.filter(func(n): return str(n.id) == "N1-04")[0]
+	var n1_04_east: Dictionary = n1_04.objects.filter(func(o): return str(o.id) == "east")[0]
+	check(str(n1_04_east.target) == "N1-08" and str(n1_04_east.name).find("菌灯井") >= 0, "rift objective and exit name point to the lamp well")
+	scene.progress.flags.Q1a = true
+	check(scene.quest_status("Q1") == "进行中 1/3", "quest status shows partial progress")
+	scene.progress.flags.Q1b = true
+	scene.progress.flags.Q1c = true
+	scene.progress.flags.Q1 = true
+	check(scene.quest_status("Q1") == "已完成", "quest status shows completion")
+	check(scene.slot_name("manual_1") == "手动存档 1", "save slot label is player-facing")
+	var before_node: String = str(scene.progress.node_id)
+	scene.progress.node_id = "N4-03"
+	check(scene.current_goal().find("第三道") >= 0, "final pressure goal names the remaining third valve")
+	scene.progress.node_id = before_node
 
 	# Save/rest lamps must not steal the E prompt from an exit.
 	var rest_min := 9999.0
@@ -126,11 +181,11 @@ func run() -> void:
 	scene.show_title()
 	await process_frame
 	var title_text := " ".join(menu_texts(scene))
-	check(title_text.find("只够一边") >= 0 and title_text.find("开场故事") >= 0, "title states the story premise and offers the opening")
+	check(title_text.find("地下三百尺") >= 0 and title_text.find("是谁先断了水") >= 0 and title_text.find("开场故事") >= 0, "title states the premise and offers the opening")
 	scene.show_journal()
 	await process_frame
 	var journal_text := " ".join(menu_texts(scene))
-	check(journal_text.find("S06") >= 0 or journal_text.find("合流") >= 0, "journal names the confluence state")
+	check(journal_text.find("合流") >= 0 and journal_text.find("共生结局") >= 0 and journal_text.find("封存结局") >= 0 and journal_text.find("S06") < 0, "journal names branches and endings without internal IDs")
 
 	scene.combat_audio.stop_all()
 	scene.queue_free()

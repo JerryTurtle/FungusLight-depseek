@@ -23,7 +23,7 @@ func _ready() -> void:
 	title.text = "画面与声音设置"
 	title.add_theme_font_size_override("font_size",36)
 	box.add_child(title)
-	for item in [["全屏窗口","fullscreen"],["低特效（保留全部危险预告）","low_effects"],["减少动态（关闭碎片飞散）","reduced_motion"],["降低闪光（保留命中轮廓）","reduced_flash"],["开启震屏（重击/阶段反馈）","shake_enabled"]]:
+	for item in [["全屏（关闭则窗口化）","fullscreen"],["低特效（保留全部危险预告）","low_effects"],["减少动态（关闭碎片飞散）","reduced_motion"],["降低闪光（保留命中轮廓）","reduced_flash"],["开启震屏（重击/阶段反馈）","shake_enabled"]]:
 		var checkbox := CheckButton.new()
 		checkbox.text = item[0]
 		checkbox.button_pressed = preferences.get(item[1])
@@ -47,12 +47,12 @@ func _ready() -> void:
 		persist())
 	box.add_child(slider)
 	var controls_label := Label.new()
-	controls_label.text = "操作：WASD/方向键移动 · E 交互 · Q 观察 · R 治疗 · 空格闪避\n左键灯击 · 右键净光 · 1/2 护灯/灯雨 · Esc 暂停"
+	controls_label.text = "操作：WASD 移动 · E 交互 · Q 观察 · R 药剂 · 空格闪避\n左键灯击 · 右键净光 · 1/2 护灯/灯雨 · Esc 暂停"
 	controls_label.add_theme_font_size_override("font_size",16)
 	controls_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(controls_label)
 	save_label = Label.new()
-	save_label.text = "设置保存在用户目录；当前战斗已暂停。"
+	save_label.text = "设置会自动保存。"
 	save_label.add_theme_font_size_override("font_size",18)
 	box.add_child(save_label)
 	var close := Button.new()
@@ -64,5 +64,5 @@ func _ready() -> void:
 
 func persist() -> void:
 	var error: Error = preferences.write_settings()
-	save_label.text = "设置已保存" if error == OK else "保存失败；本次运行仍使用当前设置（%d）" % error
+	save_label.text = "设置已保存" if error == OK else "保存失败；本次运行仍会使用当前设置。"
 	changed.emit()

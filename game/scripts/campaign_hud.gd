@@ -72,7 +72,7 @@ func _draw_status_panel() -> void:
 	var focus_ratio := _ratio(game.combat.focus, maxf(1.0, game.progress.max_focus()))
 	_text(Vector2(94, 38), "岚 · 最后守灯人", 24, C_TEXT)
 	var time_text: String = game.elapsed_text() if game.has_method("elapsed_text") else "00:00"
-	_text_right(Vector2(344, 38), time_text, 20, C_MUTED, 60)
+	_text_right(Vector2(306, 36), "用时 "+time_text, 14, C_MUTED, 98)
 
 	_text(Vector2(94, 62), "生命", 20, C_MUTED)
 	_text_right(Vector2(296, 62), "%d / %d" % [ceili(game.combat.hp), ceili(game.progress.max_hp())], 20, C_TEXT, 104)
@@ -90,9 +90,9 @@ func _draw_status_panel() -> void:
 		var shield_ratio := _ratio(shield, maxf(1.0, float(game.progress.shield_capacity())))
 		draw_rect(Rect2(94, 114, 306, 3), Color(0.07, 0.14, 0.14, 0.95))
 		draw_rect(Rect2(94, 114, round(306 * shield_ratio), 3), C_SHIELD)
-		_text(Vector2(94, 132), "护灯 %d" % ceili(shield), 16, C_SHIELD)
+		_text(Vector2(94, 132), "护灯 %d / %d" % [ceili(shield), int(game.progress.shield_capacity())], 16, C_SHIELD)
 	else:
-		var shield_label := "护灯 未习得" if not bool(game.progress.skills().get("shield", false)) else "护灯 未展开"
+		var shield_label := "护灯 未解锁" if not bool(game.progress.skills().get("shield", false)) else "护灯 未开启"
 		_text(Vector2(94, 132), shield_label, 16, Color(0.39, 0.48, 0.43, 1.0))
 
 	# Three potion bottles; empty slots stay visible so the player can read 0/3.
@@ -113,14 +113,14 @@ func _draw_status_panel() -> void:
 		_text(Vector2(314, 154), "R 饮用药剂", 16, C_MUTED)
 	if game.combat.poison_until > game.combat.tick:
 		var seconds := maxi(1, ceili(float(game.combat.poison_until - game.combat.tick) / 60.0))
-		_text(Vector2(94, 154), "孢毒 %ds" % seconds, 16, Color(0.58, 0.90, 0.40, 1.0))
+		_text(Vector2(94, 154), "孢毒 %d 秒" % seconds, 16, Color(0.58, 0.90, 0.40, 1.0))
 
 func _draw_skill_tray() -> void:
 	var panel := Rect2(884, 568, 380, 138)
 	_draw_frame(panel)
 	_draw_corner_rivets(panel)
-	_text(Vector2(900, 588), "技能 · 冷却", 20, C_MUTED)
-	_text_right(Vector2(1248, 588), "数字键 / 鼠标", 16, Color(0.45, 0.50, 0.44, 1.0), 120)
+	_text(Vector2(900, 588), "技能 · 精力 / 冷却", 20, C_MUTED)
+	_text_right(Vector2(1128, 588), "鼠标 / 数字键", 16, Color(0.45, 0.50, 0.44, 1.0), 120)
 	var slots := skill_slots()
 	for slot in slots:
 		_draw_skill_slot(slot)
@@ -192,7 +192,8 @@ func _draw_skill_slot(slot: Dictionary) -> void:
 	var cost := float(slot.cost)
 	if cost > 0.0:
 		var cost_color := C_MUTED if bool(slot.enough) else Color(1.0, 0.48, 0.38, 1.0)
-		_text_right(Vector2(rect.position.x + 53, rect.position.y + 55), str(int(cost)), 16, cost_color, 24)
+		draw_rect(Rect2(rect.position + Vector2(3, 3), Vector2(34, 16)), Color(0.01, 0.02, 0.02, 0.82))
+		_text(Vector2(rect.position.x + 4, rect.position.y + 15), "耗%d" % int(cost), 12, cost_color)
 	_text_center(Rect2(rect.position.x, rect.position.y + 59, rect.size.x, 18), str(slot.key), 16, C_MUTED)
 	_text_center(Rect2(rect.position.x, rect.position.y + 75, rect.size.x, 18), str(slot.name), 16, C_TEXT if not locked else Color(0.49, 0.48, 0.41, 1.0))
 

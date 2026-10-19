@@ -16,13 +16,13 @@ static func validate_snapshot(value: Variant) -> String:
 	for key in ["build_id", "chapter_id", "node_id"]:
 		if not value.get(key) is String or value[key].is_empty(): return "存档缺少位置或构建标识"
 	for key in MAP_FIELDS:
-		if not value.get(key) is Dictionary: return "存档缺少进度字段："+key
+		if not value.get(key) is Dictionary: return "存档缺少必要的进度数据。"
 	var position = value.get("safe_position")
 	if not position is Array or position.size() != 2: return "安全位置无效"
 	for number in position:
 		if not _number(number) or not is_finite(float(number)): return "安全位置无效"
 	for key in ["health", "focus", "potions", "effective_seconds"]:
-		if not _number(value.get(key)) or not is_finite(float(value[key])) or value[key] < 0: return "资源字段无效："+key
+		if not _number(value.get(key)) or not is_finite(float(value[key])) or value[key] < 0: return "存档里的生命、精力或药剂数据无效。"
 	if value.health <= 0 or value.potions > 3 or value.potions != floor(value.potions): return "生命或药剂无效"
 	return ""
 
@@ -35,7 +35,7 @@ static func is_safe(context: Dictionary) -> bool:
 	return true
 
 func save_slot(slot: String, snapshot: Dictionary, safety: Dictionary, overwrite_confirmed: bool = false) -> Dictionary:
-	if slot not in SLOTS: return _failure("invalid_slot", "存档槽无效")
+	if slot not in SLOTS: return _failure("invalid_slot", "存档位置无效")
 	if not is_safe(safety): return _failure("unsafe", "请在安全点、战斗和演出结束后保存")
 	var reason := validate_snapshot(snapshot)
 	if not reason.is_empty(): return _failure("invalid_snapshot", reason)
@@ -70,7 +70,7 @@ func load_ending_backup() -> Dictionary:
 	return _read(directory+"/"+ENDING_BACKUP)
 
 func load_slot(slot: String, use_backup: bool = false) -> Dictionary:
-	if slot not in SLOTS: return _failure("invalid_slot", "存档槽无效")
+	if slot not in SLOTS: return _failure("invalid_slot", "存档位置无效")
 	var path := directory+"/"+slot+".json"
 	var result := _read(path+".bak" if use_backup else path)
 	if result.ok:

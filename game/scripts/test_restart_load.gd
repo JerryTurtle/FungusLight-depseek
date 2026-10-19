@@ -42,7 +42,7 @@ func run() -> void:
 			scene.progress.flags[flag] = true
 		scene.save_game("manual_1", true)
 		check(FileAccess.file_exists(folder + "/manual_1.json"), "mid-game save written")
-		check(scene.notice == "保存成功", "save accepted: " + scene.notice)
+		check(scene.notice.find("已保存") >= 0, "save accepted: " + scene.notice)
 		print("RESTART_WRITE checks=%d failures=%d" % [checks, failures])
 	else:
 		var stored: Dictionary = scene.saves.load_slot("manual_1")

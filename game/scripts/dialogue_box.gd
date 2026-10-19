@@ -736,11 +736,11 @@ func _update_hint() -> void:
 		return
 	match state:
 		State.REVEALING:
-			_hint_label.text = "E / 回车 / 空格 显示全部　　Tab 跳过"
+			_hint_label.text = "E / 回车 / 空格 / 左键 显示全部　　Tab 跳过本段"
 		State.WAITING:
-			_hint_label.text = "E / 回车 / 空格 继续　　Tab 跳过"
+			_hint_label.text = "E / 回车 / 空格 / 左键 继续　　Tab 跳过本段"
 		State.CHOICES:
-			_hint_label.text = "W / S 选择　　E / 回车 确认"
+			_hint_label.text = "W / S 选择　　E / 回车 / 左键 确认"
 		_:
 			_hint_label.text = ""
 

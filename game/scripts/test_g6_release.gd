@@ -38,7 +38,7 @@ func run() -> void:
 	scene.saves.directory = ProjectSettings.globalize_path("res://").path_join("../qa/runtime-profile/g6-flow-"+str(Time.get_ticks_usec())).simplify_path()
 	scene.show_title()
 	await process_frame
-	check(has_text("新游戏") and has_text("继续（暂无自动存档）") and has_text("读取存档") and has_text("设置") and has_text("退出"),"title menu complete on first run")
+	check(has_text("新游戏") and has_text("继续游戏（无自动存档）") and has_text("读取存档") and has_text("设置") and has_text("退出"),"title menu complete on first run")
 	check(not has_text("开发切片") and not scene.world.visible and not scene.hud.visible,"title is a clean release screen")
 	var continue_button: Button = null
 	for child in scene.menu.get_children():
@@ -73,7 +73,7 @@ func run() -> void:
 	check(scene.running and not scene.paused and scene.world.visible,"new game enters playable world")
 	check(FileAccess.file_exists(scene.saves.directory+"/auto.json"),"new game writes auto checkpoint")
 	scene.show_title()
-	check(has_text("继续（自动存档）"),"continue enabled after auto save")
+	check(has_text("继续游戏（自动存档）"),"continue enabled after auto save")
 	scene.new_game()
 	scene.wake_left = 0
 	scene.hide_player = false
@@ -98,7 +98,7 @@ func run() -> void:
 	bad.store_string("{broken")
 	bad.close()
 	scene.load_game("manual_1")
-	check(has_text("恢复上一次有效备份"),"corrupt primary offers backup recovery")
+	check(has_text("恢复上一次备份"),"corrupt primary offers backup recovery")
 	scene.load_game("manual_1",true)
 	check(is_equal_approx(scene.progress.seconds,12.0),"backup recovery restores valid slot")
 
@@ -152,7 +152,7 @@ func run() -> void:
 	scene.paused = false
 	scene.running = true
 	scene._physics_process(1.0/60.0)
-	check(has_text("从当前区域重试") and has_text("读取存档") and has_text("返回标题"),"death menu has retry/load/title")
+	check(has_text("回到最近安全点") and has_text("读取存档") and has_text("返回标题"),"death menu has retry/load/title")
 	scene.show_title()
 
 	# Both endings and the credits/backup path.

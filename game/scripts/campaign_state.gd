@@ -120,7 +120,7 @@ func set_switch(object: Dictionary) -> String:
 		if not has(str(part)): complete = false
 	if complete:
 		flags[puzzle] = true
-		return "机关接通：%s 完成。" % puzzle
+		return "机关已接通，通路开了。"
 	return "机关进度：%d / %d。" % [parts.filter(func(p): return has(str(p))).size(), parts.size()]
 
 func sidequest(quest: String, part: String) -> String:
@@ -159,7 +159,7 @@ func apply_interaction(kind: String, scanned: bool = false) -> String:
 		"socket":
 			if node_id != "N0-02" or not has("core"): return "灯座缺少灯芯，先找储藏箱。"
 			flags.P01 = true
-			return "备用芯已装好，出口灯线复亮。"
+			return "备用灯芯已装好，出口灯线复亮。"
 		"pipe":
 			if node_id != "N0-03" or not scanned: return "按 Q 观察旧水管，再按 E 调查刻痕。"
 			flags.pipe = true
@@ -333,7 +333,7 @@ func snapshot(position: Vector2, health: float, focus: float) -> Dictionary:
 	for id in flag_ids: story[id] = has(id)
 	var encounters := {}
 	for id in encounter_ids: encounters[id] = has(id)
-	return {"schema_version":1,"build_id":str(ProjectSettings.get_setting("application/config/version","G6-004")),"chapter_id":"campaign","node_id":node_id,
+	return {"schema_version":1,"build_id":str(ProjectSettings.get_setting("application/config/version","G6-005")),"chapter_id":"campaign","node_id":node_id,
 		"safe_position":[position.x,position.y],"health":health,"focus":focus,"potions":potions,"effective_seconds":seconds,
 		"quests":quests(),"story":story,"puzzles":puzzles(),"encounters":encounters,
 		"rewards":rewards(),"skills":skills(),"upgrades":upgrades(),"equipment":equipment()}
@@ -341,25 +341,25 @@ func snapshot(position: Vector2, health: float, focus: float) -> Dictionary:
 func validate(value: Dictionary) -> String:
 	var error := Store.validate_snapshot(value)
 	if not error.is_empty(): return error
-	if value.chapter_id != "campaign" or node(str(value.node_id)).is_empty(): return "存档章节或节点未知。"
-	if value.quests.size() != quest_ids.size() or not value.quests.keys().all(func(k): return k in quest_ids): return "任务字段未知。"
-	if value.story.size() != flag_ids.size() or not value.story.keys().all(func(k): return k in flag_ids): return "进度字段未知。"
+	if value.chapter_id != "campaign" or node(str(value.node_id)).is_empty(): return "存档位置无法识别。"
+	if value.quests.size() != quest_ids.size() or not value.quests.keys().all(func(k): return k in quest_ids): return "存档任务数据无效。"
+	if value.story.size() != flag_ids.size() or not value.story.keys().all(func(k): return k in flag_ids): return "存档进度数据无效。"
 	for key in flag_ids:
-		if not value.story.get(key) is bool: return "进度标记无效。"
+		if not value.story.get(key) is bool: return "存档进度标记无效。"
 	var f: Dictionary = value.story
-	if value.encounters.size() != encounter_ids.size() or not value.encounters.keys().all(func(k): return k in encounter_ids): return "遭遇字段未知。"
+	if value.encounters.size() != encounter_ids.size() or not value.encounters.keys().all(func(k): return k in encounter_ids): return "存档遭遇数据无效。"
 	for key in encounter_ids:
 		if value.encounters.get(key) != f.get(key,false): return "遭遇状态不一致。"
-	if value.puzzles.size() != puzzle_ids.size() or not value.puzzles.keys().all(func(k): return k in puzzle_ids): return "机关字段未知。"
+	if value.puzzles.size() != puzzle_ids.size() or not value.puzzles.keys().all(func(k): return k in puzzle_ids): return "存档机关数据无效。"
 	for key in puzzle_ids:
 		if value.puzzles.get(key) != f.get(key,false): return "机关状态不一致。"
-	if value.rewards.size() != reward_ids.size() or not value.rewards.keys().all(func(k): return k in reward_ids): return "奖励字段未知。"
+	if value.rewards.size() != reward_ids.size() or not value.rewards.keys().all(func(k): return k in reward_ids): return "存档奖励数据无效。"
 	for key in reward_ids:
 		if value.rewards.get(key) != f.get(key,false): return "奖励状态不一致。"
-	if value.upgrades.size() != choice_ids.size() or not value.upgrades.keys().all(func(k): return k in choice_ids): return "强化字段未知。"
-	if value.equipment.size() != equipment_ids.size() or not value.equipment.keys().all(func(k): return k in equipment_ids): return "装备字段未知。"
+	if value.upgrades.size() != choice_ids.size() or not value.upgrades.keys().all(func(k): return k in choice_ids): return "存档强化数据无效。"
+	if value.equipment.size() != equipment_ids.size() or not value.equipment.keys().all(func(k): return k in equipment_ids): return "存档装备数据无效。"
 	var eq: Dictionary = value.equipment
-	if not eq.get("owned") is Dictionary or eq.owned.size() != 6: return "装备拥有字段无效。"
+	if not eq.get("owned") is Dictionary or eq.owned.size() != 6: return "装备数据不完整。"
 	for item in ["focus_lens","throttle_lens","clear_mirror","guardian_knot","artisan_clasp","ember_talisman"]:
 		if not eq.owned.get(item) is bool: return "装备拥有状态无效。"
 	if not str(eq.get("lens","")) in ["", "focus_lens","throttle_lens","clear_mirror"]: return "灯镜槽无效。"
@@ -394,12 +394,12 @@ func validate(value: Dictionary) -> String:
 			if not selected in ids: return "强化选择无效。"
 	if value.health > max_hp_for(f, value.upgrades, value.equipment) or value.focus > max_focus_for(f, value.upgrades): return "资源超过当前上限。"
 	# Every visited node must be reachable through unlocked exits from the start.
-	if not node_reachable(str(value.node_id), f): return "节点尚未解锁。"
+	if not node_reachable(str(value.node_id), f): return "存档所在区域尚未解锁。"
 	var position := Vector2(value.safe_position[0],value.safe_position[1])
 	if not Rect2(14,35,292,117).has_point(position): return "安全位置超出地图。"
 	for wall in node(value.node_id).walls:
 		if Rect2(wall[0],wall[1],wall[2],wall[3]).grow(5).has_point(position): return "安全位置位于墙内。"
-	if not validate_puzzles(): return "机关数据无效。"
+	if not validate_puzzles(): return "机关进度数据无效。"
 	return ""
 
 func max_hp_for(f: Dictionary, upgrades: Dictionary = {}, equipment_value: Dictionary = {}) -> float:

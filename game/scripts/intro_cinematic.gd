@@ -13,33 +13,34 @@ const FONT := preload("res://assets/fonts/FusionPixel12px-zh_hans.ttf")
 const SCENES := [
 	{
 		"image": preload("res://assets/intro/scene_01_cavern.png"),
-		"chapter": "序章 · 灯与根",
-		"text": "地下三百尺，避难所靠菌灯活着。\n灯根喝水，灯网发光；人从同一条水脉取水。",
+		"chapter": "第一幕 · 灯与根",
+		"text": "地下三百尺，避难所靠菌灯活着。\n灯根喝水，灯线发光；人和根，共用一条水脉。",
 	},
 	{
 		"image": preload("res://assets/intro/scene_02_pumps.png"),
-		"chapter": "旧约 · 一脉水",
-		"text": "三百年前，逃难的人与菌王立约：\n人取水，须留灯；根供水，须留路。",
+		"chapter": "第二幕 · 旧约",
+		"text": "三百年前，逃难的人与地下的菌王立约：\n人取水，要给根留光；根供水，要给人留路。",
 	},
 	{
 		"image": preload("res://assets/intro/scene_03_drought.png"),
-		"chapter": "后来 · 水少了",
-		"text": "后来水少了。技师禾抬高泵压，又签下砍根命令。\n灯亮了一夜，根断了水。",
+		"chapter": "第三幕 · 水少了",
+		"text": "后来水少了。泵站整夜响，井绳一天比一天短。\n有人说禾把水泵推过了红线；也有人说，根先堵了水管。",
 	},
 	{
 		"image": preload("res://assets/intro/scene_04_keeper.png"),
-		"chapter": "如今 · 最后一盏",
-		"text": "菌群开始攻击，营地只留最后一盏灯。\n守灯人岚提灯下到旧矿道，要问水，问根。",
+		"chapter": "第四幕 · 最后一盏",
+		"text": "菌群开始攻击，营地只剩最后一盏灯。\n守灯人岚提灯下到旧矿道，要查清：水到底断在哪一步。",
 	},
 	{
 		"image": preload("res://assets/intro/scene_05_core.png"),
-		"chapter": "灯根 · 最后的选择",
-		"text": "断根、抽水记录、旧约，三份证据指向同一件事。\n恢复共生，或封存撤离——这一次由岚来选。",
+		"chapter": "第五幕 · 灯根",
+		"text": "旧约说，灯与根同饮一脉水。\n如今水快干了，最后一条路在灯根之下。",
 	},
 ]
 
 var index := -1
 var playing := false
+var final_hint := "进入营地"
 var auto_left := 0.0
 var _finished := false
 var _bg: TextureRect
@@ -109,7 +110,7 @@ func _ready() -> void:
 	_text.add_theme_constant_override("outline_size", 5)
 	_text.add_theme_color_override("font_outline_color", Color(0.01, 0.02, 0.02, 0.98))
 	add_child(_text)
-	_hint = _label("Enter / 空格 继续    Esc 跳过", 16, Color(0.64, 0.65, 0.55, 0.95))
+	_hint = _label("回车 / 空格 / 左键 继续    Esc 跳过", 16, Color(0.64, 0.65, 0.55, 0.95))
 	_hint.position = Vector2(900, 684)
 	_hint.size = Vector2(350, 24)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -148,7 +149,7 @@ func _show_scene(next_index: int) -> void:
 	_bg.position = Vector2(-22, -12)
 	_chapter.text = str(scene.chapter)
 	_text.text = str(scene.text)
-	_hint.text = "Enter / 空格 继续    Esc 跳过" if index < SCENES.size() - 1 else "Enter / 空格 进入营地    Esc 跳过"
+	_hint.text = "回车 / 空格 / 左键 继续    Esc 跳过" if index < SCENES.size() - 1 else "回车 / 空格 / 左键 "+final_hint+"    Esc 跳过"
 	_dots.text = "  ".join(range(SCENES.size()).map(func(i): return "●" if i == index else "○"))
 	# Fade from black, with a slow push-in that keeps the pixel art crisp.
 	_shade.color = Color(0.005, 0.012, 0.012, 0.92)
