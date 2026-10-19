@@ -11,6 +11,7 @@
 | 原生 | test_export_input.py、test_review.py、replay_framerates.py | 先构建相同BuildId；不是系统键鼠操作 |
 | 性能 | stress_review.py、summarize_stress.py | 约15分钟；汇总含固定G2路径，先核对 |
 | 打包 | smoke_export.py、test_review_package.py | 阅读参数，后者只针对已有G2审核包 |
+| 交付包 | package_delivery.py | 从 Git 跟踪文件重建 `资料包/03-源码压缩包/FungusLight-G6-012-Source.zip` 与 `资料包/SHA256SUMS.txt`；会覆盖同名 zip，先确认发布事实不变 |
 | 资源 | audit_project.py、generate_sfx.py、gen_props.py | audit/generate_sfx会覆盖清单/音频；gen_props.py 确定性生成 props_data.json 与预览，运行前先看参数 |
 | 环境/快照 | install_templates.py、snapshot_source.py | 安装模板/源码zip；快照依赖对应报告 |
 | 历史收尾 | finalize_g2.py | 会重写报告与门槛，不能直接重跑覆盖H2批准和G3状态 |

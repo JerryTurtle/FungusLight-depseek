@@ -1,6 +1,5 @@
-﻿game/.godot/
+game/.godot/
 deliverables/*
-!deliverables/FungusLight-G6-012-Release.zip
 !deliverables/FINAL-RELEASE.md
 !deliverables/README.md
 !deliverables/SHA256SUMS.txt

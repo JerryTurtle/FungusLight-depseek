@@ -731,7 +731,7 @@
    "关闭仍在运行的 G6-010-Release 游戏进程后删除该过程目录"
   ],
   "caveat": "用户已在 qa/G6-approval.md 勾选“通过”并签名（JeryTurtle，日期按原文 2026.10.49）；G6 标记 passed。逐项验收字段和哈希栏未填写，哈希见 qa/evidence/G6/G6-012-final-package.txt。原始素材/生成图/Boss BGM 的再分发许可仍需确认。",
-  "package_zip": "deliverables/FungusLight-G6-012-Release.zip",
+  "package_zip": "资料包/01-游戏安装包/FungusLight-G6-012-Release.zip",
   "package_zip_sha256": "FCEC62C9CCD11759AF30E8532C72AD26B31D1608BA186390DAC8969D20EB25BF",
   "development_complete": true,
   "release_state": "released",

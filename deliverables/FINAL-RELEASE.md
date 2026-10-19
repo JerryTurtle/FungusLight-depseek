@@ -13,7 +13,7 @@
   - `Docs/`：操作、验收、已知问题
   - `QA/`：测试检查、截图、证据与验收记录
   - `Licenses/`：资产与音乐许可说明
-- `FungusLight-G6-012-Release.zip`：完整发布包，已纳入 Git
+- `FungusLight-G6-012-Release.zip`：完整发布包，已纳入 Git；**正式位置：`资料包/01-游戏安装包/FungusLight-G6-012-Release.zip`**（本目录保留说明与本地解压目录）
 
 ## 校验
 
