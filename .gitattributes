@@ -4,3 +4,7 @@
 *.wav binary
 *.ttf binary
 *.zip binary
+
+# G6-013 combined release zip is 135.8 MB (above GitHub's 100 MB single-file
+# limit); keep only this artifact in Git LFS so the normal Git mirror stays usable.
+资料包/01-游戏安装包/FungusLight-G6-013-Release.zip filter=lfs diff=lfs merge=lfs -text
