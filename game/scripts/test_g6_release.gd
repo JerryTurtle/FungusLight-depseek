@@ -39,7 +39,7 @@ func run() -> void:
 	scene.show_title()
 	await process_frame
 	check(has_text("新游戏") and has_text("继续游戏（无自动存档）") and has_text("读取存档") and has_text("设置") and has_text("退出"),"title menu complete on first run")
-	check(not has_text("开发切片") and not scene.world.visible and not scene.hud.visible,"title is a clean release screen")
+	check(not has_text("开发切片") and not has_text("重看开场故事") and not scene.world.visible and not scene.hud.visible,"title is a clean release screen")
 	var continue_button: Button = null
 	for child in scene.menu.get_children():
 		if child is Button and str(child.text).begins_with("继续"): continue_button = child
@@ -52,8 +52,12 @@ func run() -> void:
 		if child is Button and child.disabled: empty_buttons += 1
 	check(empty_buttons >= 4,"empty slots are disabled in load menu")
 	scene.show_title()
-	scene.open_settings("title")
-	check(scene.settings_panel.visible and scene.paused,"settings reachable from title")
+	var settings_button: Button = null
+	for child in scene.menu.get_children():
+		if child is Button and str(child.text) == "设置": settings_button = child
+	if settings_button != null: settings_button.emit_signal("pressed")
+	await process_frame
+	check(settings_button != null and scene.settings_panel.visible and scene.settings_panel.z_index >= 100 and scene.paused,"settings button from title opens above")
 	scene.on_settings_closed()
 	check(not scene.settings_panel.visible and has_text("新游戏"),"settings closes back to title")
 	var prefs = preload("res://scripts/presentation_settings.gd").new()

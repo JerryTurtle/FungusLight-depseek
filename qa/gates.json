@@ -1,5 +1,5 @@
 {
- "build_id": "G6-006",
+ "build_id": "G6-007",
  "G0": {
   "status": "passed",
   "evidence": [
@@ -416,7 +416,7 @@
  },
  "G6": {
   "status": "in_progress",
-  "build_id": "G6-006",
+  "build_id": "G6-007",
   "evidence": [
    "qa/evidence/G6/G6-gap-audit.md",
    "qa/evidence/G6/G6-001-checks.json",
@@ -554,16 +554,44 @@
    "qa/evidence/G6/G6-006-save-tests.log",
    "qa/evidence/G6/G6-006-settings.png",
    "qa/evidence/G6/G6-006-skip_route-tests.log",
-   "qa/evidence/G6/G6-006-title.png"
+   "qa/evidence/G6/G6-006-title.png",
+   "qa/evidence/G6/G6-007-campaign-tests.log",
+   "qa/evidence/G6/G6-007-checks.json",
+   "qa/evidence/G6/G6-007-clean-release.json",
+   "qa/evidence/G6/G6-007-clean-release.log",
+   "qa/evidence/G6/G6-007-combat-tests.log",
+   "qa/evidence/G6/G6-007-dialogue-tests.log",
+   "qa/evidence/G6/G6-007-enemies-tests.log",
+   "qa/evidence/G6/G6-007-final-package.txt",
+   "qa/evidence/G6/G6-007-g4_boss-tests.log",
+   "qa/evidence/G6/G6-007-g4_death-tests.log",
+   "qa/evidence/G6/G6-007-g4_presentation-tests.log",
+   "qa/evidence/G6/G6-007-g4_state-tests.log",
+   "qa/evidence/G6/G6-007-g4_visual-tests.log",
+   "qa/evidence/G6/G6-007-g6_release-tests.log",
+   "qa/evidence/G6/G6-007-hud.png",
+   "qa/evidence/G6/G6-007-pressure-tests.log",
+   "qa/evidence/G6/G6-007-progress.md",
+   "qa/evidence/G6/G6-007-props-tests.log",
+   "qa/evidence/G6/G6-007-release-layout.json",
+   "qa/evidence/G6/G6-007-release-package.json",
+   "qa/evidence/G6/G6-007-restart-load.log",
+   "qa/evidence/G6/G6-007-route-skip.json",
+   "qa/evidence/G6/G6-007-route-tests.log",
+   "qa/evidence/G6/G6-007-route.json",
+   "qa/evidence/G6/G6-007-save-tests.log",
+   "qa/evidence/G6/G6-007-skip_route-tests.log",
+   "qa/evidence/G6/G6-007-title-settings.png",
+   "qa/evidence/G6/G6-007-title.png"
   ],
-  "package": "deliverables/G6-006-Release/",
+  "package": "deliverables/G6-007-Release/",
   "remaining": [
-   "用户在 docs/g6/release/验收说明.md 的干净目录流程中验收 G6-006 开场说明、透明/缩小 HUD、无框技能栏、净光光路多目标、标题背景、缩小设置面板，并填写 qa/G6-approval.md",
+   "用户在 docs/g6/release/验收说明.md 的干净目录流程中验收 G6-007 居中/无框/像素字体标题、无剧情介绍/回看、标题页设置入口、顶部/底部像素字体，并填写 qa/G6-approval.md",
    "原始 Fungus Cave 素材与开场/标题生成图的再分发许可确认或限定内部测试",
    "可选音乐与完整按键重设（G5 单独阶段按用户指示跳过）"
   ],
-  "caveat": "AI 验证：G6-006 默认 route 734.6 秒/0 死亡、整段跳过 635.4 秒/0 死亡；14 组套件（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation47/save65/enemies73/dialogue175/props2472/pressure5/route9/skip9）与 test_combat549、restart2/8 均 0 失败；PCK 审计、五目录布局、干净目录 headless RELEASE_BOOT campaign 通过。G6-006 只重跑默认/跳过路线，8/8 矩阵为 G6-003 历史基线。开场文本、透明 HUD、技能栏、净光光路、标题背景、设置面板与 20 分钟真人时长未人工验收；用户书面确认前 G6 仍 in_progress。",
-  "package_zip": "deliverables/FungusLight-G6-006-Release.zip",
-  "package_zip_sha256": "92D8DDA75BE6C11D6DB3333871EA87D218C5E5F1B8F214C9B482B6BB517498FC"
+  "caveat": "AI 验证：G6-007 默认 route 734.6 秒/0 死亡、整段跳过 635.4 秒/0 死亡；14 组套件（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2472/pressure5/route9/skip9）与 test_combat549、restart2/8 均 0 失败；PCK 审计、五目录布局、干净目录 headless RELEASE_BOOT campaign 通过。G6-007 只重跑默认/跳过路线，8/8 矩阵为 G6-003 历史基线。标题/像素字体/设置入口/HUD/技能栏/净光光路/两结局/20分钟真人时长未人工验收；用户书面确认前 G6 仍 in_progress。",
+  "package_zip": "deliverables/FungusLight-G6-007-Release.zip",
+  "package_zip_sha256": "E5E3B0A6674820C444F22BCBC90A5A78B6706349BA9814141684D8A40CFE5C78"
  }
 }

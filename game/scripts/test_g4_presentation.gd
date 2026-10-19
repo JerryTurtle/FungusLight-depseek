@@ -182,7 +182,9 @@ func run() -> void:
 	scene.show_title()
 	await process_frame
 	var title_text := " ".join(menu_texts(scene))
-	check(title_text.find("地下三百尺") >= 0 and title_text.find("是谁先断了水") >= 0 and title_text.find("开场故事") >= 0, "title states the premise and offers the opening")
+	check(title_text.find("菌灯之下") >= 0 and title_text.find("新游戏") >= 0 and title_text.find("地下三百尺") < 0 and title_text.find("开场故事") < 0, "title is a clean menu without story blurb or replay")
+	var title_heading: Label = scene.menu.get_child(0)
+	check(title_heading.horizontal_alignment == HORIZONTAL_ALIGNMENT_CENTER and scene.overlay.size == Vector2(1280,720), "title heading is centered over the painted background")
 	check(scene.title_bg != null and scene.title_bg.visible and scene.title_bg.texture != null, "title screen uses the painted background")
 	scene.show_journal()
 	await process_frame

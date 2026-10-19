@@ -5,12 +5,16 @@ const SaveStore = preload("res://scripts/save_store.gd")
 const HUD = preload("res://scripts/campaign_hud.gd")
 const Intro = preload("res://scripts/intro_cinematic.gd")
 const TITLE_BG = preload("res://assets/title/title_bg.png")
+const UI_FONT = preload("res://assets/fonts/FusionPixel12px-zh_hans.ttf")
 const DIR_NAMES := ["上","右","下","左"]
 const DIR_VECTORS := [Vector2.UP,Vector2.RIGHT,Vector2.DOWN,Vector2.LEFT]
 var progress = Progress.new()
 var saves = SaveStore.new()
 var title_bg: TextureRect
+var title_scrim: ColorRect
 var overlay: PanelContainer
+var menu_style: StyleBoxFlat
+var title_style: StyleBoxEmpty
 var menu: VBoxContainer
 var notice := ""
 var running := false
@@ -77,7 +81,9 @@ func _ready() -> void:
 	hud.custom_minimum_size = Vector2(660,0)
 	hud.size = Vector2(660,76)
 	hud.max_lines_visible = 3
+	hud.add_theme_font_override("font",UI_FONT)
 	hud.add_theme_font_size_override("font_size",20)
+	status.add_theme_font_override("font",UI_FONT)
 	status.add_theme_font_size_override("font_size",20)
 	status.position = Vector2(28,650)
 	status.custom_minimum_size = Vector2(820,0)
@@ -95,14 +101,22 @@ func _ready() -> void:
 	title_bg.modulate = Color(0.82,0.86,0.84,1.0)
 	title_bg.visible = false
 	add_child(title_bg)
+	title_scrim = ColorRect.new()
+	title_scrim.position = Vector2.ZERO
+	title_scrim.size = Vector2(1280,720)
+	title_scrim.color = Color(0.01,0.02,0.02,0.36)
+	title_scrim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	title_scrim.visible = false
+	add_child(title_scrim)
 	overlay = PanelContainer.new()
 	overlay.position = Vector2(270,140)
 	overlay.size = Vector2(740,430)
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.015,0.035,0.040,0.97)
-	panel_style.border_color = Color(0.46,0.38,0.23,0.9)
-	panel_style.set_border_width_all(2)
-	overlay.add_theme_stylebox_override("panel", panel_style)
+	menu_style = StyleBoxFlat.new()
+	menu_style.bg_color = Color(0.015,0.035,0.040,0.97)
+	menu_style.border_color = Color(0.46,0.38,0.23,0.9)
+	menu_style.set_border_width_all(2)
+	title_style = StyleBoxEmpty.new()
+	overlay.add_theme_stylebox_override("panel", menu_style)
 	add_child(overlay)
 	menu = VBoxContainer.new()
 	menu.add_theme_constant_override("separation",10)
@@ -115,6 +129,7 @@ func _ready() -> void:
 	intro = Intro.new()
 	add_child(intro)
 	intro.finished.connect(on_intro_finished)
+	settings_panel.z_index = 100
 	settings_panel.dismissed.connect(on_settings_closed)
 	show_title()
 	if OS.is_debug_build() and "--campaign-capture" in OS.get_cmdline_user_args(): call_deferred("capture_preview")
@@ -155,6 +170,9 @@ func clear_menu(title: String) -> void:
 	reset_screen_shake()
 	overlay.position = Vector2(270,140)
 	overlay.size = Vector2(740,430)
+	if menu_style != null: overlay.add_theme_stylebox_override("panel", menu_style)
+	menu.alignment = BoxContainer.ALIGNMENT_BEGIN
+	menu.add_theme_constant_override("separation",10)
 	paused = true
 	if hud != null: hud.visible = false
 	if status != null: status.visible = false
@@ -168,6 +186,7 @@ func clear_menu(title: String) -> void:
 	overlay.show()
 	var heading := Label.new()
 	heading.text = title
+	heading.add_theme_font_override("font",UI_FONT)
 	heading.add_theme_font_size_override("font_size",36)
 	menu.add_child(heading)
 
@@ -176,12 +195,14 @@ func paragraph(text: String, min_height: float = 65.0) -> void:
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.custom_minimum_size = Vector2(700,min_height)
+	label.add_theme_font_override("font",UI_FONT)
 	label.add_theme_font_size_override("font_size",24)
 	menu.add_child(label)
 
 func button(text: String, action: Callable) -> void:
 	var control := Button.new()
 	control.text = text
+	control.add_theme_font_override("font",UI_FONT)
 	control.add_theme_font_size_override("font_size",24)
 	control.pressed.connect(action)
 	menu.add_child(control)
@@ -189,6 +210,7 @@ func button(text: String, action: Callable) -> void:
 func resume() -> void:
 	overlay.hide()
 	if title_bg != null: title_bg.visible = false
+	if title_scrim != null: title_scrim.visible = false
 	if dialogue != null and dialogue.is_open(): dialogue.close()
 	world.visible = true
 	objects_layer.visible = true
@@ -201,9 +223,29 @@ func resume() -> void:
 	commands.clear()
 	queued_pointer = Vector2.INF
 
+func title_button(text: String, action: Callable) -> Button:
+	var control := Button.new()
+	control.text = text
+	control.add_theme_font_override("font",UI_FONT)
+	control.add_theme_font_size_override("font_size",24)
+	control.add_theme_color_override("font_color",Color(0.93,0.88,0.74))
+	control.add_theme_color_override("font_hover_color",Color(1.0,0.86,0.58))
+	control.add_theme_color_override("font_pressed_color",Color(1.0,0.78,0.42))
+	control.add_theme_color_override("font_disabled_color",Color(0.48,0.49,0.43,0.80))
+	control.add_theme_constant_override("outline_size",4)
+	control.add_theme_color_override("font_outline_color",Color(0.01,0.02,0.02,0.95))
+	for state in ["normal","hover","pressed","focus","disabled"]:
+		control.add_theme_stylebox_override(state,StyleBoxEmpty.new())
+	control.custom_minimum_size = Vector2(320,42)
+	control.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	control.pressed.connect(action)
+	menu.add_child(control)
+	return control
+
 func show_title() -> void:
 	running = false
 	if title_bg != null: title_bg.visible = true
+	if title_scrim != null: title_scrim.visible = true
 	# A clean title screen: no test-room actors, minimap or HUD behind the menu.
 	world.visible = false
 	objects_layer.visible = false
@@ -213,31 +255,45 @@ func show_title() -> void:
 	if status != null: status.visible = false
 	if hud_panel != null: hud_panel.visible = false
 	clear_menu("菌灯之下")
-	overlay.position = Vector2(270,100)
-	overlay.size = Vector2(740,520)
-	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-006"))
-	paragraph("地下三百尺，营地只剩最后一盏灯。\n灯根要水，人也要水；剩下的水只够两边分。\n你提灯下井，要查清是谁先断了水。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n版本 "+build_label,150)
-	button("新游戏",func():
+	overlay.position = Vector2.ZERO
+	overlay.size = Vector2(1280,720)
+	overlay.add_theme_stylebox_override("panel",title_style)
+	menu.alignment = BoxContainer.ALIGNMENT_CENTER
+	menu.add_theme_constant_override("separation",8)
+	var heading: Label = menu.get_child(0)
+	heading.add_theme_font_override("font",UI_FONT)
+	heading.add_theme_font_size_override("font_size",56)
+	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	heading.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	heading.custom_minimum_size = Vector2(440,0)
+	var subtitle := Label.new()
+	subtitle.text = "灯与根"
+	subtitle.add_theme_font_override("font",UI_FONT)
+	subtitle.add_theme_font_size_override("font_size",18)
+	subtitle.add_theme_color_override("font_color",Color(0.86,0.70,0.41,0.95))
+	subtitle.add_theme_constant_override("outline_size",4)
+	subtitle.add_theme_color_override("font_outline_color",Color(0.01,0.02,0.02,0.95))
+	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	subtitle.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	subtitle.custom_minimum_size = Vector2(320,26)
+	menu.add_child(subtitle)
+	var auto_available := FileAccess.file_exists(saves.directory+"/auto.json")
+	title_button("新游戏",func():
 		if FileAccess.file_exists(saves.directory+"/auto.json"):
 			clear_menu("开始新旅程？")
 			paragraph("新游戏会从序章开始，并覆盖自动存档；三个手动存档不会变。")
 			button("确认新游戏",new_game)
 			button("返回",show_title)
 		else: new_game())
-	var auto_available := FileAccess.file_exists(saves.directory+"/auto.json")
-	var continue_button := Button.new()
-	continue_button.text = "继续游戏（自动存档）" if auto_available else "继续游戏（无自动存档）"
+	var continue_button := title_button("继续游戏（自动存档）" if auto_available else "继续游戏（无自动存档）",func(): load_game("auto"))
 	continue_button.disabled = not auto_available
-	continue_button.add_theme_font_size_override("font_size",24)
-	continue_button.pressed.connect(func(): load_game("auto"))
-	menu.add_child(continue_button)
-	button("重看开场故事",func(): play_intro(show_title,"返回标题"))
-	button("读取存档",show_load_menu)
-	button("设置",func(): open_settings("title"))
-	button("退出",func(): get_tree().quit())
+	title_button("读取存档",show_load_menu)
+	title_button("设置",func(): open_settings("title"))
+	title_button("退出",func(): get_tree().quit())
 
 func new_game() -> void:
 	if title_bg != null: title_bg.visible = false
+	if title_scrim != null: title_scrim.visible = false
 	run_started_ms = Time.get_ticks_msec()
 	chapter_start_ms = run_started_ms
 	chapter_times = {}
@@ -848,7 +904,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-006")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-007")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),
