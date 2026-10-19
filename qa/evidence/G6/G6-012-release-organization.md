@@ -5,4 +5,4 @@
 - 清理：删除 G0～G4 过程构建、G6-001～G6-011 过程包、G7 过程包及 zip；删除 `qa/local`、`qa/runtime-profile`、`game/.godot` 和根目录 `debug.log`。
 - 保留：G2/G4 门禁验收留档、运行中的 `deliverables/Release`、当前 G6-012。
 - 例外：`deliverables/G6-010-Release/` 仍有 G6-010 游戏进程运行，文件被占用；关闭进程后可删除。
-- 验收状态：G6 仍为 `in_progress`，等待 `qa/G6-approval.md` 书面确认。
+- 验收状态：用户已在 `qa/G6-approval.md` 勾选“通过”并签名；G6 标记 passed。

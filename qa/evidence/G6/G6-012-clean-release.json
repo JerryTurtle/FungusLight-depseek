@@ -5,5 +5,7 @@
   "release_boot": true,
   "debug_boot_absent": true,
   "script_error_free": true,
-  "passed": true
+  "passed": true,
+  "pck_sha256": "E92ACBC0BA7A06E1867F6F998DC007BCDD6ACBD839130D352B9D8AD57169C385",
+  "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13"
 }

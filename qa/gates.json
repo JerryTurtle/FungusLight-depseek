@@ -415,7 +415,7 @@
   "note": "用户明确要求在G4-009修复后直接进入G6；G5单独阶段不等待。发布必需的全量回归/设置/发布包并入G6；音乐与完整按键重设未完成，见 known issues。"
  },
  "G6": {
-  "status": "in_progress",
+  "status": "passed",
   "build_id": "G6-012",
   "evidence": [
    "qa/evidence/G6/G6-gap-audit.md",
@@ -727,14 +727,24 @@
   ],
   "package": "deliverables/G6-012-Release/",
   "remaining": [
-   "用户在 qa/G6-approval.md 填写最终书面验收；开发任务已完成，但 G6 仍为 in_progress",
    "原始 Fungus Cave 素材、开场/标题生成图与 Boss BGM 的再分发许可确认或限定内部测试",
-   "关闭仍在运行的 G6-010-Release 游戏进程后，删除该过程目录；G6-003 Release 继续按门禁留档"
+   "关闭仍在运行的 G6-010-Release 游戏进程后删除该过程目录"
   ],
-  "caveat": "AI 验证：G6-012 默认 route 707.7 秒/0 死亡、整段跳过 607.4 秒/0 死亡；14 组套件（campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）与 test_combat550、restart2/8 均 0 失败；PCK 审计、五目录布局、干净目录 headless RELEASE_BOOT campaign 通过。G6-012 只重跑默认/跳过路线，8/8 矩阵为 G6-003 历史基线。传送门观感与碰撞仍待人工验收；用户书面确认前 G6 仍 in_progress。",
+  "caveat": "用户已在 qa/G6-approval.md 勾选“通过”并签名（JeryTurtle，日期按原文 2026.10.49）；G6 标记 passed。逐项验收字段和哈希栏未填写，哈希见 qa/evidence/G6/G6-012-final-package.txt。原始素材/生成图/Boss BGM 的再分发许可仍需确认。",
   "package_zip": "deliverables/FungusLight-G6-012-Release.zip",
-  "package_zip_sha256": "E56C23DD5AEB0256AEAEEE015D2070BDE2F4BF9D33D58839972DE1F61CDD2464",
+  "package_zip_sha256": "FCEC62C9CCD11759AF30E8532C72AD26B31D1608BA186390DAC8969D20EB25BF",
   "development_complete": true,
-  "release_state": "final_candidate"
+  "release_state": "released",
+  "human_approval": {
+   "path": "qa/G6-approval.md",
+   "build_id": "G6-012",
+   "conclusion": "通过",
+   "checked": "用户勾选“通过”",
+   "signature": "JeryTurtle",
+   "date_as_written": "2026.10.49",
+   "note": "用户已签署通过；逐项字段与哈希栏未填写，结论按用户勾选与签名记录。"
+  },
+  "package_exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+  "package_pck_sha256": "E92ACBC0BA7A06E1867F6F998DC007BCDD6ACBD839130D352B9D8AD57169C385"
  }
 }

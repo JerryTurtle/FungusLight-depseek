@@ -1,6 +1,6 @@
 # 发布包目录
 
-当前最终发布候选：
+当前最终发布（用户已签署通过）：
 
 - `G6-012-Release/`
 - `FungusLight-G6-012-Release.zip`
