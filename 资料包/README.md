@@ -80,6 +80,7 @@ Get-Content .\SHA256SUMS.txt
 ## Git 管理
 
 - `资料包/` 下的说明文档、两个当前发布 zip（游戏 + 源码）、历史 G6-012 zip、实机演示视频与校验文件均纳入 Git（Conventional Commits 提交）。
+- **Git LFS：** 135.8 MB 的完整游戏 zip 超过 GitHub 单文件 100 MB 限制，只有该文件使用 Git LFS 跟踪（`.gitattributes` 已配置）。克隆/拉取前请安装 `git-lfs` 并执行 `git lfs install`；源码 zip、历史 G6-012 zip 与演示视频仍为普通 Git 文件。
 - 发布包的**解压目录** `deliverables/G6-013-Release/`、`deliverables/G6-013/`、`deliverables/G6-013-32/` 等构建产物按项目约定不提交，只保留本地。
 - 源码 zip 可由 `python tools/package_delivery.py` 从已跟踪文件重建；脚本会校验游戏 zip 哈希并重写两个 `SHA256SUMS.txt`。
 - 历史标签：`v1.0.0`（G6-012）；G6-012 验收记录：`qa/G6-approval.md`；G6-013 兼容性验收模板：`qa/G6-013-approval.md`（待用户填写）；包位置迁移记录：`qa/evidence/G6/G6-012-package-move.md`。
