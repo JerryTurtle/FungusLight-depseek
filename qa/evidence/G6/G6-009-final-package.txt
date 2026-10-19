@@ -1,0 +1,11 @@
+# 菌灯之下 G6-009 发布包
+
+- exe: `deliverables/G6-009-Release/Game/FungusLight.exe`  66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13  84214784 bytes
+- pck: `deliverables/G6-009-Release/Game/FungusLight.pck`  940AB65A0326136101BC849E42F6EB1195FEE421CF6F0894DECB4BF92E8E19CA  18135328 bytes
+- zip: `deliverables/FungusLight-G6-009-Release.zip`  23C5797745B3B704D905AFA206AA8EBABA098756968CFD942994A28D54E83B1A  71161672 bytes
+
+- 布局：`deliverables/G6-009-Release/{Game,Source,Docs,QA,Licenses}`
+- PCK 审计：`qa/evidence/G6/G6-009-release-package.json`（passed）
+- 五目录布局：`qa/evidence/G6/G6-009-release-layout.json`（passed）
+- 干净目录 headless 启动：`qa/evidence/G6/G6-009-clean-release.json`（RELEASE_BOOT campaign，exit 0）
+- `deliverables/Release` 仍保留运行中的 G6-003 进程产物，未覆盖。

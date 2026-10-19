@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_id": "G6-008",
+  "build_id": "G6-009",
   "nodes": [
     {
       "id": "N0-01",
@@ -2204,30 +2204,6 @@
           "item": "throttle_lens",
           "flag": "EQ_THROTTLE",
           "visual": "chest"
-        },
-        {
-          "id": "p06_choice",
-          "name": "两处测量点",
-          "pos": [
-            230,
-            70
-          ],
-          "kind": "puzzle_choice",
-          "visual": "puzzle_console",
-          "puzzle": "P06",
-          "success": "两处读数一致。备用储水已启动。",
-          "options": [
-            {
-              "id": "compare_then_start",
-              "label": "先对照两处读数，再启动备用储水",
-              "correct": true
-            },
-            {
-              "id": "start_first",
-              "label": "先启动备用储水，再对照读数",
-              "correct": false
-            }
-          ]
         }
       ],
       "decor": [
@@ -2480,30 +2456,6 @@
           "kind": "exit",
           "target": "N3-03",
           "requires": "P07"
-        },
-        {
-          "id": "p07_choice",
-          "name": "三段供给管线",
-          "pos": [
-            230,
-            80
-          ],
-          "kind": "puzzle_choice",
-          "visual": "puzzle_console",
-          "puzzle": "P07",
-          "success": "三段管线按顺序扫描完成。旧约拓文显现。",
-          "options": [
-            {
-              "id": "scan_order",
-              "label": "按一、二、三的顺序扫描三段管线",
-              "correct": true
-            },
-            {
-              "id": "scan_random",
-              "label": "随便扫描其中一段",
-              "correct": false
-            }
-          ]
         }
       ],
       "decor": [

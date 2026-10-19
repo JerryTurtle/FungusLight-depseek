@@ -1,0 +1,13 @@
+{
+  "build": "G6-009",
+  "release_dir": "deliverables\\G6-009",
+  "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+  "pck_sha256": "940AB65A0326136101BC849E42F6EB1195FEE421CF6F0894DECB4BF92E8E19CA",
+  "pck_bytes": 18135328,
+  "required_present": true,
+  "missing": [],
+  "forbidden_present": [],
+  "project_identity_ok": true,
+  "qa_build_exists": true,
+  "passed": true
+}

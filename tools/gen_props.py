@@ -1870,7 +1870,7 @@ def payload() -> dict:
             "end": "portal", "storage": "door", "storage_door": "door",
             "crate": "crates", "crates_small": "crate_single", "barrel_old": "barrel",
             "lore": "document", "note": "document", "switch": "lamp", "growth": "ring", "story": "document", "sidequest": "chest", "ending": "portal", "credits": "portal", "npc": "npc",
-            "puzzle_choice": "puzzle_console", "evidence_slots": "evidence_slot", "equipment": "chest",
+            "evidence_slots": "evidence_slot", "equipment": "chest",
             "mushroom": "mushroom_red", "wall_panel_green": "wall_panel",
             "panel": "wall_panel",
         },

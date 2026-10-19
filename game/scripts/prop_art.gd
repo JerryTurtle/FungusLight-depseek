@@ -25,7 +25,7 @@ extends RefCounted
 
 const DATA_PATH := "res://assets/props/props_data.json"
 const TILESET := preload("res://assets/original/Tilesets/Complete.png")
-const CUSTOM_PROPS := ["wall_inscription", "document", "puzzle_console", "evidence_slot", "npc"]
+const CUSTOM_PROPS := ["wall_inscription", "document", "evidence_slot", "npc"]
 const GUIDE_DIRS := {
 	0: Vector2.UP,
 	1: Vector2.RIGHT,
@@ -258,7 +258,6 @@ func label_anchor(kind: String) -> Vector2:
 	match k:
 		"wall_inscription": return Vector2(0,-21)
 		"document": return Vector2(0,-19)
-		"puzzle_console": return Vector2(0,-27)
 		"evidence_slot": return Vector2(0,-21)
 		"npc": return Vector2(0,-34)
 	var source: Dictionary = data.get("kinds", {})
@@ -325,16 +324,6 @@ func _draw_custom(canvas: CanvasItem, kind: String, pos: Vector2, state: Diction
 			canvas.draw_rect(Rect2(o+Vector2(2,9),Vector2(9,1)),Color("8d6f3c"))
 			canvas.draw_rect(Rect2(o+Vector2(10,10),Vector2(3,3)),red)
 			canvas.draw_rect(Rect2(o+Vector2(11,9),Vector2(1,5)),Color("e0c59a"))
-		"puzzle_console":
-			var o := base+Vector2(-8,-23)
-			canvas.draw_rect(Rect2(o+Vector2(1,4),Vector2(14,19)),dark)
-			canvas.draw_rect(Rect2(o+Vector2(2,5),Vector2(12,17)),stone)
-			canvas.draw_rect(Rect2(o+Vector2(3,2),Vector2(10,7)),Color("4e4032"))
-			canvas.draw_circle(o+Vector2(5,7),2.0,gold)
-			canvas.draw_circle(o+Vector2(8,7),2.0,teal)
-			canvas.draw_circle(o+Vector2(11,7),2.0,red)
-			canvas.draw_rect(Rect2(o+Vector2(4,12),Vector2(8,2)),stone_light)
-			canvas.draw_rect(Rect2(o+Vector2(7,14),Vector2(2,5)),gold)
 		"evidence_slot":
 			var o := base+Vector2(-9,-17)
 			canvas.draw_rect(Rect2(o,Vector2(18,17)),dark)
