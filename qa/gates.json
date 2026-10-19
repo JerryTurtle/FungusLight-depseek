@@ -722,16 +722,19 @@
    "qa/evidence/G6/G6-012-route-skip.json",
    "qa/evidence/G6/G6-012-route-tests.log",
    "qa/evidence/G6/G6-012-save-tests.log",
-   "qa/evidence/G6/G6-012-skip_route-tests.log"
+   "qa/evidence/G6/G6-012-skip_route-tests.log",
+   "qa/evidence/G6/G6-012-release-organization.md"
   ],
   "package": "deliverables/G6-012-Release/",
   "remaining": [
-   "用户在 docs/g6/release/验收说明.md 的干净目录流程中验收 G6-012 传送门暖色椭圆/内部微光/无外侧粒子/外圈无碰撞，并填写 qa/G6-approval.md",
+   "用户在 qa/G6-approval.md 填写最终书面验收；开发任务已完成，但 G6 仍为 in_progress",
    "原始 Fungus Cave 素材、开场/标题生成图与 Boss BGM 的再分发许可确认或限定内部测试",
-   "可选音乐扩展与完整按键重设（G5 单独阶段按用户指示跳过）"
+   "关闭仍在运行的 G6-010-Release 游戏进程后，删除该过程目录；G6-003 Release 继续按门禁留档"
   ],
   "caveat": "AI 验证：G6-012 默认 route 707.7 秒/0 死亡、整段跳过 607.4 秒/0 死亡；14 组套件（campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）与 test_combat550、restart2/8 均 0 失败；PCK 审计、五目录布局、干净目录 headless RELEASE_BOOT campaign 通过。G6-012 只重跑默认/跳过路线，8/8 矩阵为 G6-003 历史基线。传送门观感与碰撞仍待人工验收；用户书面确认前 G6 仍 in_progress。",
   "package_zip": "deliverables/FungusLight-G6-012-Release.zip",
-  "package_zip_sha256": "E56C23DD5AEB0256AEAEEE015D2070BDE2F4BF9D33D58839972DE1F61CDD2464"
+  "package_zip_sha256": "E56C23DD5AEB0256AEAEEE015D2070BDE2F4BF9D33D58839972DE1F61CDD2464",
+  "development_complete": true,
+  "release_state": "final_candidate"
  }
 }

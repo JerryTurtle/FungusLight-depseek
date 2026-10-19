@@ -4,13 +4,13 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 ## 1. 当前状态（2026-10-19）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。** 2026-10-19 第十二轮按用户反馈完成 **G6-012** 候选：传送门去掉外侧粒子/黑色硬边框，改暖色椭圆内部微光与悬浮；碰撞缩到 16×30 内椭圆；粒子纯绘制无碰撞。** G6 仍为 in_progress**；G6-012 默认路线 **707.7 秒/0 死亡**、整段跳过 **607.4 秒/0 死亡**，14 组套件、test_combat550 与 restart 均 0 失败；8/8 矩阵为 G6-003 历史基线；20 分钟真人时长、窗口化两结局、传送门观感/碰撞人工目检仍未完成。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。** 2026-10-19 第十二轮完成 **G6-012** 最终发布候选：传送门去掉外侧粒子/黑色硬边框，改暖色椭圆内部微光与悬浮；碰撞缩到 16×30 内椭圆；粒子纯绘制无碰撞。** G6 仍为 in_progress**；G6-012 默认路线 **707.7 秒/0 死亡**、整段跳过 **607.4 秒/0 死亡**，14 组套件、test_combat550 与 restart 均 0 失败；8/8 矩阵为 G6-003 历史基线；20 分钟真人时长、窗口化两结局、传送门观感/碰撞人工目检仍未完成。
 
 - 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-012 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **G6-012 发布包：** [deliverables/G6-012-Release](deliverables/G6-012-Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-012-Release.zip`。exe `66B26A…B7B13`，pck `BA6BA2…D76B10`，zip SHA256 `E56C23…CDD2464`；完整哈希见 `qa/evidence/G6/G6-012-final-package.txt`。旧过程包已清理；门禁审核 `G2_Review`/`G4-00x-Acceptance` 与运行中的 `deliverables/Release` 保留。
+- **G6-012 最终发布包：** [deliverables/G6-012-Release](deliverables/G6-012-Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-012-Release.zip`。exe `66B26A…B7B13`，pck `BA6BA2…D76B10`，zip SHA256 `E56C23…CDD2464`；完整哈希见 `qa/evidence/G6/G6-012-final-package.txt`。旧过程包已清理；门禁审核 `G2_Review`/`G4-00x-Acceptance` 与运行中的 `deliverables/Release` 保留。
 - **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G6-012 证据见 `qa/evidence/G6/G6-012-*`。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
-- **下一项：用户在 G6-012 发布包上完成最终验收；AI 不再改动包内容。** 验收条目为暖色椭圆传送门/内部微光/外圈无碰撞、灯击/净光/灯雨特效、近战上下内侧命中、开场章节、精简设置、Boss BGM、两结局、双槽/坏档、37 节点、字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
+- **下一项：G6-012 最终包已整理，用户在 `qa/G6-approval.md` 完成书面验收；AI 不再改动包内容。** 验收条目为暖色椭圆传送门/内部微光/外圈无碰撞、灯击/净光/灯雨特效、近战上下内侧命中、开场章节、精简设置、Boss BGM、两结局、双槽/坏档、37 节点、字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
 
 状态依据：用户最新要求、[AGENTS.md](AGENTS.md)、[qa/gates.json](qa/gates.json)和[game/DEV_STATE.md](game/DEV_STATE.md)的最新条目。旧报告中的“待H2/禁止G3”是历史状态，已被批准记录取代。发现文件与实际Git状态不符时先核对，不自行推定完成。
 
@@ -285,7 +285,7 @@ G4-001 搭出五章31节点（N0/N1/N2/N3/N4）、30个主线遭遇（tutorial+E
 #### G6-004 第四轮：剧情、HUD、技能栏与开场（发布候选）
 
 - 存档点：32 个休息灯座从出口旁移到房间安全角，全部离最近出口 ≥60 像素；E 交互新增“休息为最低优先级”，出口/宝箱/阀门/剧情物永远优先。路线机器人因此不再在 V09、V12 前误触休息。
-- 剧情：以 `qa/local/story-review.md` 为审稿稿，统一“灯网/水脉同一生命、旧约三句、禾抬压并签砍根、菌王是旧王留声、母体是根心新意志”；S01～S09、L01～L20 全部重写，新增 Boss 战后 S10；两结局尾声改为 7～8 句收束。S08/L12 的残片/全文关系在 G6-005 修正；任务日志修正“合流”误看 P06，改为 S06。
+- 剧情：以 `qa/evidence/G6/G6-012-story-review.md` 为审稿稿，统一“灯网/水脉同一生命、旧约三句、禾抬压并签砍根、菌王是旧王留声、母体是根心新意志”；S01～S09、L01～L20 全部重写，新增 Boss 战后 S10；两结局尾声改为 7～8 句收束。S08/L12 的残片/全文关系在 G6-005 修正；任务日志修正“合流”误看 P06，改为 S06。
 - HUD：`campaign_hud.gd` 绘制头像、生命条、精力条、护灯值/护盾条、三瓶药剂（满/空）、药剂饮用进度；治疗事件新增绿色 `+生命` 数字与环状反馈。右下技能栏 `icon_melee/light/shield/rain/dodge` 五枚像素图标带按键、名称、精力消耗、冷却遮罩/秒数、未解锁锁标。
 - 开场：`intro_cinematic.gd` 五幕 1280×720 像素插画（菌洞村落、泵站、断水、岚与最后灯、灯根核心），渐入/缓慢推镜、章节字幕、进度点，Enter/空格/左键推进，Esc 跳过；标题增加“开场故事”回看。
 - 验证：campaign95、g6_release38、g4_state48、g4_boss71、g4_death5、g4_visual15、g4_presentation30、save65、enemies73、dialogue175、props2464、pressure5、route9（725.9 秒/0 死亡）、skip9（635.9 秒）、test_combat549、restart 2/8，失败 0。G6-004 只重跑默认/跳过路线；8/8 矩阵为 G6-003 历史基线，未冒充本轮结果。
