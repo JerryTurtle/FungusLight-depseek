@@ -1,0 +1,17 @@
+# G6-013 32-bit QA build tests (WOW64 on Windows 10 x86_64 host)
+# build: deliverables/G6-013-QA32/FungusLight.exe (PE machine 0x014C)
+# command: godot_run_headless(godot_path=QA32 exe, --script res://scripts/test_g6_compat.gd)
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+USER_STORAGE .../deliverables/G6-013-QA32/用户数据/
+COMPAT_REPORT qa/runtime-profile/g6-compat-129321/启动信息.txt
+COMPAT_ARCH x86_32 bits=32
+COMPAT_GPU  | 
+COMPAT_DRIVER opengl3 method=gl_compatibility low_end=false
+COMPAT_TEST checks=35 failures=0
+
+# command: godot_run_headless(godot_path=QA32 exe, --script res://scripts/test_g6_release.gd)
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+USER_STORAGE .../deliverables/G6-013-QA32/用户数据/
+G6_RELEASE_TEST checks=39 failures=0

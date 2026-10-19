@@ -6,6 +6,9 @@ func _ready() -> void:
 	# Release exports always open the story and ignore every test/demo switch.
 	# A debug export keeps the G2 review bench and the automated entry points.
 	if not OS.is_debug_build():
+		# Keep a small machine report next to the saves; support can diagnose a
+		# black window/old GPU report without asking the player for specs.
+		preload("res://scripts/compat.gd").write_startup_report()
 		add_child(preload("res://scripts/campaign.gd").new())
 		print("RELEASE_BOOT campaign")
 		return

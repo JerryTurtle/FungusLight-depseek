@@ -1,6 +1,15 @@
 # 菌灯之下 · 当前开发接续
 
-更新：2026-10-19。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
+更新：2026-10-20。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
+
+## G6-013 低配/老电脑兼容性修复（最新）
+
+- 根因：G6-012 只有 x86_64 构建，32 位 Windows 无法加载；原生 OpenGL 3.3 在老驱动上可能失败；发布无日志/诊断，用户只看到黑屏或闪退；固定 1280×720 在小屏越界。
+- 修复：用官方 Godot 4.3 x86_32 模板新增 32 位构建并设为 `Game/FungusLight.exe` 默认，64 位在 `Game/64/`；`开始游戏.cmd` 自动选架构、首次失败重试 `--rendering-driver opengl3_angle`；独立 `兼容模式启动.cmd`；`系统检查.cmd` 生成 `diagnostic.txt`；启动器写 `startup-log.txt`/`compat-log.txt`；`compat.gd` 启动时写 `启动信息.txt`/`startup-info.txt`/`compat_report.json` 并做低配检测；`presentation_settings.gd` 按屏幕可用区缩放居中，首次运行对 ≤2 线程/老 iGPU 开低特效/减少动态。
+- 未改：战斗时序、握持/动作、命中范围、Boss 判定、相机、特效构图、剧情与时序；H2 与 G6-012 用户签署仍有效。
+- 验证：源码 g6_release39/0、g4_campaign95/0、g4_state48/0、g4_boss71/0、g4_death5/0、g4_visual15/0、g4_presentation48/0、save65/0、enemies73/0、dialogue175/0、props2464/0、pressure5/0、test_combat550/0、compat35/0；32 位 QA 构建 compat35/0、g6_release39/0；x64/x86 发布 exe 干净目录 headless `exit 0` + `COMPAT_ARCH`/`RELEASE_BOOT`；ANGLE 与原生标题截图逐像素一致（差异 0）；启动器 64/32 选择与失败重试已用替身程序验证。
+- 包：`deliverables/G6-013-Release/`（未跟踪），正式 zip `资料包/01-游戏安装包/FungusLight-G6-013-Release.zip`；32 位 exe `3084E7…4A1332`、pck `714B5C…2AB966`，64 位 exe `66B26A…B7B13`、pck `0B76D2…40823`，zip `09C16B…17FA47`；证据 `qa/evidence/G6/G6-013-*`；双架构 PCK/布局审计通过。
+- 限制：真实 32 位-only Windows 未在本机复现（WOW64 实机启动）；Windows 7/8.1 best-effort；只有 D3D9/无 D3D11 的显卡仍无法启动；路线/跳过路线未重跑（未改战斗/移动/房间/遭遇）；G6-013 待用户在 32 位/老电脑实机验收，`qa/G6-013-approval.md` 未填写。
 
 ## 当前状态（G6-012 已通过；用户签署完成）
 

@@ -1,0 +1,28 @@
+{
+  "build": "G6-013",
+  "x86_64": {
+    "release_dir": "deliverables\\G6-013",
+    "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+    "pck_sha256": "0B76D258EF8C387E68FFEAACD6DAF49667FFD2625194179DF43305B1F7B40823",
+    "pck_bytes": 23272016,
+    "required_present": true,
+    "missing": [],
+    "forbidden_present": [],
+    "project_identity_ok": true,
+    "passed": true
+  },
+  "x86_32": {
+    "release_dir": "deliverables\\G6-013-32",
+    "exe_sha256": "3084E7F98302180C28C658E01D7568D3EE4D4EBA511E306D73069DB3244A1332",
+    "pck_sha256": "714B5C5141E04EB5E208D499C0FB1E36323B374DE41408D177ADA7F6B02AB966",
+    "pck_bytes": 23272016,
+    "required_present": true,
+    "missing": [],
+    "forbidden_present": [],
+    "project_identity_ok": true,
+    "passed": true
+  },
+  "qa_build_exists": false,
+  "qa32_build_exists": true,
+  "passed": true
+}

@@ -1,0 +1,10 @@
+# G6-013 compatibility test (source project, x86_64 editor)
+# command: godot --headless --path game --script res://scripts/test_g6_compat.gd
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+
+USER_STORAGE C:/Users/shandian/AppData/Roaming/FungusLight/
+COMPAT_REPORT C:/Users/shandian/Documents/AI/FungusLight-depseek/qa/runtime-profile/g6-compat-136739/启动信息.txt
+COMPAT_ARCH x86_64 bits=64
+COMPAT_GPU  | 
+COMPAT_DRIVER opengl3 method=gl_compatibility low_end=false
+COMPAT_TEST checks=35 failures=0

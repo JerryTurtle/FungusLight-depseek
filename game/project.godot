@@ -2,7 +2,7 @@ config_version=5
 
 [application]
 config/name="菌灯之下"
-config/version="G6-012"
+config/version="G6-013"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="FungusLight"
 config/description="守灯人岚的五章俯视角动作RPG。"
@@ -17,6 +17,7 @@ window/stretch/mode="canvas_items"
 [rendering]
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+gl_compatibility/fallback_to_angle=true
 textures/default_filters/use_nearest_mipmap_filter=false
 textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.035, 0.05, 0.06, 1)
@@ -27,3 +28,4 @@ common/physics_ticks_per_second=60
 [debug]
 file_logging/enable_file_logging=false
 file_logging/enable_file_logging.pc=false
+

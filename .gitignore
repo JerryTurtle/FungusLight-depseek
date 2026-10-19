@@ -22,4 +22,5 @@ qa/storage_probe.gd
 # Local repro packages, templates and probes
 qa/local/
 game/autoload/
+game/qa/
 

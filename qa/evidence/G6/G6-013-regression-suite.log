@@ -1,0 +1,27 @@
+# G6-013 regression suite (Godot 4.3 stable, headless, source project)
+# All commands: godot --headless --path game --script res://scripts/<test>.gd
+# G6-013 changed only build/startup/display compatibility; combat, rooms,
+# encounters, dialogue and route data are unchanged from G6-012.
+
+G6_RELEASE_TEST       checks=39   failures=0
+G4_CAMPAIGN_TEST      checks=95   failures=0
+G4_TEST               checks=48   failures=0
+G4_BOSS_TEST          checks=71   failures=0  hp=4960 phase=2
+G4_DEATH_TEST         checks=5    failures=0  node=N2-04
+G4_VISUAL_TEST        checks=15   failures=0
+G4_PRESENTATION_TEST  checks=48   failures=0
+SAVE_TEST             checks=65   failures=0
+ENEMY_TEST            checks=73   failures=0
+DIALOGUE_TEST         checks=175  failures=0
+PROP_TEST             checks=2464 failures=0
+PRESSURE_TEST         checks=5    failures=0  path_queries=528 crossed=1 ms=7359
+G1_INITIAL_TESTS      checks=550  failures=0
+COMPAT_TEST           checks=34   failures=0
+
+# 32-bit QA build (deliverables/G6-013-QA32):
+COMPAT_TEST (x86_32)  checks=34   failures=0
+G6_RELEASE_TEST (x86_32) checks=39 failures=0
+
+# Not rerun: route_test / skip_route. The 707.7 s / 607.4 s G6-012 baselines
+# remain historical; this iteration did not touch movement, combat, rooms or
+# encounters. test_campaign.gd is a retired legacy suite and is not a gate.

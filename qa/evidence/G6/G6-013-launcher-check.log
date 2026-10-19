@@ -1,0 +1,30 @@
+# G6-013 launcher checks (GBK launchers converted from docs/g6/release/launchers)
+# On the build host PROCESSOR_ARCHITECTURE=AMD64:
+ARCH=AMD64 WOW=
+MODE=normal
+SELECTED=64\FungusLight.exe
+PCK=64\FungusLight.pck
+exit=0
+
+ARCH=AMD64 WOW=
+MODE=compat
+SELECTED=64\FungusLight.exe
+PCK=64\FungusLight.pck
+exit=0
+
+# Simulated 32-bit shell (set PROCESSOR_ARCHITECTURE=x86):
+ARCH=x86 WOW=
+MODE=normal
+SELECTED=FungusLight.exe
+PCK=FungusLight.pck
+exit=0
+
+# Failure/retry path with a stand-in program that returns exit code 1:
+正在启动《菌灯之下》...
+程序: 64\FungusLight.exe
+日志: %LOCALAPPDATA%\FungusLight\startup-log.txt
+
+首次启动失败（退出码 1），正在尝试 ANGLE/D3D11 兼容模式...
+[提示] 游戏仍然无法启动（退出码 1）。
+请双击 系统检查.cmd 生成 diagnostic.txt，并把日志一起反馈。
+exit=1

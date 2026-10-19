@@ -746,5 +746,40 @@
   },
   "package_exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
   "package_pck_sha256": "E92ACBC0BA7A06E1867F6F998DC007BCDD6ACBD839130D352B9D8AD57169C385"
+ },
+ 
+ "G6-013": {
+  "status": "compat_verified_pending_user",
+  "build_id": "G6-013",
+  "type": "compatibility_fix",
+  "package": "deliverables/G6-013-Release/",
+  "package_zip": "资料包/01-游戏安装包/FungusLight-G6-013-Release.zip",
+  "package_zip_sha256": "09C16BE205C60B584BFFB6323F7B2F9408E0017BB4FA18134A9D9F487B17FA47",
+  "x86_64": {
+   "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+   "pck_sha256": "0B76D258EF8C387E68FFEAACD6DAF49667FFD2625194179DF43305B1F7B40823"
+  },
+  "x86_32": {
+   "exe_sha256": "3084E7F98302180C28C658E01D7568D3EE4D4EBA511E306D73069DB3244A1332",
+   "pck_sha256": "714B5C5141E04EB5E208D499C0FB1E36323B374DE41408D177ADA7F6B02AB966"
+  },
+  "evidence": [
+   "qa/G6-013-approval.md",
+   "qa/evidence/G6/G6-013-final-package.txt",
+   "qa/evidence/G6/G6-013-release-package.json",
+   "qa/evidence/G6/G6-013-release-layout.json",
+   "qa/evidence/G6/G6-013-clean-release.json",
+   "qa/evidence/G6/G6-013-compat-tests.log",
+   "qa/evidence/G6/G6-013-qa32-tests.log",
+   "qa/evidence/G6/G6-013-regression-suite.log",
+   "qa/evidence/G6/G6-013-windowed-runs.log",
+   "qa/evidence/G6/G6-013-angle-vs-native.json",
+   "qa/evidence/G6/G6-013-angle-title.png",
+   "qa/evidence/G6/G6-013-native-title.png",
+   "qa/evidence/G6/G6-013-launcher-check.log"
+  ],
+  "caveat": "32 位发布/QA 构建在 WOW64 实机启动，真实 32 位-only Windows 未在本机复现；Windows 7/8.1 为 best-effort；无 D3D11 的显卡仍无法启动；路线/跳过路线沿用 G6-012 基线；G6-013 待用户填写 qa/G6-013-approval.md。"
  }
+
+
 }

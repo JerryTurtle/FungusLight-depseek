@@ -19,11 +19,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PKG = ROOT / "资料包"
-GAME_ZIP = PKG / "01-游戏安装包" / "FungusLight-G6-012-Release.zip"
-GAME_ZIP_SHA256 = "FCEC62C9CCD11759AF30E8532C72AD26B31D1608BA186390DAC8969D20EB25BF"
+GAME_ZIP = PKG / "01-游戏安装包" / "FungusLight-G6-013-Release.zip"
+GAME_ZIP_SHA256 = "09C16BE205C60B584BFFB6323F7B2F9408E0017BB4FA18134A9D9F487B17FA47"
 SRC_DIR = PKG / "03-源码压缩包"
-ZIP_PATH = SRC_DIR / "FungusLight-G6-012-Source.zip"
-TOP = "FungusLight-G6-012-Source"
+ZIP_PATH = SRC_DIR / "FungusLight-G6-013-Source.zip"
+TOP = "FungusLight-G6-013-Source"
 STAMP = (2026, 10, 19, 0, 0, 0)
 
 EXCLUDE_PREFIXES = (
@@ -100,7 +100,7 @@ def add_path(handle: zipfile.ZipFile, fs_path: Path, arcname: str) -> None:
 
 def build_manifest(entries: list[tuple[str, int]], commit: str, unpacked: int) -> bytes:
     lines = [
-        "《菌灯之下》G6-012 源码包清单",
+        "《菌灯之下》G6-013 源码包清单",
         f"源提交: {commit}",
         f"条目数: {len(entries)}",
         f"解压后总字节: {unpacked}",

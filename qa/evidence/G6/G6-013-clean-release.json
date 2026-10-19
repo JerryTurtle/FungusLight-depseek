@@ -1,0 +1,30 @@
+{
+  "build": "G6-013",
+  "method": "godot_run_headless MCP tool (unconfined subprocess) on Windows 10 x86_64; the harness cannot write to the real %APPDATA%, so the game's user_storage fallback chose the exe-adjacent 用户数据/ directory",
+  "x86_64": {
+    "source": "deliverables/G6-013/FungusLight.exe",
+    "command": "--headless --path game --quit-after 240",
+    "exit": 0,
+    "release_boot": true,
+    "compat_arch": "x86_64",
+    "compat_report": "COMPAT_REPORT .../deliverables/G6-013/用户数据/启动信息.txt",
+    "script_error": false
+  },
+  "x86_32": {
+    "source": "deliverables/G6-013-32/FungusLight.exe",
+    "command": "--headless --path game --quit-after 240",
+    "exit": 0,
+    "release_boot": true,
+    "compat_arch": "x86_32",
+    "compat_report": "COMPAT_REPORT .../deliverables/G6-013-32/用户数据/启动信息.txt",
+    "script_error": false
+  },
+  "windowed": {
+    "x86_64": "title opened, COMPAT_GPU=Radeon 780M, RELEASE_BOOT campaign (see G6-013-windowed-runs.log)",
+    "x86_32": "title opened on WOW64, COMPAT_ARCH x86_32, RELEASE_BOOT campaign (see G6-013-windowed-runs.log)"
+  },
+  "limitations": [
+    "The harness profile blocks writes to the real %APPDATA%; isolated-APPDATA clean-directory run remains for a normal desktop or the tracked tools/test_clean_release.py.",
+    "A true 32-bit-only Windows install was not available; the x86_32 build was executed under WOW64 on this host."
+  ]
+}

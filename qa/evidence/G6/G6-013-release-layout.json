@@ -1,0 +1,14 @@
+{
+  "build": "G6-013",
+  "release": "deliverables\\G6-013-Release",
+  "missing": [],
+  "hashes_ok": true,
+  "hashes_checked": [
+    "FungusLight.exe",
+    "FungusLight.pck",
+    "64/FungusLight.exe",
+    "64/FungusLight.pck"
+  ],
+  "personal_files": [],
+  "passed": true
+}

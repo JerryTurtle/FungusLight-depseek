@@ -2,22 +2,31 @@
 
 Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近战与法术。本文是 AI 交接入口，说明当前成果、下一步、运行验证及交付约定。
 
-## 1. 当前状态（2026-10-19）
+## 1. 当前状态（2026-10-20）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。** 2026-10-19 第十二轮完成 **G6-012** 最终发布候选：传送门去掉外侧粒子/黑色硬边框，改暖色椭圆内部微光与悬浮；碰撞缩到 16×30 内椭圆；粒子纯绘制无碰撞。** G6 已由用户签署通过（G6-012）**；G6-012 默认路线 **707.7 秒/0 死亡**、整段跳过 **607.4 秒/0 死亡**，14 组套件、test_combat550 与 restart 均 0 失败；8/8 矩阵为 G6-003 历史基线；用户已签署 `qa/G6-approval.md` 通过。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）、G6（G6-012 用户签署）已通过。** 2026-10-19 第十二轮完成 **G6-012** 最终发布候选：传送门去掉外侧粒子/黑色硬边框，改暖色椭圆内部微光与悬浮；碰撞缩到 16×30 内椭圆；粒子纯绘制无碰撞。** G6 已由用户签署通过（G6-012）**；G6-012 默认路线 **707.7 秒/0 死亡**、整段跳过 **607.4 秒/0 死亡**，14 组套件、test_combat550 与 restart 均 0 失败；8/8 矩阵为 G6-003 历史基线；用户已签署 `qa/G6-approval.md` 通过。
 
-- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-012 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **G6-012 最终发布包：** 正式交付资料包 [资料包](资料包)（`01-游戏安装包/`、`02-作品说明文档/`、`03-源码压缩包/`）；本地解压目录 `deliverables/G6-012-Release/`（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`，未纳入 Git），zip `资料包/01-游戏安装包/FungusLight-G6-012-Release.zip`。exe `66B26A…B7B13`，pck `E92ACB…69C385`，zip SHA256 `FCEC62…EB25BF`；完整哈希见 `qa/evidence/G6/G6-012-final-package.txt`。旧过程包、门禁/验收副本与 G6-010/G6-003 旧包均已清理；发布 zip 已纳入 Git。G6-012 实机演示视频 `资料包/FungusLight-Gameplay-演示视频.mp4`（97.3 秒/1280×720/含音轨，SHA256 `E79E79…162C32`）已纳入 Git。
-- **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G6-012 证据见 `qa/evidence/G6/G6-012-*`。
+**2026-10-20 兼容性修复 G6-013：** 针对低配/老电脑无法启动，新增 Godot 官方 **x86_32 构建**并作为 `Game/FungusLight.exe` 默认（32/64 位 Windows 均可双击），64 位构建移到 `Game/64/`；新增智能启动器（自动选 32/64 位、首次失败自动重试 ANGLE/D3D11）、`兼容模式启动.cmd`、`系统检查.cmd`、启动信息/诊断文件、小屏窗口适配，以及 ≤2 线程/老 iGPU 首次低特效默认。战斗时序、握持、命中范围、Boss 判定、相机、特效构图、剧情与时序均沿用 G6-012；G6-012 用户签署仍有效。G6-013 自动验证：g6_release39/0、g4_campaign95/0、g4_state48/0、g4_boss71/0、g4_death5/0、g4_visual15/0、g4_presentation48/0、save65/0、enemies73/0、dialogue175/0、props2464/0、pressure5/0、test_combat550/0、compat35/0；32 位 QA 构建 compat35/0 与 g6_release39/0；ANGLE 与原生 GL 标题截图逐像素一致（差异像素 0）。正式包 zip SHA256 `09C16BE…B17FA47`；G6-013 待用户在 32 位/老电脑实机验收。
+
+- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-013 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
+- **G6-013 最终发布包：** 正式交付资料包 [资料包](资料包)（`01-游戏安装包/`、`02-作品说明文档/`、`03-源码压缩包/`）；本地解压目录 `deliverables/G6-013-Release/`（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`，未纳入 Git），zip `资料包/01-游戏安装包/FungusLight-G6-013-Release.zip`。32 位 exe `3084E7…4A1332`、pck `714B5C…2AB966`；64 位 exe `66B26A…B7B13`、pck `0B76D2…40823`；zip SHA256 `09C16B…17FA47`；完整哈希见 `qa/evidence/G6/G6-013-final-package.txt`。G6-012 包与哈希保留为历史证据（`qa/evidence/G6/G6-012-final-package.txt`）。G6-012 实机演示视频 `资料包/FungusLight-Gameplay-演示视频.mp4`（97.3 秒/1280×720/含音轨，SHA256 `E79E79…162C32`）继续有效。
+- **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G6-013 证据见 `qa/evidence/G6/G6-013-*`。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
-- **验收完成：用户已在 `qa/G6-approval.md` 勾选“通过”并签名（JeryTurtle，日期按原文 2026.10.49）；G6 标记 passed。** 验收条目为暖色椭圆传送门/内部微光/外圈无碰撞、灯击/净光/灯雨特效、近战上下内侧命中、开场章节、精简设置、Boss BGM、两结局、双槽/坏档、37 节点、字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
+- **G6-012 验收完成：用户已在 `qa/G6-approval.md` 勾选“通过”并签名（JeryTurtle，日期按原文 2026.10.49）；G6 标记 passed。** G6-013 是兼容性修复，不改变已审内容；新增 `qa/G6-013-approval.md`（待用户填写），不得代填。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
 
 状态依据：用户最新要求、[AGENTS.md](AGENTS.md)、[qa/gates.json](qa/gates.json)和[game/DEV_STATE.md](game/DEV_STATE.md)的最新条目。旧报告中的“待H2/禁止G3”是历史状态，已被批准记录取代。发现文件与实际Git状态不符时先核对，不自行推定完成。
 
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
-### 接续快照：已实现功能与剩余工作（2026-10-19）
+### 接续快照：已实现功能与剩余工作（2026-10-20）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-012，当前源码含P0-1/P0-2、第三轮 8 项反馈修复、第四轮 5 项剧情/UI反馈、第五轮全文本审校、第六轮界面/开场/净光优化、第七轮开始界面/像素字体、第八轮根桥清理、第九轮全局三色记录台清理、第十轮传送门/墙位/BGM、第十一轮技能特效/章节/设置/近战与第十二轮传送门视觉修正；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-012 已由用户签署通过。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布解压目录 `deliverables/G6-012-Release/`（本地未跟踪），正式安装包 `资料包/01-游戏安装包/FungusLight-G6-012-Release.zip`，源码包与AI交互记录在 `资料包/03-源码压缩包/`，说明文档在 `资料包/02-作品说明文档/`；`deliverables/Release` 已清理，不再保留旧门禁包；发布 zip 与源码 zip 已纳入 Git。G6-012 实机演示视频 `资料包/FungusLight-Gameplay-演示视频.mp4`（97.3 秒/1280×720，SHA256 `E79E79…162C32`）已纳入 Git。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-012，当前源码含P0-1/P0-2、第三轮 8 项反馈修复、第四轮 5 项剧情/UI反馈、第五轮全文本审校、第六轮界面/开场/净光优化、第七轮开始界面/像素字体、第八轮根桥清理、第九轮全局三色记录台清理、第十轮传送门/墙位/BGM、第十一轮技能特效/章节/设置/近战、第十二轮传送门视觉修正与 **G6-013 兼容性修复**；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-012 已由用户签署通过，G6-013 为兼容性修复、待用户实机验收。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布解压目录 `deliverables/G6-013-Release/`（本地未跟踪），正式安装包 `资料包/01-游戏安装包/FungusLight-G6-013-Release.zip`，源码包与AI交互记录在 `资料包/03-源码压缩包/`，说明文档在 `资料包/02-作品说明文档/`；G6-012 包与哈希保留为历史证据。G6-012 实机演示视频 `资料包/FungusLight-Gameplay-演示视频.mp4`（97.3 秒/1280×720，SHA256 `E79E79…162C32`）继续有效。
+
+#### G6-013 兼容性修复（2026-10-20）
+
+- **已实现：** Godot 官方 x86_32 模板导出；`Game/FungusLight.exe` 默认 32 位（32/64 位 Windows 双击可运行），64 位在 `Game/64/`；`开始游戏.cmd` 自动选 32/64 位并在首次失败后自动重试 ANGLE；`兼容模式启动.cmd` 强制 `--rendering-driver opengl3_angle`；`系统检查.cmd` + `diagnostic.txt` + `startup-log.txt`/`compat-log.txt` + `startup-info.txt` 诊断链；`compat.gd` 启动信息/低配检测；窗口按屏幕可用区缩放居中；首次运行 ≤2 线程或老 iGPU 自动开低特效/减少动态。
+- **仅配置/演示：** 32 位构建在 WOW64 下实机窗口启动；真实 32 位-only Windows 未在本机复现；Windows 7/8.1 best-effort；无代码签名/安装器。
+- **未完成/边界：** 只有 D3D9、无 D3D11 的显卡仍无法启动（不含软件渲染器）；32 位进程 2 GB 地址空间上限；路线/跳过路线未重跑（本轮未改战斗/移动/房间/遭遇）；素材/BGM 再分发许可仍需确认。
+- **下一步：** 用 `qa/G6-013-approval.md` 在真实 32 位/老显卡机器实机验收；有问题按 `diagnostic.txt` + 日志定位；再做路线矩阵或性能复测时另开迭代。
 
 #### 已实现清单（接续时直接复用）
 
@@ -42,6 +51,8 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 | I17 像素字体/底部对话框 | 缝合像素字体 Fusion Pixel 12px（OFL，G3-007 由方舟像素替换以覆盖全部用字；关闭抗锯齿/hinting/子像素，字号12/24/36）；底部RPG对话框含名字牌、打字机、▼、E/回车/空格/左键推进、Tab跳过、M1选项页且不能跳过代选；审核台保留Noto | dialogue_box.gd、test_dialogue.gd（175项，含字形覆盖）；1280×720面板(48,504,1184,176)；无立绘/历史/语音 |
 | I18 交互物像素与待机粒子 | 自绘灯座/宝箱/门/水管/灯环/导光/旧矿门/石拱传送门；床/柜/木箱/书架/纸张/菌丛/火把/墙面板复用Complete.png裁切；6类粒子与3～6帧待机；G3-007 降低粒子数量/速度/亮度以求安静；低特效减半、减少动态冻结 | prop_art.gd、props_data.json、tools/gen_props.py、test_props.gd（2156项）；导光颜色字段暂未做三色键控 |
 | I19 G3切片/路线 | N1-01菌洞入口、N1-02导光间、P02三导光机关、T2主线、L01/L02回声、数据驱动遭遇与出生避让、重叠脱困；G3-007 尸体/刻字/墙壁/导光；G3-008 床铺地表层与苏醒、箱子/柜子/绒碰撞、门状态；G3-009 床铺/火把/门/传送门碰撞、石拱传送门、去箭头目的地提示；G3-010 所有出口统一石拱；G3-011 N1-03 菌根前厅、T3/EL1 主线、A15 压力；G3-012 菌根裂口、灯根祭坛、L03/L04、E09-E11；G3-013 整段跳过/联合回读/A15实际房间 | prologue.json、campaign.gd、campaign_state.gd、route_test.gd、test_g3_slice.py；正常路线127.8秒、跳过98.6秒；人类已确认总时长10～15分钟 |
+
+| I20 兼容性分发 | x86_64 + x86_32 双构建；默认 32 位 exe；启动器自动选架构/失败重试 ANGLE；兼容模式；系统诊断；启动信息/低配检测；小屏窗口适配 | compat.gd、presentation_settings.gd、docs/g6/release/launchers、tools/build.ps1、tools/package_release.ps1；老显卡 D3D11 以下仍不支持，真实 32 位机器待用户验收 |
 
 #### 已验证范围与不可扩大解释的结论
 

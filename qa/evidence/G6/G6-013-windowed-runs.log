@@ -1,0 +1,30 @@
+# G6-013 windowed launch evidence (release binaries, Windows 10 x86_64 host)
+# NOTE: this harness cannot write to the real %APPDATA%; the game correctly
+#       falls back to the exe-adjacent 用户数据/ directory. On a normal user
+#       machine user:// is writable and is tried first.
+
+## x86_64 release: deliverables/G6-013/FungusLight.exe
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 24.12.1.241127 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+USER_STORAGE .../deliverables/G6-013/用户数据/
+COMPAT_REPORT .../deliverables/G6-013/用户数据/启动信息.txt
+COMPAT_ARCH x86_64 bits=64
+COMPAT_GPU AMD Radeon 780M Graphics | 3.3.0 Core Profile Context 24.12.1.241127
+COMPAT_DRIVER opengl3 method=gl_compatibility low_end=false
+RELEASE_BOOT campaign
+
+## x86_32 release: deliverables/G6-013-32/FungusLight.exe
+Godot Engine v4.3.stable.official.77dcf97d8 - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 24.12.1.241127 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+USER_STORAGE .../deliverables/G6-013-32/用户数据/
+COMPAT_REPORT .../deliverables/G6-013-32/用户数据/启动信息.txt
+COMPAT_ARCH x86_32 bits=32
+COMPAT_GPU AMD Radeon 780M Graphics | 3.3.0 Core Profile Context 24.12.1.241127
+COMPAT_DRIVER opengl3 method=gl_compatibility low_end=false
+RELEASE_BOOT campaign
+
+## ANGLE compatibility mode (source project, forced with rendering/gl_compatibility/driver.windows)
+OpenGL API OpenGL ES 3.0.0 (ANGLE 2.1.1 git hash: 468fcbe033fa) - Compatibility - Using Device: Google Inc. (AMD) - ANGLE (AMD, AMD Radeon 780M Graphics (0x00001900) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.12033.1030)
+ANGLE_TEST adapter=ANGLE (AMD, AMD Radeon 780M Graphics (0x00001900) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.12033.1030) api=OpenGL ES 3.0.0 (ANGLE 2.1.1 git hash: 468fcbe033fa) driver=opengl3_angle
