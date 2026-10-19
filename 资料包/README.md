@@ -23,6 +23,7 @@
 资料包/
 ├── README.md                        本文件
 ├── SHA256SUMS.txt                   两个发布 zip 的 SHA256
+├── FungusLight-Gameplay-演示视频.mp4  G6 实机演示（97.3 秒，1280×720，含音轨）
 ├── 01-游戏安装包/
 │   ├── FungusLight-G6-012-Release.zip   正式 Windows 发布包（81,622,223 字节）
 │   └── 安装与运行说明.md
@@ -51,10 +52,14 @@
 | --- | --- | --- |
 | `01-游戏安装包/FungusLight-G6-012-Release.zip` | `FCEC62C9CCD11759AF30E8532C72AD26B31D1608BA186390DAC8969D20EB25BF` | 81,622,223 字节 |
 | `03-源码压缩包/FungusLight-G6-012-Source.zip` | `B5BFB567FA086AE07F27591EE664FA22A8E68B25E6C62640606508419F11543F` | 23,980,308 字节（22.87 MiB） |
+| `FungusLight-Gameplay-演示视频.mp4` | `E79E7940036909C348E0282709D34B5428BCFBBFC2DE5B5B42337580F9162C32` | 41,836,200 字节（39.90 MiB） |
+
+演示视频为 G6-012 实机录制（H.264 1280×720/60fps + AAC 音轨，97.3 秒），校验：
 
 ```powershell
 Get-FileHash .\01-游戏安装包\FungusLight-G6-012-Release.zip -Algorithm SHA256
 Get-FileHash .\03-源码压缩包\FungusLight-G6-012-Source.zip -Algorithm SHA256
+Get-FileHash .\FungusLight-Gameplay-演示视频.mp4 -Algorithm SHA256
 Get-Content .\SHA256SUMS.txt
 ```
 
@@ -64,7 +69,7 @@ Get-Content .\SHA256SUMS.txt
 
 ## Git 管理
 
-- `资料包/` 下的说明文档、两个发布 zip 与校验文件均纳入 Git（Conventional Commits 提交）。
+- `资料包/` 下的说明文档、两个发布 zip、实机演示视频与校验文件均纳入 Git（Conventional Commits 提交）。
 - 发布包的**解压目录** `deliverables/G6-012-Release/`、`deliverables/G6-012/` 等构建产物仍按项目约定不提交，只保留本地。
 - 源码 zip 可由 `python tools/package_delivery.py` 从已跟踪文件重建；脚本会校验游戏 zip 哈希并重写两个 `SHA256SUMS.txt`。
 - 历史标签：`v1.0.0`；G6 验收记录：`qa/G6-approval.md`；包位置迁移记录：`qa/evidence/G6/G6-012-package-move.md`。
