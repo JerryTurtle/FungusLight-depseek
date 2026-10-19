@@ -1,0 +1,5 @@
+Godot Engine v4.3.stable.official.77dcf97d8
+build=G6-010
+clean_directory=qa/local/G6-010-clean/有 空格 的 目录
+RELEASE_BOOT campaign
+Result: exit 0; stderr only a headless Windows root-certificate read warning.

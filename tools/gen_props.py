@@ -1217,57 +1217,20 @@ def portal_opening(x: int, y: int) -> bool:
 
 
 def portal_base() -> Grid:
-    # Stone gate: chunky arch matching the cave brick walls, not a wooden door.
+    # Oval threshold only: no stone lintel/jamb box around the light.
     g = Grid(28, 38)
-    for y in range(1, 37):
-        left = 4 if y < 4 else (3 if y < 6 else (2 if y < 8 else 1))
-        right = 23 if y < 4 else (24 if y < 6 else (25 if y < 8 else 26))
-        for x in range(left, right + 1):
-            g.put(x, y, "B")
-    for y in range(1, 37):
-        for x in range(1, 27):
-            if g.get(x, y) != "B":
-                continue
-            if y % 4 == 0:
-                g.put(x, y, "D")
-            elif x % 4 == 0 and (y // 4) % 2 == 0:
-                g.put(x, y, "b")
-            elif (x // 4 + y // 3) % 5 == 0:
-                g.put(x, y, "P")
-    # keystone and lintel highlights
-    g.rect(5, 1, 18, 1, "P")
-    g.rect(11, 1, 6, 4, "P")
-    g.rect(12, 2, 4, 2, "Q")
-    g.put(13, 3, "Y")
-    g.put(14, 3, "y")
-    # carved opening
-    for y in range(2, 36):
-        for x in range(2, 26):
+    for y in range(38):
+        for x in range(28):
             if portal_opening(x, y):
                 g.put(x, y, ".")
-    # outline the opening against the stone
-    for y in range(2, 36):
-        for x in range(2, 26):
+    for y in range(38):
+        for x in range(28):
             if not portal_opening(x, y):
                 continue
             for ox, oy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 if not portal_opening(x + ox, y + oy):
                     g.put(x + ox, y + oy, "K")
-    # runes on both jambs
-    for y in (13, 20, 27):
-        g.put(3, y, "y")
-        g.put(24, y, "y")
-        g.put(4, y, "Y")
-        g.put(23, y, "Y")
-    # threshold + moss
-    g.rect(1, 35, 26, 2, "K")
-    g.rect(2, 35, 24, 1, "P")
-    g.put(3, 35, "Q")
-    g.put(24, 35, "Q")
-    for x, y in ((2, 33), (3, 34), (25, 33), (24, 34), (4, 34), (23, 34)):
-        g.put(x, y, "G" if (x + y) % 2 else "g")
     return g
-
 
 def portal_sealed(frame: int) -> Grid:
     g = portal_base()
@@ -1316,20 +1279,6 @@ def portal_open(frame: int) -> Grid:
         y = 10 + (i * 6 + frame * 3) % 18
         if portal_opening(x, y):
             g.put(x, y, "W")
-    g.put(3, 13, "Y")
-    g.put(3, 20, "W")
-    g.put(3, 27, "Y")
-    g.put(24, 13, "Y")
-    g.put(24, 20, "W")
-    g.put(24, 27, "Y")
-    # light spill on the threshold
-    for x in range(4, 24):
-        if (x + frame) % 2 == 0:
-            g.put(x, 34, "y")
-        if (x + frame) % 3 == 0:
-            g.put(x, 34, "Y")
-    g.put(13, 34, "F")
-    g.put(14, 34, "F")
     return g
 
 

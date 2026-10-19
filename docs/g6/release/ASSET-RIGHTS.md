@@ -26,3 +26,5 @@ Godot Engine 4.3 stable，MIT License。完整 MIT 文本见同目录 `Godot-MIT
 ## 项目代码
 
 项目代码采用根目录 `LICENSE`（Apache-2.0）所载条款；第三方引擎/字体/原始素材仍分别适用各自的许可与边界。
+
+- Boss BGM `boss_theme.wav`：项目内程序化合成的原创循环音乐，不含第三方采样或旋律；随源工程保留生成参数与音频哈希。

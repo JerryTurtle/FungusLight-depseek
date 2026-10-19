@@ -1,5 +1,5 @@
 ﻿param(
-    [string]$BuildId = 'G6-009',
+    [string]$BuildId = 'G6-010',
     [ValidateSet('release','qa')]
     [string]$Mode = 'release'
 )

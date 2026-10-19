@@ -333,7 +333,7 @@ func snapshot(position: Vector2, health: float, focus: float) -> Dictionary:
 	for id in flag_ids: story[id] = has(id)
 	var encounters := {}
 	for id in encounter_ids: encounters[id] = has(id)
-	return {"schema_version":1,"build_id":str(ProjectSettings.get_setting("application/config/version","G6-009")),"chapter_id":"campaign","node_id":node_id,
+	return {"schema_version":1,"build_id":str(ProjectSettings.get_setting("application/config/version","G6-010")),"chapter_id":"campaign","node_id":node_id,
 		"safe_position":[position.x,position.y],"health":health,"focus":focus,"potions":potions,"effective_seconds":seconds,
 		"quests":quests(),"story":story,"puzzles":puzzles(),"encounters":encounters,
 		"rewards":rewards(),"skills":skills(),"upgrades":upgrades(),"equipment":equipment()}

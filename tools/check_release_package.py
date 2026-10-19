@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-009"
+BUILD = sys.argv[1] if len(sys.argv) > 1 else "G6-010"
 RELEASE = ROOT / "deliverables" / BUILD
 QA = ROOT / "deliverables" / (BUILD + "-QA")
 OUT = ROOT / "qa" / "evidence" / "G6" / f"{BUILD}-release-package.json"
@@ -32,7 +32,7 @@ REQUIRED = [
     "scripts/graybox.gdc", "scripts/combat_model.gdc", "scripts/world_art.gdc",
     "scripts/campaign_hud.gdc", "scripts/intro_cinematic.gdc",
     "assets/fonts/FusionPixel12px-zh_hans.ttf", "assets/audio/swing.wav",
-    "assets/hud/icon_melee.png", "assets/intro/scene_01_cavern.png",
+    "assets/audio/boss_theme.wav", "assets/hud/icon_melee.png", "assets/intro/scene_01_cavern.png",
     "assets/title/title_bg.png",
 ]
 

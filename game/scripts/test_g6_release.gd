@@ -33,6 +33,7 @@ func _initialize() -> void:
 func run() -> void:
 	scene = Campaign.new()
 	root.add_child(scene)
+	check(scene.combat_audio.music != null and scene.combat_audio.music.stream is AudioStreamWAV and scene.combat_audio.music.stream.loop_mode == AudioStreamWAV.LOOP_FORWARD, "boss BGM loaded and loops")
 	await process_frame
 	scene.set_physics_process(false)
 	scene.saves.directory = ProjectSettings.globalize_path("res://").path_join("../qa/runtime-profile/g6-flow-"+str(Time.get_ticks_usec())).simplify_path()

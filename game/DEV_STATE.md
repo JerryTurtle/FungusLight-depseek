@@ -2,15 +2,15 @@
 
 更新：2026-10-19。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
 
-## 当前状态（G6-009 发布候选，等待用户验收）
+## 当前状态（G6-010 发布候选，等待用户验收）
 
 - G0/G1/G2技术通过；H2用户明确批准，无问题：[原文](../qa/H2-approval.md)。G3、G4已通过；G4-009完成五项试玩修复。
 - P0-1 读档修复、P0-2 路线/竞技场修复、P0-3 包/版本/门槛统一均已完成；第三轮按用户 8 项反馈修复箱子开启、休息灯座、冗余机关与 Boss 判定/持续伤害反馈。
-- G6-009 第九轮按用户反馈：全局移除三色记录台素材；N1-06/N2-08/N3-02 均已删除，`puzzle_console` 绘制与别名一并移除；P03/P06/P07 继续由阀门完成，出口门槛不变。
-- 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 734.6 秒/0 死亡，跳过 635.4 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
-- G6-009 包：`deliverables/G6-009-Release/`，zip `deliverables/FungusLight-G6-009-Release.zip`；exe `66B26A…B7B13`，pck `940AB6…8E19CA`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-009 改放同级目录，PCK 审计、五目录布局、干净目录 headless 启动通过。
+- G6-010 第十轮按用户反馈：传送门只保留椭圆与内部；多数房间墙数降至 0～1 且位置多样，N4-06/N4-07 无内部墙；新增 29.09 秒循环 Boss BGM；顶部指引 `/` 改 `.`。
+- 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 752.2 秒/0 死亡，跳过 651.4 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
+- G6-010 包：`deliverables/G6-010-Release/`，zip `deliverables/FungusLight-G6-010-Release.zip`；exe `66B26A…B7B13`，BGM `boss_theme.wav`，pck/zip 哈希见 `qa/evidence/G6/G6-010-final-package.txt`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-010 改放同级目录，PCK 审计、五目录布局、干净目录 headless 启动通过。
 - 接续分支 main；release 构建默认 campaign，debug 构建仍进 G2 审核台。
-- G6 仍为 in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；三个场景的清理/P03/P06/P07 阀门与 20 分钟真人时长尚未人工验收。
+- G6 仍为 in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；椭圆传送门、墙位、Boss BGM 听感/音量、顶部 `.` 与 20 分钟真人时长尚未人工验收。
 
 ## 2026-10-18 第二轮：剧情收敛与成长/证据接线（进行中）
 
@@ -47,6 +47,15 @@
 - 已统一 `project.godot`/`prologue.json` 版本、导出预设、标题默认值、发布文档、`qa/gates.json` 和验收模板到 G6-002。
 - 重建 `deliverables/Release/` 五目录与 zip `deliverables/FungusLight-G6-002-Release.zip`；exe `66B26A…B7B13`，pck `06BDF1…EFEB2`，zip `4B0E9B…B930B`。PCK 审计、五目录布局通过；Game 无个人存档/日志。
 - 限制：未重跑干净目录 GUI 全流程；20 分钟真人时长未验证；G6 仍 in_progress，用户书面确认前不得标 passed。证据 `qa/evidence/G6/G6-002-release-package.json`、`G6-002-release-layout.json`、`G6-002-final-package.txt`。
+
+## G6-010 第十轮传送门、墙位、Boss BGM 与指引
+
+- 传送门：`portal_base()` 只画椭圆轮廓和内部光幕，删除门框/门楣/侧柱/门槛/门框符文；`sealed` 3 帧、`open` 5 帧均无外框，碰撞不变。
+- 墙壁：37 房间重排，多数降为 0～1 面原墙并轮换左右位置；N1-02/N2-10/N3-05 保留原墙保证路线，N4-06/N4-07 `walls=[]`。
+- BGM：`game/assets/audio/boss_theme.wav` 29.09 秒、44.1kHz 立体声原创循环；`combat_audio` 新增 music，N4-06 播放，离开/标题停止，设置音量同控。
+- 顶部指引：`章节 / 房间` → `章节  .  房间`。
+- 验证：campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9（752.2 秒）/skip9（651.4 秒）全 0；test_combat549、restart2/8。实机 N4-06 `music.playing=true`、`loop_mode=1`、walls=0。
+- 包：`deliverables/G6-010-Release/`，zip `deliverables/FungusLight-G6-010-Release.zip`；PCK/布局/干净目录 headless 启动通过。限制：传送门构图/墙位/BGM 听感与音量人工目检、20 分钟真人时长、素材/音乐许可未完成；G6 仍 in_progress。
 
 ## G6-009 第九轮全局移除三色记录台
 
@@ -115,15 +124,15 @@
 - 包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-003-Release.zip`；exe `66B26A…B7B13`，pck `0495EA…77491B`，zip `21E1CD…BBC0A`。PCK/布局/干净启动烟测通过。
 - 限制：窗口化两结局与 20 分钟真人时长未验收；G6 仍 in_progress。证据 `qa/evidence/G6/G6-003-feedback-checks.json`、`G6-003-route-matrix.json`、`G6-003-feedback-suite.log`。
 
-## 下一项：G6-009 用户验收（P0-1/P0-2/P0-3、第三/四/五/六/七/八/九轮反馈均已完成）
+## 下一项：G6-010 用户验收（P0-1/P0-2/P0-3、第三/四/五/六/七/八/九/十轮反馈均已完成）
 
-P0-1/P0-2/P0-3 与 G6-004/G6-005/G6-006/G6-007/G6-008/G6-009 反馈修复已完成，当前包为 G6-009；用户验收前不再改包内容。以下清单保留作为最终验收条目：
+P0-1/P0-2/P0-3 与 G6-004～G6-010 反馈修复已完成，当前包为 G6-010；用户验收前不再改包内容。以下清单保留作为最终验收条目：
 
 1. 干净目录首次启动；标题居中/无黑框/像素字体，无剧情介绍与开场回看，点击“设置”能正常打开；新游戏（含五幕开场/跳过）、设置持久化、双槽隔离、坏档恢复、死亡三选项。
 2. 开场五幕是否一眼读懂世界/旧约/禾抬压与砍根/菌群反击/三证据/两种选择；全文本通读 S01～S10、L01～L20、两结局 9 句尾声。
 3. 左上透明 HUD 与右下无框技能栏：尺寸/透明度/字号、生命/精力/护灯/药剂/用时、冷却/锁标/“耗 N”，确认不遮挡场景。
 4. 净光光路：直线上多个敌人同时掉血、每人只结算一次、墙后敌人不掉血；两结局各走一次，确认尾声/统计/返回标题/结局前备份。
-5. N1-06/N2-08/N3-02 三色记录台均已消失；P03/P06/P07 阀门与出口门槛；顶部/底部像素字体；37 节点、字体/标签、休息灯座、暂停/装备完整可见。
+5. 传送门只保留椭圆；多数房间墙数 0～1、位置多样；N4-06/N4-07 无墙；Boss BGM 可循环/停止/调音量；顶部指引 `.`；37 节点、字体/标签、暂停/装备完整可见。
 6. 双槽/坏档/仅备份提示、WASD 键位说明、设置持久化；确认原始 Fungus Cave 素材与开场/标题生成图再分发范围；G5单独阶段按用户指示跳过，音乐与完整按键重设列为已知边界。
 7. 用户书面确认后，才把 G6 标 passed 并写 human_approval。
 

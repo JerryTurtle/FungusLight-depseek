@@ -244,6 +244,7 @@ func title_button(text: String, action: Callable) -> Button:
 
 func show_title() -> void:
 	running = false
+	combat_audio.stop_music()
 	if title_bg != null: title_bg.visible = true
 	if title_scrim != null: title_scrim.visible = true
 	# A clean title screen: no test-room actors, minimap or HUD behind the menu.
@@ -440,6 +441,13 @@ func load_room(position: Vector2 = Vector2.INF, health: float = -1, focus_value:
 	var room_snapshot: Dictionary = progress.snapshot(combat.player,combat.hp,combat.focus)
 	if progress.validate(room_snapshot).is_empty():
 		room_checkpoint = room_snapshot
+	update_boss_music()
+
+func update_boss_music() -> void:
+	if progress.node_id == "N4-06":
+		combat_audio.play_boss_music()
+	else:
+		combat_audio.stop_music()
 
 func reset_guides() -> void:
 	guide_dirs.clear()
@@ -904,7 +912,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-009")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-010")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),
@@ -1263,7 +1271,7 @@ func _physics_process(delta: float) -> void:
 	objects_layer.queue_redraw()
 	ui_layer.queue_redraw()
 	if hud_panel != null: hud_panel.queue_redraw()
-	hud.text = "%s  /  %s\n%s" % [chapter_name(progress.node_id),progress.node().name,current_goal()]
+	hud.text = "%s  .  %s\n%s" % [chapter_name(progress.node_id),progress.node().name,current_goal()]
 	var nearest := nearest_object()
 	var boss := boss_target()
 	if not boss.is_empty():

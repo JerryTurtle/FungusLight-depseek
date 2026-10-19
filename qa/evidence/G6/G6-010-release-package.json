@@ -1,0 +1,13 @@
+{
+  "build": "G6-010",
+  "release_dir": "deliverables\\G6-010",
+  "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+  "pck_sha256": "1588EBFF0318C9295FC94BD47BBFDD40D631FE2C616658CF180227465C3008E5",
+  "pck_bytes": 23266896,
+  "required_present": true,
+  "missing": [],
+  "forbidden_present": [],
+  "project_identity_ok": true,
+  "qa_build_exists": true,
+  "passed": true
+}
