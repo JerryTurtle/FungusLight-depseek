@@ -1,4 +1,4 @@
-﻿param([string]$BuildId = "G6-005", [string]$ReleaseName = "Release")
+﻿param([string]$BuildId = "G6-006", [string]$ReleaseName = "Release")
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $source = Join-Path $root "deliverables/$BuildId"

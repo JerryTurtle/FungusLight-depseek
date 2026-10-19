@@ -1,0 +1,10 @@
+{
+  "build": "G6-006",
+  "clean_directory": "qa/local/G6-006-clean/有 空格 的 目录",
+  "exit": 0,
+  "release_boot": true,
+  "debug_boot_absent": true,
+  "script_error_free": true,
+  "note": "Run through the unconfined godot_run_headless service with the exported release exe+pck in a directory containing spaces. Debug command-line rejection was not re-probed for G6-006; boot.gd release/debug gate is unchanged.",
+  "passed": true
+}

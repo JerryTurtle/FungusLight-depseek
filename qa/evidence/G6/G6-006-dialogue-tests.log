@@ -1,0 +1,4 @@
+Godot Engine v4.3.stable.official.77dcf97d8
+build=G6-006
+DIALOGUE_ENV viewport=(1280, 720) font=Fusion Pixel 12px Prop zh-Hans oversampling=1 panel=[P: (48, 504), S: (1184, 176)]
+DIALOGUE_TEST checks=175 failures=0

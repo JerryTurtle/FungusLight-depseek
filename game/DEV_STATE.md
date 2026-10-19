@@ -2,15 +2,15 @@
 
 更新：2026-10-19。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
 
-## 当前状态（G6-005 发布候选，等待用户验收）
+## 当前状态（G6-006 发布候选，等待用户验收）
 
 - G0/G1/G2技术通过；H2用户明确批准，无问题：[原文](../qa/H2-approval.md)。G3、G4已通过；G4-009完成五项试玩修复。
 - P0-1 读档修复、P0-2 路线/竞技场修复、P0-3 包/版本/门槛统一均已完成；第三轮按用户 8 项反馈修复箱子开启、休息灯座、冗余机关与 Boss 判定/持续伤害反馈。
-- G6-005 第五轮按用户“全面审视全部文本”要求：重写剧情、目标、提示、日志、结局和界面用语；统一水退→抬压→砍根→菌群反击时间线；修正 S08 残片/L12 全文、禾/绒/砾去向、两结局代价、N1-04/N4-04 目标；挂载 L05/L09/L11/L14；修正内部 ID、HUD 费用/护灯上限/用时、暂停/装备面板、存档标签与 WASD 键位说明。
-- 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation45/save65/enemies73/dialogue175/props2472/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 735.1 秒/0 死亡，跳过 635.9 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
-- G6-005 包：`deliverables/G6-005-Release/`，zip `deliverables/FungusLight-G6-005-Release.zip`；exe `66B26A…B7B13`，pck `2D52D5…14833A`，zip `E47338…84A3F2`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-005 改放同级目录，PCK 审计、五目录布局、干净目录 headless 启动通过。
+- G6-006 第六轮按用户 6 项反馈：五幕开场改为清楚背景摘要；左上 HUD 透明缩小；右下技能栏透明/无框/缩小；净光贯穿光路命中所有敌人；开始界面加菌洞/灯根/守灯人背景图；设置面板与字体缩小。
+- 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation47/save65/enemies73/dialogue175/props2472/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 734.6 秒/0 死亡，跳过 635.4 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
+- G6-006 包：`deliverables/G6-006-Release/`，zip `deliverables/FungusLight-G6-006-Release.zip`；exe `66B26A…B7B13`，pck `7BCA16…693F04`，zip `92D8DD…7498FC`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-006 改放同级目录，PCK 审计、五目录布局、干净目录 headless 启动通过。
 - 接续分支 main；release 构建默认 campaign，debug 构建仍进 G2 审核台。
-- G6 仍为 in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；全文本/HUD/开场/暂停/装备面板与 20 分钟真人时长尚未人工验收。
+- G6 仍为 in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；开场/HUD/技能栏/标题/设置/净光多目标与 20 分钟真人时长尚未人工验收。
 
 ## 2026-10-18 第二轮：剧情收敛与成长/证据接线（进行中）
 
@@ -48,6 +48,17 @@
 - 重建 `deliverables/Release/` 五目录与 zip `deliverables/FungusLight-G6-002-Release.zip`；exe `66B26A…B7B13`，pck `06BDF1…EFEB2`，zip `4B0E9B…B930B`。PCK 审计、五目录布局通过；Game 无个人存档/日志。
 - 限制：未重跑干净目录 GUI 全流程；20 分钟真人时长未验证；G6 仍 in_progress，用户书面确认前不得标 passed。证据 `qa/evidence/G6/G6-002-release-package.json`、`G6-002-release-layout.json`、`G6-002-final-package.txt`。
 
+## G6-006 第六轮界面与开场优化
+
+- 开场：五幕改为可直接读懂的故事摘要（世界/旧约/禾抬压与砍根/菌群反击/岚下井/三证据/两种选择）；第三幕拆三行。
+- 左上 HUD：删除面板与铆钉，改为约 280×128 透明信息层；小头像、生命/精力细条、护灯当前/上限、三瓶药剂、用时、R 药剂/孢毒，文字加描边。
+- 右下技能栏：删除面板/标题/格子边框，五个 32×32 图标横排；保留冷却、锁标、精力不足变暗、护灯青色下划线，费用 10px“耗 N”。
+- 净光：沿光路收集所有敌方受击体，每人结算一次，遇墙截断；`test_combat` A04 双目标都掉 24 血，549 项 0 失败。
+- 标题：`game/assets/title/title_bg.png`，320×180、96 色量化后最近邻放大到 1280×720；只在新标题显示。
+- 设置：420×540、主字号 18；标题 28、操作/保存 12、返回 18/36；打开时隐藏 HUD/小地图。
+- 验证：campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation47/save65/enemies73/dialogue175/props2472/pressure5/route9（734.6 秒）/skip9（635.4 秒）全 0；test_combat549、restart2/8。
+- 包：`deliverables/G6-006-Release/`，zip `deliverables/FungusLight-G6-006-Release.zip`；PCK/布局/干净目录 headless 启动通过。限制：开场/HUD/技能栏/标题/设置/净光多目标与 20 分钟真人时长未人工验收；G6 仍 in_progress。
+
 ## G6-005 第五轮全文本审校
 
 - 剧情：水脉先降→禾抬泵压→根须堵管→禾签砍根令→菌群反击；L03 区分侧根渴裂/主根斧痕，S04/S07/L10 互证。S08 只留残片并注明“已够作证”，L12 补全留路与违约代价。
@@ -79,16 +90,16 @@
 - 包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-003-Release.zip`；exe `66B26A…B7B13`，pck `0495EA…77491B`，zip `21E1CD…BBC0A`。PCK/布局/干净启动烟测通过。
 - 限制：窗口化两结局与 20 分钟真人时长未验收；G6 仍 in_progress。证据 `qa/evidence/G6/G6-003-feedback-checks.json`、`G6-003-route-matrix.json`、`G6-003-feedback-suite.log`。
 
-## 下一项：G6-005 用户验收（P0-1/P0-2/P0-3、第三/四/五轮反馈均已完成）
+## 下一项：G6-006 用户验收（P0-1/P0-2/P0-3、第三/四/五/六轮反馈均已完成）
 
-P0-1/P0-2/P0-3 与 G6-004/G6-005 反馈修复已完成，当前包为 G6-005；用户验收前不再改包内容。以下清单保留作为最终验收条目：
+P0-1/P0-2/P0-3 与 G6-004/G6-005/G6-006 反馈修复已完成，当前包为 G6-006；用户验收前不再改包内容。以下清单保留作为最终验收条目：
 
 1. 干净目录首次启动、新游戏（含五幕开场/跳过）、设置持久化、双槽隔离、坏档恢复、死亡三选项。
-2. 开场动画与全文本通读：S01～S10、L01～L20、节点目标/提示/日志、Boss 战后、两结局 9 句尾声；确认禾/绒/砾去向与 S08 残片/L12 全文。
-3. HUD/技能栏实际战斗检查：生命/精力、护灯当前与上限、药剂/饮用进度、治疗 +生命、用时、五技能冷却/锁标/“耗 N”、右下角不遮挡。
-4. 两个结局各走一次，确认尾声结局名/章节统计/返回标题/结局前备份，且不再有“继续探索”空房间。
-5. 37节点全地图与初燃/灯焰/导光/移动手感、字体/标签、休息灯座不再抢出口 E 提示；暂停最下方按钮、装备 6 件与返回完整可见。
-6. 双槽/坏档/仅备份提示、WASD 键位说明、设置持久化；确认原始 Fungus Cave 素材再分发范围；G5单独阶段按用户指示跳过，音乐与完整按键重设列为已知边界。
+2. 开场五幕是否一眼读懂世界/旧约/禾抬压与砍根/菌群反击/三证据/两种选择；全文本通读 S01～S10、L01～L20、两结局 9 句尾声。
+3. 左上透明 HUD 与右下无框技能栏：尺寸/透明度/字号、生命/精力/护灯/药剂/用时、冷却/锁标/“耗 N”，确认不遮挡场景。
+4. 净光光路：直线上多个敌人同时掉血、每人只结算一次、墙后敌人不掉血；两结局各走一次，确认尾声/统计/返回标题/结局前备份。
+5. 标题背景图与整体美术/故事风格；设置面板缩小、字号变小且打开时隐藏 HUD/小地图；37 节点、字体/标签、休息灯座、暂停/装备完整可见。
+6. 双槽/坏档/仅备份提示、WASD 键位说明、设置持久化；确认原始 Fungus Cave 素材与开场/标题生成图再分发范围；G5单独阶段按用户指示跳过，音乐与完整按键重设列为已知边界。
 7. 用户书面确认后，才把 G6 标 passed 并写 human_approval。
 
 ## 证据与限制

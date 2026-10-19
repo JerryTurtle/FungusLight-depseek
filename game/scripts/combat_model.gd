@@ -516,7 +516,8 @@ func light_attack() -> void:
 	cooldowns.light = int(spec.cooldown)
 	beam_from = player
 	beam_end = player + locked * float(spec.range)
-	var selected: Dictionary = {}
+	var hits: Array = []
+	var seen := {}
 	var candidates := ordered_enemies()
 	for distance in range(int(spec.range)+1):
 		var point := player + locked * distance
@@ -524,14 +525,12 @@ func light_attack() -> void:
 			beam_end = point
 			break
 		for enemy in candidates:
-			if enemy.hp > 0 and enemy_hit_at(enemy,point,10):
-				selected = enemy
-				beam_end = point
-				break
-		if not selected.is_empty():
-			break
-	if not selected.is_empty():
-		damage_enemy(selected,float(spec.damage))
+			if enemy.hp <= 0 or seen.has(enemy.id): continue
+			if enemy_hit_at(enemy,point,10):
+				seen[enemy.id] = true
+				hits.append(enemy)
+	for enemy in hits:
+		damage_enemy(enemy,float(spec.damage))
 	emit("release", {"action":"light","attack_id":attack_id})
 
 func valid_rain_target(target: Vector2) -> bool:

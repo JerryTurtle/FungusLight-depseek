@@ -4,10 +4,12 @@ const Progress = preload("res://scripts/campaign_state.gd")
 const SaveStore = preload("res://scripts/save_store.gd")
 const HUD = preload("res://scripts/campaign_hud.gd")
 const Intro = preload("res://scripts/intro_cinematic.gd")
+const TITLE_BG = preload("res://assets/title/title_bg.png")
 const DIR_NAMES := ["上","右","下","左"]
 const DIR_VECTORS := [Vector2.UP,Vector2.RIGHT,Vector2.DOWN,Vector2.LEFT]
 var progress = Progress.new()
 var saves = SaveStore.new()
+var title_bg: TextureRect
 var overlay: PanelContainer
 var menu: VBoxContainer
 var notice := ""
@@ -82,6 +84,17 @@ func _ready() -> void:
 	status.size = Vector2(820,54)
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status.max_lines_visible = 2
+	title_bg = TextureRect.new()
+	title_bg.texture = TITLE_BG
+	title_bg.position = Vector2.ZERO
+	title_bg.size = Vector2(1280,720)
+	title_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	title_bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	title_bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	title_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	title_bg.modulate = Color(0.82,0.86,0.84,1.0)
+	title_bg.visible = false
+	add_child(title_bg)
 	overlay = PanelContainer.new()
 	overlay.position = Vector2(270,140)
 	overlay.size = Vector2(740,430)
@@ -175,6 +188,7 @@ func button(text: String, action: Callable) -> void:
 
 func resume() -> void:
 	overlay.hide()
+	if title_bg != null: title_bg.visible = false
 	if dialogue != null and dialogue.is_open(): dialogue.close()
 	world.visible = true
 	objects_layer.visible = true
@@ -189,6 +203,7 @@ func resume() -> void:
 
 func show_title() -> void:
 	running = false
+	if title_bg != null: title_bg.visible = true
 	# A clean title screen: no test-room actors, minimap or HUD behind the menu.
 	world.visible = false
 	objects_layer.visible = false
@@ -200,7 +215,7 @@ func show_title() -> void:
 	clear_menu("菌灯之下")
 	overlay.position = Vector2(270,100)
 	overlay.size = Vector2(740,520)
-	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-005"))
+	var build_label := str(ProjectSettings.get_setting("application/config/version","G6-006"))
 	paragraph("地下三百尺，营地只剩最后一盏灯。\n灯根要水，人也要水；剩下的水只够两边分。\n你提灯下井，要查清是谁先断了水。\n五章主线 · 两种结局 · 自动存档与三个手动存档。\n版本 "+build_label,150)
 	button("新游戏",func():
 		if FileAccess.file_exists(saves.directory+"/auto.json"):
@@ -222,6 +237,7 @@ func show_title() -> void:
 	button("退出",func(): get_tree().quit())
 
 func new_game() -> void:
+	if title_bg != null: title_bg.visible = false
 	run_started_ms = Time.get_ticks_msec()
 	chapter_start_ms = run_started_ms
 	chapter_times = {}
@@ -542,6 +558,10 @@ func open_settings(return_to: String) -> void:
 	settings_was_paused = paused
 	if overlay != null: overlay.hide()
 	paused = true
+	if hud != null: hud.visible = false
+	if status != null: status.visible = false
+	if ui_layer != null: ui_layer.visible = false
+	if floating_ui != null: floating_ui.visible = false
 	if hud_panel != null: hud_panel.visible = false
 	settings_panel.show()
 
@@ -828,7 +848,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-005")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-006")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),

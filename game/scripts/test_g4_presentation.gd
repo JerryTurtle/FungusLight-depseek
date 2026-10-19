@@ -46,6 +46,8 @@ func run() -> void:
 		for j in range(i + 1, slot_rects.size()):
 			if slot_rects[i].intersects(slot_rects[j]): overlap = true
 	check(not overlap, "skill tray is in the lower-right and slots do not overlap")
+	var last_slot: Rect2 = slot_rects[slot_rects.size() - 1]
+	check(slot_rects[0].size.x <= 36 and last_slot.end.x <= 1270 and last_slot.end.y <= 710, "skill tray is compact and inside the lower-right")
 
 	# The bars must reflect actual state, not a decorative fixed fill.
 	scene.combat.hp = 42
@@ -136,11 +138,10 @@ func run() -> void:
 	for id in content.dialogues:
 		if str(id).begins_with("L") and not mounted_lore.has(str(id)): lore_reachable = false
 	check(lore_reachable, "all 20 lore entries are reachable from a room object")
-	var intro_spoils := false
+	var intro_text := ""
 	for panel in Intro.SCENES:
-		var panel_text := str(panel.get("text",""))
-		if panel_text.find("三份证据") >= 0 or panel_text.find("恢复共生") >= 0 or panel_text.find("封存撤离") >= 0: intro_spoils = true
-	check(not intro_spoils, "opening raises the question without spoiling evidence or endings")
+		intro_text += str(panel.get("text",""))
+	check(intro_text.find("菌根") >= 0 and intro_text.find("旧约") >= 0 and intro_text.find("禾") >= 0 and intro_text.find("三份证据") >= 0 and intro_text.find("恢复共生") >= 0, "opening explains the world, covenant, He's mistake and the choice")
 	var n4_04: Dictionary = content.nodes.filter(func(n): return str(n.id) == "N4-04")[0]
 	check(str(n4_04.goal).find("空") >= 0 and str(n4_04.goal).find("两段") < 0, "core corridor objective matches the empty room")
 	var n1_04: Dictionary = content.nodes.filter(func(n): return str(n.id) == "N1-04")[0]
@@ -182,6 +183,7 @@ func run() -> void:
 	await process_frame
 	var title_text := " ".join(menu_texts(scene))
 	check(title_text.find("地下三百尺") >= 0 and title_text.find("是谁先断了水") >= 0 and title_text.find("开场故事") >= 0, "title states the premise and offers the opening")
+	check(scene.title_bg != null and scene.title_bg.visible and scene.title_bg.texture != null, "title screen uses the painted background")
 	scene.show_journal()
 	await process_frame
 	var journal_text := " ".join(menu_texts(scene))

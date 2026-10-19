@@ -562,7 +562,7 @@ func check_gate_edges() -> void:
 	m.enemies.reverse()
 	m.step(Vector2.ZERO,Vector2.RIGHT,"light")
 	for i in range(12): m.step(Vector2.ZERO,Vector2.RIGHT)
-	check(a.hp == 48 and b.hp == 72,"A04 beam hits nearest target only")
+	check(a.hp == 48 and b.hp == 48,"A04 beam hits every enemy on its path")
 	var paid_focus: float = m.focus
 	var paid_cooldown: int = m.cooldowns.light
 	m.damage_player(12)
