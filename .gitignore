@@ -1,5 +1,9 @@
 ﻿game/.godot/
-deliverables/
+deliverables/*
+!deliverables/FungusLight-G6-012-Release.zip
+!deliverables/FINAL-RELEASE.md
+!deliverables/README.md
+!deliverables/SHA256SUMS.txt
 /Fungus Cave \[16x16\]/
 qa/*.tpz
 qa/clean-run/

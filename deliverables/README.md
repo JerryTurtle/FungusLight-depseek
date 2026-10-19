@@ -1,19 +1,9 @@
 # 发布包目录
 
-当前最终发布（用户已签署通过）：
+最终发布：
 
-- `G6-012-Release/`
-- `FungusLight-G6-012-Release.zip`
-- `SHA256SUMS.txt`、`FINAL-RELEASE.md`
+- `G6-012-Release/`：解压后的完整发布目录（Game/Source/Docs/QA/Licenses）。
+- `FungusLight-G6-012-Release.zip`：正式发布压缩包，已纳入 Git。
+- `SHA256SUMS.txt`、`FINAL-RELEASE.md`：校验与发布说明。
 
-保留的门禁/验收留档：
-
-- `G2_Review/`、`G2_Review-G2-007.zip`、`G2-007-check/`
-- `G4-001-Acceptance/` ～ `G4-008-Acceptance/` 及对应 zip
-- `Release/`：G6-003 门禁版本，仍被进程占用
-
-清理说明：
-
-- 已删除 G0～G4 过程构建、G6-001～G6-011 过程包、G7 过程包及 zip。
-- `G6-010-Release/` 中仍有 G6-010 游戏进程运行，debug.log/包文件被占用，暂时无法删除；关闭该进程后可移除。
-- 历史证据仍保留在 `qa/evidence/`。
+旧过程构建、门禁/验收副本、G6-010/G6-003 包均已清理；历史证据仍保留在 `qa/evidence/`。

@@ -7,7 +7,7 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 **G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。** 2026-10-19 第十二轮完成 **G6-012** 最终发布候选：传送门去掉外侧粒子/黑色硬边框，改暖色椭圆内部微光与悬浮；碰撞缩到 16×30 内椭圆；粒子纯绘制无碰撞。** G6 已由用户签署通过（G6-012）**；G6-012 默认路线 **707.7 秒/0 死亡**、整段跳过 **607.4 秒/0 死亡**，14 组套件、test_combat550 与 restart 均 0 失败；8/8 矩阵为 G6-003 历史基线；用户已签署 `qa/G6-approval.md` 通过。
 
 - 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-012 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **G6-012 最终发布包：** [deliverables/G6-012-Release](deliverables/G6-012-Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-012-Release.zip`。exe `66B26A…B7B13`，pck `E92ACB…69C385`，zip SHA256 `FCEC62…EB25BF`；完整哈希见 `qa/evidence/G6/G6-012-final-package.txt`。旧过程包已清理；门禁审核 `G2_Review`/`G4-00x-Acceptance` 与运行中的 `deliverables/Release` 保留。
+- **G6-012 最终发布包：** [deliverables/G6-012-Release](deliverables/G6-012-Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-012-Release.zip`。exe `66B26A…B7B13`，pck `E92ACB…69C385`，zip SHA256 `FCEC62…EB25BF`；完整哈希见 `qa/evidence/G6/G6-012-final-package.txt`。旧过程包、门禁/验收副本与 G6-010/G6-003 旧包均已清理；发布 zip 已纳入 Git。
 - **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G6-012 证据见 `qa/evidence/G6/G6-012-*`。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
 - **验收完成：用户已在 `qa/G6-approval.md` 勾选“通过”并签名（JeryTurtle，日期按原文 2026.10.49）；G6 标记 passed。** 验收条目为暖色椭圆传送门/内部微光/外圈无碰撞、灯击/净光/灯雨特效、近战上下内侧命中、开场章节、精简设置、Boss BGM、两结局、双槽/坏档、37 节点、字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
@@ -17,7 +17,7 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
 ### 接续快照：已实现功能与剩余工作（2026-10-19）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-012，当前源码含P0-1/P0-2、第三轮 8 项反馈修复、第四轮 5 项剧情/UI反馈、第五轮全文本审校、第六轮界面/开场/净光优化、第七轮开始界面/像素字体、第八轮根桥清理、第九轮全局三色记录台清理、第十轮传送门/墙位/BGM、第十一轮技能特效/章节/设置/近战与第十二轮传送门视觉修正；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-012 已由用户签署通过。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/G6-012-Release/`（G6-012），zip `deliverables/FungusLight-G6-012-Release.zip`；`deliverables/Release` 被运行中的 G6-003 占用，未覆盖。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-012，当前源码含P0-1/P0-2、第三轮 8 项反馈修复、第四轮 5 项剧情/UI反馈、第五轮全文本审校、第六轮界面/开场/净光优化、第七轮开始界面/像素字体、第八轮根桥清理、第九轮全局三色记录台清理、第十轮传送门/墙位/BGM、第十一轮技能特效/章节/设置/近战与第十二轮传送门视觉修正；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-012 已由用户签署通过。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/G6-012-Release/`（G6-012），zip `deliverables/FungusLight-G6-012-Release.zip`；`deliverables/Release` 已清理，不再保留旧门禁包；发布 zip 已纳入 Git。
 
 #### 已实现清单（接续时直接复用）
 

@@ -8,7 +8,7 @@
 - P0-1 读档修复、P0-2 路线/竞技场修复、P0-3 包/版本/门槛统一均已完成；第三轮按用户 8 项反馈修复箱子开启、休息灯座、冗余机关与 Boss 判定/持续伤害反馈。
 - G6-012 第十二轮：传送门去掉外侧粒子/黑色硬边框，改暖色椭圆内部微光与悬浮；碰撞缩到 16×30 内椭圆；粒子纯绘制无碰撞。
 - 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）；另 test_combat 550/0、跨进程 restart write2/load8。默认 route 707.7 秒/0 死亡，跳过 607.4 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
-- G6-012 包：`deliverables/G6-012-Release/`，zip `deliverables/FungusLight-G6-012-Release.zip`；exe `66B26A…B7B13`，BGM `boss_theme.wav`，pck/zip 哈希见 `qa/evidence/G6/G6-012-final-package.txt`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-012 改放同级目录，PCK 审计、五目录布局、干净目录 headless 启动通过。
+- G6-012 包：`deliverables/G6-012-Release/`，zip `deliverables/FungusLight-G6-012-Release.zip`；exe `66B26A…B7B13`，BGM `boss_theme.wav`，pck/zip 哈希见 `qa/evidence/G6/G6-012-final-package.txt`。旧 `deliverables/Release` 与门禁/验收副本已清理；G6-012 发布 zip 已纳入 Git，PCK 审计、五目录布局、干净目录 headless 启动通过。
 - 接续分支 main；release 构建默认 campaign，debug 构建仍进 G2 审核台。
 - G6 已通过：用户在 `qa/G6-approval.md` 勾选“通过”并签名（JeryTurtle，日期按原文 2026.10.49）；逐项字段/哈希栏未填写，哈希见 `qa/evidence/G6/G6-012-final-package.txt`。原始素材/生成图/Boss BGM 再分发许可仍需确认。
 
