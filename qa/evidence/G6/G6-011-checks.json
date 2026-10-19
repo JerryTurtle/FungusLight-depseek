@@ -1,0 +1,131 @@
+{
+  "build_id": "G6-011",
+  "engine": "Godot 4.3.stable",
+  "checks": [
+    {
+      "check": "campaign",
+      "checks": 95,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-campaign-tests.log"
+    },
+    {
+      "check": "g6_release",
+      "checks": 39,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-g6_release-tests.log"
+    },
+    {
+      "check": "g4_state",
+      "checks": 48,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-g4_state-tests.log"
+    },
+    {
+      "check": "g4_boss",
+      "checks": 71,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-g4_boss-tests.log"
+    },
+    {
+      "check": "g4_death",
+      "checks": 5,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-g4_death-tests.log"
+    },
+    {
+      "check": "g4_visual",
+      "checks": 15,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-g4_visual-tests.log"
+    },
+    {
+      "check": "g4_presentation",
+      "checks": 48,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-g4_presentation-tests.log"
+    },
+    {
+      "check": "save",
+      "checks": 65,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-save-tests.log"
+    },
+    {
+      "check": "enemies",
+      "checks": 73,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-enemies-tests.log"
+    },
+    {
+      "check": "dialogue",
+      "checks": 175,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-dialogue-tests.log"
+    },
+    {
+      "check": "props",
+      "checks": 2464,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-props-tests.log"
+    },
+    {
+      "check": "pressure",
+      "checks": 5,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-pressure-tests.log"
+    },
+    {
+      "check": "route",
+      "checks": 9,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-route-tests.log"
+    },
+    {
+      "check": "skip_route",
+      "checks": 9,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-skip_route-tests.log"
+    },
+    {
+      "check": "combat",
+      "checks": 550,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-combat-tests.log"
+    },
+    {
+      "check": "restart_write",
+      "checks": 2,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-restart-load.log"
+    },
+    {
+      "check": "restart_load",
+      "checks": 8,
+      "failures": 0,
+      "passed": true,
+      "log": "qa/evidence/G6/G6-011-restart-load.log"
+    }
+  ],
+  "failures": 0,
+  "route_seconds": 707.8,
+  "skip_route_seconds": 607.1,
+  "route_deaths": 0,
+  "skip_route_deaths": 0,
+  "note": "Rows were run through the unconfined godot_run_headless service against G6-011. Route input is engine input injection, not human play time. Combat 550 includes a vertical inner-edge melee check; walls remain the G6-010 layout."
+}

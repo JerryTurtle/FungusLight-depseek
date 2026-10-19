@@ -1,5 +1,5 @@
 {
- "build_id": "G6-010",
+ "build_id": "G6-011",
  "G0": {
   "status": "passed",
   "evidence": [
@@ -416,7 +416,7 @@
  },
  "G6": {
   "status": "in_progress",
-  "build_id": "G6-010",
+  "build_id": "G6-011",
   "evidence": [
    "qa/evidence/G6/G6-gap-audit.md",
    "qa/evidence/G6/G6-001-checks.json",
@@ -663,16 +663,49 @@
    "qa/evidence/G6/G6-010-route-tests.log",
    "qa/evidence/G6/G6-010-route.json",
    "qa/evidence/G6/G6-010-save-tests.log",
-   "qa/evidence/G6/G6-010-skip_route-tests.log"
+   "qa/evidence/G6/G6-010-skip_route-tests.log",
+   "qa/evidence/G6/G6-011-bgm.json",
+   "qa/evidence/G6/G6-011-campaign-tests.log",
+   "qa/evidence/G6/G6-011-checks.json",
+   "qa/evidence/G6/G6-011-clean-release.json",
+   "qa/evidence/G6/G6-011-clean-release.log",
+   "qa/evidence/G6/G6-011-combat-tests.log",
+   "qa/evidence/G6/G6-011-dialogue-tests.log",
+   "qa/evidence/G6/G6-011-enemies-tests.log",
+   "qa/evidence/G6/G6-011-final-package.txt",
+   "qa/evidence/G6/G6-011-g4_boss-tests.log",
+   "qa/evidence/G6/G6-011-g4_death-tests.log",
+   "qa/evidence/G6/G6-011-g4_presentation-tests.log",
+   "qa/evidence/G6/G6-011-g4_state-tests.log",
+   "qa/evidence/G6/G6-011-g4_visual-tests.log",
+   "qa/evidence/G6/G6-011-g6_release-tests.log",
+   "qa/evidence/G6/G6-011-intro.png",
+   "qa/evidence/G6/G6-011-light.png",
+   "qa/evidence/G6/G6-011-melee.png",
+   "qa/evidence/G6/G6-011-portal.png",
+   "qa/evidence/G6/G6-011-pressure-tests.log",
+   "qa/evidence/G6/G6-011-progress.md",
+   "qa/evidence/G6/G6-011-props-tests.log",
+   "qa/evidence/G6/G6-011-rain.png",
+   "qa/evidence/G6/G6-011-release-layout.json",
+   "qa/evidence/G6/G6-011-release-package.json",
+   "qa/evidence/G6/G6-011-restart-load.log",
+   "qa/evidence/G6/G6-011-route-skip.json",
+   "qa/evidence/G6/G6-011-route-tests.log",
+   "qa/evidence/G6/G6-011-route.json",
+   "qa/evidence/G6/G6-011-save-tests.log",
+   "qa/evidence/G6/G6-011-settings.png",
+   "qa/evidence/G6/G6-011-skip_route-tests.log",
+   "qa/evidence/G6/G6-011-cleanup.md"
   ],
-  "package": "deliverables/G6-010-Release/",
+  "package": "deliverables/G6-011-Release/",
   "remaining": [
-   "用户在 docs/g6/release/验收说明.md 的干净目录流程中验收 G6-010 椭圆传送门、墙位数量/位置、Boss BGM 循环/音量、顶部 . 分隔符，并填写 qa/G6-approval.md",
+   "用户在 docs/g6/release/验收说明.md 的干净目录流程中验收 G6-011 技能特效、传送门浮动、近战上下内侧命中、开场章节、精简设置、Boss BGM，并填写 qa/G6-approval.md",
    "原始 Fungus Cave 素材、开场/标题生成图与 Boss BGM 的再分发许可确认或限定内部测试",
    "可选音乐扩展与完整按键重设（G5 单独阶段按用户指示跳过）"
   ],
-  "caveat": "AI 验证：G6-010 默认 route 752.2 秒/0 死亡、整段跳过 651.4 秒/0 死亡；14 组套件（campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）与 test_combat549、restart2/8 均 0 失败；N4-06 实机 music.playing=true、loop_mode=1、walls=0；PCK 审计、五目录布局、干净目录 headless RELEASE_BOOT campaign 通过。G6-010 只重跑默认/跳过路线，8/8 矩阵为 G6-003 历史基线。传送门构图/墙位/BGM 听感与音量、标题/像素字体、HUD/技能栏、净光光路、两结局/20分钟真人时长未人工验收；用户书面确认前 G6 仍 in_progress。",
-  "package_zip": "deliverables/FungusLight-G6-010-Release.zip",
-  "package_zip_sha256": "FB3CB0AE1383172E07163DB5A9B6ACF9B87301C5852E36A88DEA192B47E2B5AB"
+  "caveat": "AI 验证：G6-011 默认 route 707.8 秒/0 死亡、整段跳过 607.1 秒/0 死亡；14 组套件（campaign95/g6_release39/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2464/pressure5/route9/skip9）与 test_combat550、restart2/8 均 0 失败；PCK 审计、五目录布局、干净目录 headless RELEASE_BOOT campaign 通过。G6-011 只重跑默认/跳过路线，8/8 矩阵为 G6-003 历史基线。技能特效/传送门/近战/章节/设置/BGM 仍需人工验收；用户书面确认前 G6 仍 in_progress。",
+  "package_zip": "deliverables/FungusLight-G6-011-Release.zip",
+  "package_zip_sha256": "499497126AEE1CB9C2EB868BF68DE473CEBC1CFC91DF049F80BEC56CC3C770DF"
  }
 }

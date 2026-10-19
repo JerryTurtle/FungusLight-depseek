@@ -1,0 +1,12 @@
+# 菌灯之下 G6-011 发布包
+
+- exe: `deliverables/G6-011-Release/Game/FungusLight.exe`  66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13  84214784 bytes
+- pck: `deliverables/G6-011-Release/Game/FungusLight.pck`  18B8BB23F4DA535796EF2E5084C4B04C33B79E537BF7BD017395E320AE8BFEFD  23264880 bytes
+- zip: `deliverables/FungusLight-G6-011-Release.zip`  499497126AEE1CB9C2EB868BF68DE473CEBC1CFC91DF049F80BEC56CC3C770DF  81552736 bytes
+
+- BGM：`game/assets/audio/boss_theme.wav` 29.09 秒循环
+- 布局：`deliverables/G6-011-Release/{Game,Source,Docs,QA,Licenses}`
+- PCK 审计：`qa/evidence/G6/G6-011-release-package.json`（passed）
+- 五目录布局：`qa/evidence/G6/G6-011-release-layout.json`（passed）
+- 干净目录 headless 启动：`qa/evidence/G6/G6-011-clean-release.json`（RELEASE_BOOT campaign，exit 0）
+- 过程包清理：保留 G6-011、门禁审核 G2_Review/G4 Acceptance、锁定的 `deliverables/Release`。

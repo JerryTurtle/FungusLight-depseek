@@ -747,8 +747,15 @@ func enemy_melee_hit(enemy: Dictionary, origin: Vector2, direction: Vector2, rea
 	var rect := enemy_hurt_rect(enemy)
 	var point: Vector2 = enemy.pos if rect.size.is_zero_approx() else closest_point_on_rect(rect,origin)
 	var offset: Vector2 = point-origin
-	if offset.length() > reach: return false
-	if not offset.is_zero_approx() and direction.dot(offset.normalized()) < cos(half_angle): return false
+	var distance := offset.length()
+	if distance > reach: return false
+	if not offset.is_zero_approx() and direction.dot(offset.normalized()) < cos(half_angle):
+		# Vertical swings draw the weapon to one side. Give the inner edge of
+		# the staff a short close-range catch so an enemy tucked under the
+		# inside of the swing still takes the hit.
+		var lateral := absf(offset.dot(Vector2(-direction.y,direction.x)))
+		var inner := absf(direction.y) > 0.5 and lateral <= reach*0.56 and offset.dot(direction) >= -1.0 and distance <= reach*0.86
+		if not inner: return false
 	return clear_line(origin,point)
 
 func enemy_damage_allowed(_enemy: Dictionary) -> bool:

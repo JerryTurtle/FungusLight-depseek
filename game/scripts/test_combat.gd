@@ -36,6 +36,14 @@ func _initialize() -> void:
 			check(target.hp == 54,"A03 once per swing")
 	m.reset()
 	m.enemies.clear()
+	m.walls.clear()
+	m.player = Vector2(160,100)
+	var inner_target: Dictionary = m.add_enemy(m.player+Vector2(14,-5),true)
+	m.step(Vector2.ZERO,Vector2.UP,"melee")
+	for i in range(24): m.step(Vector2.ZERO,Vector2.UP)
+	check(inner_target.hp == 54,"A02 vertical swing catches inner edge")
+	m.reset()
+	m.enemies.clear()
 	m.focus = 50
 	m.step(Vector2.ZERO,Vector2.RIGHT,"melee")
 	for i in range(24): m.step(Vector2.ZERO,Vector2.RIGHT)
@@ -528,7 +536,7 @@ func check_input_boundaries() -> void:
 
 func check_gate_edges() -> void:
 	for direction in [Vector2.RIGHT,Vector2.LEFT,Vector2.UP,Vector2.DOWN]:
-		for sample in [[21.9,0.0,true],[22.1,0.0,false],[18.0,44.9,true],[18.0,45.1,false],[18.0,180.0,false]]:
+		for sample in [[25.9,0.0,true],[26.1,0.0,false],[18.0,64.9,true],[18.0,65.1,false],[18.0,180.0,false]]:
 			var m = hazard_world()
 			var target: Dictionary = m.add_enemy(m.player+direction.rotated(deg_to_rad(sample[1]))*sample[0],true)
 			m.step(Vector2.ZERO,direction,"melee")

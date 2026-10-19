@@ -13,27 +13,27 @@ const FONT := preload("res://assets/fonts/FusionPixel12px-zh_hans.ttf")
 const SCENES := [
 	{
 		"image": preload("res://assets/intro/scene_01_cavern.png"),
-		"chapter": "第一幕 · 灯与根",
+		"chapter": "序章 · 灯与根",
 		"text": "地下三百尺，人类避难所靠菌灯活着。\n菌根从水脉吸水，灯线把光送进房间；人和菌根共用一条水脉。",
 	},
 	{
 		"image": preload("res://assets/intro/scene_02_pumps.png"),
-		"chapter": "第二幕 · 旧约",
+		"chapter": "第一章 · 断根",
 		"text": "三百年前，人类与地下的菌王立约：\n人取水要给根留光，根供水要给人留路；违约者，以渴偿还。",
 	},
 	{
 		"image": preload("res://assets/intro/scene_03_drought.png"),
-		"chapter": "第三幕 · 水少了",
+		"chapter": "第二章 · 排水",
 		"text": "水脉变细，灯一盏盏变暗。\n岚的师父禾抬高泵压，想让灯再亮一夜；\n水退更快，根须堵管。禾又签令砍根，菌群攻击人。",
 	},
 	{
 		"image": preload("res://assets/intro/scene_04_keeper.png"),
-		"chapter": "第四幕 · 最后一盏",
+		"chapter": "第三章 · 王庭",
 		"text": "水断后菌群开始攻击，营地只剩最后一盏灯。\n守灯人岚提灯下井，要查清真相，也要替营地和菌根做决定。",
 	},
 	{
 		"image": preload("res://assets/intro/scene_05_core.png"),
-		"chapter": "第五幕 · 灯根",
+		"chapter": "终章 · 灯根",
 		"text": "断根、抽水记录、旧约，三份证据能还原真相。\n恢复共生，还是封存撤离——岚要替营地选一条路。",
 	},
 ]

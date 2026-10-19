@@ -327,14 +327,46 @@ func draw_world() -> void:
 	for rain in combat.rains:
 		var center: Vector2 = rain.pos
 		var radius: float = combat.config.actions.rain.radius
+		var rest: bool = preferences.reduced_motion or preferences.low_effects
 		world.draw_arc(center,radius,0,TAU,40,Color("b1e6d0"),1)
+		world.draw_arc(center,radius-2.0,0,TAU,36,Color(0.45,0.95,0.82,0.35),0.5)
 		if rain.hit:
-			var fade := clampf(1.0-float(combat.tick-rain.impact_tick)/15,0,1)
-			for offset in ([Vector2.ZERO] if preferences.low_effects else [Vector2.ZERO,Vector2(-16,-8),Vector2(14,-10),Vector2(-10,14),Vector2(12,12)]):
-				world.draw_line(center+offset-Vector2(0,8 if preferences.reduced_motion else 27)*fade,center+offset,Color(0.9,1,0.8,fade*(0.5 if preferences.reduced_flash else 1.0)),2)
+			var fade := clampf(1.0-float(combat.tick-rain.impact_tick)/18,0,1)
+			var age := float(combat.tick-rain.impact_tick)
+			# A column of lamp-rain falls through the sigil, then flowers into
+			# pixel splashes. Low-effects keeps a single readable column.
+			var columns := [Vector2.ZERO] if preferences.low_effects else [Vector2.ZERO,Vector2(-14,-6),Vector2(13,-8),Vector2(-8,12),Vector2(10,11)]
+			for offset in columns:
+				world.draw_line(center+offset-Vector2(0,10 if preferences.reduced_motion else 31)*fade,center+offset,Color(0.9,1,0.8,fade*(0.5 if preferences.reduced_flash else 1.0)),2 if offset==Vector2.ZERO else 1)
+			world.draw_circle(center,radius*0.75*maxf(0.0,1.0-age/20.0),Color(0.42,0.96,0.78,0.12*fade))
+			for ring in 3:
+				var rr := radius*(0.35+0.22*float(ring))+age*1.1
+				world.draw_arc(center,rr,0,TAU,40,Color(0.62,1.0,0.86,0.32*fade*(1.0-float(ring)*0.18)),1.0)
+			if not rest:
+				for drop in 12:
+					var da := float(drop)*TAU/12.0+float(combat.tick%9)*0.13
+					var dr := radius*0.78+float((drop*5)%7)*2.0
+					var p := center+Vector2.from_angle(da)*dr
+					var sink := fmod(age*1.7+float(drop)*3.0,9.0)
+					world.draw_rect(Rect2((p+Vector2(0,sink-6)).round(),Vector2(2,3)),Color(0.80,1.0,0.84,fade*0.75))
+				for i in 8:
+					var a := float(i)*TAU/8.0+float(combat.tick%5)*0.08
+					var d := radius*0.55+float((i*7)%5)*2.0
+					world.draw_line(center+Vector2.from_angle(a)*d,center+Vector2.from_angle(a)*(d+4.0),Color(1.0,0.90,0.56,0.35*fade),1.0)
 		else:
-			var progress := 1.0-float(rain.impact_tick-combat.tick)/30
+			var progress := clampf(1.0-float(rain.impact_tick-combat.tick)/30.0,0.0,1.0)
 			world.draw_arc(center,radius*progress,0,TAU,32,Color(0.7,0.9,0.7,0.5),0.5)
+			# Floating preparation sigil: runes orbit the target while the rain
+			# gathers above it. This is deliberately slot-machine readable.
+			for rune in 8:
+				var ra := float(rune)*TAU/8.0+float(combat.tick)*0.02
+				var rp := center+Vector2.from_angle(ra)*(radius*0.52)
+				world.draw_rect(Rect2(rp.round(),Vector2(2,2)),Color(0.72,1.0,0.84,0.45+0.25*sin(float(combat.tick)/8.0+float(rune))))
+			if not rest:
+				for streak in 7:
+					var sx := center.x-float(radius)*0.65+float((streak*13+combat.tick/2)%int(maxf(4.0,radius*1.3)))
+					var sy := center.y-float(radius)-6.0+float((streak*11+combat.tick*2)%int(maxf(6.0,radius*1.4)))
+					world.draw_line(Vector2(sx,sy),Vector2(sx,sy+5),Color(0.72,1.0,0.82,0.36),1)
 	for zone in combat.zones:
 		world.draw_circle(zone.pos,zone.radius,Color(0.6,0.65,0.2,0.25))
 		world.draw_arc(zone.pos,zone.radius,0,TAU,32,Color("e0d780"),1)
@@ -391,8 +423,8 @@ func draw_world() -> void:
 			var angle: float = combat.locked.angle()
 			var fade := clampf(1.0-float(age-3)/17.0,0.0,1.0)
 			var reach := float(combat.config.actions.melee.range)+3.0
-			var start_a: float = angle-1.18
-			var end_a: float = angle+1.18
+			var start_a: float = angle-1.36
+			var end_a: float = angle+1.36
 			var segments := 6 if preferences.low_effects else 16
 			for layer in [{"radius":reach+5.0,"width":14.0,"color":Color(0.22,0.92,0.82,0.22*fade)},{"radius":reach,"width":5.0,"color":Color(0.82,1.0,0.90,0.92*fade)},{"radius":reach-1.0,"width":2.5,"color":Color(1.0,0.84,0.38,0.96*fade)},{"radius":reach-4.0,"width":1.2,"color":Color(1.0,0.99,0.90,0.95*fade)}]:
 				for i in segments:
@@ -417,6 +449,14 @@ func draw_world() -> void:
 			world.draw_circle(tip,3.0+2.0*fade,Color(0.82,1.0,0.90,0.55*fade))
 			world.draw_rect(Rect2(tip-Vector2(1,1),Vector2(3,3)),Color(1,0.99,0.86,0.95*fade))
 			world.draw_arc(combat.player,reach+8.0,angle-1.5,angle+1.5,20,Color(0.35,0.95,0.82,0.32*fade),1.0)
+			# Inner crescent: the staff shaft still cuts close targets on the
+			# body side, matching the widened vertical hit window.
+			world.draw_arc(combat.player,reach*0.56,angle-1.25,angle+1.25,18,Color(0.62,1.0,0.86,0.28*fade),4.0)
+			world.draw_arc(combat.player,reach*0.46,angle-1.05,angle+1.05,16,Color(1.0,0.88,0.48,0.22*fade),1.0)
+			var rune_center: Vector2 = combat.player+combat.locked*8.0
+			for rune in 6:
+				var ra := float(rune)*TAU/6.0+float(combat.tick%11)*0.07
+				world.draw_rect(Rect2((rune_center+Vector2.from_angle(ra)*11.0).round(),Vector2(2,2)),Color(0.72,1.0,0.88,0.46*fade))
 			if not preferences.low_effects and not preferences.reduced_motion:
 				for i in 14:
 					var a := angle-1.0+float(i)*0.18
@@ -451,6 +491,18 @@ func draw_world() -> void:
 				world.draw_line(join,endp,Color(1,1,0.97,1.0*beam_fade),1.5)
 				world.draw_circle(join,4.0+float(18-age)*0.3,Color(0.8,1,0.9,0.66*beam_fade))
 				world.draw_circle(join,8.0+float(18-age)*0.5,Color(0.42,0.9,0.74,0.10*beam_fade))
+				# Twisted light ribbons and a small rune at the lamp mouth.
+				var perp := Vector2(-combat.locked.y,combat.locked.x)
+				for ribbon in 3:
+					var wob := 0.0 if preferences.reduced_motion else sin(float(combat.tick)/6.0+float(ribbon)*2.1)*2.0
+					var a := join+perp*(wob+float(ribbon-1)*2.0)
+					var b := endp+perp*(wob*0.4+float(ribbon-1)*1.2)
+					world.draw_line(a,b,Color(0.64,1.0,0.84,0.16*beam_fade),1.0)
+				for rune in 4:
+					var ra := float(combat.tick)/22.0+float(rune)*TAU/4.0
+					var rp := join+Vector2.from_angle(ra)*Vector2(6.0,4.0)
+					world.draw_rect(Rect2(rp.round(),Vector2(2,2)),Color(1.0,0.90,0.55,0.55*beam_fade))
+				world.draw_arc(join,7.0+float(18-age)*0.25,0,TAU,20,Color(0.72,1.0,0.88,0.38*beam_fade),1.0)
 				# One short shock ring, gone before the lingering sparks.
 				var ring_age := mini(age-12,6)
 				var ring_fade := clampf(1.0-float(age-12)/8.0,0.0,1.0)

@@ -912,7 +912,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-010")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-011")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),
@@ -1541,7 +1541,11 @@ func draw_objects() -> void:
 			props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,10),tick,preferences)
 			continue
 		var prop_tick: int = int(tick/3) if draw_kind in ["door","mine_door","exit","end"] else tick
-		props.draw_prop(objects_layer,draw_kind,pos,state,prop_tick,preferences)
+		var draw_pos := pos
+		if draw_kind in ["exit","end"]:
+			var bob := 0.0 if preferences.reduced_motion else roundf(sin(float(tick)/38.0+pos.x*0.07)*1.5)
+			draw_pos = pos+Vector2(0,bob)
+		props.draw_prop(objects_layer,draw_kind,draw_pos,state,prop_tick,preferences)
 		match draw_kind:
 			"lamp","socket":
 				props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,12),tick,preferences)
@@ -1555,13 +1559,12 @@ func draw_objects() -> void:
 				props.draw_ambient(objects_layer,"ember",pos,tick,preferences)
 			"exit":
 				if bool(state.get("open",false)):
-					props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,16),tick,preferences)
-				else:
-					draw_portal(pos,state,tick)
+					props.draw_ambient(objects_layer,"light_pool",draw_pos+Vector2(0,16),tick,preferences)
+				draw_portal(draw_pos,state,tick)
 			"end":
-				draw_portal(pos,state,tick)
+				draw_portal(draw_pos,state,tick)
 				if bool(state.get("open",false)):
-					props.draw_ambient(objects_layer,"light_pool",pos+Vector2(0,16),tick,preferences)
+					props.draw_ambient(objects_layer,"light_pool",draw_pos+Vector2(0,16),tick,preferences)
 	for entry in progress.node().get("ambient",[]):
 		props.draw_ambient(objects_layer,str(entry.kind),Vector2(entry.pos[0],entry.pos[1]),tick,preferences)
 	draw_scan_highlights(tick)
@@ -1578,15 +1581,37 @@ func draw_scan_highlights(tick: int) -> void:
 		objects_layer.draw_line(pos-Vector2(10,16),pos-Vector2(4,16),Color(0.85,1.0,0.86,0.8*fade),1.5)
 
 func draw_portal(pos: Vector2, state: Dictionary, tick: int) -> void:
-	# Slow, readable threshold: sealed doors stay cold/dark, open doors breathe
-	# warm light and slowly release motes. No fast flicker.
-	var breath: float = 0.5+0.5*sin(TAU*float(tick)/180.0)
-	if bool(state.get("open",false)):
-		# The portal art itself carries the slow glow; only a soft threshold line
-		# is added so the passable edge reads at a glance.
-		objects_layer.draw_rect(Rect2(pos+Vector2(-7,-1),Vector2(14,2)),Color(1.0,0.9,0.55,0.25+0.15*breath))
+	# Ethereal threshold: a breathing oval aura, slow orbit motes and a soft
+	# ground reflection. The portal sprite itself carries the vignette/light.
+	var breath: float = 0.5+0.5*sin(TAU*float(tick)/150.0)
+	var rest: bool = preferences.reduced_motion
+	var open: bool = bool(state.get("open",false))
+	var core := Color(1.0,0.84,0.45,1.0) if open else Color(0.48,0.66,0.62,1.0)
+	var center := pos+Vector2(0,-21)
+	# Elliptical halo: flatten the circle on Y so it hugs the 28x38 art.
+	objects_layer.draw_set_transform(center,0.0,Vector2(1.0,1.32))
+	objects_layer.draw_circle(Vector2.ZERO,16.0+breath*2.0,Color(core.r,core.g,core.b,0.045 if open else 0.025))
+	objects_layer.draw_arc(Vector2.ZERO,15.0+breath*2.0,0,TAU,28,Color(core.r,core.g,core.b,0.18 if open else 0.10),1.0)
+	if open:
+		objects_layer.draw_arc(Vector2.ZERO,12.5+breath*1.2,0,TAU,24,Color(0.62,1.0,0.86,0.26),1.0)
+	objects_layer.draw_set_transform(Vector2.ZERO)
+	# Ground reflection / lift shadow.
+	objects_layer.draw_set_transform(pos+Vector2(0,17),0.0,Vector2(1.0,0.30))
+	objects_layer.draw_circle(Vector2.ZERO,10.0+breath*2.0,Color(core.r,core.g,core.b,0.10))
+	objects_layer.draw_set_transform(Vector2.ZERO)
+	if open:
+		# Slow orbiting pixel motes sell the float without moving collision.
+		if not rest:
+			for i in 6:
+				var phase := float(tick)/54.0+float(i)*TAU/6.0
+				var p := center+Vector2(cos(phase)*15.0,sin(phase)*20.0)
+				var a := 0.35+0.35*breath
+				objects_layer.draw_rect(Rect2(p.round(),Vector2.ONE*2),Color(1.0,0.90,0.55,a))
+				objects_layer.draw_rect(Rect2((p+Vector2(1,-3)).round(),Vector2.ONE),Color(0.72,1.0,0.86,a*0.7))
+		# A gentle vertical seam at the threshold.
+		objects_layer.draw_line(pos+Vector2(0,-3),pos+Vector2(0,-12),Color(1.0,0.92,0.62,0.30+0.15*breath),1.0)
 	else:
-		# Sealed: faint cold seam + small lock, so "not yet passable" is obvious.
+		# Sealed: cold seam + small lock, still clearly not passable.
 		objects_layer.draw_rect(Rect2(pos+Vector2(-7,-1),Vector2(14,1)),Color(0.55,0.5,0.42,0.4))
 		var lock: Vector2 = pos+Vector2(0,-30)
 		objects_layer.draw_rect(Rect2(lock+Vector2(-2,-3),Vector2(5,7)),Color(0.12,0.11,0.09,0.95))

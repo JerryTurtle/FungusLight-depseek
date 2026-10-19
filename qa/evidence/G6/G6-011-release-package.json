@@ -1,0 +1,13 @@
+{
+  "build": "G6-011",
+  "release_dir": "deliverables\\G6-011",
+  "exe_sha256": "66B26AD96DF7458EA917B632A73AC7C88BB058DB24DBD11A457FD50435AB7B13",
+  "pck_sha256": "18B8BB23F4DA535796EF2E5084C4B04C33B79E537BF7BD017395E320AE8BFEFD",
+  "pck_bytes": 23264880,
+  "required_present": true,
+  "missing": [],
+  "forbidden_present": [],
+  "project_identity_ok": true,
+  "qa_build_exists": true,
+  "passed": true
+}
