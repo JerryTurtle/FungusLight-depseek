@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_id": "G6-007",
+  "build_id": "G6-008",
   "nodes": [
     {
       "id": "N0-01",
@@ -1252,30 +1252,6 @@
           "kind": "exit",
           "target": "N1-07",
           "requires": "P03&S04"
-        },
-        {
-          "id": "p03_choice",
-          "name": "断根记录对照",
-          "pos": [
-            230,
-            80
-          ],
-          "kind": "puzzle_choice",
-          "visual": "puzzle_console",
-          "puzzle": "P03",
-          "options": [
-            {
-              "id": "human",
-              "label": "根上有新斧痕：人先砍根断水",
-              "correct": true
-            },
-            {
-              "id": "fungus",
-              "label": "根是菌群咬断：它们先袭击",
-              "correct": false
-            }
-          ],
-          "success": "结论：人先砍根断水，菌群才开始攻击。"
         },
         {
           "id": "lore_bridge",

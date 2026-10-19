@@ -4,20 +4,20 @@ Windows 单机俯视动作 RPG，Godot **4.3 stable**，一名主角、灯杖近
 
 ## 1. 当前状态（2026-10-19）
 
-**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。** 2026-10-19 第七轮按用户 4 项反馈完成 **G6-007** 候选：开始界面改为居中、无黑框、像素字体，删除剧情介绍与开场回看；修复标题页“设置”被背景遮挡；顶部剧情目标与底部操作提示显式使用像素字体。** G6 仍为 in_progress**；G6-007 默认路线 **734.6 秒/0 死亡**、整段跳过 **635.4 秒/0 死亡**，14 组套件与 test_combat/跨进程 restart 均 0 失败；8/8 矩阵为 G6-003 历史基线；20 分钟真人时长、窗口化两结局、标题/像素字体人工目检仍未完成。
+**G0/G1/G2 技术检查与 H2 人工审核均已通过，G3（G3-013）、G4（用户确认 20 分钟）已通过。** 2026-10-19 第八轮按用户反馈完成 **G6-008** 候选：删除根桥 N1-06 的三色记录台素材，P03 继续由两个桥压阀完成，东侧出口门槛不变；标题/像素字体/设置入口沿用 G6-007。** G6 仍为 in_progress**；G6-008 默认路线 **734.6 秒/0 死亡**、整段跳过 **635.4 秒/0 死亡**，14 组套件与 test_combat/跨进程 restart 均 0 失败；8/8 矩阵为 G6-003 历史基线；20 分钟真人时长、窗口化两结局、根桥画面人工目检仍未完成。
 
-- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-007 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
-- **G6-007 发布包：** [deliverables/G6-007-Release](deliverables/G6-007-Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-007-Release.zip`。exe `66B26A…B7B13`，pck `AE2B83…B7B9656`，zip SHA256 `E5E3B0…FE5C78`；完整哈希见 `qa/evidence/G6/G6-007-final-package.txt`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-001～G6-006 历史包分别保留在各自 `-Release/` 与旧 zip，不再作为当前候选。
-- **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G6-007 证据见 `qa/evidence/G6/G6-007-*`。
+- 仓库：本工作区 `FungusLight-depseek`，基线提交 `685a8e2`（导入 G3-005 源码与证据），随后为 G3-006～G6-008 小步提交；`origin` 为 https://github.com/JerryTurtle/FungusLight-depseek.git。
+- **G6-008 发布包：** [deliverables/G6-008-Release](deliverables/G6-008-Release)（`Game/`、`Source/`、`Docs/`、`QA/`、`Licenses/`），zip `deliverables/FungusLight-G6-008-Release.zip`。exe `66B26A…B7B13`，pck `42D568…B53017`，zip SHA256 `88BB3C…375693`；完整哈希见 `qa/evidence/G6/G6-008-final-package.txt`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-001～G6-007 历史包分别保留在各自 `-Release/` 与旧 zip，不再作为当前候选。
+- **发布构建默认进入主线；debug 构建仍保留 G2 审核台。** release 导出由 `boot.gd` 的 `OS.is_debug_build()` 门禁直接加载 campaign，debug 导出/无参数仍进审核台。G6-008 证据见 `qa/evidence/G6/G6-008-*`。
 - [H2批准原文](qa/H2-approval.md)：用户明确表示“H2已通过，无问题”。允许继续G3，不必重新请求同一批准。
-- **下一项：用户在 G6-007 发布包上完成最终验收；AI 不再改动包内容。** 验收条目为居中/无框/像素字体标题、无剧情介绍与开场回看、标题页设置入口、顶部/底部像素字体、HUD/技能栏、净光光路、两结局、双槽/坏档、37 节点、字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
+- **下一项：用户在 G6-008 发布包上完成最终验收；AI 不再改动包内容。** 验收条目为根桥三色记录台已移除、P03 两桥压阀仍可完成、标题/像素字体/设置入口、HUD/技能栏、净光光路、两结局、双槽/坏档、37 节点、字体/标签，填写 `qa/G6-approval.md`；确认前 G6 保持 `in_progress`，不得称整款游戏交付完成。G5 单独阶段按用户指示跳过，音乐/完整按键重设列为已知边界。
 
 状态依据：用户最新要求、[AGENTS.md](AGENTS.md)、[qa/gates.json](qa/gates.json)和[game/DEV_STATE.md](game/DEV_STATE.md)的最新条目。旧报告中的“待H2/禁止G3”是历史状态，已被批准记录取代。发现文件与实际Git状态不符时先核对，不自行推定完成。
 
 <!-- HANDOFF_SNAPSHOT_BEGIN -->
 ### 接续快照：已实现功能与剩余工作（2026-10-19）
 
-完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-007，当前源码含P0-1/P0-2、第三轮 8 项反馈修复、第四轮 5 项剧情/UI反馈、第五轮全文本审校、第六轮界面/开场/净光优化与第七轮开始界面/像素字体修复；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-007为发布候选，等待用户最终验收。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/G6-007-Release/`（G6-007），zip `deliverables/FungusLight-G6-007-Release.zip`；`deliverables/Release` 被运行中的 G6-003 占用，未覆盖。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
+完整路径相对仓库根目录；未写完整路径的.gd文件均在game/scripts，data/与assets/均在game/内，project.godot位于game/。功能基线为G2-007＋G4-009＋G6-008，当前源码含P0-1/P0-2、第三轮 8 项反馈修复、第四轮 5 项剧情/UI反馈、第五轮全文本审校、第六轮界面/开场/净光优化、第七轮开始界面/像素字体与第八轮根桥清理；目录整理基线为84ce2c2；文档整理不创建新游戏构建。G0/G1/G2通过，H2用户已于2026-10-17明确表示“已通过，无问题”，G3/G4已通过；G5按用户指示跳过单独阶段，G6-008为发布候选，等待用户最终验收。当前分支main；release构建默认进campaign，debug构建仍进G2审核台；发布包 `deliverables/G6-008-Release/`（G6-008），zip `deliverables/FungusLight-G6-008-Release.zip`；`deliverables/Release` 被运行中的 G6-003 占用，未覆盖。此快照区分实际实现与设计目标，未标完成的正文要求仍是待办。
 
 #### 已实现清单（接续时直接复用）
 
@@ -190,6 +190,16 @@ G4-001 搭出五章31节点（N0/N1/N2/N3/N4）、30个主线遭遇（tutorial+E
 #### G6-003 用户反馈修复（发布候选）
 
 按用户 8 项反馈完成：泵站 EL2 冲锋/水道伤害经真实 N2-07 场景探针确认存在（20/10×2），补上 dot 伤害数字与受击音；菌根裂口/排水出口/安全旁室/控制室/供给回廊的侧支/装备箱领取后切换开启帧；删除 N2-02/N2-04/N3-05/N4-03 四处冗余对照台/证据台；32 个休息灯座移到出口侧且灯座不再挡路；N4-06 Boss 取消核心窗口伤害门，155×135 素材整体作为判定区（灯击/净光/灯雨共用）。验证：默认 route 674.4 秒/0 死亡，8/8 matrix 612.3～728.3 秒，campaign92/g6_release38/g4_boss71/g4_visual14/save65/enemies73/dialogue175/props2464/pressure5 + test_combat549、restart2/8；G6-003 包重建。限制：窗口化两结局/20 分钟真人时长/素材许可未完成，G6 仍 in_progress。证据 `G6-003-feedback-checks.json`、`G6-003-route-matrix.json`、`G6-003-feedback-suite.log`。
+
+#### G6-008 第八轮：根桥去除三色记录台（发布候选）
+
+- 用户指出根桥场景中的 `puzzle_console` 素材（深色石台、金/青/红三圆灯、金色 T 拉杆）与场景不符。
+- 从 `game/data/prologue.json` 的 N1-06 根桥对象列表删除 `p03_choice`「断根记录对照」；该位置不再绘制三色记录台。
+- P03 仍由 `v01`/`v02` 两个桥压阀完成；东侧出口仍要求 `P03&S04`，S04 仍由桥头断根切口记录。没有删除谜题或改变主线门槛。
+- `puzzle_console` 仍用于 P06/P07，不在根桥出现。
+- 验证：campaign95、g6_release38、g4_state48、g4_boss71、g4_death5、g4_visual15、g4_presentation48、save65、enemies73、dialogue175、props2470、pressure5、route9（734.6 秒/0 死亡）、skip9（635.4 秒/0 死亡）全部 0 失败；test_combat549、跨进程 restart write2/load8。`props` 由 2472 降至 2470，对应移除一个双图层素材实例。
+- 包：`deliverables/G6-008-Release/`，zip `deliverables/FungusLight-G6-008-Release.zip`；PCK、五目录布局与干净目录 headless 启动通过。证据 `qa/evidence/G6/G6-008-*`。
+- 限制：根桥画面与 P03 两阀仍需用户实机目检；20 分钟真人时长、窗口化两结局、原始素材/生成图许可未完成；G6 仍 `in_progress`。
 
 #### G6-007 第七轮：开始界面与像素字体（发布候选）
 

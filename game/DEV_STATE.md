@@ -2,15 +2,15 @@
 
 更新：2026-10-19。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
 
-## 当前状态（G6-007 发布候选，等待用户验收）
+## 当前状态（G6-008 发布候选，等待用户验收）
 
 - G0/G1/G2技术通过；H2用户明确批准，无问题：[原文](../qa/H2-approval.md)。G3、G4已通过；G4-009完成五项试玩修复。
 - P0-1 读档修复、P0-2 路线/竞技场修复、P0-3 包/版本/门槛统一均已完成；第三轮按用户 8 项反馈修复箱子开启、休息灯座、冗余机关与 Boss 判定/持续伤害反馈。
-- G6-007 第七轮按用户 4 项反馈：标题居中/无黑框/像素字体；删除剧情介绍与开场回看；修复标题页设置入口被背景遮挡；顶部剧情/底部操作提示显式使用像素字体。
-- 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2472/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 734.6 秒/0 死亡，跳过 635.4 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
-- G6-007 包：`deliverables/G6-007-Release/`，zip `deliverables/FungusLight-G6-007-Release.zip`；exe `66B26A…B7B13`，pck `AE2B83…B7B9656`，zip `E5E3B0…FE5C78`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-007 改放同级目录，PCK 审计、五目录布局、干净目录 headless 启动通过。
+- G6-008 第八轮按用户反馈：删除根桥 N1-06 的三色记录台素材；P03 继续由两个桥压阀完成，东侧出口 P03&S04 不变；标题/像素字体/设置入口沿用 G6-007。
+- 当前源码验证：14 组引擎套件失败 0（campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2470/pressure5/route9/skip9）；另 test_combat 549/0、跨进程 restart write2/load8。默认 route 734.6 秒/0 死亡，跳过 635.4 秒/0 死亡；8/8 矩阵为 G6-003 历史基线。
+- G6-008 包：`deliverables/G6-008-Release/`，zip `deliverables/FungusLight-G6-008-Release.zip`；exe `66B26A…B7B13`，pck `42D568…B53017`，zip `88BB3C…375693`。`deliverables/Release` 当前被一个运行中的 G6-003 进程占用，未覆盖；G6-008 改放同级目录，PCK 审计、五目录布局、干净目录 headless 启动通过。
 - 接续分支 main；release 构建默认 campaign，debug 构建仍进 G2 审核台。
-- G6 仍为 in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；标题/像素字体/设置入口与 20 分钟真人时长尚未人工验收。
+- G6 仍为 in_progress：用户按 `docs/g6/release/验收说明.md` 在干净目录完成窗口化最终验收并填写 `qa/G6-approval.md`；根桥画面/P03 两阀与 20 分钟真人时长尚未人工验收。
 
 ## 2026-10-18 第二轮：剧情收敛与成长/证据接线（进行中）
 
@@ -47,6 +47,14 @@
 - 已统一 `project.godot`/`prologue.json` 版本、导出预设、标题默认值、发布文档、`qa/gates.json` 和验收模板到 G6-002。
 - 重建 `deliverables/Release/` 五目录与 zip `deliverables/FungusLight-G6-002-Release.zip`；exe `66B26A…B7B13`，pck `06BDF1…EFEB2`，zip `4B0E9B…B930B`。PCK 审计、五目录布局通过；Game 无个人存档/日志。
 - 限制：未重跑干净目录 GUI 全流程；20 分钟真人时长未验证；G6 仍 in_progress，用户书面确认前不得标 passed。证据 `qa/evidence/G6/G6-002-release-package.json`、`G6-002-release-layout.json`、`G6-002-final-package.txt`。
+
+## G6-008 第八轮根桥去除三色记录台
+
+- N1-06 根桥删除 `p03_choice`「断根记录对照」；用户截图对应的 `puzzle_console` 三色记录台不再出现。
+- P03 仍由 `v01`/`v02` 两个桥压阀完成；东侧出口仍要求 `P03&S04`，S04 由桥头断根切口记录；未删除谜题或门槛。
+- `puzzle_console` 保留给 P06/P07；`test_props` 由 2472 降至 2470。
+- 验证：campaign95/g6_release38/g4_state48/g4_boss71/g4_death5/g4_visual15/g4_presentation48/save65/enemies73/dialogue175/props2470/pressure5/route9（734.6 秒）/skip9（635.4 秒）全 0；test_combat549、restart2/8。
+- 包：`deliverables/G6-008-Release/`，zip `deliverables/FungusLight-G6-008-Release.zip`；PCK/布局/干净目录 headless 启动通过。限制：根桥画面/P03 两阀人工目检、20 分钟真人时长、素材许可未完成；G6 仍 in_progress。
 
 ## G6-007 第七轮开始界面与像素字体
 
@@ -99,15 +107,15 @@
 - 包：`deliverables/Release/`，zip `deliverables/FungusLight-G6-003-Release.zip`；exe `66B26A…B7B13`，pck `0495EA…77491B`，zip `21E1CD…BBC0A`。PCK/布局/干净启动烟测通过。
 - 限制：窗口化两结局与 20 分钟真人时长未验收；G6 仍 in_progress。证据 `qa/evidence/G6/G6-003-feedback-checks.json`、`G6-003-route-matrix.json`、`G6-003-feedback-suite.log`。
 
-## 下一项：G6-007 用户验收（P0-1/P0-2/P0-3、第三/四/五/六/七轮反馈均已完成）
+## 下一项：G6-008 用户验收（P0-1/P0-2/P0-3、第三/四/五/六/七/八轮反馈均已完成）
 
-P0-1/P0-2/P0-3 与 G6-004/G6-005/G6-006/G6-007 反馈修复已完成，当前包为 G6-007；用户验收前不再改包内容。以下清单保留作为最终验收条目：
+P0-1/P0-2/P0-3 与 G6-004/G6-005/G6-006/G6-007/G6-008 反馈修复已完成，当前包为 G6-008；用户验收前不再改包内容。以下清单保留作为最终验收条目：
 
 1. 干净目录首次启动；标题居中/无黑框/像素字体，无剧情介绍与开场回看，点击“设置”能正常打开；新游戏（含五幕开场/跳过）、设置持久化、双槽隔离、坏档恢复、死亡三选项。
 2. 开场五幕是否一眼读懂世界/旧约/禾抬压与砍根/菌群反击/三证据/两种选择；全文本通读 S01～S10、L01～L20、两结局 9 句尾声。
 3. 左上透明 HUD 与右下无框技能栏：尺寸/透明度/字号、生命/精力/护灯/药剂/用时、冷却/锁标/“耗 N”，确认不遮挡场景。
 4. 净光光路：直线上多个敌人同时掉血、每人只结算一次、墙后敌人不掉血；两结局各走一次，确认尾声/统计/返回标题/结局前备份。
-5. 顶部剧情/底部操作提示是否为清晰像素字体；设置面板缩小、字号变小且打开时隐藏 HUD/小地图；37 节点、字体/标签、休息灯座、暂停/装备完整可见。
+5. 根桥 N1-06 三色记录台已消失；两个桥压阀完成 P03；顶部/底部像素字体；37 节点、字体/标签、休息灯座、暂停/装备完整可见。
 6. 双槽/坏档/仅备份提示、WASD 键位说明、设置持久化；确认原始 Fungus Cave 素材与开场/标题生成图再分发范围；G5单独阶段按用户指示跳过，音乐与完整按键重设列为已知边界。
 7. 用户书面确认后，才把 G6 标 passed 并写 human_approval。
 

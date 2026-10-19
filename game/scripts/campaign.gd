@@ -904,7 +904,7 @@ func write_run_report() -> void:
 		last_chapter = ""
 	var total := (Time.get_ticks_msec()-run_started_ms)/1000.0
 	var report := {
-		"build":str(ProjectSettings.get_setting("application/config/version","G6-007")),
+		"build":str(ProjectSettings.get_setting("application/config/version","G6-008")),
 		"total_seconds":snappedf(total,0.1),
 		"effective_seconds":snappedf(float(progress.seconds),0.1),
 		"ending":progress.ending_id(),
