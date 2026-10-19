@@ -42,7 +42,7 @@
 │   └── AI工具使用说明.md            模型与工具、辅助环节、人机分工、生成内容清单
 └── 03-源码压缩包/
     ├── 源码包说明.md
-    ├── FungusLight-G6-013-Source.zip    当前源码 + 文档 + 证据 + AI 记录（24,007,687 字节）
+    ├── FungusLight-G6-013-Source.zip    当前源码 + 文档 + 证据 + AI 记录（24,007,879 字节）
     ├── FungusLight-G6-012-Source.zip    历史源码包（保留审计）
     ├── SHA256SUMS.txt
     └── AI交互过程记录/
@@ -61,7 +61,7 @@
 | 文件 | SHA256 | 大小 |
 | --- | --- | --- |
 | `01-游戏安装包/FungusLight-G6-013-Release.zip` | `09C16BE205C60B584BFFB6323F7B2F9408E0017BB4FA18134A9D9F487B17FA47` | 135,786,194 字节（129.5 MiB） |
-| `03-源码压缩包/FungusLight-G6-013-Source.zip` | `863A5629883CA5A4255523EE3E6CCDCEFA2FE1AF6C9A035FD9635811544B93D8` | 24,007,687 字节（22.90 MiB） |
+| `03-源码压缩包/FungusLight-G6-013-Source.zip` | `ACE29B77B7656D1A26B0B2DEE282D4558D72013CFFD711275BAAFBD953669096` | 24,007,879 字节（22.90 MiB） |
 | `FungusLight-Gameplay-演示视频.mp4` | `E79E7940036909C348E0282709D34B5428BCFBBFC2DE5B5B42337580F9162C32` | 41,836,200 字节（39.90 MiB） |
 
 演示视频为 G6-012 实机录制（H.264 1280×720/60fps + AAC 音轨，97.3 秒），G6-013 未改玩法画面，继续有效。校验：
@@ -75,7 +75,7 @@ Get-Content .\SHA256SUMS.txt
 
 发布包内 32/64 位 exe/pck 哈希、逐项清单见 `01-游戏安装包` 内 `QA/SHA256SUMS.txt` 与根 `qa/evidence/G6/G6-013-final-package.txt`。
 
-源码包：1,346 个文件（解压后 55,252,758 字节，含目录项），源快照 `b5502b2`；包含 `game/`、`tools/`、`docs/`、`qa/`（文本证据）、`策划输出/`、`交付文档/`、`AI交互记录/`，排除截图与缓存；完整清单见包内 `SOURCE-MANIFEST.txt`。
+源码包：1,346 个文件（解压后 55,253,016 字节，含目录项），源快照 `be7a822`；包含 `game/`、`tools/`、`docs/`、`qa/`（文本证据）、`策划输出/`、`交付文档/`、`AI交互记录/`，排除截图与缓存；完整清单见包内 `SOURCE-MANIFEST.txt`。
 
 ## Git 管理
 
