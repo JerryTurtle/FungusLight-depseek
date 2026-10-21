@@ -1,5 +1,15 @@
 # 菌灯之下 · 当前开发接续
 
+## 2026-10-21 参赛 Word 说明文档
+
+- 完成：面向比赛评委的 8 页说明，含背景/玩法/特色、AI 流程与人机分工、握持/传送门/存档等迭代案例、完成度和试玩指南；6 张截图来自既有实机证据及 G6-012 演示视频。源稿 `资料包/02-作品说明文档/参赛说明.md`，生成器 `tools/build_competition_doc.py`，交付 `deliverables/competition-doc/菌灯之下_游戏参赛说明.docx`（未跟踪）。
+- 验证：核对 prologue.json 的 5 章/37 节点/37 遭遇/9 机关、门槛状态、截图来源；DOCX 6 图/5 表与标题结构通过；最终 8 页全部渲染目检，无裁切/溢出/孤立尾页。证据 `qa/maintenance/competition-doc-check.json`。
+- 渲染限制与处理：Windows runtime 未捆绑 LibreOffice，标准 render_docx.py 初次调用因 soffice.exe 缺失失败；改用本机 WPS 的 Word COM 接口导出 PDF，并通过同一 render_docx.py 的 rasterize + bundled Poppler 生成 PNG。首轮分页溢出与固定行距导致的图片裁切已修正，最终 v3 全页目检通过。未把前两轮失败记为通过。
+- 同步：README 与策划的 HANDOFF_SNAPSHOT 改为一致的当前摘要；旧大段快照逐字保留在历史接续明细下，策划正文目标规格保留。说明目录索引新增文档入口。
+- 边界：仅文档迭代，未运行游戏回归或更改游戏内容/gates/发布包；不将历史自动化时长等同真人体验，不将素材包误称 AI 原创。输出 DOCX、抽帧和渲染文件不纳入 Git。
+- 下一步：按比赛指定模板补充资料（如需）；游戏侧仍为 G6-013 老设备实机验收与再分发范围确认。分支 `codex/competition-word-guide`，验证后提交并推送 origin。
+
+
 更新：2026-10-20。入口见 [根README](../README.md)，详细过程见 [开发历史](../docs/history/development-through-G3-001.md)。
 
 ## G6-013 低配/老电脑兼容性修复（最新）

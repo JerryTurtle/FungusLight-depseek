@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-21",
+  "scope": "competition document only; no game build or regression rerun",
+  "source": "资料包/02-作品说明文档/参赛说明.md",
+  "generator": "tools/build_competition_doc.py",
+  "output": "deliverables\\competition-doc\\菌灯之下_游戏参赛说明.docx",
+  "output_sha256": "b8b2371910fad7602a3c2b0b4168412bbaba011bc292491cd587721c6be37018",
+  "pages": 8,
+  "embedded_images": 6,
+  "tables": 5,
+  "game_content_counts": {
+    "chapters": 5,
+    "nodes": 37,
+    "encounters": 37,
+    "puzzles": 9
+  },
+  "handoff_snapshots_equal": true,
+  "python_ast_valid": true,
+  "docx_structure": "passed: title, 7 section headings, 6 image descriptions, 5 tables, no paragraph border",
+  "visual_review": {
+    "result": "passed",
+    "reviewed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "render_directory": "qa/local/competition-doc/render-v3",
+    "checks": [
+      "no clipping or overlap",
+      "full screenshot visibility",
+      "readable Chinese glyphs",
+      "no orphan/blank pages",
+      "table and caption placement"
+    ]
+  },
+  "renderer": {
+    "pdf_export": "WPS Word COM ExportAsFixedFormat",
+    "png_renderer": "documents skill render_docx.py rasterize with converted PDF adapter; bundled Poppler",
+    "initial_failure": "soffice.exe unavailable; Windows dependency bundle has no LibreOffice",
+    "iterations": [
+      "v1: 13 pages; overflow tails and inherited title border corrected",
+      "v2: 8 pages but exact line spacing clipped inline images; corrected",
+      "v3: 8 pages; all pages visually reviewed and passed"
+    ]
+  },
+  "screenshots": [
+    {
+      "path": "qa/evidence/G6/G6-013-native-title.png",
+      "sha256": "0673acaa45e272ec47e974b11520f9c275f47c16ec19b8bb01baf41889d02ac5"
+    },
+    {
+      "path": "qa/local/competition-doc/video-006.png",
+      "sha256": "4c6ad68342c231e6b48239a83610aad57cefa61c897f1c56f860b812e94b2a89"
+    },
+    {
+      "path": "qa/local/competition-doc/video-042.png",
+      "sha256": "c53ec5b1c89e7c64c92d126be90047e59b5832d1e3b8943fa6897aa921375d63"
+    },
+    {
+      "path": "qa/local/competition-doc/video-030.png",
+      "sha256": "6d261ea6011855205f731645654f61f33202037766d701d1d49f261e5467235d"
+    },
+    {
+      "path": "qa/evidence/G6/G6-012-portal.png",
+      "sha256": "fa22fece8c7f1ea4f698c8a951a206086453dbd4da6d3d3332b6d374d1a527db"
+    },
+    {
+      "path": "qa/local/competition-doc/video-066.png",
+      "sha256": "64b56092fcbd97755d1a8e61044d4a063510b0cddf8685c2cb1cefbde68a3970"
+    }
+  ],
+  "video_source": {
+    "path": "资料包/FungusLight-Gameplay-演示视频.mp4",
+    "sha256": "e79e7940036909c348e0282709d34b5428bcfbbfc2de5b5b42337580f9162c32",
+    "extracted_seconds": [
+      6,
+      30,
+      42,
+      66
+    ]
+  },
+  "limits": [
+    "G6-013 old-machine acceptance remains pending",
+    "Historical test results are cited, not rerun in this document iteration",
+    "Final DOCX is local ignored output; source and generator are committed"
+  ]
+}
